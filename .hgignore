@@ -1,0 +1,13 @@
+syntax: glob
+
+#Ignore VS .user files
+*.user
+
+#Ignore VS .suo files
+*.suo
+
+#Ignore the binaries folder
+bin
+
+#Ignore the obj folder
+obj
