@@ -17,9 +17,16 @@ namespace JDT.Calidus.Tokens.Common
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         /// <param name="content">The content</param>
-        public GenericToken(int line, int col, int position, String value)
-            : base(line, col, position, value)
+        /// <param name="hint">An additional 'hint'</param>
+        public GenericToken(int line, int column, int position, String content, object hint)
+            : base(line, column, position, content)
         {
+            Hint = hint;
         }
+
+        /// <summary>
+        /// Get the 'hint' which allows a generic token to hint at what kind of token it actually contains
+        /// </summary>
+        public object Hint { get; private set; }
     }
 }

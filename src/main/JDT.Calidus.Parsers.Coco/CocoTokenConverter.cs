@@ -24,7 +24,7 @@ namespace JDT.Calidus.Parsers.Coco
                 case 1:
                     return CreateTokenInstance<IdentifierToken>(token);
                 default:
-                    return CreateTokenInstance<GenericToken>(token);
+                    return new GenericToken(token.line, token.col, token.pos, token.val, token.kind);
             }
         }
 

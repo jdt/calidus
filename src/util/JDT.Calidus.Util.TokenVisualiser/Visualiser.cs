@@ -122,6 +122,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
             details.Add(String.Format("Position: {0}", token.Position));
             details.Add(String.Format("Content: {0}", token.Content));
             details.Add(String.Format("Content size: {0}", token.Content.Length));
+            details.Add(String.Format("Hint: {0}", token.Hint));
+
             lstDetails.DataSource = details;
         }
     }
