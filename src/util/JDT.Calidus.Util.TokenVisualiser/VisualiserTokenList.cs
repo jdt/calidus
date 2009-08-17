@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Tokens;
+using JDT.Calidus.Tokens.Common;
 
 namespace JDT.Calidus.Util.TokenVisualiser
 {
@@ -41,6 +42,17 @@ namespace JDT.Calidus.Util.TokenVisualiser
         public String Type
         {
             get { return _token.GetType().Name; }
+        }
+
+        public object Hint
+        {
+            get
+            {
+                if (_token is GenericToken)
+                    return ((GenericToken)_token).Hint;
+                else
+                    return String.Empty;
+            }
         }
     }
 }
