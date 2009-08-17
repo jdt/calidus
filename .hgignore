@@ -11,3 +11,6 @@ bin
 
 #Ignore the obj folder
 obj
+
+#Ignore Gallio reports
+Reports
