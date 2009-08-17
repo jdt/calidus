@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens;
+using JDT.Calidus.Tokens.Modifiers;
 
 namespace JDT.Calidus.Parsers.Coco
 {
@@ -21,8 +22,14 @@ namespace JDT.Calidus.Parsers.Coco
         {
             switch (token.kind)
             {
-                case 1:
+                case Parser._ident:
                     return CreateTokenInstance<IdentifierToken>(token);
+                case Parser._private:
+                    return CreateTokenInstance<PrivateModifierToken>(token);
+                case Parser._protected:
+                    return CreateTokenInstance<ProtectedModifierToken>(token);
+                case Parser._public:
+                    return CreateTokenInstance<PublicModifierToken>(token);
                 default:
                     return new GenericToken(token.line, token.col, token.pos, token.val, token.kind);
             }
