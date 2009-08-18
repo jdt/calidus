@@ -140,5 +140,11 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._ushort)));
         }
+
+        [Test]
+        public void SemiColonConstShouldReturnSemiColonToken()
+        {
+            Assert.IsInstanceOfType(typeof(SemiColonToken), CocoTokenConverter.Convert(GetCocoToken(Parser._scolon)));
+        }
     }
 }
