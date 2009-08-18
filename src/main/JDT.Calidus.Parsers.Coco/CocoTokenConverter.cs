@@ -40,6 +40,8 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._uint, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
+
+            _simpleTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
         }
 
         /// <summary>
