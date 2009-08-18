@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using JDT.Calidus.Parsers.Coco;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
+using JDT.Calidus.Tokens.Types;
 
 namespace JDT.Calidus.Parsers.CocoTest
 {
@@ -48,6 +49,96 @@ namespace JDT.Calidus.Parsers.CocoTest
         public void PublicConstShouldReturnPublicModifierToken()
         {
             Assert.IsInstanceOfType(typeof(PublicModifierToken), CocoTokenConverter.Convert(GetCocoToken(Parser._public)));
+        }
+
+        [Test]
+        public void BoolConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._bool)));
+        }
+
+        [Test]
+        public void ByteConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._byte)));
+        }
+
+        [Test]
+        public void CharConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._char)));
+        }
+
+        [Test]
+        public void DecimalConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._decimal)));
+        }
+
+        [Test]
+        public void DoubleConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._double)));
+        }
+
+        [Test]
+        public void EnumConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._enum)));
+        }
+
+        [Test]
+        public void FloatConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._float)));
+        }
+
+        [Test]
+        public void IntConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._int)));
+        }
+
+        [Test]
+        public void LongConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._long)));
+        }
+
+        [Test]
+        public void SByteConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._sbyte)));
+        }
+
+        [Test]
+        public void ShortConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._short)));
+        }
+
+        [Test]
+        public void StructConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._struct)));
+        }
+
+        [Test]
+        public void UnitConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._uint)));
+        }
+
+        [Test]
+        public void ULongConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._ulong)));
+        }
+
+        [Test]
+        public void UShortConstShouldReturnValueTypeToken()
+        {
+            Assert.IsInstanceOfType(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._ushort)));
         }
     }
 }
