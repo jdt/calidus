@@ -41,5 +41,37 @@ namespace JDT.Calidus.Tokens
         /// Get the content of the token
         /// </summary>
         public String Content { get; private set; }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            TokenBase theToken = (TokenBase)obj;
+            if (theToken.Column != Column) return false;
+            if (theToken.Content.Equals(Content) == false) return false;
+            if (theToken.Line != Line) return false;
+            if (theToken.Position != Position) return false;
+            return true;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            int hash = 31;
+            hash ^= Column.GetHashCode();
+            hash ^= Content.GetHashCode();
+            hash ^= Line.GetHashCode();
+            hash ^= Position.GetHashCode();
+            return hash;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{4} at (l:{0}, c:{1}, p:{2}): {3}", new object[] { Line, Column, Position, Content, GetType().Name });
+        }
     }
 }

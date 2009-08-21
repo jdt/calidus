@@ -45,9 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\NewLineToken.cs" />
     <Compile Include="Common\GenericToken.cs" />
     <Compile Include="Common\IdentifierToken.cs" />
     <Compile Include="Common\SemiColonToken.cs" />
+    <Compile Include="Common\SpaceToken.cs" />
+    <Compile Include="Common\TabToken.cs" />
     <Compile Include="Modifiers\PrivateModifierToken.cs" />
     <Compile Include="Modifiers\ProtectedModifierToken.cs" />
     <Compile Include="Modifiers\PublicModifierToken.cs" />

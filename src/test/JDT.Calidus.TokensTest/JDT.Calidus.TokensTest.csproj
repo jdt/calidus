@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1B4EA3E8-CAD1-4A7C-B6B4-C25C465FDE01}</ProjectGuid>
+    <ProjectGuid>{589EB356-D3C1-4A07-A781-5D6EDD729266}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.ParsersTest</RootNamespace>
-    <AssemblyName>JDT.Calidus.ParsersTest</AssemblyName>
+    <RootNamespace>JDT.Calidus.TokensTest</RootNamespace>
+    <AssemblyName>JDT.Calidus.TokensTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,15 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormattingTokenParserTest.cs" />
-    <Compile Include="ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\main\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
-      <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
-      <Name>JDT.Calidus.Parsers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>
