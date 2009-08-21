@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Parsers.Coco;
+using JDT.Calidus.Tokens.Common;
 
 namespace JDT.Calidus.Parsers
 {
@@ -37,6 +38,7 @@ namespace JDT.Calidus.Parsers
             cocoValidationParser.Parse();
 
             //declare result
+            IList<TokenBase> completeTokenList = new List<TokenBase>();
             IList<TokenBase> tokens = new List<TokenBase>();
             bool result = false;
 
@@ -50,10 +52,16 @@ namespace JDT.Calidus.Parsers
                     Coco.Token currentToken = cocoTokenScanner.Scan();
                     tokens.Add(CocoTokenConverter.Convert(currentToken));
                 }
+
+                //parse additional formatting tokens
+                //TODO: make this part of the actual parser
+                FormattingTokenParser tokenParser = new FormattingTokenParser();
+                completeTokenList = tokenParser.Parse(source, tokens);
+
                 result = true;
             }
 
-            parsedTokens = tokens;
+            parsedTokens = completeTokenList;
             return result;
         }
     }

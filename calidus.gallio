@@ -5,6 +5,7 @@
       <assemblyFile>.\bin\JDT.Calidus.ParsersTest.dll</assemblyFile>
       <assemblyFile>.\bin\JDT.Calidus.Parsers.CocoTest.dll</assemblyFile>
       <assemblyFile>.\bin\JDT.Calidus.ParsersTest.dll</assemblyFile>
+      <assemblyFile>.\bin\JDT.Calidus.TokensTest.dll</assemblyFile>
     </assemblyFiles>
     <hintDirectories />
     <excludedFrameworkIds />
@@ -17,7 +18,7 @@
     </hostSetup>
   </testPackageConfig>
   <testFilters>
-    <testFilter filterName="LastRun" filter="*" />
+    <testFilter filterName="LastRun" filter="" />
     <testFilter filterName="AutoSave" filter="" />
   </testFilters>
 </project>
