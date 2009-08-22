@@ -56,7 +56,7 @@ namespace JDT.Calidus.Parsers
                 //parse additional formatting tokens
                 //TODO: make this part of the actual parser
                 FormattingTokenParser tokenParser = new FormattingTokenParser();
-                completeTokenList = tokenParser.Parse(source, tokens);
+                completeTokenList = new List<TokenBase>(tokenParser.Parse(source, tokens));
 
                 result = true;
             }

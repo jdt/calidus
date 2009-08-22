@@ -20,17 +20,17 @@ namespace JDT.Calidus.Parsers
         /// <param name="source">The source</param>
         /// <param name="previouslyParsed">The previously parsed</param>
         /// <returns>A full list of tokens</returns>
-        public IList<TokenBase> Parse(String source, IList<TokenBase> previouslyParsed)
+        public IEnumerable<TokenBase> Parse(String source, IEnumerable<TokenBase> previouslyParsed)
         {
             IList<TokenBase> completeTokenList = new List<TokenBase>();
             
-            if (previouslyParsed.Count > 0)
-                completeTokenList.Add(previouslyParsed[0]);
+            if (previouslyParsed.Count() > 0)
+                completeTokenList.Add(previouslyParsed.ElementAt(0));
 
-            for (int i = 1; i < previouslyParsed.Count; i++)
+            for (int i = 1; i < previouslyParsed.Count(); i++)
             {
-                TokenBase previousToken = previouslyParsed[i - 1];
-                TokenBase currentToken = previouslyParsed[i];
+                TokenBase previousToken = previouslyParsed.ElementAt(i - 1);
+                TokenBase currentToken = previouslyParsed.ElementAt(i);
 
                 int previousTokendEndPosition = previousToken.Position + previousToken.Content.Length;
                 int currentTokenStartPosition = currentToken.Position;

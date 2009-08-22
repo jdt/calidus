@@ -15,7 +15,7 @@ namespace JDT.Calidus.Statements.Common
         /// Create a new instance of this class
         /// </summary>
         /// <param name="tokens">The tokens in this statement</param>
-        public GenericStatement(IList<TokenBase> tokens)
+        public GenericStatement(IEnumerable<TokenBase> tokens)
             : base(tokens)
         {
         }

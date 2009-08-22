@@ -29,8 +29,8 @@ namespace JDT.Calidus.ParsersTest
             input.Add(new GenericToken(1, 7, 6, "code", null));
             input.Add(new SemiColonToken(1, 11, 10));
 
-            IList<StatementBase> actual = _parser.Parse(input);
-            CollectionAssert.AreEquivalent(actual[0].Tokens, input);
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, input);
         }
 
         [Test]
@@ -44,8 +44,8 @@ namespace JDT.Calidus.ParsersTest
             input.Add(new GenericToken(2, 7, 6, "code", null));
             input.Add(new SemiColonToken(2, 11, 10));
 
-            IList<StatementBase> actual = _parser.Parse(input);
-            Assert.AreEqual(2, actual.Count);
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            Assert.AreEqual(2, actual.Count());
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace JDT.Calidus.ParsersTest
             input.Add(new GenericToken(1, 1, 1, "source", null));
             input.Add(new GenericToken(1, 7, 6, "code", null));
 
-            IList<StatementBase> actual = _parser.Parse(input);
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
         }
     }
 }
