@@ -19,7 +19,7 @@ namespace JDT.Calidus.Statements
         /// Create a new instance of this class
         /// </summary>
         /// <param name="tokens">The list of tokens in the statement</param>
-        protected StatementBase(IList<TokenBase> tokens)
+        protected StatementBase(IEnumerable<TokenBase> tokens)
         {
             Tokens = tokens;
         }
@@ -27,6 +27,6 @@ namespace JDT.Calidus.Statements
         /// <summary>
         /// Get the tokens contained in the statement
         /// </summary>
-        public IList<TokenBase> Tokens { get; private set; }
+        public IEnumerable<TokenBase> Tokens { get; private set; }
     }
 }

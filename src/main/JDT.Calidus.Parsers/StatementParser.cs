@@ -19,7 +19,7 @@ namespace JDT.Calidus.Parsers
         /// </summary>
         /// <param name="tokens">The list of tokens</param>
         /// <returns>The list of statements</returns>
-        public IList<StatementBase> Parse(IList<TokenBase> tokens)
+        public IEnumerable<StatementBase> Parse(IList<TokenBase> tokens)
         {
             IList<StatementBase> res = new List<StatementBase>();
 

@@ -30,8 +30,8 @@ namespace JDT.Calidus.ParsersTest
 
             NewLineToken newLine = new NewLineToken(1, 7, 6);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(newLine, parsed[1]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(newLine, parsed.ElementAt(1));
         }
 
         [Test]
@@ -45,9 +45,9 @@ namespace JDT.Calidus.ParsersTest
             NewLineToken newLineAlpha = new NewLineToken(1, 7, 6);
             NewLineToken newLineBravo = new NewLineToken(2, 1, 7);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(newLineAlpha, parsed[1]);
-            Assert.AreEqual(newLineBravo, parsed[2]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(newLineAlpha, parsed.ElementAt(1));
+            Assert.AreEqual(newLineBravo, parsed.ElementAt(2));
         }
 
         [Test]
@@ -64,12 +64,12 @@ namespace JDT.Calidus.ParsersTest
             NewLineToken newLineDelta = new NewLineToken(4, 1, 9);
             NewLineToken newLineEcho = new NewLineToken(5, 1, 10);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(newLineAlpha, parsed[1]);
-            Assert.AreEqual(newLineBravo, parsed[2]);
-            Assert.AreEqual(newLineCharlie, parsed[3]);
-            Assert.AreEqual(newLineDelta, parsed[4]);
-            Assert.AreEqual(newLineEcho, parsed[5]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(newLineAlpha, parsed.ElementAt(1));
+            Assert.AreEqual(newLineBravo, parsed.ElementAt(2));
+            Assert.AreEqual(newLineCharlie, parsed.ElementAt(3));
+            Assert.AreEqual(newLineDelta, parsed.ElementAt(4));
+            Assert.AreEqual(newLineEcho, parsed.ElementAt(5));
         }
 
         [Test]
@@ -82,8 +82,8 @@ namespace JDT.Calidus.ParsersTest
 
             SpaceToken space = new SpaceToken(1, 7, 6);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(space, parsed[1]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(space, parsed.ElementAt(1));
         }
 
         [Test]
@@ -98,10 +98,10 @@ namespace JDT.Calidus.ParsersTest
             SpaceToken spaceBravo = new SpaceToken(1, 8, 7);
             SpaceToken spaceCharlie = new SpaceToken(1, 9, 8);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(spaceAlpha, parsed[1]);
-            Assert.AreEqual(spaceBravo, parsed[2]);
-            Assert.AreEqual(spaceCharlie, parsed[3]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(spaceAlpha, parsed.ElementAt(1));
+            Assert.AreEqual(spaceBravo, parsed.ElementAt(2));
+            Assert.AreEqual(spaceCharlie, parsed.ElementAt(3));
         }
 
         [Test]
@@ -114,8 +114,8 @@ namespace JDT.Calidus.ParsersTest
 
             TabToken tab = new TabToken(1, 7, 6);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(tab, parsed[1]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(tab, parsed.ElementAt(1));
         }
 
         [Test]
@@ -130,10 +130,10 @@ namespace JDT.Calidus.ParsersTest
             TabToken tabBravo = new TabToken(1, 8, 7);
             TabToken tabCharlie = new TabToken(1, 9, 8);
 
-            IList<TokenBase> parsed = _parser.Parse(source, input);
-            Assert.AreEqual(tabAlpha, parsed[1]);
-            Assert.AreEqual(tabBravo, parsed[2]);
-            Assert.AreEqual(tabCharlie, parsed[3]);
+            IEnumerable<TokenBase> parsed = _parser.Parse(source, input);
+            Assert.AreEqual(tabAlpha, parsed.ElementAt(1));
+            Assert.AreEqual(tabBravo, parsed.ElementAt(2));
+            Assert.AreEqual(tabCharlie, parsed.ElementAt(3));
         }
     }
 }
