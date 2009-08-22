@@ -12,7 +12,7 @@ namespace JDT.Calidus.Parsers
     /// <summary>
     /// This class acts as a parser for source code and splits the source into tokens
     /// </summary>
-    public class Parser
+    public class TokenParser
     {
         /// <summary>
         /// Parses the source into a list of tokens and returns true if it succeeded, otherwise false

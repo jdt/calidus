@@ -48,7 +48,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
 
         private void cmdParse_Click(object sender, EventArgs e)
         {
-            Parser parser = new Parser();
+            TokenParser parser = new TokenParser();
             IList<TokenBase> parsedTokens;
             if (parser.TryParse(rtSource.Text, out parsedTokens))
             {

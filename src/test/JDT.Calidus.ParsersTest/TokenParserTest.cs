@@ -10,14 +10,14 @@ using JDT.Calidus.Tokens.Common;
 namespace JDT.Calidus.ParsersTest
 {
     [TestFixture]
-    public class ParserTest
+    public class TokenParserTest
     {
-        private Parser _parser;
+        private TokenParser _parser;
 
         [SetUp]
         public void SetUp()
         {
-            _parser = new Parser();
+            _parser = new TokenParser();
         }
 
         [Test]
