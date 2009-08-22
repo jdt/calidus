@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Statements\IStatementFactory.cs" />
     <Compile Include="Tokens\FormattingTokenParser.cs" />
-    <Compile Include="ParseException.cs" />
     <Compile Include="Statements\StatementParser.cs" />
     <Compile Include="Tokens\TokenParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

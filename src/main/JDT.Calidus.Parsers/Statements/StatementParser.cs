@@ -40,7 +40,7 @@ namespace JDT.Calidus.Parsers.Statements
 
             //throw an exception if tokens remain
             if (currentStatementTokens.Count != 0)
-                throw new ParseException("No valid statement terminator found for the last " + currentStatementTokens.Count + " tokens");
+                throw new CalidusException("No valid statement terminator found for the last " + currentStatementTokens.Count + " tokens");
 
             return res;
         }
