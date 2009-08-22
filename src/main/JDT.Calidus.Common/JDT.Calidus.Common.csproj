@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</ProjectGuid>
+    <ProjectGuid>eb50b8ad-6470-4276-b9e6-2a5269cdacac</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Parsers</RootNamespace>
-    <AssemblyName>JDT.Calidus.Parsers</AssemblyName>
+    <RootNamespace>JDT.Calidus.Common</RootNamespace>
+    <AssemblyName>JDT.Calidus.Common</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,25 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tokens\FormattingTokenParser.cs" />
-    <Compile Include="ParseException.cs" />
-    <Compile Include="Statements\StatementParser.cs" />
-    <Compile Include="Tokens\TokenParser.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\JDT.Calidus.Parsers.Coco\JDT.Calidus.Parsers.Coco.csproj">
-      <Project>{8D9004AA-01D2-4973-B5BC-43F40AAABFAD}</Project>
-      <Name>JDT.Calidus.Parsers.Coco</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
-      <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
-      <Name>JDT.Calidus.Statements</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
-      <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
-      <Name>JDT.Calidus.Tokens</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,7 +5,7 @@ using System.Text;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 
-namespace JDT.Calidus.Parsers
+namespace JDT.Calidus.Parsers.Tokens
 {
     /// <summary>
     /// This class provides parsing for whitespace and newline tokens that

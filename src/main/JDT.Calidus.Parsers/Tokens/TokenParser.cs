@@ -7,7 +7,7 @@ using JDT.Calidus.Tokens;
 using JDT.Calidus.Parsers.Coco;
 using JDT.Calidus.Tokens.Common;
 
-namespace JDT.Calidus.Parsers
+namespace JDT.Calidus.Parsers.Tokens
 {
     /// <summary>
     /// This class acts as a parser for source code and splits the source into tokens
