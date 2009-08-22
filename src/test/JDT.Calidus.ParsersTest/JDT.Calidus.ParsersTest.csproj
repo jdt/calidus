@@ -49,9 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormattingTokenParserTest.cs" />
-    <Compile Include="StatementParserTest.cs" />
-    <Compile Include="TokenParserTest.cs" />
+    <Compile Include="Tokens\FormattingTokenParserTest.cs" />
+    <Compile Include="Statements\StatementParserTest.cs" />
+    <Compile Include="Tokens\TokenParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,10 +5,11 @@ using System.Text;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Statements;
-using JDT.Calidus.Parsers;
 using NUnit.Framework;
+using JDT.Calidus.Parsers.Statements;
+using JDT.Calidus.Parsers;
 
-namespace JDT.Calidus.ParsersTest
+namespace JDT.Calidus.ParsersTest.Statements
 {
     [TestFixture]
     public class StatementParserTest

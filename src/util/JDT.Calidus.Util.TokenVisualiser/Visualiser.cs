@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Parsers;
 using JDT.Calidus.Tokens;
+using JDT.Calidus.Parsers.Tokens;
 
 namespace JDT.Calidus.Util.TokenVisualiser
 {

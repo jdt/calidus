@@ -7,7 +7,7 @@ using JDT.Calidus.Statements;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Statements.Common;
 
-namespace JDT.Calidus.Parsers
+namespace JDT.Calidus.Parsers.Statements
 {
     /// <summary>
     /// This class acts as a parser for tokens and combines tokens into statements

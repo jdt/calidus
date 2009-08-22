@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Parsers;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using NUnit.Framework;
+using JDT.Calidus.Parsers.Tokens;
 
-namespace JDT.Calidus.ParsersTest
+namespace JDT.Calidus.ParsersTest.Tokens
 {
     [TestFixture]
     public class FormattingTokenParserTest
