@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MbUnit.Framework;
+using NUnit.Framework;
 using JDT.Calidus.Parsers;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
@@ -27,10 +27,10 @@ namespace JDT.Calidus.ParsersTest
             IList<TokenBase> tokens = new List<TokenBase>();
             _parser.TryParse(toParse, out tokens);
 
-            Assert.IsInstanceOfType(typeof(SpaceToken), tokens[1]);
-            Assert.IsInstanceOfType(typeof(SpaceToken), tokens[3]);
-            Assert.IsInstanceOfType(typeof(SpaceToken), tokens[5]);
-            Assert.IsInstanceOfType(typeof(SpaceToken), tokens[7]);
+            Assert.IsInstanceOf(typeof(SpaceToken), tokens[1]);
+            Assert.IsInstanceOf(typeof(SpaceToken), tokens[3]);
+            Assert.IsInstanceOf(typeof(SpaceToken), tokens[5]);
+            Assert.IsInstanceOf(typeof(SpaceToken), tokens[7]);
         }
     }
 }
