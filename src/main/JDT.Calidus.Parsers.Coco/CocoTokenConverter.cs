@@ -40,8 +40,6 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._uint, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
-
-            _simpleTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
         }
 
         /// <summary>
@@ -56,8 +54,12 @@ namespace JDT.Calidus.Parsers.Coco
                 object[] args = new object[] { token.line, token.col, token.pos, token.val };
                 return (TokenBase)Activator.CreateInstance(_simpleTokenTypeMap[token.kind], args);
             }
+            else if (token.kind == Parser._scolon)
+            {
+                return new SemiColonToken(token.line, token.col, token.pos);
+            }
             else
-            {                
+            {
                 return new GenericToken(token.line, token.col, token.pos, token.val, token.kind);
             }
         }

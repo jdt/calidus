@@ -12,5 +12,6 @@ bin
 #Ignore the obj folder
 obj
 
-#Ignore Gallio reports
-Reports
+#Ignore NUnit reports
+TestResult.xml
+calidus.VisualState.xml

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using JDT.Calidus.Parsers;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
+using NUnit.Framework;
 
 namespace JDT.Calidus.ParsersTest
 {
