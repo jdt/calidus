@@ -8,6 +8,10 @@ using JDT.Calidus.Statements;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Parsers;
+using Rhino.Mocks;
+using JDT.Calidus.Common;
+using JDT.Calidus.Statements.Common;
+using JDT.Calidus.Tests;
 
 namespace JDT.Calidus.ParsersTest.Statements
 {
@@ -20,6 +24,36 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void SetUp()
         {
             _parser = new StatementParser();
+            ObjectFactory.Register<IStatementFactory>(new StubStatementFactory());
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ObjectFactory.Clear();
+        }
+
+        [Test]
+        public void ParserShouldCallStatementFactoryWhenParsingTokens()
+        {        
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(new GenericToken(1, 1, 1, "source", null));
+            input.Add(new GenericToken(1, 7, 6, "code", null));
+            input.Add(new SemiColonToken(1, 11, 10));
+
+            MockRepository mocker = new MockRepository();
+            IStatementFactory factory = mocker.StrictMock<IStatementFactory>();
+            Expect.Call(factory.Create(input)).Return(new GenericStatement(input)).Repeat.Once();
+
+            //clear and register a mock factory
+            ObjectFactory.Clear();
+            ObjectFactory.Register<IStatementFactory>(factory);
+            mocker.ReplayAll();
+
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+
+            mocker.VerifyAll();
+            ObjectFactory.Clear();
         }
 
         [Test]

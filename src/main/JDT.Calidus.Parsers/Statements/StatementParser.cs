@@ -6,6 +6,7 @@ using JDT.Calidus.Tokens;
 using JDT.Calidus.Statements;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Statements.Common;
+using JDT.Calidus.Common;
 
 namespace JDT.Calidus.Parsers.Statements
 {
@@ -22,6 +23,7 @@ namespace JDT.Calidus.Parsers.Statements
         public IEnumerable<StatementBase> Parse(IList<TokenBase> tokens)
         {
             IList<StatementBase> res = new List<StatementBase>();
+            IStatementFactory statementFactory = ObjectFactory.Get<IStatementFactory>();
 
             IList<TokenBase> currentStatementTokens = new List<TokenBase>();
             foreach (TokenBase aToken in tokens)
@@ -31,7 +33,7 @@ namespace JDT.Calidus.Parsers.Statements
                 //when the token is a semicolon, add a statement and reset the list
                 if (aToken is SemiColonToken)
                 {
-                    res.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
+                    res.Add(statementFactory.Create(new List<TokenBase>(currentStatementTokens)));
                     currentStatementTokens.Clear();
                 }
             }
