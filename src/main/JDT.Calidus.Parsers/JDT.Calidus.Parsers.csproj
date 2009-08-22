@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormattingTokenParser.cs" />
+    <Compile Include="ParseException.cs" />
+    <Compile Include="StatementParser.cs" />
     <Compile Include="TokenParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +55,10 @@
     <ProjectReference Include="..\JDT.Calidus.Parsers.Coco\JDT.Calidus.Parsers.Coco.csproj">
       <Project>{8D9004AA-01D2-4973-B5BC-43F40AAABFAD}</Project>
       <Name>JDT.Calidus.Parsers.Coco</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
+      <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
+      <Name>JDT.Calidus.Statements</Name>
     </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>

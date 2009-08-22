@@ -16,9 +16,8 @@ namespace JDT.Calidus.Tokens.Common
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        /// <param name="content">The content</param>
-        public SemiColonToken(int line, int column, int position, String content)
-            : base(line, column, position, content)
+        public SemiColonToken(int line, int column, int position)
+            : base(line, column, position, ";")
         {
         }
     }

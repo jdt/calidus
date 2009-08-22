@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormattingTokenParserTest.cs" />
+    <Compile Include="StatementParserTest.cs" />
     <Compile Include="TokenParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\..\main\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
+      <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
+      <Name>JDT.Calidus.Statements</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
