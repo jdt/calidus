@@ -8,7 +8,7 @@ namespace JDT.Calidus.Tokens.Modifiers
     /// <summary>
     /// This class represents a private modifier token
     /// </summary>
-    public class PrivateModifierToken : TokenBase
+    public class PrivateModifierToken : AccessModifierToken
     {
         /// <summary>
         /// Create a new instance of this class

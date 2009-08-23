@@ -6,9 +6,9 @@ using System.Text;
 namespace JDT.Calidus.Tokens.Modifiers
 {
     /// <summary>
-    /// This class represents a protected modifier token
+    /// This class represents an access modifier token
     /// </summary>
-    public class ProtectedModifierToken : AccessModifierToken
+    public abstract class AccessModifierToken : TokenBase
     {
         /// <summary>
         /// Create a new instance of this class
@@ -17,7 +17,7 @@ namespace JDT.Calidus.Tokens.Modifiers
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         /// <param name="content">The content</param>
-        public ProtectedModifierToken(int line, int col, int pos, String content)
+        public AccessModifierToken(int line, int col, int pos, String content)
             : base(line, col, pos, content)
         {
         }
