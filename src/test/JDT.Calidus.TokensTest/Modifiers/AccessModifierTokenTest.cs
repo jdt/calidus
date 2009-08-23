@@ -30,5 +30,12 @@ namespace JDT.Calidus.TokensTest.Modifiers
             PublicModifierToken token = new PublicModifierToken(1, 1, 1, "public");
             Assert.IsInstanceOf<AccessModifierToken>(token);
         }
+
+        [Test]
+        public void InternalModifierTokenShouldBeAccessModifierToken()
+        {
+            InternalModifierToken token = new InternalModifierToken(1, 1, 1, "internal");
+            Assert.IsInstanceOf<AccessModifierToken>(token);
+        }
     }
 }
