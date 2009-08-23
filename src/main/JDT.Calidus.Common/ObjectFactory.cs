@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Castle.MicroKernel;
+using Castle.Windsor;
+using Castle.Windsor.Configuration.Interpreters;
+using Castle.Core.Resource;
 
 namespace JDT.Calidus.Common
 {
@@ -11,7 +14,8 @@ namespace JDT.Calidus.Common
     /// </summary>
     public static class ObjectFactory
     {
-        private static IKernel _kernel;
+        private static IWindsorContainer _container;
+        private static IKernel _manualContainer;
 
         /// <summary>
         /// Gets an instance of the specified type
@@ -20,8 +24,12 @@ namespace JDT.Calidus.Common
         /// <returns>The object</returns>
         public static TObject Get<TObject>()
         {
-            if (Kernel[typeof(TObject)] != null)
-                return (TObject)Kernel[typeof(TObject)];
+            //first attempt manual registrations
+            if (ManualContainer.HasComponent(typeof(TObject)))
+                return (TObject)_manualContainer[typeof(TObject)];
+            //if no objects in manual registrations, start configuration-based registrations
+            if (Container.Kernel.HasComponent(typeof(TObject).Name))
+                return (TObject)Container[typeof(TObject).Name];
 
             throw new CalidusException("Could not find an appropriate instance of " + typeof(TObject).Name + " to return");
         }
@@ -33,7 +41,7 @@ namespace JDT.Calidus.Common
         /// <param name="obj">The concrete object</param>
         public static void Register<TInterface>(TInterface obj)
         {
-            Kernel.AddComponentInstance<TInterface>(obj);
+            ManualContainer.AddComponentInstance<TInterface>(obj);
         }
 
         /// <summary>
@@ -41,18 +49,32 @@ namespace JDT.Calidus.Common
         /// </summary>
         public static void Clear()
         {
-            if (_kernel != null)
-                _kernel.Dispose();
-            _kernel = null;
+            if (_container != null)
+                _container.Dispose();
+            if (_manualContainer != null)
+                _manualContainer.Dispose();
+
+            _container = null;
+            _manualContainer = null;
         }
 
-        private static IKernel Kernel
+        private static IWindsorContainer Container
         {
             get
             {
-                if (_kernel == null)
-                    _kernel = new DefaultKernel();
-                return _kernel;
+                if (_container == null)
+                    _container = new WindsorContainer(new XmlInterpreter(new FileResource("castle.config.xml")));
+                return _container;
+            }
+        }
+
+        private static IKernel ManualContainer
+        {
+            get
+            {
+                if (_manualContainer == null)
+                    _manualContainer = new DefaultKernel();
+                return _manualContainer;
             }
         }
     }

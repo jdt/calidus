@@ -37,6 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lstTokens = new System.Windows.Forms.ListBox();
+            this.cmdStatement = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.windowContainer.Panel1.SuspendLayout();
             this.windowContainer.Panel2.SuspendLayout();
@@ -81,6 +82,7 @@
             // 
             // windowContainer.Panel2
             // 
+            this.windowContainer.Panel2.Controls.Add(this.cmdStatement);
             this.windowContainer.Panel2.Controls.Add(this.lstDetails);
             this.windowContainer.Panel2.Controls.Add(this.label2);
             this.windowContainer.Panel2.Controls.Add(this.label1);
@@ -136,6 +138,16 @@
             this.lstTokens.TabIndex = 7;
             this.lstTokens.SelectedIndexChanged += new System.EventHandler(this.lstTokens_SelectedIndexChanged);
             // 
+            // cmdStatement
+            // 
+            this.cmdStatement.Location = new System.Drawing.Point(8, 370);
+            this.cmdStatement.Name = "cmdStatement";
+            this.cmdStatement.Size = new System.Drawing.Size(181, 23);
+            this.cmdStatement.TabIndex = 13;
+            this.cmdStatement.Text = "Statement:";
+            this.cmdStatement.UseVisualStyleBackColor = true;
+            this.cmdStatement.Click += new System.EventHandler(this.cmdStatement_Click);
+            // 
             // Visualiser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -167,5 +179,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lstDetails;
+        private System.Windows.Forms.Button cmdStatement;
     }
 }

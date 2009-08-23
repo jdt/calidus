@@ -9,12 +9,15 @@ using System.Windows.Forms;
 using JDT.Calidus.Parsers;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Parsers.Tokens;
+using JDT.Calidus.Statements;
+using JDT.Calidus.Parsers.Statements;
 
 namespace JDT.Calidus.Util.TokenVisualiser
 {
     public partial class Visualiser : Form
     {
         private IList<VisualiserToken> _currentTokens;
+        private IEnumerable<StatementBase> _currentStatements;
 
         private bool _suspendSourceSelectionChanged;
 
@@ -23,7 +26,21 @@ namespace JDT.Calidus.Util.TokenVisualiser
             InitializeComponent();
 
             _currentTokens = new List<VisualiserToken>();
+            _currentStatements = new List<StatementBase>();
+
             _suspendSourceSelectionChanged = false;
+        }
+
+        private StatementBase GetCurrentTokenStatement()
+        {
+            VisualiserToken currentToken = (VisualiserToken)lstTokens.SelectedItem;
+            foreach (StatementBase aStatement in _currentStatements)
+            {
+                if (aStatement.Tokens.Contains(currentToken.BaseToken))
+                    return aStatement;
+            }
+
+            return null;
         }
 
         private void rtSource_SelectionChanged(object sender, EventArgs e)
@@ -49,13 +66,17 @@ namespace JDT.Calidus.Util.TokenVisualiser
 
         private void cmdParse_Click(object sender, EventArgs e)
         {
-            TokenParser parser = new TokenParser();
+            TokenParser tokenParser = new TokenParser();
+            StatementParser statementParser = new StatementParser();
+
             IList<TokenBase> parsedTokens;
-            if (parser.TryParse(rtSource.Text, out parsedTokens))
+            if (tokenParser.TryParse(rtSource.Text, out parsedTokens))
             {
                 _currentTokens.Clear();
                 foreach (TokenBase aToken in parsedTokens)
                     _currentTokens.Add(new VisualiserToken(aToken));
+
+                _currentStatements = statementParser.Parse(parsedTokens);
 
                 lstTokens.DataSource = _currentTokens;
                 lstTokens.Enabled = true;
@@ -126,6 +147,13 @@ namespace JDT.Calidus.Util.TokenVisualiser
             details.Add(String.Format("Hint: {0}", token.Hint));
 
             lstDetails.DataSource = details;
+            cmdStatement.Text = String.Format("Statement: {0}", GetCurrentTokenStatement().GetType().Name);
+        }
+
+        private void cmdStatement_Click(object sender, EventArgs e)
+        {
+            StatementDetails details = new StatementDetails(GetCurrentTokenStatement().Tokens);
+            details.ShowDialog();
         }
     }
 }

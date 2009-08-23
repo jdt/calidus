@@ -92,5 +92,22 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             Assert.Throws<CalidusException>(delegate { _parser.Parse(input); }, "No valid statement terminator found for the last 2 tokens");
         }
+
+        [Test]
+        public void ParseCurlyBracketTokensShouldParseAsStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(new OpenCurlyBracketToken(1, 1, 1));
+            input.Add(new CloseCurlyBracketToken(1, 2, 2));
+
+            IList<TokenBase> openList = new List<TokenBase>();
+            openList.Add(input[0]);
+            IList<TokenBase> closeList = new List<TokenBase>();
+            closeList.Add(input[1]);
+
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, openList);
+            CollectionAssert.AreEquivalent(actual.ElementAt(1).Tokens, closeList);
+        }
     }
 }

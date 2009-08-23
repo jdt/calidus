@@ -44,6 +44,11 @@ namespace JDT.Calidus.Util.TokenVisualiser
             get { return _token.GetType().Name; }
         }
 
+        public TokenBase BaseToken
+        {
+            get { return _token; }
+        }
+
         public object Hint
         {
             get
