@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Statements\DefaultStatementFactory.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />
     <Compile Include="Tokens\FormattingTokenParser.cs" />
     <Compile Include="Statements\StatementParser.cs" />

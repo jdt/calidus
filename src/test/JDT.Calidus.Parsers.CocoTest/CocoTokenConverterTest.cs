@@ -146,5 +146,17 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(SemiColonToken), CocoTokenConverter.Convert(GetCocoToken(Parser._scolon)));
         }
+
+        [Test]
+        public void LeftBraceConstShouldReturnOpenCurlyBracketToken()
+        {
+            Assert.IsInstanceOf(typeof(OpenCurlyBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._lbrace)));
+        }
+
+        [Test]
+        public void RightBraceConstShouldReturnCloseCurlyBracketToken()
+        {
+            Assert.IsInstanceOf(typeof(CloseCurlyBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._rbrace)));
+        }
     }
 }

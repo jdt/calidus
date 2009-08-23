@@ -15,11 +15,13 @@ namespace JDT.Calidus.Parsers.Coco
     public static class CocoTokenConverter
     {
         private static IDictionary<int, Type> _simpleTokenTypeMap;
+        private static IDictionary<int, Type> _contentTokenTypeMap;
 
         static CocoTokenConverter()
         {
             //keeps a list of simple tokens
             _simpleTokenTypeMap = new Dictionary<int, Type>();
+            _contentTokenTypeMap = new Dictionary<int, Type>();
 
             _simpleTokenTypeMap.Add(Parser._ident, typeof(IdentifierToken));
             _simpleTokenTypeMap.Add(Parser._private, typeof(PrivateModifierToken));
@@ -40,6 +42,10 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._uint, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
+
+            _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
+            _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));
+            _contentTokenTypeMap.Add(Parser._rbrace, typeof(CloseCurlyBracketToken));
         }
 
         /// <summary>
@@ -54,9 +60,10 @@ namespace JDT.Calidus.Parsers.Coco
                 object[] args = new object[] { token.line, token.col, token.pos, token.val };
                 return (TokenBase)Activator.CreateInstance(_simpleTokenTypeMap[token.kind], args);
             }
-            else if (token.kind == Parser._scolon)
+            else if (_contentTokenTypeMap.ContainsKey(token.kind))
             {
-                return new SemiColonToken(token.line, token.col, token.pos);
+                object[] args = new object[] { token.line, token.col, token.pos };
+                return (TokenBase)Activator.CreateInstance(_contentTokenTypeMap[token.kind], args);
             }
             else
             {
