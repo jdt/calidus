@@ -46,6 +46,12 @@ namespace JDT.Calidus.Parsers.CocoTest
         }
 
         [Test]
+        public void InternalConstShouldReturnInternalModifierToken()
+        {
+            Assert.IsInstanceOf(typeof(InternalModifierToken), CocoTokenConverter.Convert(GetCocoToken(Parser._internal)));
+        }
+
+        [Test]
         public void PublicConstShouldReturnPublicModifierToken()
         {
             Assert.IsInstanceOf(typeof(PublicModifierToken), CocoTokenConverter.Convert(GetCocoToken(Parser._public)));

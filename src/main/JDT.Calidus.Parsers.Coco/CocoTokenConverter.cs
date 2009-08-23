@@ -26,6 +26,7 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._ident, typeof(IdentifierToken));
             _simpleTokenTypeMap.Add(Parser._private, typeof(PrivateModifierToken));
             _simpleTokenTypeMap.Add(Parser._protected, typeof(ProtectedModifierToken));
+            _simpleTokenTypeMap.Add(Parser._internal, typeof(InternalModifierToken));
             _simpleTokenTypeMap.Add(Parser._public, typeof(PublicModifierToken));
             _simpleTokenTypeMap.Add(Parser._bool, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._byte, typeof(ValueTypeToken));

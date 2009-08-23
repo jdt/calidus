@@ -54,6 +54,7 @@
     <Compile Include="Common\SpaceToken.cs" />
     <Compile Include="Common\TabToken.cs" />
     <Compile Include="Modifiers\AccessModifierToken.cs" />
+    <Compile Include="Modifiers\InternalModifierToken.cs" />
     <Compile Include="Modifiers\PrivateModifierToken.cs" />
     <Compile Include="Modifiers\ProtectedModifierToken.cs" />
     <Compile Include="Modifiers\PublicModifierToken.cs" />
