@@ -23,14 +23,7 @@ namespace JDT.Calidus.ParsersTest.Statements
         [SetUp]
         public void SetUp()
         {
-            _parser = new StatementParser();
-            ObjectFactory.Register<IStatementFactory>(new StubStatementFactory());
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ObjectFactory.Clear();
+            _parser = new StatementParser(new StubStatementFactory());
         }
 
         [Test]
@@ -46,14 +39,12 @@ namespace JDT.Calidus.ParsersTest.Statements
             Expect.Call(factory.Create(input)).Return(new GenericStatement(input)).Repeat.Once();
 
             //clear and register a mock factory
-            ObjectFactory.Clear();
-            ObjectFactory.Register<IStatementFactory>(factory);
+            StatementParser parser = new StatementParser(factory);
             mocker.ReplayAll();
 
-            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            IEnumerable<StatementBase> actual = parser.Parse(input);
 
             mocker.VerifyAll();
-            ObjectFactory.Clear();
         }
 
         [Test]
