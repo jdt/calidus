@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="FluentStatementResolverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatementExpressionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
