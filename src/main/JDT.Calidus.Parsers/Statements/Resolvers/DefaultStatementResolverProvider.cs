@@ -6,7 +6,7 @@ using System.Text;
 namespace JDT.Calidus.Parsers.Statements.Resolvers
 {    
     /// <summary>
-    /// This interface is implemented by providers of statement resolvers
+    /// This class is a default (empty) statement resolver provider
     /// </summary>
     public class DefaultStatementResolverProvider : IStatementResolverProvider
     {
