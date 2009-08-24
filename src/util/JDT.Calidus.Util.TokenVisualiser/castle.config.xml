@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <castle>
   <components>
-    <component id="IStatementFactory" type="JDT.Calidus.Parsers.Statements.DefaultStatementFactory, JDT.Calidus.Parsers" />
+    <component id="IStatementResolverProvider" type="JDT.Calidus.Parsers.Statements.Resolvers.DefaultStatementResolverProvider, JDT.Calidus.Parsers" />
+    
+    <component id="IStatementFactory" type="JDT.Calidus.Parsers.Statements.DefaultStatementFactory, JDT.Calidus.Parsers">
+      <arguments>
+        <resolverProvider>${IStatementResolverProvider}</resolverProvider>
+      </arguments>
+    </component>
   </components>
 </castle>
