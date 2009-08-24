@@ -48,6 +48,7 @@
     <Compile Include="Statements\DefaultStatementFactory.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />
     <Compile Include="Statements\IStatementResolver.cs" />
+    <Compile Include="Statements\Resolvers\AssemblyBasedStatementResolverProvider.cs" />
     <Compile Include="Statements\Resolvers\DefaultStatementResolverProvider.cs" />
     <Compile Include="Statements\Resolvers\IStatementResolverProvider.cs" />
     <Compile Include="Tokens\FormattingTokenParser.cs" />

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Statements\DefaultStatementFactoryTest.cs" />
+    <Compile Include="Statements\Resolvers\AssemblyBasedStatementResolverProviderTest.cs" />
     <Compile Include="Statements\Resolvers\DefaultStatementResolverProviderTest.cs" />
     <Compile Include="Tokens\FormattingTokenParserTest.cs" />
     <Compile Include="Statements\StatementParserTest.cs" />
