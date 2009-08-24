@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8C956493-60B9-4099-9685-8BB8C451AAD3}</ProjectGuid>
+    <ProjectGuid>{0582D5E2-D6C0-49F2-89AF-F10BCD564D2D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Tests</RootNamespace>
-    <AssemblyName>JDT.Calidus.Tests</AssemblyName>
+    <RootNamespace>JDT.Calidus.Statements.ResolversTest</RootNamespace>
+    <AssemblyName>JDT.Calidus.Statements.ResolversTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\NUnit\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,15 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FluentStatementResolverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StubStatement.cs" />
-    <Compile Include="StubStatementFactory.cs" />
-    <Compile Include="StubStatementResolverProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\main\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Resolvers.csproj">
+      <Project>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</Project>
+      <Name>JDT.Calidus.Statements.Resolvers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
@@ -62,6 +72,10 @@
     <ProjectReference Include="..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Tests\JDT.Calidus.Tests.csproj">
+      <Project>{8C956493-60B9-4099-9685-8BB8C451AAD3}</Project>
+      <Name>JDT.Calidus.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
