@@ -44,20 +44,6 @@ namespace JDT.Calidus.Common
             ManualContainer.AddComponentInstance<TInterface>(obj);
         }
 
-        /// <summary>
-        /// Clears all registrations from the factory
-        /// </summary>
-        public static void Clear()
-        {
-            if (_container != null)
-                _container.Dispose();
-            if (_manualContainer != null)
-                _manualContainer.Dispose();
-
-            _container = null;
-            _manualContainer = null;
-        }
-
         private static IWindsorContainer Container
         {
             get
