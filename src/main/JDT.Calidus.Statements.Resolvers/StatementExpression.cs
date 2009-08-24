@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tokens;
 
 namespace JDT.Calidus.Statements.Resolvers
 {
@@ -15,9 +16,9 @@ namespace JDT.Calidus.Statements.Resolvers
         /// </summary>
         /// <param name="tokenList">The list to match against</param>
         /// <returns>True if matches, otherwise false</returns>
-        public bool Matches(IList<JDT.Calidus.Tokens.TokenBase> tokenList)
+        public bool Matches(IList<TokenBase> tokenList)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
