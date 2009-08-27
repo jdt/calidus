@@ -66,7 +66,9 @@ namespace JDT.Calidus.Parsers.Statements.Resolvers
                 {
                     //make sure to ignore the interface itself
                     if (typeof(IStatementResolver).IsAssignableFrom(aType)
-                        && aType.IsInterface == false)
+                        && aType.IsInterface == false
+                        && aType.IsAbstract == false
+                        )
                     {
                         resolvers.Add((IStatementResolver)Activator.CreateInstance(aType));
                     }

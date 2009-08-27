@@ -50,6 +50,12 @@ namespace JDT.Calidus.ParsersTest.Statements.Resolvers
         }
     }
 
+    public abstract class AbstractTestStatementResolver : IStatementResolver
+    {
+        public abstract StatementBase Resolve(IList<TokenBase> input);
+        public abstract bool CanResolve(IList<TokenBase> tokenList);
+    }
+
     [TestFixture]
     public class AssemblyBasedStatementResolverProviderTest
     {
@@ -73,6 +79,15 @@ namespace JDT.Calidus.ParsersTest.Statements.Resolvers
 
         [Test]
         public void AssemblyBasedStatementResolverProviderShouldReturnResolversInAssemblyList()
+        {
+            IList<IStatementResolver> expected = new List<IStatementResolver>();
+            expected.Add(new TestStatementResolver());
+
+            CollectionAssert.AreEquivalent(expected, _resolverProvider.GetResolvers());
+        }
+
+        [Test]
+        public void AssemblyBasedStatementResolverProviderShouldNotReturnAbstractResolversInAssemblyList()
         {
             IList<IStatementResolver> expected = new List<IStatementResolver>();
             expected.Add(new TestStatementResolver());
