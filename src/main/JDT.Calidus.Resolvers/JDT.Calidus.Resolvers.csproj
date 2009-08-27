@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</ProjectGuid>
+    <ProjectGuid>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Tokens</RootNamespace>
-    <AssemblyName>JDT.Calidus.Tokens</AssemblyName>
+    <RootNamespace>JDT.Calidus.Resolvers</RootNamespace>
+    <AssemblyName>JDT.Calidus.Resolvers</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,26 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\CloseCurlyBracketToken.cs" />
-    <Compile Include="Common\CloseRoundBracketToken.cs" />
-    <Compile Include="Common\NewLineToken.cs" />
-    <Compile Include="Common\GenericToken.cs" />
-    <Compile Include="Common\IdentifierToken.cs" />
-    <Compile Include="Common\OpenCurlyBracketToken.cs" />
-    <Compile Include="Common\OpenRoundBracketToken.cs" />
-    <Compile Include="Common\SemiColonToken.cs" />
-    <Compile Include="Common\SpaceToken.cs" />
-    <Compile Include="Common\TabToken.cs" />
-    <Compile Include="Common\WhiteSpaceToken.cs" />
-    <Compile Include="Modifiers\AccessModifierToken.cs" />
-    <Compile Include="Modifiers\InternalModifierToken.cs" />
-    <Compile Include="Modifiers\PrivateModifierToken.cs" />
-    <Compile Include="Modifiers\ProtectedModifierToken.cs" />
-    <Compile Include="Modifiers\PublicModifierToken.cs" />
+    <Compile Include="Declaration\MemberStatementResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TokenBase.cs" />
-    <Compile Include="Types\ClassToken.cs" />
-    <Compile Include="Types\ValueTypeToken.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
+      <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
+      <Name>JDT.Calidus.Parsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Resolvers.csproj">
+      <Project>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</Project>
+      <Name>JDT.Calidus.Statements.Resolvers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
+      <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
+      <Name>JDT.Calidus.Statements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
+      <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
+      <Name>JDT.Calidus.Tokens</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

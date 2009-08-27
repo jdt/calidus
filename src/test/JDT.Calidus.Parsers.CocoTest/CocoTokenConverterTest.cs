@@ -164,5 +164,23 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(CloseCurlyBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._rbrace)));
         }
+
+        [Test]
+        public void ClassConstShouldReturnClassToken()
+        {
+            Assert.IsInstanceOf(typeof(ClassToken), CocoTokenConverter.Convert(GetCocoToken(Parser._class)));
+        }
+
+        [Test]
+        public void LeftParenthesisConstShouldReturnOpenRoundBracketToken()
+        {
+            Assert.IsInstanceOf(typeof(OpenRoundBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._lpar)));
+        }
+
+        [Test]
+        public void RightParenthesisConstShouldReturnCloseRoundBracketToken()
+        {
+            Assert.IsInstanceOf(typeof(CloseRoundBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._rpar)));
+        }
     }
 }

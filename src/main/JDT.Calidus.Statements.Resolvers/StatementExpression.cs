@@ -9,9 +9,16 @@ using JDT.Calidus.Tokens.Common;
 namespace JDT.Calidus.Statements.Resolvers
 {
     /// <summary>
-    /// Default implementation of the IStatementExpression interface
+    /// Default implementation of the IStatementExpression interfaces
     /// </summary>
-    public class StatementExpression : IStatementExpression
+    /// <remarks>
+    /// A statement expression consists of three parts: a starting, middle and ending part
+    /// </remarks>
+    public class StatementExpression 
+        : IStatementExpression,
+        IStartingStatementExpression, 
+        IMiddleStatementExpression, 
+        IEndingStatementExpression
     {
         private IList<TokenOccurenceBase> _occurences;
 
@@ -66,16 +73,29 @@ namespace JDT.Calidus.Statements.Resolvers
             return true;
         }
 
-
         /// <summary>
         /// Verify that the token list starts with a token of the supplied type
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression starting with the specified type</returns>
-        public StatementExpression StartsWith<TTokenType>()
+        public IMiddleStatementExpression StartsWith<TTokenType>()
             where TTokenType : TokenBase
         {
             _occurences.Insert(1, new TokenOccurence(typeof(TTokenType), 1));
+            return this;
+        }
+
+        /// <summary>
+        /// Verify that the previously added token is follwed by a token of the supplied type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type</typeparam>
+        /// <returns>An expression followed by the specified token</returns>
+        public IMiddleStatementExpression FollowedBy<TTokenType>()
+            where TTokenType : TokenBase
+        {
+            //add the token and allow any occurence of whitespace before that
+            _occurences.Insert(_occurences.Count - 1, new TokenOccurence(typeof(TTokenType), 1));
+            _occurences.Insert(_occurences.Count - 2, new AnyTokenOccurence(typeof(WhiteSpaceToken)));
             return this;
         }
     }
