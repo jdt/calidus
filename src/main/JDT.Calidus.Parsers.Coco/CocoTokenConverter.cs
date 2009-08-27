@@ -6,6 +6,7 @@ using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Types;
+using JDT.Calidus.Tokens.Common.Brackets;
 
 namespace JDT.Calidus.Parsers.Coco
 {

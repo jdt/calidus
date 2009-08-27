@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JDT.Calidus.Tokens.Common
-{
+namespace JDT.Calidus.Tokens.Common.Brackets
+{    
     /// <summary>
-    /// This class represents a close round bracket
+    /// This class represents an open curly bracket
     /// </summary>
-    public class CloseRoundBracketToken : TokenBase
-    {
+    public class OpenCurlyBracketToken : TokenBase
+    {        
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        public CloseRoundBracketToken(int line, int column, int position)
-            : base(line, column, position, ")")
+        public OpenCurlyBracketToken(int line, int column, int position)
+            : base(line, column, position, "{")
         {
         }
     }

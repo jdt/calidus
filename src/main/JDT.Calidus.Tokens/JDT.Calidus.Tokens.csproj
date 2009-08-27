@@ -45,15 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\CloseAngleBracketToken.cs" />
-    <Compile Include="Common\CloseCurlyBracketToken.cs" />
-    <Compile Include="Common\CloseRoundBracketToken.cs" />
+    <Compile Include="Common\Brackets\CloseAngleBracketToken.cs" />
+    <Compile Include="Common\Brackets\CloseCurlyBracketToken.cs" />
+    <Compile Include="Common\Brackets\CloseRoundBracketToken.cs" />
     <Compile Include="Common\NewLineToken.cs" />
     <Compile Include="Common\GenericToken.cs" />
     <Compile Include="Common\IdentifierToken.cs" />
-    <Compile Include="Common\OpenAngleBracketToken.cs" />
-    <Compile Include="Common\OpenCurlyBracketToken.cs" />
-    <Compile Include="Common\OpenRoundBracketToken.cs" />
+    <Compile Include="Common\Brackets\OpenAngleBracketToken.cs" />
+    <Compile Include="Common\Brackets\OpenCurlyBracketToken.cs" />
+    <Compile Include="Common\Brackets\OpenRoundBracketToken.cs" />
     <Compile Include="Common\SemiColonToken.cs" />
     <Compile Include="Common\SpaceToken.cs" />
     <Compile Include="Common\TabToken.cs" />
