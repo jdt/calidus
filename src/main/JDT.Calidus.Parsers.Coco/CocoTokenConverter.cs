@@ -50,6 +50,8 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._rbrace, typeof(CloseCurlyBracketToken));
             _contentTokenTypeMap.Add(Parser._lpar, typeof(OpenRoundBracketToken));
             _contentTokenTypeMap.Add(Parser._rpar, typeof(CloseRoundBracketToken));
+            _contentTokenTypeMap.Add(Parser._lt, typeof(OpenAngleBracketToken));
+            _contentTokenTypeMap.Add(Parser._gt, typeof(CloseAngleBracketToken));
         }
 
         /// <summary>
