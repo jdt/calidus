@@ -8,7 +8,7 @@ namespace JDT.Calidus.Tokens.Common
     /// <summary>
     /// This class represents a tab character
     /// </summary>
-    public class TabToken : TokenBase
+    public class TabToken : WhiteSpaceToken
     {
         /// <summary>
         /// Create a new instance of this class
