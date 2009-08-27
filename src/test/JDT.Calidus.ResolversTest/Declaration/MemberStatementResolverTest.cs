@@ -57,9 +57,9 @@ namespace JDT.Calidus.ResolversTest.Declaration
             input.Add(new SpaceToken(1, 8, 7));
             input.Add(new IdentifierToken(1, 9, 8, "String"));
             input.Add(new SpaceToken(1, 15, 14));
-            //input.Add(new IdentifierToken(1, 16, 15, "t"));
-            //input.Add(new OpenRoundBracket(1, 17, 16));
-            //input.Add(new CloseRoundBracket(1, 18, 17));
+            input.Add(new IdentifierToken(1, 16, 15, "t"));
+            input.Add(new OpenRoundBracketToken(1, 17, 16));
+            input.Add(new CloseRoundBracketToken(1, 18, 17));
 
             Assert.IsFalse(_resolver.CanResolve(input));
         }
