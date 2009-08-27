@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JDT.Calidus.Tokens.Common
+namespace JDT.Calidus.Tokens.Common.Brackets
 {
     /// <summary>
     /// This class represents a close curly bracket

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JDT.Calidus.Tokens.Common
+namespace JDT.Calidus.Tokens.Common.Brackets
 {
     /// <summary>
-    /// This class represents a close angle bracket
+    /// This class represents an open round bracket
     /// </summary>
-    public class CloseAngleBracketToken : TokenBase
+    public class OpenRoundBracketToken : TokenBase
     {
         /// <summary>
         /// Create a new instance of this class
@@ -16,8 +16,8 @@ namespace JDT.Calidus.Tokens.Common
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        public CloseAngleBracketToken(int line, int column, int position)
-            : base(line, column, position, ">")
+        public OpenRoundBracketToken(int line, int column, int position)
+            : base(line, column, position, "(")
         {
         }
     }

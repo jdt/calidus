@@ -12,6 +12,7 @@ using Rhino.Mocks;
 using JDT.Calidus.Common;
 using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Tests;
+using JDT.Calidus.Tokens.Common.Brackets;
 
 namespace JDT.Calidus.ParsersTest.Statements
 {
