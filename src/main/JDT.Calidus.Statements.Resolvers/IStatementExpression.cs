@@ -16,6 +16,6 @@ namespace JDT.Calidus.Statements.Resolvers
         /// </summary>
         /// <param name="tokenList">The list to match against</param>
         /// <returns>True if matches, otherwise false</returns>
-        bool Matches(IList<TokenBase> tokenList);
+        bool Matches(IEnumerable<TokenBase> tokenList);
     }
 }

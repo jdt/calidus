@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -53,6 +53,7 @@
     <Compile Include="Common\SemiColonToken.cs" />
     <Compile Include="Common\SpaceToken.cs" />
     <Compile Include="Common\TabToken.cs" />
+    <Compile Include="Common\WhiteSpaceToken.cs" />
     <Compile Include="Modifiers\AccessModifierToken.cs" />
     <Compile Include="Modifiers\InternalModifierToken.cs" />
     <Compile Include="Modifiers\PrivateModifierToken.cs" />

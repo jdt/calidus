@@ -47,7 +47,7 @@ namespace JDT.Calidus.Statements.ResolversTest
 
         public bool Result { get; set; }
 
-        public bool Matches(IList<TokenBase> tokenList)
+        public bool Matches(IEnumerable<TokenBase> tokenList)
         {
             return Result;
         }

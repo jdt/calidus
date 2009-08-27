@@ -8,7 +8,7 @@ namespace JDT.Calidus.Tokens.Common
     /// <summary>
     /// This class represents a newline token
     /// </summary>
-    public class NewLineToken : TokenBase
+    public class NewLineToken : WhiteSpaceToken
     {        
         /// <summary>
         /// Create a new instance of this class
