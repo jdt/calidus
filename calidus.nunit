@@ -5,6 +5,7 @@
     <assembly path="bin\test\JDT.Calidus.ParsersTest.dll" />
     <assembly path="bin\test\JDT.Calidus.Statements.ResolversTest.dll" />
     <assembly path="bin\test\JDT.Calidus.StatementsTest.dll" />
+    <assembly path="bin\test\JDT.Calidus.TokensTest.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>
