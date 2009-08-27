@@ -43,10 +43,13 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._uint, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
+            _simpleTokenTypeMap.Add(Parser._class, typeof(ClassToken));
 
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));
             _contentTokenTypeMap.Add(Parser._rbrace, typeof(CloseCurlyBracketToken));
+            _contentTokenTypeMap.Add(Parser._lpar, typeof(OpenRoundBracketToken));
+            _contentTokenTypeMap.Add(Parser._rpar, typeof(CloseRoundBracketToken));
         }
 
         /// <summary>
