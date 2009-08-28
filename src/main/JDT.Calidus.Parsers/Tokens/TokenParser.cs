@@ -38,7 +38,8 @@ namespace JDT.Calidus.Parsers.Tokens
             cocoValidationParser.Parse();
 
             //declare result
-            IList<TokenBase> completeTokenList = new List<TokenBase>();
+            IList<TokenBase> whitespacedTokenList = new List<TokenBase>();
+            IList<TokenBase> genericedTokenList = new List<TokenBase>();
             IList<TokenBase> tokens = new List<TokenBase>();
             bool result = false;
 
@@ -53,15 +54,18 @@ namespace JDT.Calidus.Parsers.Tokens
                     tokens.Add(CocoTokenConverter.Convert(currentToken));
                 }
 
-                //parse additional formatting tokens
+                //parse additional formatting tokens and generics
                 //TODO: make this part of the actual parser
                 FormattingTokenParser tokenParser = new FormattingTokenParser();
-                completeTokenList = new List<TokenBase>(tokenParser.Parse(source, tokens));
+                GenericsTokenParser genericParser = new GenericsTokenParser();
+
+                whitespacedTokenList = new List<TokenBase>(tokenParser.Parse(source, tokens));
+                genericedTokenList = new List<TokenBase>(genericParser.Parse(whitespacedTokenList));
 
                 result = true;
             }
 
-            parsedTokens = completeTokenList;
+            parsedTokens = genericedTokenList;
             return result;
         }
     }
