@@ -12,12 +12,12 @@ namespace JDT.Calidus.ParsersTest.Tokens
     [TestFixture]
     public class FormattingTokenParserTest
     {
-        private FormattingTokenParser _parser;
+        private WhiteSpaceTokenParser _parser;
 
         [SetUp]
         public void SetUp()
         {
-            _parser = new FormattingTokenParser();
+            _parser = new WhiteSpaceTokenParser();
         }
 
         [Test]

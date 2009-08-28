@@ -69,9 +69,9 @@ namespace JDT.Calidus.Util.TokenVisualiser
             TokenParser tokenParser = new TokenParser();
             StatementParser statementParser = new StatementParser();
 
-            IList<TokenBase> parsedTokens;
-            if (tokenParser.TryParse(rtSource.Text, out parsedTokens))
+            try
             {
+                IEnumerable<TokenBase> parsedTokens = tokenParser.Parse(rtSource.Text);
                 _currentTokens.Clear();
                 foreach (TokenBase aToken in parsedTokens)
                     _currentTokens.Add(new VisualiserToken(aToken));
@@ -81,9 +81,9 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 lstTokens.DataSource = _currentTokens;
                 lstTokens.Enabled = true;
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Errors occured during parsing");
+                MessageBox.Show("Errors occured during parsing: " + ex.Message);
                 
                 lstTokens.Enabled = false;
                 lstDetails.DataSource = null;

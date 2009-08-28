@@ -6,55 +6,102 @@ using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Tokens;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.ParsersTest.Tokens
 {
+    public class OtherParsersImpl : IWhiteSpaceTokenParser, IGenericsTokenParser
+    {
+        public OtherParsersImpl()
+        {
+            GenericsWasCalled = false;
+            WhiteSpaceWasCalled = false;
+        }
+
+        public bool GenericsWasCalled { get; private set; }
+        public bool WhiteSpaceWasCalled { get; private set; }
+
+        public IEnumerable<TokenBase> Parse(String source, IEnumerable<TokenBase> previouslyParsed)
+        {
+            WhiteSpaceWasCalled = true;
+            return previouslyParsed;
+        }
+
+        public IEnumerable<TokenBase> Parse(IEnumerable<TokenBase> input)
+        {
+            GenericsWasCalled = true;
+            return input;
+        }
+    }
+
     [TestFixture]
     public class TokenParserTest
     {
-        private TokenParser _parser;
+        private OtherParsersImpl _otherImpl;
 
         [SetUp]
         public void SetUp()
         {
-            _parser = new TokenParser();
+            _otherImpl = new OtherParsersImpl();
         }
 
         [Test]
-        public void ParsingShouldIncludeSpace()
+        public void ParserShouldCheckWhiteSpaceBeforeGenerics()
         {
-            String toParse = "public class TestClass { }";
-            IList<TokenBase> tokens = new List<TokenBase>();
-            _parser.TryParse(toParse, out tokens);
-            
-            Assert.IsInstanceOf(typeof(SpaceToken), tokens[1]);
-            Assert.IsInstanceOf(typeof(SpaceToken), tokens[3]);
-            Assert.IsInstanceOf(typeof(SpaceToken), tokens[5]);
-            Assert.IsInstanceOf(typeof(SpaceToken), tokens[7]);
+            MockRepository mocker = new MockRepository();
+            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
+
+            using (mocker.Ordered())
+            {
+                Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
+                Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
+                Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
+            }
+
+            mocker.ReplayAll();
+
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            parser.Parse("");
+
+            mocker.VerifyAll();
         }
 
         [Test]
-        public void GenericIdentifierTokenShouldIncludeBracketTokens()
+        public void ParserShouldUseWhiteSpaceParserWhenPluggedParserDoesNotSupportWhiteSpace()
         {
-            String toParse = "public class TestClass { private IList<String> test; }";
-            IList<TokenBase> tokens = new List<TokenBase>();
-            _parser.TryParse(toParse, out tokens);
+            MockRepository mocker = new MockRepository();
+            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
 
-            IdentifierToken expected = new IdentifierToken(1, 34, 33, "IList<String>");
+            Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
+            Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(false).Repeat.Once();
+            Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
 
-            CollectionAssert.Contains(tokens, expected);
+            mocker.ReplayAll();
+
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            parser.Parse("");
+
+            mocker.VerifyAll();
+            Assert.IsTrue(_otherImpl.WhiteSpaceWasCalled);
         }
 
         [Test]
-        public void GenericIdentifierTokenShouldIncludeBracketTokensAndWhitespace()
+        public void ParserShouldUseGenericsParserWhenPluggedParserDoesNotSupportGenerics()
         {
-            String toParse = "public class TestClass { private IList < String > test; }";
-            IList<TokenBase> tokens = new List<TokenBase>();
-            _parser.TryParse(toParse, out tokens);
+            MockRepository mocker = new MockRepository();
+            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
 
-            IdentifierToken expected = new IdentifierToken(1, 34, 33, "IList < String >");
+            Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
+            Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
+            Expect.Call(parserImp.SupportsGenericsParsing).Return(false).Repeat.Once();
 
-            CollectionAssert.Contains(tokens, expected);
+            mocker.ReplayAll();
+
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            parser.Parse("");
+
+            mocker.VerifyAll();
+            Assert.IsTrue(_otherImpl.GenericsWasCalled);
         }
     }
 }

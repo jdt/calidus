@@ -12,7 +12,7 @@ namespace JDT.Calidus.Parsers.Tokens
     /// This class parses open and close angle brackets to see if they match
     /// as generic arguments
     /// </summary>
-    public class GenericsTokenParser
+    public class GenericsTokenParser : IGenericsTokenParser
     {
         /// <summary>
         /// Parses the tokenlist and returns the modified list
