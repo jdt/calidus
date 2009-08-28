@@ -58,6 +58,7 @@
     <Compile Include="Statements\Resolvers\DefaultStatementResolverProviderTest.cs" />
     <Compile Include="Tokens\FormattingTokenParserTest.cs" />
     <Compile Include="Statements\StatementParserTest.cs" />
+    <Compile Include="Tokens\GenericsTokenParserTest.cs" />
     <Compile Include="Tokens\TokenParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

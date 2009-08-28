@@ -53,6 +53,7 @@
     <Compile Include="Statements\Resolvers\IStatementResolverProvider.cs" />
     <Compile Include="Tokens\FormattingTokenParser.cs" />
     <Compile Include="Statements\StatementParser.cs" />
+    <Compile Include="Tokens\GenericsTokenParser.cs" />
     <Compile Include="Tokens\TokenParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
