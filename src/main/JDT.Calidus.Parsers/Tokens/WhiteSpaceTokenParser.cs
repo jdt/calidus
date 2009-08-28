@@ -11,7 +11,7 @@ namespace JDT.Calidus.Parsers.Tokens
     /// This class provides parsing for whitespace and newline tokens that
     /// have not been parsed yet
     /// </summary>
-    public class FormattingTokenParser
+    public class WhiteSpaceTokenParser : IWhiteSpaceTokenParser
     {
         /// <summary>
         /// Parse additional tokens from the source to fill in empty spaces in the provided

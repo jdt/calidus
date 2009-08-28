@@ -46,11 +46,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CocoTokenConverter.cs" />
+    <Compile Include="CocoTokenParser.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scanner.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
+      <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
+      <Name>JDT.Calidus.Parsers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>
