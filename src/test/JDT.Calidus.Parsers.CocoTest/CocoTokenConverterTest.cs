@@ -195,5 +195,17 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(CloseAngleBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._gt)));
         }
+
+        [Test]
+        public void BlockCommentConstShouldReturnBlockCommentToken()
+        {
+            Assert.IsInstanceOf(typeof(BlockCommentToken), CocoTokenConverter.Convert(GetCocoToken(Parser._cBlockCom)));
+        }
+
+        [Test]
+        public void LineCommentConstShouldReturnLineCommentToken()
+        {
+            Assert.IsInstanceOf(typeof(LineCommentToken), CocoTokenConverter.Convert(GetCocoToken(Parser._cLineCom)));
+        }
     }
 }
