@@ -103,5 +103,22 @@ namespace JDT.Calidus.ParsersTest.Tokens
 
             Assert.AreEqual(expected, _parser.Parse(input));
         }
+
+        [Test]
+        public void ParseSourceWithGenericsShouldParseCorrectlyForIdentifierTokensSeparatedBySpace()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<IdentifierToken>("TType"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("MyMethod"));
+            input.Add(TokenCreator.Create<OpenAngleBracketToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("TType"));
+            input.Add(TokenCreator.Create<CloseAngleBracketToken>());
+
+            IdentifierToken expectedToken = new IdentifierToken(1, 7, 6, "MyMethod<TType>");
+
+            IEnumerable<TokenBase> actual = _parser.Parse(input);
+            Assert.AreEqual(expectedToken, actual.ElementAt(2));
+        }
     }
 }
