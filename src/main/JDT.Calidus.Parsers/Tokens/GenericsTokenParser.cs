@@ -109,12 +109,24 @@ namespace JDT.Calidus.Parsers.Tokens
                     //else: just add the tokens
                     else
                     {
+                        //check: if possible tokens is [identifier space identifier]
+                        //the second identifier would not get checked
+                        //revert the counter by one to have second identifier checked as well
+                        if (possibleTokens.Last() is IdentifierToken)
+                        {
+                            //decrement the starting index to make the assignment of
+                            //i to startingIndex - 1 correct
+                            startingIndex--;
+                            possibleTokens.Remove(possibleTokens.Last());
+                        }
+                        
                         foreach (TokenBase aToken in possibleTokens)
                         {
                             result.Add(aToken);
                         }
                     }
                     //set the starting index
+                    //starting index can have been decremented one by the identifier checker
                     i = startingIndex - 1;
                 }
                 //other identifier, add token
