@@ -158,6 +158,8 @@ namespace JDT.Calidus.Parsers.Coco
         public const int _ppRegion = 152;
         public const int _ppEndReg = 153;
         public const int _ppPragma = 154;
+        public const int _cBlockCom = 155;
+        public const int _cLineCom = 156;
 
         const bool T = true;
         const bool x = false;
@@ -1425,6 +1427,12 @@ namespace JDT.Calidus.Parsers.Coco
                 {
                 }
                 if (la.kind == 154)
+                {
+                }
+                if (la.kind == 155)
+                {
+                }
+                if (la.kind == 156)
                 {
                 }
 

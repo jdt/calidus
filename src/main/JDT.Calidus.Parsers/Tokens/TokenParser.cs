@@ -16,7 +16,6 @@ namespace JDT.Calidus.Parsers.Tokens
         private ITokenParser _parser;
         private IWhiteSpaceTokenParser _whiteSpaceParser;
         private IGenericsTokenParser _genericsParser;
-        private ICommentsTokenParser _commentParser;
 
         /// <summary>
         /// Create a new instance of this class
@@ -33,8 +32,7 @@ namespace JDT.Calidus.Parsers.Tokens
         public TokenParser(ITokenParser parser)
             : this(parser, 
                     ObjectFactory.Get<IWhiteSpaceTokenParser>(), 
-                    ObjectFactory.Get<IGenericsTokenParser>(),
-                    ObjectFactory.Get<ICommentsTokenParser>())
+                    ObjectFactory.Get<IGenericsTokenParser>())
         {
         }
 
@@ -44,16 +42,13 @@ namespace JDT.Calidus.Parsers.Tokens
         /// <param name="parser">The parser to use</param>
         /// <param name="whiteSpaceParser">The whitespace parser to use</param>
         /// <param name="genericsParser">The custom generics parser to use</param>
-        /// <param name="ICommentsTokenParser">The custom comment parser to use</param>
         public TokenParser(ITokenParser parser, 
             IWhiteSpaceTokenParser whiteSpaceParser, 
-            IGenericsTokenParser genericsParser,
-            ICommentsTokenParser commentParser)
+            IGenericsTokenParser genericsParser)
         {
             _parser = parser;
             _whiteSpaceParser = whiteSpaceParser;
             _genericsParser = genericsParser;
-            _commentParser = commentParser;
 
             SupportsWhiteSpaceParsing = true;
             SupportsGenericsParsing = true;
@@ -77,7 +72,7 @@ namespace JDT.Calidus.Parsers.Tokens
         /// Parses the source into a list of tokens and returns true if it succeeded, otherwise false
         /// </summary>
         /// <param name="source">The source to parse</param>
-        /// <param name="parsedTokens">The tokenlist to put tokens in</param>
+        /// <param name="source">The tokenlist to put tokens in</param>
         /// <returns>True if succeeded, otherwise false</returns>
         public IEnumerable<TokenBase> Parse(String source)
         {
@@ -87,11 +82,6 @@ namespace JDT.Calidus.Parsers.Tokens
             if (!_parser.SupportsWhiteSpaceParsing)
             {
                 result = _whiteSpaceParser.Parse(source, result);
-            }
-            //check for comments support
-            if (!_parser.SupportsCommentParsing)
-            {
-                result = _commentParser.Parse(source, result);
             }
             //check for generics support
             if (!_parser.SupportsGenericsParsing)

@@ -22,11 +22,31 @@ namespace JDT.Calidus.Parsers.Tokens
         public IEnumerable<TokenBase> Parse(IEnumerable<TokenBase> input)
         {
             IList<TokenBase> result = new List<TokenBase>();
+            
+            int currentLine = 1;
+            bool isComment = false;
 
             for (int i = 0; i < input.Count(); i++)
             {
-                //if an identifier, attempt to find generics
-                if (input.ElementAt(i) is IdentifierToken)
+                //reset the comments if a newline occurs
+                if (input.ElementAt(i).Line != currentLine)
+                {
+                    isComment = false;
+                    currentLine = input.ElementAt(i).Line;
+                }
+                //check to see if we can look two tokens ahead
+                if(i + 1 < input.Count())
+                {
+                    //need at least two forward slashes
+                    if (input.ElementAt(i) is ForwardSlashToken
+                        && input.ElementAt(i + 1) is ForwardSlashToken
+                        && input.ElementAt(i).Line == input.ElementAt(i + 1).Line
+                        )
+                        isComment = true;
+                }
+
+                //if an identifier not in comments, attempt to find generics
+                if (input.ElementAt(i) is IdentifierToken && !isComment)
                 {
                     IList<TokenBase> possibleTokens = new List<TokenBase>();
                     //add the current token

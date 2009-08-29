@@ -21,14 +21,14 @@ namespace JDT.Calidus.Parsers.Coco
         {
             SupportsGenericsParsing = false;
             SupportsWhiteSpaceParsing = false;
-            SupportsCommentParsing = false;
+            SupportsCommentParsing = true;
         }
 
         /// <summary>
         /// Parses the source into a list of tokens and returns true if it succeeded, otherwise false
         /// </summary>
         /// <param name="source">The source to parse</param>
-        /// <param name="parsedTokens">The tokenlist to put tokens in</param>
+        /// <param name="source">The tokenlist to put tokens in</param>
         /// <returns>True if succeeded, otherwise false</returns>
         public IEnumerable<TokenBase> Parse(String source)
         {            
