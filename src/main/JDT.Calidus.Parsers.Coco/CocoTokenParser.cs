@@ -21,6 +21,7 @@ namespace JDT.Calidus.Parsers.Coco
         {
             SupportsGenericsParsing = false;
             SupportsWhiteSpaceParsing = false;
+            SupportsCommentParsing = false;
         }
 
         /// <summary>
@@ -75,6 +76,10 @@ namespace JDT.Calidus.Parsers.Coco
         /// <summary>
         /// Gets if the parser supports generics parsing
         /// </summary>
-        public bool SupportsGenericsParsing { get; private set; }
+        public bool SupportsGenericsParsing { get; private set; }        
+        /// <summary>
+        /// Gets if the parser supports comment parsing
+        /// </summary>
+        public bool SupportsCommentParsing { get; private set; }
     }
 }

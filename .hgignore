@@ -15,3 +15,6 @@ obj
 #Ignore NUnit reports
 TestResult.xml
 calidus.VisualState.xml
+
+#Ignore resharper
+_ReSharper.JDT.Calidus

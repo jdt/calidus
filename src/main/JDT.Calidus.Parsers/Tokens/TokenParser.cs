@@ -16,6 +16,7 @@ namespace JDT.Calidus.Parsers.Tokens
         private ITokenParser _parser;
         private IWhiteSpaceTokenParser _whiteSpaceParser;
         private IGenericsTokenParser _genericsParser;
+        private ICommentsTokenParser _commentParser;
 
         /// <summary>
         /// Create a new instance of this class
@@ -30,7 +31,10 @@ namespace JDT.Calidus.Parsers.Tokens
         /// </summary>
         /// <param name="parser">The parser to use</param>
         public TokenParser(ITokenParser parser)
-            : this(parser, ObjectFactory.Get<IWhiteSpaceTokenParser>(), ObjectFactory.Get<IGenericsTokenParser>())
+            : this(parser, 
+                    ObjectFactory.Get<IWhiteSpaceTokenParser>(), 
+                    ObjectFactory.Get<IGenericsTokenParser>(),
+                    ObjectFactory.Get<ICommentsTokenParser>())
         {
         }
 
@@ -40,14 +44,20 @@ namespace JDT.Calidus.Parsers.Tokens
         /// <param name="parser">The parser to use</param>
         /// <param name="whiteSpaceParser">The whitespace parser to use</param>
         /// <param name="genericsParser">The custom generics parser to use</param>
-        public TokenParser(ITokenParser parser, IWhiteSpaceTokenParser whiteSpaceParser, IGenericsTokenParser genericsParser)
+        /// <param name="ICommentsTokenParser">The custom comment parser to use</param>
+        public TokenParser(ITokenParser parser, 
+            IWhiteSpaceTokenParser whiteSpaceParser, 
+            IGenericsTokenParser genericsParser,
+            ICommentsTokenParser commentParser)
         {
             _parser = parser;
             _whiteSpaceParser = whiteSpaceParser;
             _genericsParser = genericsParser;
+            _commentParser = commentParser;
 
             SupportsWhiteSpaceParsing = true;
             SupportsGenericsParsing = true;
+            SupportsCommentParsing = true;
         }
 
         /// <summary>
@@ -57,7 +67,11 @@ namespace JDT.Calidus.Parsers.Tokens
         /// <summary>
         /// Gets if the parser supports generics parsing
         /// </summary>
-        public bool SupportsGenericsParsing { get; private set; }
+        public bool SupportsGenericsParsing { get; private set; }        
+        /// <summary>
+        /// Gets if the parser supports comment parsing
+        /// </summary>
+        public bool SupportsCommentParsing { get; private set; }
 
         /// <summary>
         /// Parses the source into a list of tokens and returns true if it succeeded, otherwise false
@@ -73,6 +87,11 @@ namespace JDT.Calidus.Parsers.Tokens
             if (!_parser.SupportsWhiteSpaceParsing)
             {
                 result = _whiteSpaceParser.Parse(source, result);
+            }
+            //check for comments support
+            if (!_parser.SupportsCommentParsing)
+            {
+                result = _commentParser.Parse(source, result);
             }
             //check for generics support
             if (!_parser.SupportsGenericsParsing)

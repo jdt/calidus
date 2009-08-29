@@ -48,6 +48,7 @@
     <Compile Include="Common\Brackets\CloseAngleBracketToken.cs" />
     <Compile Include="Common\Brackets\CloseCurlyBracketToken.cs" />
     <Compile Include="Common\Brackets\CloseRoundBracketToken.cs" />
+    <Compile Include="Common\ForwardSlashToken.cs" />
     <Compile Include="Common\NewLineToken.cs" />
     <Compile Include="Common\GenericToken.cs" />
     <Compile Include="Common\IdentifierToken.cs" />
