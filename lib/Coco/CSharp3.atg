@@ -1256,6 +1256,9 @@ PRAGMAS
   ppRegion  = "#" {ws} "region" {notNewLine}    /* newLine */.
   ppEndReg  = "#" {ws} "endregion" {notNewLine} /* newLine */.
   ppPragma  = "#" {ws} "pragma" {notNewLine}    /* newLine */.
+  
+  cBlockCom = "/*" { "/" | blockComCh | "*"{"*"} blockComCh } "*"{"*"}"/".
+  cLineCom = "//" { notNewLine } newLine.
 
 // ****************************************************************************
 // If you would like to use C# comments in your grammar, use
@@ -1272,8 +1275,8 @@ PRAGMAS
 // CHARACTERS section).
 // ****************************************************************************
 
-COMMENTS FROM "/*" TO "*/"
-COMMENTS FROM "//" TO eol
+//COMMENTS FROM "/*" TO "*/"
+//COMMENTS FROM "//" TO eol
 
 IGNORE eol + cr + tab
 

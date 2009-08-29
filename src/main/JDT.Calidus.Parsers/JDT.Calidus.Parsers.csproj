@@ -51,8 +51,6 @@
     <Compile Include="Statements\Resolvers\AssemblyBasedStatementResolverProvider.cs" />
     <Compile Include="Statements\Resolvers\DefaultStatementResolverProvider.cs" />
     <Compile Include="Statements\Resolvers\IStatementResolverProvider.cs" />
-    <Compile Include="Tokens\CommentsTokenParser.cs" />
-    <Compile Include="Tokens\ICommentsTokenParser.cs" />
     <Compile Include="Tokens\IGenericsTokenParser.cs" />
     <Compile Include="Tokens\IWhiteSpaceTokenParser.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParser.cs" />

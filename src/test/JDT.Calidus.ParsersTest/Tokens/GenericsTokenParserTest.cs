@@ -55,5 +55,52 @@ namespace JDT.Calidus.ParsersTest.Tokens
 
             Assert.AreEqual(expected, _parser.Parse(input));
         }
+
+        [Test]
+        public void ParseSourceWithGenericsShouldIgnoreComments()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(new ForwardSlashToken(1, 1, 0));
+            input.Add(new ForwardSlashToken(1, 2, 1));
+            input.Add(new IdentifierToken(1, 3, 2, "IList"));
+            input.Add(new SpaceToken(1, 8, 7));
+            input.Add(new OpenAngleBracketToken(1, 9, 8));
+            input.Add(new TabToken(1, 10, 9));
+            input.Add(new IdentifierToken(1, 11, 10, "String"));
+            input.Add(new NewLineToken(1, 14, 13));
+            input.Add(new CloseAngleBracketToken(2, 1, 14));
+
+            IList<TokenBase> expected = new List<TokenBase>(input);
+
+            Assert.AreEqual(expected, _parser.Parse(input));
+        }
+
+        [Test]
+        public void ParseSourceWithGenericsShouldIgnoreCommentsAndTerminateAtLine()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(new ForwardSlashToken(1, 1, 0));
+            input.Add(new ForwardSlashToken(1, 2, 1));
+            input.Add(new IdentifierToken(1, 3, 2, "IList"));
+            input.Add(new SpaceToken(1, 8, 7));
+            input.Add(new OpenAngleBracketToken(1, 9, 8));
+            input.Add(new TabToken(1, 10, 9));
+            input.Add(new IdentifierToken(1, 11, 10, "String"));
+            input.Add(new SpaceToken(1, 14, 13));
+            input.Add(new CloseAngleBracketToken(1, 15, 14));
+            input.Add(new NewLineToken(1, 16, 15));
+
+            IList<TokenBase> expected = new List<TokenBase>(input);
+
+            input.Add(new IdentifierToken(2, 1, 16, "IList"));
+            input.Add(new OpenAngleBracketToken(2, 6, 21));
+            input.Add(new IdentifierToken(2, 6, 22, "String"));
+            input.Add(new CloseAngleBracketToken(2, 12, 27));
+
+            IdentifierToken expectedToken = new IdentifierToken(2, 1, 16, "IList<String>");
+            expected.Add(expectedToken);
+
+            Assert.AreEqual(expected, _parser.Parse(input));
+        }
     }
 }

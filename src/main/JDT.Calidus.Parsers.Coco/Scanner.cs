@@ -275,37 +275,37 @@ namespace JDT.Calidus.Parsers.Coco
             for (int i = 192; i <= 214; ++i) start[i] = 1;
             for (int i = 216; i <= 246; ++i) start[i] = 1;
             for (int i = 248; i <= 255; ++i) start[i] = 1;
-            for (int i = 49; i <= 57; ++i) start[i] = 156;
+            for (int i = 49; i <= 57; ++i) start[i] = 160;
             start[92] = 15;
-            start[64] = 157;
-            start[48] = 158;
-            start[46] = 159;
+            start[64] = 161;
+            start[48] = 162;
+            start[46] = 163;
             start[39] = 44;
             start[34] = 61;
-            start[38] = 193;
-            start[61] = 160;
-            start[58] = 161;
+            start[38] = 198;
+            start[61] = 164;
+            start[58] = 165;
             start[44] = 80;
-            start[45] = 194;
-            start[47] = 195;
-            start[62] = 162;
-            start[43] = 163;
+            start[45] = 199;
+            start[47] = 200;
+            start[62] = 166;
+            start[43] = 167;
             start[123] = 87;
             start[91] = 88;
             start[40] = 89;
-            start[60] = 196;
-            start[37] = 197;
-            start[33] = 164;
-            start[63] = 165;
-            start[124] = 198;
+            start[60] = 201;
+            start[37] = 202;
+            start[33] = 168;
+            start[63] = 169;
+            start[124] = 203;
             start[125] = 97;
             start[93] = 98;
             start[41] = 99;
             start[59] = 100;
             start[126] = 101;
-            start[42] = 166;
-            start[94] = 199;
-            start[35] = 167;
+            start[42] = 170;
+            start[94] = 204;
+            start[35] = 171;
             start[Buffer.EOF] = -1;
 
         }
@@ -391,62 +391,6 @@ namespace JDT.Calidus.Parsers.Coco
         }
 
 
-
-        bool Comment0()
-        {
-            int level = 1, pos0 = pos, line0 = line, col0 = col;
-            NextCh();
-            if (ch == '/')
-            {
-                NextCh();
-                for (; ; )
-                {
-                    if (ch == 10)
-                    {
-                        level--;
-                        if (level == 0) { oldEols = line - line0; NextCh(); return true; }
-                        NextCh();
-                    }
-                    else if (ch == Buffer.EOF) return false;
-                    else NextCh();
-                }
-            }
-            else
-            {
-                buffer.Pos = pos0; NextCh(); line = line0; col = col0;
-            }
-            return false;
-        }
-
-        bool Comment1()
-        {
-            int level = 1, pos0 = pos, line0 = line, col0 = col;
-            NextCh();
-            if (ch == '*')
-            {
-                NextCh();
-                for (; ; )
-                {
-                    if (ch == '*')
-                    {
-                        NextCh();
-                        if (ch == '/')
-                        {
-                            level--;
-                            if (level == 0) { oldEols = line - line0; NextCh(); return true; }
-                            NextCh();
-                        }
-                    }
-                    else if (ch == Buffer.EOF) return false;
-                    else NextCh();
-                }
-            }
-            else
-            {
-                buffer.Pos = pos0; NextCh(); line = line0; col = col0;
-            }
-            return false;
-        }
 
 
         void CheckLiteral()
@@ -550,9 +494,9 @@ namespace JDT.Calidus.Parsers.Coco
         Token NextToken()
         {
             while (ch == ' ' ||
-                ch == 10 || ch == 13
+                ch >= 9 && ch <= 10 || ch == 13
             ) NextCh();
-            if (ch == '/' && Comment0() || ch == '/' && Comment1()) return NextToken();
+
             int apx = 0;
             t = new Token();
             t.pos = pos; t.col = col; t.line = line;
@@ -661,10 +605,10 @@ namespace JDT.Calidus.Parsers.Coco
                     else { t.kind = noSym; break; }
                 case 30:
                     if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 30; }
-                    else if (ch == 'U') { AddCh(); goto case 172; }
-                    else if (ch == 'u') { AddCh(); goto case 173; }
-                    else if (ch == 'L') { AddCh(); goto case 174; }
-                    else if (ch == 'l') { AddCh(); goto case 175; }
+                    else if (ch == 'U') { AddCh(); goto case 176; }
+                    else if (ch == 'u') { AddCh(); goto case 177; }
+                    else if (ch == 'L') { AddCh(); goto case 178; }
+                    else if (ch == 'l') { AddCh(); goto case 179; }
                     else { t.kind = 2; break; }
                 case 31:
                     { t.kind = 2; break; }
@@ -715,7 +659,7 @@ namespace JDT.Calidus.Parsers.Coco
                     { t.kind = 3; break; }
                 case 44:
                     if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= '&' || ch >= '(' && ch <= '[' || ch >= ']' && ch <= 65535) { AddCh(); goto case 45; }
-                    else if (ch == 92) { AddCh(); goto case 176; }
+                    else if (ch == 92) { AddCh(); goto case 180; }
                     else { t.kind = noSym; break; }
                 case 45:
                     if (ch == 39) { AddCh(); goto case 60; }
@@ -724,7 +668,7 @@ namespace JDT.Calidus.Parsers.Coco
                     if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 47; }
                     else { t.kind = noSym; break; }
                 case 47:
-                    if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 177; }
+                    if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 181; }
                     else if (ch == 39) { AddCh(); goto case 60; }
                     else { t.kind = noSym; break; }
                 case 48:
@@ -768,16 +712,16 @@ namespace JDT.Calidus.Parsers.Coco
                 case 61:
                     if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= '!' || ch >= '#' && ch <= '[' || ch >= ']' && ch <= 65535) { AddCh(); goto case 61; }
                     else if (ch == '"') { AddCh(); goto case 77; }
-                    else if (ch == 92) { AddCh(); goto case 179; }
+                    else if (ch == 92) { AddCh(); goto case 183; }
                     else { t.kind = noSym; break; }
                 case 62:
                     if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 63; }
                     else { t.kind = noSym; break; }
                 case 63:
                     if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= '!' || ch >= '#' && ch <= '/' || ch >= ':' && ch <= '@' || ch >= 'G' && ch <= '[' || ch >= ']' && ch <= '`' || ch >= 'g' && ch <= 65535) { AddCh(); goto case 61; }
-                    else if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 180; }
+                    else if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 184; }
                     else if (ch == '"') { AddCh(); goto case 77; }
-                    else if (ch == 92) { AddCh(); goto case 179; }
+                    else if (ch == 92) { AddCh(); goto case 183; }
                     else { t.kind = noSym; break; }
                 case 64:
                     if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 65; }
@@ -817,7 +761,7 @@ namespace JDT.Calidus.Parsers.Coco
                     else { t.kind = noSym; break; }
                 case 76:
                     if (ch <= '!' || ch >= '#' && ch <= 65535) { AddCh(); goto case 76; }
-                    else if (ch == '"') { AddCh(); goto case 182; }
+                    else if (ch == '"') { AddCh(); goto case 186; }
                     else { t.kind = noSym; break; }
                 case 77:
                     { t.kind = 5; break; }
@@ -1030,80 +974,80 @@ namespace JDT.Calidus.Parsers.Coco
                     if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= 65535) { AddCh(); goto case 155; }
                     else { t.kind = 154; break; }
                 case 156:
-                    if (ch >= '0' && ch <= '9') { AddCh(); goto case 156; }
-                    else if (ch == 'U') { AddCh(); goto case 168; }
-                    else if (ch == 'u') { AddCh(); goto case 169; }
-                    else if (ch == 'L') { AddCh(); goto case 170; }
-                    else if (ch == 'l') { AddCh(); goto case 171; }
-                    else if (ch == '.') { apx++; AddCh(); goto case 183; }
+                    if (ch <= ')' || ch >= '+' && ch <= 65535) { AddCh(); goto case 156; }
+                    else if (ch == '*') { AddCh(); goto case 187; }
+                    else { t.kind = noSym; break; }
+                case 157:
+                    { t.kind = 155; break; }
+                case 158:
+                    if (ch == 10 || ch == 13) { AddCh(); goto case 159; }
+                    else if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= 65535) { AddCh(); goto case 158; }
+                    else { t.kind = noSym; break; }
+                case 159:
+                    { t.kind = 156; break; }
+                case 160:
+                    if (ch >= '0' && ch <= '9') { AddCh(); goto case 160; }
+                    else if (ch == 'U') { AddCh(); goto case 172; }
+                    else if (ch == 'u') { AddCh(); goto case 173; }
+                    else if (ch == 'L') { AddCh(); goto case 174; }
+                    else if (ch == 'l') { AddCh(); goto case 175; }
+                    else if (ch == '.') { apx++; AddCh(); goto case 188; }
                     else if (ch == 'E' || ch == 'e') { AddCh(); goto case 40; }
                     else if (ch == 'D' || ch == 'F' || ch == 'M' || ch == 'd' || ch == 'f' || ch == 'm') { AddCh(); goto case 43; }
                     else { t.kind = 2; break; }
-                case 157:
+                case 161:
                     if (ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= 'a' && ch <= 'z' || ch == 170 || ch == 181 || ch == 186 || ch >= 192 && ch <= 214 || ch >= 216 && ch <= 246 || ch >= 248 && ch <= 255) { AddCh(); goto case 1; }
                     else if (ch == 92) { AddCh(); goto case 15; }
                     else if (ch == '"') { AddCh(); goto case 76; }
                     else { t.kind = noSym; break; }
-                case 158:
-                    if (ch >= '0' && ch <= '9') { AddCh(); goto case 156; }
-                    else if (ch == 'U') { AddCh(); goto case 168; }
-                    else if (ch == 'u') { AddCh(); goto case 169; }
-                    else if (ch == 'L') { AddCh(); goto case 170; }
-                    else if (ch == 'l') { AddCh(); goto case 171; }
-                    else if (ch == '.') { apx++; AddCh(); goto case 183; }
+                case 162:
+                    if (ch >= '0' && ch <= '9') { AddCh(); goto case 160; }
+                    else if (ch == 'U') { AddCh(); goto case 172; }
+                    else if (ch == 'u') { AddCh(); goto case 173; }
+                    else if (ch == 'L') { AddCh(); goto case 174; }
+                    else if (ch == 'l') { AddCh(); goto case 175; }
+                    else if (ch == '.') { apx++; AddCh(); goto case 188; }
                     else if (ch == 'X' || ch == 'x') { AddCh(); goto case 29; }
                     else if (ch == 'E' || ch == 'e') { AddCh(); goto case 40; }
                     else if (ch == 'D' || ch == 'F' || ch == 'M' || ch == 'd' || ch == 'f' || ch == 'm') { AddCh(); goto case 43; }
                     else { t.kind = 2; break; }
-                case 159:
+                case 163:
                     if (ch >= '0' && ch <= '9') { AddCh(); goto case 32; }
                     else { t.kind = 91; break; }
-                case 160:
+                case 164:
                     if (ch == '>') { AddCh(); goto case 79; }
                     else if (ch == '=') { AddCh(); goto case 84; }
                     else { t.kind = 86; break; }
-                case 161:
+                case 165:
                     if (ch == ':') { AddCh(); goto case 83; }
                     else { t.kind = 87; break; }
-                case 162:
+                case 166:
                     if (ch == '=') { AddCh(); goto case 85; }
                     else { t.kind = 94; break; }
-                case 163:
+                case 167:
                     if (ch == '+') { AddCh(); goto case 86; }
                     else if (ch == '=') { AddCh(); goto case 96; }
                     else { t.kind = 110; break; }
-                case 164:
+                case 168:
                     if (ch == '=') { AddCh(); goto case 93; }
                     else { t.kind = 107; break; }
-                case 165:
+                case 169:
                     if (ch == '?') { AddCh(); goto case 94; }
                     else { t.kind = 112; break; }
-                case 166:
+                case 170:
                     if (ch == '=') { AddCh(); goto case 102; }
                     else { t.kind = 118; break; }
-                case 167:
-                    if (ch == 9 || ch >= 11 && ch <= 12 || ch == ' ') { AddCh(); goto case 167; }
+                case 171:
+                    if (ch == 9 || ch >= 11 && ch <= 12 || ch == ' ') { AddCh(); goto case 171; }
                     else if (ch == 'd') { AddCh(); goto case 104; }
                     else if (ch == 'u') { AddCh(); goto case 110; }
                     else if (ch == 'i') { AddCh(); goto case 115; }
-                    else if (ch == 'e') { AddCh(); goto case 185; }
+                    else if (ch == 'e') { AddCh(); goto case 190; }
                     else if (ch == 'l') { AddCh(); goto case 123; }
                     else if (ch == 'w') { AddCh(); goto case 131; }
                     else if (ch == 'r') { AddCh(); goto case 138; }
                     else if (ch == 'p') { AddCh(); goto case 150; }
                     else { t.kind = noSym; break; }
-                case 168:
-                    if (ch == 'L' || ch == 'l') { AddCh(); goto case 31; }
-                    else { t.kind = 2; break; }
-                case 169:
-                    if (ch == 'L' || ch == 'l') { AddCh(); goto case 31; }
-                    else { t.kind = 2; break; }
-                case 170:
-                    if (ch == 'U' || ch == 'u') { AddCh(); goto case 31; }
-                    else { t.kind = 2; break; }
-                case 171:
-                    if (ch == 'U' || ch == 'u') { AddCh(); goto case 31; }
-                    else { t.kind = 2; break; }
                 case 172:
                     if (ch == 'L' || ch == 'l') { AddCh(); goto case 31; }
                     else { t.kind = 2; break; }
@@ -1117,94 +1061,113 @@ namespace JDT.Calidus.Parsers.Coco
                     if (ch == 'U' || ch == 'u') { AddCh(); goto case 31; }
                     else { t.kind = 2; break; }
                 case 176:
+                    if (ch == 'L' || ch == 'l') { AddCh(); goto case 31; }
+                    else { t.kind = 2; break; }
+                case 177:
+                    if (ch == 'L' || ch == 'l') { AddCh(); goto case 31; }
+                    else { t.kind = 2; break; }
+                case 178:
+                    if (ch == 'U' || ch == 'u') { AddCh(); goto case 31; }
+                    else { t.kind = 2; break; }
+                case 179:
+                    if (ch == 'U' || ch == 'u') { AddCh(); goto case 31; }
+                    else { t.kind = 2; break; }
+                case 180:
                     if (ch == '"' || ch == 39 || ch == '0' || ch == 92 || ch >= 'a' && ch <= 'b' || ch == 'f' || ch == 'n' || ch == 'r' || ch == 't' || ch == 'v') { AddCh(); goto case 45; }
                     else if (ch == 'x') { AddCh(); goto case 46; }
                     else if (ch == 'u') { AddCh(); goto case 48; }
                     else if (ch == 'U') { AddCh(); goto case 52; }
                     else { t.kind = noSym; break; }
-                case 177:
-                    if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 178; }
+                case 181:
+                    if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 182; }
                     else if (ch == 39) { AddCh(); goto case 60; }
                     else { t.kind = noSym; break; }
-                case 178:
+                case 182:
                     if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 45; }
                     else if (ch == 39) { AddCh(); goto case 60; }
                     else { t.kind = noSym; break; }
-                case 179:
+                case 183:
                     if (ch == '"' || ch == 39 || ch == '0' || ch == 92 || ch >= 'a' && ch <= 'b' || ch == 'f' || ch == 'n' || ch == 'r' || ch == 't' || ch == 'v') { AddCh(); goto case 61; }
                     else if (ch == 'x') { AddCh(); goto case 62; }
                     else if (ch == 'u') { AddCh(); goto case 64; }
                     else if (ch == 'U') { AddCh(); goto case 68; }
                     else { t.kind = noSym; break; }
-                case 180:
-                    if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 181; }
+                case 184:
+                    if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') { AddCh(); goto case 185; }
                     else if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= '!' || ch >= '#' && ch <= '/' || ch >= ':' && ch <= '@' || ch >= 'G' && ch <= '[' || ch >= ']' && ch <= '`' || ch >= 'g' && ch <= 65535) { AddCh(); goto case 61; }
                     else if (ch == '"') { AddCh(); goto case 77; }
-                    else if (ch == 92) { AddCh(); goto case 179; }
+                    else if (ch == 92) { AddCh(); goto case 183; }
                     else { t.kind = noSym; break; }
-                case 181:
+                case 185:
                     if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= '!' || ch >= '#' && ch <= '[' || ch >= ']' && ch <= 65535) { AddCh(); goto case 61; }
                     else if (ch == '"') { AddCh(); goto case 77; }
-                    else if (ch == 92) { AddCh(); goto case 179; }
+                    else if (ch == 92) { AddCh(); goto case 183; }
                     else { t.kind = noSym; break; }
-                case 182:
+                case 186:
                     if (ch == '"') { AddCh(); goto case 76; }
                     else { t.kind = 5; break; }
-                case 183:
+                case 187:
+                    if (ch <= ')' || ch >= '+' && ch <= '.' || ch >= '0' && ch <= 65535) { AddCh(); goto case 156; }
+                    else if (ch == '/') { AddCh(); goto case 157; }
+                    else if (ch == '*') { AddCh(); goto case 187; }
+                    else { t.kind = noSym; break; }
+                case 188:
                     if (ch <= '/' || ch >= ':' && ch <= 65535) { apx++; AddCh(); goto case 28; }
                     else if (ch >= '0' && ch <= '9') { apx = 0; AddCh(); goto case 36; }
                     else { t.kind = noSym; break; }
-                case 184:
+                case 189:
                     if (ch == '=') { AddCh(); goto case 90; }
                     else { t.kind = 102; break; }
-                case 185:
-                    if (ch == 'l') { AddCh(); goto case 186; }
-                    else if (ch == 'n') { AddCh(); goto case 187; }
+                case 190:
+                    if (ch == 'l') { AddCh(); goto case 191; }
+                    else if (ch == 'n') { AddCh(); goto case 192; }
                     else if (ch == 'r') { AddCh(); goto case 127; }
                     else { t.kind = noSym; break; }
-                case 186:
+                case 191:
                     if (ch == 'i') { AddCh(); goto case 117; }
                     else if (ch == 's') { AddCh(); goto case 119; }
                     else { t.kind = noSym; break; }
-                case 187:
-                    if (ch == 'd') { AddCh(); goto case 188; }
+                case 192:
+                    if (ch == 'd') { AddCh(); goto case 193; }
                     else { t.kind = noSym; break; }
-                case 188:
+                case 193:
                     if (ch == 'i') { AddCh(); goto case 121; }
                     else if (ch == 'r') { AddCh(); goto case 144; }
                     else { t.kind = noSym; break; }
-                case 189:
-                    { t.kind = 134; break; }
-                case 190:
-                    { t.kind = 135; break; }
-                case 191:
-                    { t.kind = 138; break; }
-                case 192:
-                    { t.kind = 141; break; }
-                case 193:
-                    if (ch == '=') { AddCh(); goto case 78; }
-                    else if (ch == '&') { AddCh(); goto case 190; }
-                    else { t.kind = 83; break; }
                 case 194:
+                    { t.kind = 134; break; }
+                case 195:
+                    { t.kind = 135; break; }
+                case 196:
+                    { t.kind = 138; break; }
+                case 197:
+                    { t.kind = 141; break; }
+                case 198:
+                    if (ch == '=') { AddCh(); goto case 78; }
+                    else if (ch == '&') { AddCh(); goto case 195; }
+                    else { t.kind = 83; break; }
+                case 199:
                     if (ch == '-') { AddCh(); goto case 81; }
                     else if (ch == '=') { AddCh(); goto case 91; }
-                    else if (ch == '>') { AddCh(); goto case 192; }
+                    else if (ch == '>') { AddCh(); goto case 197; }
                     else { t.kind = 103; break; }
-                case 195:
+                case 200:
                     if (ch == '=') { AddCh(); goto case 82; }
+                    else if (ch == '*') { AddCh(); goto case 156; }
+                    else if (ch == '/') { AddCh(); goto case 158; }
                     else { t.kind = 139; break; }
-                case 196:
-                    if (ch == '<') { AddCh(); goto case 184; }
-                    else if (ch == '=') { AddCh(); goto case 191; }
+                case 201:
+                    if (ch == '<') { AddCh(); goto case 189; }
+                    else if (ch == '=') { AddCh(); goto case 196; }
                     else { t.kind = 101; break; }
-                case 197:
+                case 202:
                     if (ch == '=') { AddCh(); goto case 92; }
                     else { t.kind = 140; break; }
-                case 198:
+                case 203:
                     if (ch == '=') { AddCh(); goto case 95; }
-                    else if (ch == '|') { AddCh(); goto case 189; }
+                    else if (ch == '|') { AddCh(); goto case 194; }
                     else { t.kind = 136; break; }
-                case 199:
+                case 204:
                     if (ch == '=') { AddCh(); goto case 103; }
                     else { t.kind = 137; break; }
 

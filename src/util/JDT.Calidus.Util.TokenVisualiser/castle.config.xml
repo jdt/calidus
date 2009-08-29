@@ -5,7 +5,6 @@
     <component id="IStatementResolverProvider" type="JDT.Calidus.Parsers.Statements.Resolvers.AssemblyBasedStatementResolverProvider, JDT.Calidus.Parsers" />
     <component id="IWhiteSpaceTokenParser" type="JDT.Calidus.Parsers.Tokens.WhiteSpaceTokenParser, JDT.Calidus.Parsers" />
     <component id="IGenericsTokenParser" type="JDT.Calidus.Parsers.Tokens.GenericsTokenParser, JDT.Calidus.Parsers" />
-    <component id="ICommentsTokenParser" type="JDT.Calidus.Parsers.Tokens.CommentsTokenParser, JDT.Calidus.Parsers" />
     <component id="ITokenParser" type="JDT.Calidus.Parsers.Coco.CocoTokenParser, JDT.Calidus.Parsers.Coco" />
     
     <component id="IStatementFactory" type="JDT.Calidus.Parsers.Statements.DefaultStatementFactory, JDT.Calidus.Parsers">

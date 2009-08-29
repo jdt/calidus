@@ -15,7 +15,7 @@ namespace JDT.Calidus.Parsers.Tokens
         /// Parses the source into a list of tokens and returns true if it succeeded, otherwise false
         /// </summary>
         /// <param name="source">The source to parse</param>
-        /// <param name="parsedTokens">The tokenlist to put tokens in</param>
+        /// <param name="source">The tokenlist to put tokens in</param>
         /// <returns>True if succeeded, otherwise false</returns>
         IEnumerable<TokenBase> Parse(String source);
         /// <summary>
@@ -26,9 +26,5 @@ namespace JDT.Calidus.Parsers.Tokens
         /// Gets if the parser supports generics parsing
         /// </summary>
         bool SupportsGenericsParsing { get; }
-        /// <summary>
-        /// Gets if the parser supports comment parsing
-        /// </summary>
-        bool SupportsCommentParsing { get; }
     }
 }
