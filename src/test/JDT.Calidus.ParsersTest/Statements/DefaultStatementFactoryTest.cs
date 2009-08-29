@@ -16,13 +16,14 @@ using JDT.Calidus.Tests;
 namespace JDT.Calidus.ParsersTest.Statements
 {
     [TestFixture]
-    public class DefaultStatementFactoryTest
+    public class DefaultStatementFactoryTest : CalidusTestBase
     {
         private DefaultStatementFactory _factory;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
             _factory = new DefaultStatementFactory(new StubStatementResolverProvider());
         }
 
@@ -30,7 +31,7 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void ParseGenericTokenShouldReturnGenericStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "test", null));
+            input.Add(TokenCreator.Create<GenericToken>("test", null));
 
             GenericStatement expected = new GenericStatement(input);
             Assert.AreEqual(expected, _factory.Create(input));
@@ -40,9 +41,9 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void DefaultStatementFactoryShouldUseStatementProvider()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
-            input.Add(new SemiColonToken(1, 11, 10));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             MockRepository mocker = new MockRepository();
             IStatementResolverProvider factory = mocker.StrictMock<IStatementResolverProvider>();

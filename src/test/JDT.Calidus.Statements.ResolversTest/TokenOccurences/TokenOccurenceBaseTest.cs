@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Statements.Resolvers.TokenOccurences;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Common;
@@ -24,13 +25,14 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
     }
 
     [TestFixture]
-    public class TokenOccurenceBaseTest
+    public class TokenOccurenceBaseTest : CalidusTestBase
     {
         private TokenOccurenceImpl _occurence;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
             _occurence = new TokenOccurenceImpl(typeof(SpaceToken));
         }
 
@@ -38,8 +40,8 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
         public void MatchingShouldThrowExceptionWhenTokenTypesAreNotEqual()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
-            input.Add(new SemiColonToken(1, 2, 1));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             Assert.Throws<CalidusException>(delegate { _occurence.Matches(input); }, "Token occurence can only match a list of same-type tokens of type " + typeof(SpaceToken).Name);
         }
@@ -50,8 +52,8 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
             TokenOccurenceImpl occurence = new TokenOccurenceImpl(typeof(WhiteSpaceToken));
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
-            input.Add(new TabToken(1, 2, 1));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<TabToken>());
             occurence.Matches(input);
 
             Assert.Pass();
@@ -74,7 +76,7 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
         public void WhenMatchedWasMatchedShouldReturnTrue()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
+            input.Add(TokenCreator.Create<SpaceToken>());
 
             Assert.AreEqual(_occurence.Matches(input), _occurence.WasMatched);
         }

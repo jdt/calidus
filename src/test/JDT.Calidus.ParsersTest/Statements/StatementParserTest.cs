@@ -17,13 +17,14 @@ using JDT.Calidus.Tokens.Common.Brackets;
 namespace JDT.Calidus.ParsersTest.Statements
 {
     [TestFixture]
-    public class StatementParserTest
+    public class StatementParserTest : CalidusTestBase
     {
         private StatementParser _parser;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
             _parser = new StatementParser(new StubStatementFactory());
         }
 
@@ -31,9 +32,9 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void ParserShouldCallStatementFactoryWhenParsingTokens()
         {        
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
-            input.Add(new SemiColonToken(1, 11, 10));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             MockRepository mocker = new MockRepository();
             IStatementFactory factory = mocker.StrictMock<IStatementFactory>();
@@ -52,9 +53,9 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void ParseSemiColonDelimitedTokenShouldReturnStatementWithParsedTokensAsMember()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
-            input.Add(new SemiColonToken(1, 11, 10));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             IEnumerable<StatementBase> actual = _parser.Parse(input);
             CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, input);
@@ -64,12 +65,12 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void ParseSemiColonDelimitedTokensShouldReturnStatements()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
-            input.Add(new SemiColonToken(1, 11, 10));
-            input.Add(new GenericToken(2, 1, 1, "source", null));
-            input.Add(new GenericToken(2, 7, 6, "code", null));
-            input.Add(new SemiColonToken(2, 11, 10));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             IEnumerable<StatementBase> actual = _parser.Parse(input);
             Assert.AreEqual(2, actual.Count());
@@ -79,8 +80,8 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void ParseTokensNotEndedBySemiColonShouldThrowParseException()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             Assert.Throws<CalidusException>(delegate { _parser.Parse(input); }, "No valid statement terminator found for the last 2 tokens");
         }
@@ -89,8 +90,8 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void ParseCurlyBracketTokensShouldParseAsStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new OpenCurlyBracketToken(1, 1, 1));
-            input.Add(new CloseCurlyBracketToken(1, 2, 2));
+            input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
+            input.Add(TokenCreator.Create<CloseCurlyBracketToken>());
 
             IList<TokenBase> openList = new List<TokenBase>();
             openList.Add(input[0]);

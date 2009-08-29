@@ -54,15 +54,15 @@ namespace JDT.Calidus.Statements.ResolversTest
     }
 
     [TestFixture]
-    public class FluentStatementResolverTest
+    public class FluentStatementResolverTest : CalidusTestBase
     {
         [Test]
         public void FluentResolverShouldThrowExceptionOnRequestingResolveWhenCannotResolve()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
-            input.Add(new SemiColonToken(1, 11, 10));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             FluentStatementResolverImpl resolver = new FluentStatementResolverImpl(false);
 
@@ -77,9 +77,9 @@ namespace JDT.Calidus.Statements.ResolversTest
         public void FluentResolverShouldCallMatchExpressionwhenCanResolving()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 1, "source", null));
-            input.Add(new GenericToken(1, 7, 6, "code", null));
-            input.Add(new SemiColonToken(1, 11, 10));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             FluentStatementResolverImpl resolver = new FluentStatementResolverImpl(true);
 

@@ -73,6 +73,10 @@
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Tests\JDT.Calidus.Tests.csproj">
+      <Project>{8C956493-60B9-4099-9685-8BB8C451AAD3}</Project>
+      <Name>JDT.Calidus.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
