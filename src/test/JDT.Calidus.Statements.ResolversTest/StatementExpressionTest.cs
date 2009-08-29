@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.Statements.Resolvers;
 using JDT.Calidus.Tokens;
@@ -11,13 +12,14 @@ using JDT.Calidus.Tokens.Modifiers;
 namespace JDT.Calidus.Statements.ResolversTest
 {
     [TestFixture]
-    public class StatementExpressionTest
+    public class StatementExpressionTest : CalidusTestBase
     {
         private StatementExpression _expression;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
             _expression = new StatementExpression();
         }
 
@@ -33,7 +35,7 @@ namespace JDT.Calidus.Statements.ResolversTest
         public void ExpressionStartWithShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SemiColonToken(1, 1, 0));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             IStatementExpression toMatch = _expression.StartsWith<SemiColonToken>();
 
@@ -44,10 +46,10 @@ namespace JDT.Calidus.Statements.ResolversTest
         public void ExpressionStartWithShouldMatchAppropriateTokenListIgnoringWhiteSpaceTokens()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
-            input.Add(new NewLineToken(1, 2, 1));
-            input.Add(new TabToken(2, 1, 0));
-            input.Add(new SemiColonToken(2, 2, 1));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<NewLineToken>());
+            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             IStatementExpression toMatch = _expression.StartsWith<SemiColonToken>();
 
@@ -58,8 +60,8 @@ namespace JDT.Calidus.Statements.ResolversTest
         public void ExpressionStartWithShouldNotMatchUnAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SemiColonToken(1, 1, 0));
-            input.Add(new GenericToken(1, 2, 1, "content", null));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<GenericToken>("content", null));
 
             IStatementExpression toMatch = _expression.StartsWith<GenericToken>();
 
@@ -70,8 +72,8 @@ namespace JDT.Calidus.Statements.ResolversTest
         public void ExpressionStartWithAndFollowedByShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new PrivateModifierToken(1, 1, 0, "private"));
-            input.Add(new SemiColonToken(1, 8, 7));
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             IStatementExpression toMatch =
                 _expression.StartsWith<PrivateModifierToken>()
@@ -84,11 +86,11 @@ namespace JDT.Calidus.Statements.ResolversTest
         public void ExpressionStartWithAndFollowedByShouldMatchAppropriateTokenListIgnoringWhiteSpaceTokens()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new PrivateModifierToken(1, 1, 0, "private"));
-            input.Add(new SpaceToken(1, 8, 7));
-            input.Add(new NewLineToken(1, 9, 8));
-            input.Add(new TabToken(2, 10, 9));
-            input.Add(new SemiColonToken(2, 11, 10));
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<NewLineToken>());
+            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             IStatementExpression toMatch =
                 _expression.StartsWith<PrivateModifierToken>()

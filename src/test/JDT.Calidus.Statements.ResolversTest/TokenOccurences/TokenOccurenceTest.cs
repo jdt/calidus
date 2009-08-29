@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.Statements.Resolvers.TokenOccurences;
 using JDT.Calidus.Tokens.Common;
@@ -10,13 +11,14 @@ using JDT.Calidus.Tokens;
 namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
 {
     [TestFixture]
-    public class TokenOccurenceTest
+    public class TokenOccurenceTest : CalidusTestBase
     {
         private TokenOccurence _occurence;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
             _occurence = new TokenOccurence(typeof(SpaceToken), 2);
         }
 
@@ -24,8 +26,8 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
         public void TokenOccurenceShouldReturnTrueForMatchingCount()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
-            input.Add(new SpaceToken(1, 2, 1));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
 
             Assert.IsTrue(_occurence.Matches(input));
         }
@@ -34,7 +36,7 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
         public void TokenOccurenceShouldReturnFalseForLesserMatchingCount()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
+            input.Add(TokenCreator.Create<SpaceToken>());
 
             Assert.IsFalse(_occurence.Matches(input));
         }
@@ -43,9 +45,9 @@ namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
         public void TokenOccurenceShouldReturnTrueForBiggerMatchingCount()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new SpaceToken(1, 1, 0));
-            input.Add(new SpaceToken(1, 2, 1));
-            input.Add(new SpaceToken(1, 3, 2));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
 
             Assert.IsFalse(_occurence.Matches(input));
         }

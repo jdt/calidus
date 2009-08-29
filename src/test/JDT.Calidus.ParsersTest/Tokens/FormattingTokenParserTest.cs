@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using NUnit.Framework;
@@ -10,13 +11,14 @@ using JDT.Calidus.Parsers.Tokens;
 namespace JDT.Calidus.ParsersTest.Tokens
 {
     [TestFixture]
-    public class FormattingTokenParserTest
+    public class FormattingTokenParserTest : CalidusTestBase
     {
         private WhiteSpaceTokenParser _parser;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
             _parser = new WhiteSpaceTokenParser();
         }
 
@@ -25,8 +27,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source\ncode";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(2, 1, 7, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.Advance(1);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             NewLineToken newLine = new NewLineToken(1, 7, 6);
 
@@ -39,8 +42,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source\n\ncode";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(3, 1, 8, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.NewLine(2);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             NewLineToken newLineAlpha = new NewLineToken(1, 7, 6);
             NewLineToken newLineBravo = new NewLineToken(2, 1, 7);
@@ -55,8 +59,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source\n\n\n\n\ncode";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(6, 1, 11, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.NewLine(5);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             NewLineToken newLineAlpha = new NewLineToken(1, 7, 6);
             NewLineToken newLineBravo = new NewLineToken(2, 1, 7);
@@ -77,8 +82,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source code";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(1, 8, 7, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.Advance(1);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             SpaceToken space = new SpaceToken(1, 7, 6);
 
@@ -91,8 +97,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source   code";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(1, 10, 9, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.Advance(3);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             SpaceToken spaceAlpha = new SpaceToken(1, 7, 6);
             SpaceToken spaceBravo = new SpaceToken(1, 8, 7);
@@ -109,8 +116,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source\tcode";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(1, 8, 7, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.Advance(1);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             TabToken tab = new TabToken(1, 7, 6);
 
@@ -123,8 +131,9 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             String source = "source\t\t\tcode";
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(new GenericToken(1, 1, 0, "source", null));
-            input.Add(new GenericToken(1, 10, 9, "code", null));
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            TokenCreator.Advance(3);
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
 
             TabToken tabAlpha = new TabToken(1, 7, 6);
             TabToken tabBravo = new TabToken(1, 8, 7);
