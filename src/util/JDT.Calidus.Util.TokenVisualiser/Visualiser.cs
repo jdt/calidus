@@ -17,7 +17,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
     public partial class Visualiser : Form
     {
         private IList<VisualiserToken> _currentTokens;
-        private IEnumerable<StatementBase> _currentStatements;
+        private IList<VisualiserStatement> _currentStatements;
 
         private bool _suspendSourceSelectionChanged;
 
@@ -26,21 +26,9 @@ namespace JDT.Calidus.Util.TokenVisualiser
             InitializeComponent();
 
             _currentTokens = new List<VisualiserToken>();
-            _currentStatements = new List<StatementBase>();
+            _currentStatements = new List<VisualiserStatement>();
 
             _suspendSourceSelectionChanged = false;
-        }
-
-        private StatementBase GetCurrentTokenStatement()
-        {
-            VisualiserToken currentToken = (VisualiserToken)lstTokens.SelectedItem;
-            foreach (StatementBase aStatement in _currentStatements)
-            {
-                if (aStatement.Tokens.Contains(currentToken.BaseToken))
-                    return aStatement;
-            }
-
-            return null;
         }
 
         private void rtSource_SelectionChanged(object sender, EventArgs e)
@@ -48,21 +36,13 @@ namespace JDT.Calidus.Util.TokenVisualiser
             SetLineColumnLabel();
 
             if (!_suspendSourceSelectionChanged)
-                UpdateTokenListSelectedToken();
-        }
-
-        private void lstTokens_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lstTokens.SelectedItem != null)
             {
-                VisualiserToken currentToken = (VisualiserToken)lstTokens.SelectedItem;
-
-                _suspendSourceSelectionChanged = true;
-                DisplayTokenDetails(currentToken);
-                MarkTokenInSource(currentToken);
-                _suspendSourceSelectionChanged = false;
+                if (TokensTabActive)
+                    UpdateTokenListSelectedToken();
+                else if (StatementsTabActive)
+                    UpdateStatementListSelectedToken();
             }
-        }
+        }      
 
         private void cmdParse_Click(object sender, EventArgs e)
         {
@@ -76,18 +56,26 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 foreach (TokenBase aToken in parsedTokens)
                     _currentTokens.Add(new VisualiserToken(aToken));
 
-                _currentStatements = statementParser.Parse(parsedTokens);
+                IEnumerable<StatementBase> parsedStatements = statementParser.Parse(parsedTokens);
+                _currentStatements.Clear();
+                foreach (StatementBase aStatement in parsedStatements)
+                    _currentStatements.Add(new VisualiserStatement(aStatement));
 
-                lstTokens.DataSource = _currentTokens;
-                lstTokens.Enabled = true;
+                lstTokenList.DataSource = _currentTokens;
+                lstTokenList.Enabled = true;
+                lstStatementList.DataSource = _currentStatements;
+                lstStatementList.Enabled = true;
+
+                tabDisplay.SelectedIndex = 0;
+                DisplayCurrentToken();
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Errors occured during parsing: " + ex.Message);
                 
-                lstTokens.Enabled = false;
-                lstDetails.DataSource = null;
-                lstTokens.DataSource = null;
+                lstTokenList.Enabled = false;
+                lstTokenDetails.DataSource = null;
+                lstTokenList.DataSource = null;
             }
         }
 
@@ -106,6 +94,30 @@ namespace JDT.Calidus.Util.TokenVisualiser
             toolStripStatusLabel.Text = String.Format("Line {0}, Column {1}", new object[] { line + 1, col + 1 });
         }
 
+        private void tabDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (TokensTabActive)
+                DisplayCurrentToken();
+            else if (StatementsTabActive)
+                DisplayCurrentStatement();
+        }
+
+        #region Display list index changed
+
+        private void lstTokens_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayCurrentToken();
+        }
+
+        private void lstStatementList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayCurrentStatement();
+        }
+
+        #endregion
+
+        #region Select in list methods
+
         //updates the token list by selecting the token for the token the caret is in
         private void UpdateTokenListSelectedToken()
         {
@@ -119,12 +131,42 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 foreach (VisualiserToken aToken in _currentTokens)
                 {
                     if (aToken.Position > selectionStart)
-                        lstTokens.SelectedItem = tokenCaretIsIn;
+                        lstTokenList.SelectedItem = tokenCaretIsIn;
                     else
                         tokenCaretIsIn = aToken;
                 }
             }
         }
+
+        //updates the statement list by selecting the statement for the token the caret is in
+        private void UpdateStatementListSelectedToken()
+        {
+            //get selection start
+            int selectionStart = rtSource.SelectionStart;
+            if (_currentTokens.Count > 0)
+            {
+                //get the first token
+                VisualiserToken tokenCaretIsIn = _currentTokens[0];
+                //if the position of the token is beyond the caret position, the previous token was the right one
+                foreach (VisualiserToken aToken in _currentTokens)
+                {
+                    if (aToken.Position > selectionStart)
+                    {
+                        foreach(VisualiserStatement aStatement in _currentStatements)
+                        {
+                            if(aStatement.Tokens.Contains<TokenBase>(tokenCaretIsIn.BaseToken))
+                                lstStatementList.SelectedItem = aStatement;
+                        }
+                    }
+                    else
+                        tokenCaretIsIn = aToken;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Source marking methods
 
         //marks the text of the specified token in the source
         private void MarkTokenInSource(VisualiserToken token)
@@ -132,6 +174,17 @@ namespace JDT.Calidus.Util.TokenVisualiser
             rtSource.Select(token.Position, token.Content.Length);
             rtSource.Focus();
         }
+
+        //marks the text of the specified token in the source
+        private void MarkStatementInSource(VisualiserStatement statement)
+        {
+            rtSource.Select(statement.Position, statement.Content.Length);
+            rtSource.Focus();
+        }
+
+        #endregion
+
+        #region Token detail display methods
 
         //display details for the specified token
         private void DisplayTokenDetails(VisualiserToken token)
@@ -146,14 +199,63 @@ namespace JDT.Calidus.Util.TokenVisualiser
             details.Add(String.Format("Content size: {0}", token.Content.Length));
             details.Add(String.Format("Hint: {0}", token.Hint));
 
-            lstDetails.DataSource = details;
-            cmdStatement.Text = String.Format("Statement: {0}", GetCurrentTokenStatement().GetType().Name);
+            lstTokenDetails.DataSource = details;
         }
 
-        private void cmdStatement_Click(object sender, EventArgs e)
+        //display details for the specified statement
+        private void DisplayStatementDetails(VisualiserStatement statement)
         {
-            StatementDetails details = new StatementDetails(GetCurrentTokenStatement().Tokens);
-            details.ShowDialog();
+            //display details
+            IList<String> details = new List<String>();
+            details.Add(String.Format("Type: {0}", statement.Type));
+
+            lstStatementDetails.DataSource = details;
         }
+
+        #endregion
+
+        #region Display methods
+
+        private void DisplayCurrentStatement()
+        {
+            if (lstStatementList.SelectedItem != null)
+            {
+                VisualiserStatement currentStatement = (VisualiserStatement)lstStatementList.SelectedItem;
+
+                _suspendSourceSelectionChanged = true;
+                DisplayStatementDetails(currentStatement);
+                MarkStatementInSource(currentStatement);
+                _suspendSourceSelectionChanged = false;
+            }
+        }
+
+        private void DisplayCurrentToken()
+        {
+            if (lstTokenList.SelectedItem != null)
+            {
+                VisualiserToken currentToken = (VisualiserToken)lstTokenList.SelectedItem;
+
+                _suspendSourceSelectionChanged = true;
+                DisplayTokenDetails(currentToken);
+                MarkTokenInSource(currentToken);
+                _suspendSourceSelectionChanged = false;
+            }
+        }
+
+        #endregion
+
+        #region Active tab properties
+
+        private bool TokensTabActive
+        {
+            get { return tabDisplay.SelectedTab.Equals(tabTokens); }
+        }
+
+        private bool StatementsTabActive
+        {
+            get { return tabDisplay.SelectedTab.Equals(tabStatements); }
+        }
+
+        #endregion
     }
 }
