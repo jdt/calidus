@@ -45,6 +45,8 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._class, typeof(ClassToken));
+            _simpleTokenTypeMap.Add(Parser._cBlockCom, typeof(BlockCommentToken));
+            _simpleTokenTypeMap.Add(Parser._cLineCom, typeof(LineCommentToken));
 
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));

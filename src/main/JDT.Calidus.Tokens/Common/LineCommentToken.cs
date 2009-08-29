@@ -6,9 +6,9 @@ using System.Text;
 namespace JDT.Calidus.Tokens.Common
 {
     /// <summary>
-    /// This class represents an identifier token
+    /// This class represents a line comment token starting with //
     /// </summary>
-    public class IdentifierToken : TokenBase
+    public class LineCommentToken : TokenBase
     {
         /// <summary>
         /// Create a new instance of this class
@@ -17,7 +17,7 @@ namespace JDT.Calidus.Tokens.Common
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         /// <param name="content">The content</param>
-        public IdentifierToken(int line, int column, int position, String content)
+        public LineCommentToken(int line, int column, int position, String content)
             : base(line, column, position, content)
         {
         }
