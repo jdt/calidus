@@ -26,5 +26,9 @@ namespace JDT.Calidus.Parsers.Tokens
         /// Gets if the parser supports generics parsing
         /// </summary>
         bool SupportsGenericsParsing { get; }
+        /// <summary>
+        /// Gets if the parser supports comment parsing
+        /// </summary>
+        bool SupportsCommentParsing { get; }
     }
 }

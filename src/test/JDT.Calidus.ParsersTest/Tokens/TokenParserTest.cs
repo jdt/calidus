@@ -10,18 +10,23 @@ using Rhino.Mocks;
 
 namespace JDT.Calidus.ParsersTest.Tokens
 {
-    public class OtherParsersImpl : IWhiteSpaceTokenParser, IGenericsTokenParser
+    public class OtherParsersImpl : 
+        IWhiteSpaceTokenParser, 
+        IGenericsTokenParser,
+        ICommentsTokenParser
     {
         public OtherParsersImpl()
         {
             GenericsWasCalled = false;
             WhiteSpaceWasCalled = false;
+            CommentsWasCalled = false;
         }
 
         public bool GenericsWasCalled { get; private set; }
         public bool WhiteSpaceWasCalled { get; private set; }
+        public bool CommentsWasCalled { get; private set; }
 
-        public IEnumerable<TokenBase> Parse(String source, IEnumerable<TokenBase> previouslyParsed)
+        IEnumerable<TokenBase> IWhiteSpaceTokenParser.Parse(String source, IEnumerable<TokenBase> previouslyParsed)
         {
             WhiteSpaceWasCalled = true;
             return previouslyParsed;
@@ -31,6 +36,12 @@ namespace JDT.Calidus.ParsersTest.Tokens
         {
             GenericsWasCalled = true;
             return input;
+        }
+
+        IEnumerable<TokenBase> ICommentsTokenParser.Parse(string source, IEnumerable<TokenBase> previouslyParsed)
+        {
+            CommentsWasCalled = true;
+            return previouslyParsed;
         }
     }
 
@@ -46,7 +57,7 @@ namespace JDT.Calidus.ParsersTest.Tokens
         }
 
         [Test]
-        public void ParserShouldCheckWhiteSpaceBeforeGenerics()
+        public void ParserShouldCheckWhiteSpaceBeforeCommentsBeforeGenerics()
         {
             MockRepository mocker = new MockRepository();
             ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
@@ -55,12 +66,13 @@ namespace JDT.Calidus.ParsersTest.Tokens
             {
                 Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
                 Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
+                Expect.Call(parserImp.SupportsCommentParsing).Return(true).Repeat.Once();
                 Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
             }
 
             mocker.ReplayAll();
 
-            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl, _otherImpl);
             parser.Parse("");
 
             mocker.VerifyAll();
@@ -75,10 +87,11 @@ namespace JDT.Calidus.ParsersTest.Tokens
             Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
             Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(false).Repeat.Once();
             Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
+            Expect.Call(parserImp.SupportsCommentParsing).Return(true).Repeat.Once();
 
             mocker.ReplayAll();
 
-            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl, _otherImpl);
             parser.Parse("");
 
             mocker.VerifyAll();
@@ -94,14 +107,35 @@ namespace JDT.Calidus.ParsersTest.Tokens
             Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
             Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
             Expect.Call(parserImp.SupportsGenericsParsing).Return(false).Repeat.Once();
+            Expect.Call(parserImp.SupportsCommentParsing).Return(true).Repeat.Once();
 
             mocker.ReplayAll();
 
-            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl, _otherImpl);
             parser.Parse("");
 
             mocker.VerifyAll();
             Assert.IsTrue(_otherImpl.GenericsWasCalled);
+        }
+
+        [Test]
+        public void ParserShouldUseCommentParserWhenPluggedParserDoesNotSupportComments()
+        {
+            MockRepository mocker = new MockRepository();
+            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
+
+            Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
+            Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
+            Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
+            Expect.Call(parserImp.SupportsCommentParsing).Return(false).Repeat.Once();
+
+            mocker.ReplayAll();
+
+            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl, _otherImpl);
+            parser.Parse("");
+
+            mocker.VerifyAll();
+            Assert.IsTrue(_otherImpl.CommentsWasCalled);
         }
     }
 }
