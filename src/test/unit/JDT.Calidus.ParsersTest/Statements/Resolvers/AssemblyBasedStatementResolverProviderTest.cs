@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using NUnit.Framework;
 using System.Reflection;
-using JDT.Calidus.Parsers.Statements;
-using JDT.Calidus.Tokens;
-using JDT.Calidus.Statements;
 using JDT.Calidus.Parsers.Statements.Resolvers;
 
 namespace JDT.Calidus.ParsersTest.Statements.Resolvers

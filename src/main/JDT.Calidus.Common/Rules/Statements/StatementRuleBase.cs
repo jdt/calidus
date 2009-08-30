@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Statements;
+using JDT.Calidus.Common.Statements;
 
-namespace JDT.Calidus.Rules.Statements
+namespace JDT.Calidus.Common.Rules.Statements
 {
     /// <summary>
     /// This class is the base class for all statement rules

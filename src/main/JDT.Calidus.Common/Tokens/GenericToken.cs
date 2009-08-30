@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tokens.Common
+namespace JDT.Calidus.Common.Tokens
 {
     /// <summary>
     /// This class represents a generic, non-specific token

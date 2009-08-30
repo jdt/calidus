@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.Statements.Resolvers;
-using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
 

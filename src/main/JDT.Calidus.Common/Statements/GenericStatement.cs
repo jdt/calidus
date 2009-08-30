@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Statements.Common
+namespace JDT.Calidus.Common.Statements
 {
     /// <summary>
     /// This class represents a generic , non-specific statement

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens;
-using JDT.Calidus.Tokens.Common;
 
 namespace JDT.Calidus.Util.TokenVisualiser
 {

@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Providers;
+using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Statements;
-using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
-using JDT.Calidus.Statements.Common;
 using Rhino.Mocks;
 using JDT.Calidus.Common;
-using JDT.Calidus.Statements;
-using JDT.Calidus.Parsers.Statements.Resolvers;
 using JDT.Calidus.Tests;
 
 namespace JDT.Calidus.ParsersTest.Statements

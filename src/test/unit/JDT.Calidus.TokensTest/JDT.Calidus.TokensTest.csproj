@@ -54,6 +54,10 @@
     <Compile Include="TokenBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>

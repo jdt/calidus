@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 
-namespace JDT.Calidus.Parsers.Statements.Resolvers
+namespace JDT.Calidus.Common.Providers
 {
     /// <summary>
     /// This interface is implemented by providers of statement resolvers

@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JDT.Calidus.Common;
+using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Parsers;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Parsers.Tokens;
@@ -69,7 +72,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 tabDisplay.SelectedIndex = 0;
                 DisplayCurrentToken();
             }
-            catch(Exception ex)
+            catch(CalidusException ex)
             {
                 MessageBox.Show("Errors occured during parsing: " + ex.Message);
                 

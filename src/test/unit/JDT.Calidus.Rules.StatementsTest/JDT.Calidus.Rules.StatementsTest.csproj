@@ -53,6 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Rules.Statements\JDT.Calidus.Rules.Statements.csproj">
       <Project>{0552D015-5AD0-4E7B-B99A-7514109DAD2D}</Project>
       <Name>JDT.Calidus.Rules.Statements</Name>

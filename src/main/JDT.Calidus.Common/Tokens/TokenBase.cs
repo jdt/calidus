@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JDT.Calidus.Tokens
+namespace JDT.Calidus.Common.Tokens
 {
     /// <summary>
     /// This class is the base class for all tokens

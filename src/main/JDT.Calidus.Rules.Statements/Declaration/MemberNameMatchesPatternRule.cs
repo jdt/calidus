@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using JDT.Calidus.Common.Rules.Statements;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Statements;
 using JDT.Calidus.Statements.Declaration;
 

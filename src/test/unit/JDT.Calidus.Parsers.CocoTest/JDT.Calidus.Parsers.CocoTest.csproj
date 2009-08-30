@@ -53,6 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Parsers.Coco\JDT.Calidus.Parsers.Coco.csproj">
       <Project>{8D9004AA-01D2-4973-B5BC-43F40AAABFAD}</Project>
       <Name>JDT.Calidus.Parsers.Coco</Name>

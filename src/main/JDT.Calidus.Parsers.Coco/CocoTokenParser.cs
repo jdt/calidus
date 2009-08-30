@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Parsers.Tokens;
-using JDT.Calidus.Tokens;
 using System.IO;
 using JDT.Calidus.Common;
 
