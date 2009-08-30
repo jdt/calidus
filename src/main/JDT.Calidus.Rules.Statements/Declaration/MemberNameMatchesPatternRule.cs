@@ -13,7 +13,7 @@ namespace JDT.Calidus.Rules.Statements.Declaration
     /// of a member declaration matches a certain pattern
     /// </summary>
     public class MemberNameMatchesPatternRule 
-        : RuleBase
+        : StatementRuleBase
     {
         private Regex _expression;
 
