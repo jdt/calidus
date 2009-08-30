@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 using NUnit.Framework;
 using JDT.Calidus.Tokens;
 

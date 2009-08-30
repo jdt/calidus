@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.IO;
+using JDT.Calidus.Common.Providers;
+using JDT.Calidus.Common.Statements;
 
 namespace JDT.Calidus.Parsers.Statements.Resolvers
 {

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Statements;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Parsers.Statements
+namespace JDT.Calidus.Common.Statements
 {
     /// <summary>
-    /// This interface is implemented by 
+    /// This interface is implemented by statement resolvers that attempt to
+    /// create a statement from a list of tokens
     /// </summary>
+    /// <seealso cref="IStatementFactory"/>
     public interface IStatementResolver
     {
         /// <summary>

@@ -46,17 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Statements\DefaultStatementFactory.cs" />
-    <Compile Include="Statements\IStatementFactory.cs" />
-    <Compile Include="Statements\IStatementResolver.cs" />
     <Compile Include="Statements\Resolvers\AssemblyBasedStatementResolverProvider.cs" />
     <Compile Include="Statements\Resolvers\DefaultStatementResolverProvider.cs" />
-    <Compile Include="Statements\Resolvers\IStatementResolverProvider.cs" />
-    <Compile Include="Tokens\IGenericsTokenParser.cs" />
-    <Compile Include="Tokens\IWhiteSpaceTokenParser.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParser.cs" />
     <Compile Include="Statements\StatementParser.cs" />
     <Compile Include="Tokens\GenericsTokenParser.cs" />
-    <Compile Include="Tokens\ITokenParser.cs" />
     <Compile Include="Tokens\TokenParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Parsers.Tokens
+namespace JDT.Calidus.Common.Tokens
 {
     /// <summary>
     /// This interface is implemented by token parsers

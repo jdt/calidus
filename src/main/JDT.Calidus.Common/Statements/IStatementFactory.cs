@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Tokens;
-using JDT.Calidus.Statements;
+using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Parsers.Statements
+namespace JDT.Calidus.Common.Statements
 {
     /// <summary>
     /// This interface is implemented by statement factories

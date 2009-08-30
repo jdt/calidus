@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Common.Tokens;
 
 namespace JDT.Calidus.Statements.Resolvers.TokenOccurences
 {

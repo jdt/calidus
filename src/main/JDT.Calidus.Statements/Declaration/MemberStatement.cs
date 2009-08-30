@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
 
 namespace JDT.Calidus.Statements.Declaration

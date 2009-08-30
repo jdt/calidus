@@ -58,6 +58,10 @@
     <Compile Include="TokenCreator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>

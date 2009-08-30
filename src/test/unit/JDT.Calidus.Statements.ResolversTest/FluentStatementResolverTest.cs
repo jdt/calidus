@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 using NUnit.Framework;
 using JDT.Calidus.Statements.Resolvers;
 using JDT.Calidus.Tests;
-using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Common;
 
@@ -20,7 +20,7 @@ namespace JDT.Calidus.Statements.ResolversTest
             ExpressionResult = expressionResult;
         }
 
-        protected override StubStatement BuildStatement(IList<JDT.Calidus.Tokens.TokenBase> input)
+        protected override StubStatement BuildStatement(IList<TokenBase> input)
         {
             throw new NotImplementedException();
         }

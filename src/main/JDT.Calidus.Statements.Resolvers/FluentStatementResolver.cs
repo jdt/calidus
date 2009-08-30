@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Parsers.Statements;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Common;
 
 namespace JDT.Calidus.Statements.Resolvers
