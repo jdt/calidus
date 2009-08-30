@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CalidusTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatementCreator.cs" />
     <Compile Include="StubStatement.cs" />
     <Compile Include="StubStatementFactory.cs" />
     <Compile Include="StubStatementResolverProvider.cs" />

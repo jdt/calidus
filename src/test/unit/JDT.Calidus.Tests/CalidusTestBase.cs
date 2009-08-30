@@ -13,11 +13,13 @@ namespace JDT.Calidus.Tests
     public abstract class CalidusTestBase
     {
         private TokenCreator _tokenCreator;
+        private StatementCreator _statementCreator;
 
         [SetUp]
         public virtual void SetUp()
         {
             _tokenCreator = new TokenCreator();
+            _statementCreator = new StatementCreator(_tokenCreator);
         }
 
         /// <summary>
@@ -28,6 +30,17 @@ namespace JDT.Calidus.Tests
             get
             {
                 return _tokenCreator;
+            }
+        }
+
+        /// <summary>
+        /// Gets a statement creator
+        /// </summary>
+        public StatementCreator StatementCreator
+        {
+            get
+            {
+                return _statementCreator;
             }
         }
     }

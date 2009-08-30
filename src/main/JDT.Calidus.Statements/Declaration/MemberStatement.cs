@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common;
 using JDT.Calidus.Tokens;
+using JDT.Calidus.Tokens.Common;
 
 namespace JDT.Calidus.Statements.Declaration
 {
@@ -18,6 +20,23 @@ namespace JDT.Calidus.Statements.Declaration
         public MemberStatement(IEnumerable<TokenBase> tokens)
             : base(tokens)
         {
+        }
+
+        /// <summary>
+        /// Gets the token that contains the member name in the statement
+        /// </summary>
+        public IdentifierToken MemberNameToken
+        {
+            get
+            {
+                for(int i = Tokens.Count() - 1; i >= 0; i--)
+                {
+                    if(Tokens.ElementAt(i) is IdentifierToken)
+                        return (IdentifierToken)Tokens.ElementAt(i);
+                }
+
+                throw new CalidusException("Could not find a valid member name token");
+            }
         }
     }
 }
