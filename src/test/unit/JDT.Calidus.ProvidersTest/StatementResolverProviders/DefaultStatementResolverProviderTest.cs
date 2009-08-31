@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Providers.StatementResolverProviders;
 using NUnit.Framework;
-using JDT.Calidus.Parsers.Statements.Resolvers;
 
-namespace JDT.Calidus.ParsersTest.Statements.Resolvers
+namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
 {
     [TestFixture]
     public class DefaultStatementResolverProviderTest

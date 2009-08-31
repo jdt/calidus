@@ -65,6 +65,7 @@
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IStatementResolverProvider.cs" />
+    <Compile Include="Providers\IStatementRuleProvider.cs" />
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
     <Compile Include="Statements\GenericStatement.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />

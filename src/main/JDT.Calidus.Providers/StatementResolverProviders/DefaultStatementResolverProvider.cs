@@ -5,8 +5,8 @@ using System.Text;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Statements;
 
-namespace JDT.Calidus.Parsers.Statements.Resolvers
-{    
+namespace JDT.Calidus.Providers.StatementResolverProviders
+{
     /// <summary>
     /// This class is a default (empty) statement resolver provider
     /// </summary>

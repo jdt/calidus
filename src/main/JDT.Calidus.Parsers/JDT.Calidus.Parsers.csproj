@@ -46,8 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Statements\DefaultStatementFactory.cs" />
-    <Compile Include="Statements\Resolvers\AssemblyBasedStatementResolverProvider.cs" />
-    <Compile Include="Statements\Resolvers\DefaultStatementResolverProvider.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParser.cs" />
     <Compile Include="Statements\StatementParser.cs" />
     <Compile Include="Tokens\GenericsTokenParser.cs" />
