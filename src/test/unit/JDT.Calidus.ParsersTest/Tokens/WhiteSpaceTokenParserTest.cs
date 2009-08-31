@@ -11,7 +11,7 @@ using JDT.Calidus.Parsers.Tokens;
 namespace JDT.Calidus.ParsersTest.Tokens
 {
     [TestFixture]
-    public class FormattingTokenParserTest : CalidusTestBase
+    public class WhiteSpaceTokenParserTest : CalidusTestBase
     {
         private WhiteSpaceTokenParser _parser;
 

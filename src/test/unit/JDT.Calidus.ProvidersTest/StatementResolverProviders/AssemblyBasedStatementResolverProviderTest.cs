@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Providers.StatementResolverProviders;
 using NUnit.Framework;
-using System.Reflection;
-using JDT.Calidus.Parsers.Statements.Resolvers;
 
-namespace JDT.Calidus.ParsersTest.Statements.Resolvers
+namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
 {
     public class TestStatementResolver : IStatementResolver
     {

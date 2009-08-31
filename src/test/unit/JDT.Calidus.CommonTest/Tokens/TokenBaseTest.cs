@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
 using NUnit.Framework;
-using JDT.Calidus.Tokens;
 
-namespace JDT.Calidus.TokensTest
+namespace JDT.Calidus.CommonTest.Tokens
 {
     [TestFixture]
     public class TokenBaseTest

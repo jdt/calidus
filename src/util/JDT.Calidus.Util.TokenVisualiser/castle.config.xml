@@ -2,7 +2,7 @@
 <castle>
   <components>
     
-    <component id="IStatementResolverProvider" type="JDT.Calidus.Parsers.Statements.Resolvers.AssemblyBasedStatementResolverProvider, JDT.Calidus.Parsers" />
+    <component id="IStatementResolverProvider" type="JDT.Calidus.Providers.StatementResolverProviders.AssemblyBasedStatementResolverProvider, JDT.Calidus.Providers" />
     <component id="IWhiteSpaceTokenParser" type="JDT.Calidus.Parsers.Tokens.WhiteSpaceTokenParser, JDT.Calidus.Parsers" />
     <component id="IGenericsTokenParser" type="JDT.Calidus.Parsers.Tokens.GenericsTokenParser, JDT.Calidus.Parsers" />
     <component id="ITokenParser" type="JDT.Calidus.Parsers.Coco.CocoTokenParser, JDT.Calidus.Parsers.Coco" />
