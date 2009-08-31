@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JDT.Calidus.Statements.Resolvers")]
+[assembly: AssemblyTitle("JDT.Calidus.Statements.Factories.Fluent")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JDT.Calidus.Statements.Resolvers")]
+[assembly: AssemblyProduct("JDT.Calidus.Statements.Factories.Fluent")]
 [assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

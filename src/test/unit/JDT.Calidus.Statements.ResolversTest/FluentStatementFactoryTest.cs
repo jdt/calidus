@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Factories.Fluent;
 using NUnit.Framework;
-using JDT.Calidus.Statements.Resolvers;
 using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Common;
 
-namespace JDT.Calidus.Statements.ResolversTest
+namespace JDT.Calidus.Statements.Factories.FluentTest
 {
-    public class FluentStatementResolverImpl
-        : FluentStatementResolver<StubStatement>
+    public class FluentStatementFactoryImpl
+        : FluentStatementFactory<StubStatement>
     {
-        public FluentStatementResolverImpl(bool expressionResult)
+        public FluentStatementFactoryImpl(bool expressionResult)
         {
             MatchExpressionWasCalled = false;
             ExpressionResult = expressionResult;
@@ -54,7 +54,7 @@ namespace JDT.Calidus.Statements.ResolversTest
     }
 
     [TestFixture]
-    public class FluentStatementResolverTest : CalidusTestBase
+    public class FluentStatementFactoryTest : CalidusTestBase
     {
         [Test]
         public void FluentResolverShouldThrowExceptionOnRequestingResolveWhenCannotResolve()
@@ -64,13 +64,13 @@ namespace JDT.Calidus.Statements.ResolversTest
             input.Add(TokenCreator.Create<GenericToken>("code", null));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            FluentStatementResolverImpl resolver = new FluentStatementResolverImpl(false);
+            FluentStatementFactoryImpl factory = new FluentStatementFactoryImpl(false);
 
-            Assert.AreEqual(false, resolver.CanResolve(input));
+            Assert.AreEqual(false, factory.CanCreateStatementFrom(input));
             Assert.Throws<CalidusException>(delegate
-            {
-                resolver.Resolve(input);
-            }, "The resolver cannot resolve the token list to a statement");
+                                                {
+                                                    factory.Create(input);
+                                                }, "The factory cannot parse the token list into a statement");
         }
 
         [Test]
@@ -81,11 +81,11 @@ namespace JDT.Calidus.Statements.ResolversTest
             input.Add(TokenCreator.Create<GenericToken>("code", null));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            FluentStatementResolverImpl resolver = new FluentStatementResolverImpl(true);
+            FluentStatementFactoryImpl factory = new FluentStatementFactoryImpl(true);
 
-            resolver.CanResolve(input);
+            factory.CanCreateStatementFrom(input);
 
-            Assert.True(resolver.MatchExpressionWasCalled);
+            Assert.True(factory.MatchExpressionWasCalled);
         }
     }
 }

@@ -15,5 +15,10 @@ namespace JDT.Calidus.Tests
         {
             return new GenericStatement(tokenList);
         }
+
+        public bool CanCreateStatementFrom(IList<TokenBase> tokenList)
+        {
+            return true;
+        }
     }
 }

@@ -54,7 +54,7 @@
     <Compile Include="StatementCreator.cs" />
     <Compile Include="StubStatement.cs" />
     <Compile Include="StubStatementFactory.cs" />
-    <Compile Include="StubStatementResolverProvider.cs" />
+    <Compile Include="StubStatementFactoryProvider.cs" />
     <Compile Include="TokenCreator.cs" />
   </ItemGroup>
   <ItemGroup>

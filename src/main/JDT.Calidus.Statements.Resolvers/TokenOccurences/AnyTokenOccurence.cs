@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Statements.Resolvers.TokenOccurences
+namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
 {
     /// <summary>
     /// This class is an implementation of TokenOccurenceBase that allows for any number of tokens

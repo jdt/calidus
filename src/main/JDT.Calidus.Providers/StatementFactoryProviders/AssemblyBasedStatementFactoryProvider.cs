@@ -7,12 +7,12 @@ using System.IO;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Statements;
 
-namespace JDT.Calidus.Providers.StatementResolverProviders
+namespace JDT.Calidus.Providers.StatementFactoryProviders
 {
     /// <summary>
-    /// This class provides an assembly-based statement resolver provider
+    /// This class provides an assembly-based statement factory provider
     /// </summary>
-    public class AssemblyBasedStatementResolverProvider : IStatementResolverProvider
+    public class AssemblyBasedStatementFactoryProvider : IStatementFactoryProvider
     {
         private static IEnumerable<Assembly> GetCurrentDirectoryAssemblyList()
         {
@@ -29,7 +29,7 @@ namespace JDT.Calidus.Providers.StatementResolverProviders
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
-        public AssemblyBasedStatementResolverProvider()
+        public AssemblyBasedStatementFactoryProvider()
             : this(GetCurrentDirectoryAssemblyList())
         {
         }
@@ -38,7 +38,7 @@ namespace JDT.Calidus.Providers.StatementResolverProviders
         /// Create a new instance of this class
         /// </summary>
         /// <param name="assemblyToParse">The assembly to parse</param>
-        public AssemblyBasedStatementResolverProvider(Assembly assemblyToParse)
+        public AssemblyBasedStatementFactoryProvider(Assembly assemblyToParse)
             : this(new Assembly[] { assemblyToParse})
         {
         }
@@ -47,37 +47,37 @@ namespace JDT.Calidus.Providers.StatementResolverProviders
         /// Create a new instance of this class
         /// </summary>
         /// <param name="assembliesToParse"></param>
-        public AssemblyBasedStatementResolverProvider(IEnumerable<Assembly> assembliesToParse)
+        public AssemblyBasedStatementFactoryProvider(IEnumerable<Assembly> assembliesToParse)
         {
             _assemblies = assembliesToParse;
         }
 
         /// <summary>
-        /// Loads the resolvers from the provider
+        /// Loads the factories from the provider
         /// </summary>
-        /// <returns>The resolvers</returns>
-        public IEnumerable<IStatementResolver> GetResolvers()
+        /// <returns>The factories</returns>
+        public IEnumerable<IStatementFactory> GetFactories()
         {
-            IList<IStatementResolver> resolvers = new List<IStatementResolver>();
+            IList<IStatementFactory> factories = new List<IStatementFactory>();
 
             //loads all types in the assembly and checks that they are
-            //implementations of the IStatementResolver
+            //implementations of the IStatementFactory
             foreach (Assembly anAssembly in _assemblies)
             {
                 foreach (Type aType in anAssembly.GetTypes())
                 {
                     //make sure to ignore the interface itself
-                    if (typeof(IStatementResolver).IsAssignableFrom(aType)
+                    if (typeof(IStatementFactory).IsAssignableFrom(aType)
                         && aType.IsInterface == false
                         && aType.IsAbstract == false
                         )
-                    {
-                        resolvers.Add((IStatementResolver)Activator.CreateInstance(aType));
+                    { 
+                        factories.Add((IStatementFactory)Activator.CreateInstance(aType));
                     }
                 }
             }
 
-            return resolvers;
+            return factories;
         }
     }
 }

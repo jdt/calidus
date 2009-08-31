@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Resolvers.TokenOccurences;
+using JDT.Calidus.Statements.Factories.Fluent.TokenOccurences;
 using JDT.Calidus.Tokens.Common;
 
-namespace JDT.Calidus.Statements.Resolvers
+namespace JDT.Calidus.Statements.Factories.Fluent
 {
     /// <summary>
     /// Default implementation of the IStatementExpression interfaces
@@ -16,9 +16,9 @@ namespace JDT.Calidus.Statements.Resolvers
     /// </remarks>
     public class StatementExpression 
         : IStatementExpression,
-        IStartingStatementExpression, 
-        IMiddleStatementExpression, 
-        IEndingStatementExpression
+          IStartingStatementExpression, 
+          IMiddleStatementExpression, 
+          IEndingStatementExpression
     {
         private IList<TokenOccurenceBase> _occurences;
 
@@ -53,9 +53,9 @@ namespace JDT.Calidus.Statements.Resolvers
                 //belong to the occurence
                 IList<TokenBase> matching = new List<TokenBase>();
                 while(currentIndex < tokenList.Count() 
-                    && (tokenList.ElementAt(currentIndex).GetType().Equals(anOccurence.TokenType)
-                        || 
-                        tokenList.ElementAt(currentIndex).GetType().IsSubclassOf(anOccurence.TokenType)))
+                      && (tokenList.ElementAt(currentIndex).GetType().Equals(anOccurence.TokenType)
+                          || 
+                          tokenList.ElementAt(currentIndex).GetType().IsSubclassOf(anOccurence.TokenType)))
                 {
                     matching.Add(tokenList.ElementAt(currentIndex));
                     currentIndex++;

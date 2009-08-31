@@ -49,8 +49,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
 
         private void cmdParse_Click(object sender, EventArgs e)
         {
-            TokenParser tokenParser = new TokenParser();
-            StatementParser statementParser = new StatementParser();
+            CalidusTokenParser tokenParser = new CalidusTokenParser();
+            CalidusStatementParser statementParser = new CalidusStatementParser();
 
             try
             {

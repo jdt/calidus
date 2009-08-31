@@ -8,8 +8,8 @@
     <ProjectGuid>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Resolvers</RootNamespace>
-    <AssemblyName>JDT.Calidus.Resolvers</AssemblyName>
+    <RootNamespace>JDT.Calidus.Statements.Factories</RootNamespace>
+    <AssemblyName>JDT.Calidus.Statements.Factories</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -58,9 +58,9 @@
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Resolvers.csproj">
+    <ProjectReference Include="..\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Factories.Fluent.csproj">
       <Project>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</Project>
-      <Name>JDT.Calidus.Statements.Resolvers</Name>
+      <Name>JDT.Calidus.Statements.Factories.Fluent</Name>
     </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>

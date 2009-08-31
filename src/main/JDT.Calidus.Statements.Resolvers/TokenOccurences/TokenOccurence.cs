@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Tokens.Common;
 
-namespace JDT.Calidus.Statements.Resolvers.TokenOccurences
+namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
 {
     /// <summary>
     /// This class is an implementation of TokenOccurenceBase testing for a specified count of tokens

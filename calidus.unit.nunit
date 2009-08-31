@@ -1,15 +1,15 @@
 ﻿<NUnitProject>
   <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
+    <assembly path="bin\test\unit\JDT.Calidus.CommonTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Parsers.CocoTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.ParsersTest.dll" />
-    <assembly path="bin\test\unit\JDT.Calidus.ResolversTest.dll" />
-    <assembly path="bin\test\unit\JDT.Calidus.Statements.ResolversTest.dll" />
+    <assembly path="bin\test\unit\JDT.Calidus.ProvidersTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.StatementsTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.TokensTest.dll" />
+    <assembly path="bin\test\unit\JDT.Calidus.Statements.FactoriesTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Rules.StatementsTest.dll" />
-    <assembly path="bin\test\unit\JDT.Calidus.CommonTest.dll" />
-    <assembly path="bin\test\unit\JDT.Calidus.ProvidersTest.dll" />
+    <assembly path="bin\test\unit\JDT.Calidus.Statements.FactoriesTest.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

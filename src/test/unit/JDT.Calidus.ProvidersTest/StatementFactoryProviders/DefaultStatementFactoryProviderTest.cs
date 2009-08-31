@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Providers.StatementResolverProviders;
+using JDT.Calidus.Providers.StatementFactoryProviders;
 using NUnit.Framework;
 
-namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
+namespace JDT.Calidus.ProvidersTest.StatementFactoryProviders
 {
     [TestFixture]
     public class DefaultStatementResolverProviderTest
     {
-        private DefaultStatementResolverProvider _statementFactory;
+        private DefaultStatementFactoryProvider _statementFactory;
 
         [SetUp]
         public void SetUp()
         {
-            _statementFactory = new DefaultStatementResolverProvider();
+            _statementFactory = new DefaultStatementFactoryProvider();
         }
 
         [Test]
         public void DefaultStatementResolverProviderShouldReturnEmptyResolverList()
         {
-            Assert.AreEqual(0, _statementFactory.GetResolvers().Count());
+            Assert.AreEqual(0, _statementFactory.GetFactories().Count());
         }
     }
 }

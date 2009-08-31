@@ -37,7 +37,7 @@ namespace JDT.Calidus.ParsersTest.Tokens
     }
 
     [TestFixture]
-    public class TokenParserTest
+    public class CalidusTokenParserTest
     {
         private OtherParsersImpl _otherImpl;
 
@@ -62,7 +62,7 @@ namespace JDT.Calidus.ParsersTest.Tokens
 
             mocker.ReplayAll();
 
-            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            CalidusTokenParser parser = new CalidusTokenParser(parserImp, _otherImpl, _otherImpl);
             parser.Parse("");
 
             mocker.VerifyAll();
@@ -80,7 +80,7 @@ namespace JDT.Calidus.ParsersTest.Tokens
             
             mocker.ReplayAll();
 
-            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            CalidusTokenParser parser = new CalidusTokenParser(parserImp, _otherImpl, _otherImpl);
             parser.Parse("");
 
             mocker.VerifyAll();
@@ -99,7 +99,7 @@ namespace JDT.Calidus.ParsersTest.Tokens
             
             mocker.ReplayAll();
 
-            TokenParser parser = new TokenParser(parserImp, _otherImpl, _otherImpl);
+            CalidusTokenParser parser = new CalidusTokenParser(parserImp, _otherImpl, _otherImpl);
             parser.Parse("");
 
             mocker.VerifyAll();
