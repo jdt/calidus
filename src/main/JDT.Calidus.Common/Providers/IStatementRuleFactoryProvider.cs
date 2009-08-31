@@ -7,12 +7,12 @@ using JDT.Calidus.Common.Rules.Statements;
 namespace JDT.Calidus.Common.Providers
 {
     /// <summary>
-    /// This interface is implemented by providers of statement rules
+    /// This interface is implemented by factories of statement rules
     /// </summary>
-    public interface IStatementRuleProvider
+    public interface IStatementRuleFactoryProvider
     {        
         /// <summary>
-        /// Loads the statement rules from the provider
+        /// Loads the statement rules from the factory
         /// </summary>
         /// <returns>The rules</returns>
         IEnumerable<StatementRuleBase> GetStatementRules();

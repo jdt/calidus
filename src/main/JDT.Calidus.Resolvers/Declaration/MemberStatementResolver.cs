@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Resolvers;
+using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Statements.Declaration;
-using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Common;
 
-namespace JDT.Calidus.Resolvers.Declaration
+namespace JDT.Calidus.Statements.Factories.Declaration
 {
     /// <summary>
-    /// This class resolves member statements
+    /// This class creates member statements
     /// </summary>
-    public class MemberStatementResolver : FluentStatementResolver<MemberStatement>
+    public class MemberStatementFactory : FluentStatementFactory<MemberStatement>
     {
         protected override MemberStatement BuildStatement(IList<TokenBase> input)
         {
@@ -27,9 +26,9 @@ namespace JDT.Calidus.Resolvers.Declaration
             {
                 StatementExpression expression = new StatementExpression();
                 expression.StartsWith<AccessModifierToken>()
-                          .FollowedBy<IdentifierToken>()
-                          .FollowedBy<IdentifierToken>()
-                          .FollowedBy<SemiColonToken>();
+                    .FollowedBy<IdentifierToken>()
+                    .FollowedBy<IdentifierToken>()
+                    .FollowedBy<SemiColonToken>();
 
                 return expression;
             }

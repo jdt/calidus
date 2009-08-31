@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Factories.Fluent.TokenOccurences;
 using JDT.Calidus.Tests;
 using NUnit.Framework;
-using JDT.Calidus.Statements.Resolvers.TokenOccurences;
 using JDT.Calidus.Tokens.Common;
 
-namespace JDT.Calidus.Statements.ResolversTest.TokenOccurences
+namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
 {
     [TestFixture]
     public class TokenOccurenceTest : CalidusTestBase

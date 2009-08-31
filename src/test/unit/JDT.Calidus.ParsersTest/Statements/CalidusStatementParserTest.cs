@@ -16,20 +16,20 @@ using JDT.Calidus.Tokens.Common.Brackets;
 namespace JDT.Calidus.ParsersTest.Statements
 {
     [TestFixture]
-    public class StatementParserTest : CalidusTestBase
+    public class CalidusStatementParserTest : CalidusTestBase
     {
-        private StatementParser _parser;
+        private CalidusStatementParser _parser;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _parser = new StatementParser(new StubStatementFactory());
+            _parser = new CalidusStatementParser(new StubStatementFactoryProvider());
         }
 
         [Test]
         public void ParserShouldCallStatementFactoryWhenParsingTokens()
-        {        
+        {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<GenericToken>("source", null));
             input.Add(TokenCreator.Create<GenericToken>("code", null));
@@ -37,10 +37,11 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             MockRepository mocker = new MockRepository();
             IStatementFactory factory = mocker.StrictMock<IStatementFactory>();
+            Expect.Call(factory.CanCreateStatementFrom(new List<TokenBase>())).IgnoreArguments().Return(true).Repeat.Once();
             Expect.Call(factory.Create(input)).Return(new GenericStatement(input)).Repeat.Once();
 
-            //clear and register a mock factory
-            StatementParser parser = new StatementParser(factory);
+            StubStatementFactoryProvider provider = new StubStatementFactoryProvider(factory);
+            CalidusStatementParser parser = new CalidusStatementParser(provider);
             mocker.ReplayAll();
 
             IEnumerable<StatementBase> actual = parser.Parse(input);

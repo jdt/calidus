@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Factories.Declaration;
 using JDT.Calidus.Tests;
 using NUnit.Framework;
-using JDT.Calidus.Resolvers.Declaration;
-using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Types;
 using JDT.Calidus.Tokens.Common.Brackets;
 
-namespace JDT.Calidus.ResolversTest.Declaration
+namespace JDT.Calidus.Statements.FactoriesTest.Declaration
 {
     [TestFixture]
-    public class MemberStatementResolverTest : CalidusTestBase
+    public class MemberStatementFactoryTest : CalidusTestBase
     {
-        private MemberStatementResolver _resolver;
+        private MemberStatementFactory _factory;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _resolver = new MemberStatementResolver();
+            _factory = new MemberStatementFactory();
         }
 
         [Test]
-        public void MemberStatementResolverShouldResolveMemberCorrectly()
+        public void MemberStatementFactoryShouldCheckCreateMemberCorrectly()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
@@ -37,11 +36,11 @@ namespace JDT.Calidus.ResolversTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            Assert.IsTrue(_resolver.CanResolve(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
         }
 
         [Test]
-        public void MemberStatementResolverShouldNotResolveClass()
+        public void MemberStatementFactoryShouldNotCreateClass()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
@@ -50,11 +49,11 @@ namespace JDT.Calidus.ResolversTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
 
-            Assert.IsFalse(_resolver.CanResolve(input));
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
         }
 
         [Test]
-        public void MemberStatementResolverShouldNotResolveMethod()
+        public void MemberStatementFactoryShouldNotCreateFromMethod()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
@@ -65,7 +64,7 @@ namespace JDT.Calidus.ResolversTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            Assert.IsFalse(_resolver.CanResolve(input));
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
         }
     }
 }

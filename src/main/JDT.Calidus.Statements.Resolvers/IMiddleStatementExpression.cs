@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Statements.Resolvers
+namespace JDT.Calidus.Statements.Factories.Fluent
 {
     /// <summary>
     /// This interface is implemented by middle parts of statement expressions

@@ -5,7 +5,7 @@ using System.Text;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Common;
 
-namespace JDT.Calidus.Statements.Resolvers.TokenOccurences
+namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
 {
     /// <summary>
     /// This class is the base class for token occurences
@@ -45,7 +45,7 @@ namespace JDT.Calidus.Statements.Resolvers.TokenOccurences
             foreach (Type aTokenType in tokenList.Select(p => p.GetType()))
             {
                 if(aTokenType.Equals(TokenType) == false
-                    && aTokenType.IsSubclassOf(TokenType) == false
+                   && aTokenType.IsSubclassOf(TokenType) == false
                     )
                     throw new CalidusException("Token occurence can only match a list of same-type tokens of type " + TokenType.Name);
             }

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Common;
 
 namespace JDT.Calidus.Parsers.Tokens
 {
     /// <summary>
-    /// This class is a pluggable implementation of the ITokenParser interface
+    /// This class is the main Calidus token parser. It provides a safe implementation
+    /// that parsers all tokens and returns unknown tokens as GenericTokens
     /// </summary>
-    public class TokenParser : ITokenParser
+    public class CalidusTokenParser
     {
         private ITokenParser _parser;
         private IWhiteSpaceTokenParser _whiteSpaceParser;
@@ -20,7 +20,7 @@ namespace JDT.Calidus.Parsers.Tokens
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
-        public TokenParser()
+        public CalidusTokenParser()
             : this(ObjectFactory.Get<ITokenParser>())
         {
         }
@@ -29,7 +29,7 @@ namespace JDT.Calidus.Parsers.Tokens
         /// Create a new instance of this class
         /// </summary>
         /// <param name="parser">The parser to use</param>
-        public TokenParser(ITokenParser parser)
+        public CalidusTokenParser(ITokenParser parser)
             : this(parser, 
                     ObjectFactory.Get<IWhiteSpaceTokenParser>(), 
                     ObjectFactory.Get<IGenericsTokenParser>())
@@ -42,31 +42,14 @@ namespace JDT.Calidus.Parsers.Tokens
         /// <param name="parser">The parser to use</param>
         /// <param name="whiteSpaceParser">The whitespace parser to use</param>
         /// <param name="genericsParser">The custom generics parser to use</param>
-        public TokenParser(ITokenParser parser, 
+        public CalidusTokenParser(ITokenParser parser, 
             IWhiteSpaceTokenParser whiteSpaceParser, 
             IGenericsTokenParser genericsParser)
         {
             _parser = parser;
             _whiteSpaceParser = whiteSpaceParser;
             _genericsParser = genericsParser;
-
-            SupportsWhiteSpaceParsing = true;
-            SupportsGenericsParsing = true;
-            SupportsCommentParsing = true;
         }
-
-        /// <summary>
-        /// Gets if the parser supports whitespace parsing
-        /// </summary>
-        public bool SupportsWhiteSpaceParsing { get; private set; }
-        /// <summary>
-        /// Gets if the parser supports generics parsing
-        /// </summary>
-        public bool SupportsGenericsParsing { get; private set; }        
-        /// <summary>
-        /// Gets if the parser supports comment parsing
-        /// </summary>
-        public bool SupportsCommentParsing { get; private set; }
 
         /// <summary>
         /// Parses the source into a list of tokens and returns true if it succeeded, otherwise false

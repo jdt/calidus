@@ -5,19 +5,19 @@ using System.Text;
 using System.Reflection;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Providers.StatementResolverProviders;
+using JDT.Calidus.Providers.StatementFactoryProviders;
 using NUnit.Framework;
 
-namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
+namespace JDT.Calidus.ProvidersTest.StatementFactoryProviders
 {
-    public class TestStatementResolver : IStatementResolver
+    public class TestStatementFactory : IStatementFactory
     {
-        public StatementBase Resolve(IList<TokenBase> input)
+        public StatementBase Create(IList<TokenBase> input)
         {
             throw new NotImplementedException();
         }
 
-        public bool CanResolve(IList<TokenBase> tokenList)
+        public bool CanCreateStatementFrom(IList<TokenBase> tokenList)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +37,7 @@ namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
                 return false;
             }
 
-            TestStatementResolver theResolver = (TestStatementResolver)obj;
+            TestStatementFactory theResolver = (TestStatementFactory)obj;
             return true;
         }
 
@@ -49,29 +49,29 @@ namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
         }
     }
 
-    public abstract class AbstractTestStatementResolver : IStatementResolver
+    public abstract class AbstractTestStatementFactory : IStatementFactory
     {
-        public abstract StatementBase Resolve(IList<TokenBase> input);
-        public abstract bool CanResolve(IList<TokenBase> tokenList);
+        public abstract StatementBase Create(IList<TokenBase> input);
+        public abstract bool CanCreateStatementFrom(IList<TokenBase> tokenList);
     }
 
     [TestFixture]
     public class AssemblyBasedStatementResolverProviderTest
     {
-        private AssemblyBasedStatementResolverProvider _resolverProvider;
+        private AssemblyBasedStatementFactoryProvider _factoryProvider;
 
         [SetUp]
         public void SetUp()
         {
             Assembly toCheck = this.GetType().Assembly;
-            _resolverProvider = new AssemblyBasedStatementResolverProvider(toCheck);
+            _factoryProvider = new AssemblyBasedStatementFactoryProvider(toCheck);
         }
 
         [Test]
-        public void TestStatementResolverInstancesShouldBeEqual()
+        public void TestStatementFactoryInstancesShouldBeEqual()
         {
-            TestStatementResolver alpha = new TestStatementResolver();
-            TestStatementResolver bravo = new TestStatementResolver();
+            TestStatementFactory alpha = new TestStatementFactory();
+            TestStatementFactory bravo = new TestStatementFactory();
 
             Assert.AreEqual(alpha, bravo);
         }
@@ -79,19 +79,19 @@ namespace JDT.Calidus.ProvidersTest.StatementResolverProviders
         [Test]
         public void AssemblyBasedStatementResolverProviderShouldReturnResolversInAssemblyList()
         {
-            IList<IStatementResolver> expected = new List<IStatementResolver>();
-            expected.Add(new TestStatementResolver());
+            IList<IStatementFactory> expected = new List<IStatementFactory>();
+            expected.Add(new TestStatementFactory());
 
-            CollectionAssert.AreEquivalent(expected, _resolverProvider.GetResolvers());
+            CollectionAssert.AreEquivalent(expected, _factoryProvider.GetFactories());
         }
 
         [Test]
         public void AssemblyBasedStatementResolverProviderShouldNotReturnAbstractResolversInAssemblyList()
         {
-            IList<IStatementResolver> expected = new List<IStatementResolver>();
-            expected.Add(new TestStatementResolver());
+            IList<IStatementFactory> expected = new List<IStatementFactory>();
+            expected.Add(new TestStatementFactory());
 
-            CollectionAssert.AreEquivalent(expected, _resolverProvider.GetResolvers());
+            CollectionAssert.AreEquivalent(expected, _factoryProvider.GetFactories());
         }
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Tests;
 using NUnit.Framework;
-using JDT.Calidus.Statements.Resolvers;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
 
-namespace JDT.Calidus.Statements.ResolversTest
+namespace JDT.Calidus.Statements.Factories.FluentTest
 {
     [TestFixture]
     public class StatementExpressionTest : CalidusTestBase
@@ -77,7 +77,7 @@ namespace JDT.Calidus.Statements.ResolversTest
 
             IStatementExpression toMatch =
                 _expression.StartsWith<PrivateModifierToken>()
-                            .FollowedBy<SemiColonToken>();
+                    .FollowedBy<SemiColonToken>();
 
             Assert.IsTrue(toMatch.Matches(input));
         }
@@ -94,7 +94,7 @@ namespace JDT.Calidus.Statements.ResolversTest
 
             IStatementExpression toMatch =
                 _expression.StartsWith<PrivateModifierToken>()
-                            .FollowedBy<SemiColonToken>();
+                    .FollowedBy<SemiColonToken>();
 
             Assert.IsTrue(toMatch.Matches(input));
         }

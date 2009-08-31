@@ -53,11 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Statements\DefaultStatementFactoryTest.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParserTest.cs" />
-    <Compile Include="Statements\StatementParserTest.cs" />
+    <Compile Include="Statements\CalidusStatementParserTest.cs" />
     <Compile Include="Tokens\GenericsTokenParserTest.cs" />
-    <Compile Include="Tokens\TokenParserTest.cs" />
+    <Compile Include="Tokens\CalidusTokenParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

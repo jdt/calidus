@@ -6,13 +6,13 @@ using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Common;
 
-namespace JDT.Calidus.Statements.Resolvers
+namespace JDT.Calidus.Statements.Factories.Fluent
 {
     /// <summary>
-    /// Fluent implementation of an IStatementResolver
+    /// Fluent implementation of an IStatementFactory
     /// </summary>
-    public abstract class FluentStatementResolver<TStatementType>
-        : IStatementResolver
+    public abstract class FluentStatementFactory<TStatementType>
+        : IStatementFactory
         where TStatementType : StatementBase
     {
         /// <summary>
@@ -20,20 +20,20 @@ namespace JDT.Calidus.Statements.Resolvers
         /// </summary>
         /// <param name="input">The tokens to parse</param>
         /// <returns>The statement</returns>
-        public StatementBase Resolve(IList<TokenBase> input)
+        public StatementBase Create(IList<TokenBase> input)
         {
-            if (CanResolve(input))
+            if (CanCreateStatementFrom(input))
                 return BuildStatement(input);
             else
-                throw new CalidusException("The resolver cannot resolve the token list to a statement");
+                throw new CalidusException("The factory cannot parse the token list into a statement");
         }
 
         /// <summary>
-        /// Checks to see if the current resolver is able to resolve the token list
+        /// Checks to see if the current factory is able to create a statement from the token list
         /// </summary>
-        /// <param name="tokenList">The tokens to try to resolve</param>
-        /// <returns>True if able to resolve, otherwise false</returns>
-        public bool CanResolve(IList<TokenBase> tokenList)
+        /// <param name="tokenList">The tokens to try to parse as a statement</param>
+        /// <returns>True if able to parse, otherwise false</returns>
+        public bool CanCreateStatementFrom(IList<TokenBase> tokenList)
         {
             return Expression.Matches(tokenList);
         }

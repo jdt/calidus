@@ -45,11 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Statements\DefaultStatementFactory.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParser.cs" />
-    <Compile Include="Statements\StatementParser.cs" />
+    <Compile Include="Statements\CalidusStatementParser.cs" />
     <Compile Include="Tokens\GenericsTokenParser.cs" />
-    <Compile Include="Tokens\TokenParser.cs" />
+    <Compile Include="Tokens\CalidusTokenParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
