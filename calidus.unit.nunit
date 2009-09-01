@@ -10,6 +10,7 @@
     <assembly path="bin\test\unit\JDT.Calidus.Statements.FactoriesTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Rules.StatementsTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Statements.FactoriesTest.dll" />
+    <assembly path="bin\test\unit\JDT.Calidus.ProjectsTest.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>
