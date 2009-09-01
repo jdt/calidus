@@ -33,21 +33,21 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.tvFiles = new System.Windows.Forms.TreeView();
-            this.stripStatus = new System.Windows.Forms.StatusStrip();
-            this.pnlControl = new System.Windows.Forms.Panel();
             this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
-            this.cmdRun = new System.Windows.Forms.Button();
-            this.prgProgress = new System.Windows.Forms.ProgressBar();
-            this.lstViolations = new System.Windows.Forms.ListBox();
             this.lvRules = new System.Windows.Forms.ListView();
+            this.lstViolations = new System.Windows.Forms.ListBox();
+            this.pnlControl = new System.Windows.Forms.Panel();
+            this.prgProgress = new System.Windows.Forms.ProgressBar();
+            this.cmdRun = new System.Windows.Forms.Button();
+            this.stripStatus = new System.Windows.Forms.StatusStrip();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
-            this.pnlControl.SuspendLayout();
             this.splitRulesViolations.Panel1.SuspendLayout();
             this.splitRulesViolations.Panel2.SuspendLayout();
             this.splitRulesViolations.SuspendLayout();
+            this.pnlControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuMain
@@ -105,26 +105,6 @@
             this.tvFiles.Size = new System.Drawing.Size(239, 409);
             this.tvFiles.TabIndex = 0;
             // 
-            // stripStatus
-            // 
-            this.stripStatus.Location = new System.Drawing.Point(0, 445);
-            this.stripStatus.Name = "stripStatus";
-            this.stripStatus.Size = new System.Drawing.Size(741, 22);
-            this.stripStatus.TabIndex = 2;
-            this.stripStatus.Text = "statusStrip1";
-            // 
-            // pnlControl
-            // 
-            this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlControl.Controls.Add(this.prgProgress);
-            this.pnlControl.Controls.Add(this.cmdRun);
-            this.pnlControl.Location = new System.Drawing.Point(3, 3);
-            this.pnlControl.Name = "pnlControl";
-            this.pnlControl.Size = new System.Drawing.Size(486, 100);
-            this.pnlControl.TabIndex = 0;
-            // 
             // splitRulesViolations
             // 
             this.splitRulesViolations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -145,14 +125,35 @@
             this.splitRulesViolations.SplitterDistance = 151;
             this.splitRulesViolations.TabIndex = 1;
             // 
-            // cmdRun
+            // lvRules
             // 
-            this.cmdRun.Location = new System.Drawing.Point(15, 4);
-            this.cmdRun.Name = "cmdRun";
-            this.cmdRun.Size = new System.Drawing.Size(75, 23);
-            this.cmdRun.TabIndex = 0;
-            this.cmdRun.Text = "Run";
-            this.cmdRun.UseVisualStyleBackColor = true;
+            this.lvRules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvRules.Location = new System.Drawing.Point(0, 0);
+            this.lvRules.Name = "lvRules";
+            this.lvRules.Size = new System.Drawing.Size(486, 151);
+            this.lvRules.TabIndex = 0;
+            this.lvRules.UseCompatibleStateImageBehavior = false;
+            // 
+            // lstViolations
+            // 
+            this.lstViolations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstViolations.FormattingEnabled = true;
+            this.lstViolations.Location = new System.Drawing.Point(0, 0);
+            this.lstViolations.Name = "lstViolations";
+            this.lstViolations.Size = new System.Drawing.Size(486, 147);
+            this.lstViolations.TabIndex = 0;
+            // 
+            // pnlControl
+            // 
+            this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlControl.Controls.Add(this.prgProgress);
+            this.pnlControl.Controls.Add(this.cmdRun);
+            this.pnlControl.Location = new System.Drawing.Point(3, 3);
+            this.pnlControl.Name = "pnlControl";
+            this.pnlControl.Size = new System.Drawing.Size(486, 100);
+            this.pnlControl.TabIndex = 0;
             // 
             // prgProgress
             // 
@@ -164,23 +165,22 @@
             this.prgProgress.Size = new System.Drawing.Size(451, 52);
             this.prgProgress.TabIndex = 1;
             // 
-            // lstViolations
+            // cmdRun
             // 
-            this.lstViolations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstViolations.FormattingEnabled = true;
-            this.lstViolations.Location = new System.Drawing.Point(0, 0);
-            this.lstViolations.Name = "lstViolations";
-            this.lstViolations.Size = new System.Drawing.Size(486, 147);
-            this.lstViolations.TabIndex = 0;
+            this.cmdRun.Location = new System.Drawing.Point(15, 4);
+            this.cmdRun.Name = "cmdRun";
+            this.cmdRun.Size = new System.Drawing.Size(75, 23);
+            this.cmdRun.TabIndex = 0;
+            this.cmdRun.Text = "Run";
+            this.cmdRun.UseVisualStyleBackColor = true;
             // 
-            // lvRules
+            // stripStatus
             // 
-            this.lvRules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvRules.Location = new System.Drawing.Point(0, 0);
-            this.lvRules.Name = "lvRules";
-            this.lvRules.Size = new System.Drawing.Size(486, 151);
-            this.lvRules.TabIndex = 0;
-            this.lvRules.UseCompatibleStateImageBehavior = false;
+            this.stripStatus.Location = new System.Drawing.Point(0, 445);
+            this.stripStatus.Name = "stripStatus";
+            this.stripStatus.Size = new System.Drawing.Size(741, 22);
+            this.stripStatus.TabIndex = 2;
+            this.stripStatus.Text = "statusStrip1";
             // 
             // MainWindow
             // 
@@ -198,10 +198,10 @@
             this.splitMain.Panel1.ResumeLayout(false);
             this.splitMain.Panel2.ResumeLayout(false);
             this.splitMain.ResumeLayout(false);
-            this.pnlControl.ResumeLayout(false);
             this.splitRulesViolations.Panel1.ResumeLayout(false);
             this.splitRulesViolations.Panel2.ResumeLayout(false);
             this.splitRulesViolations.ResumeLayout(false);
+            this.pnlControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
