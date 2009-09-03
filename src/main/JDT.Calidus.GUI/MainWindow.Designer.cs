@@ -40,6 +40,8 @@
             this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.cmdRun = new System.Windows.Forms.Button();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
+            this.lblProjectDir = new System.Windows.Forms.Label();
+            this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -148,6 +150,8 @@
             this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlControl.Controls.Add(this.lnkSourceDirectory);
+            this.pnlControl.Controls.Add(this.lblProjectDir);
             this.pnlControl.Controls.Add(this.prgProgress);
             this.pnlControl.Controls.Add(this.cmdRun);
             this.pnlControl.Location = new System.Drawing.Point(3, 3);
@@ -182,6 +186,25 @@
             this.stripStatus.TabIndex = 2;
             this.stripStatus.Text = "statusStrip1";
             // 
+            // lblProjectDir
+            // 
+            this.lblProjectDir.AutoSize = true;
+            this.lblProjectDir.Location = new System.Drawing.Point(96, 9);
+            this.lblProjectDir.Name = "lblProjectDir";
+            this.lblProjectDir.Size = new System.Drawing.Size(44, 13);
+            this.lblProjectDir.TabIndex = 2;
+            this.lblProjectDir.Text = "Source:";
+            // 
+            // lnkSourceDirectory
+            // 
+            this.lnkSourceDirectory.AutoSize = true;
+            this.lnkSourceDirectory.Location = new System.Drawing.Point(146, 9);
+            this.lnkSourceDirectory.Name = "lnkSourceDirectory";
+            this.lnkSourceDirectory.Size = new System.Drawing.Size(55, 13);
+            this.lnkSourceDirectory.TabIndex = 3;
+            this.lnkSourceDirectory.TabStop = true;
+            this.lnkSourceDirectory.Text = "<Not Set>";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,6 +225,7 @@
             this.splitRulesViolations.Panel2.ResumeLayout(false);
             this.splitRulesViolations.ResumeLayout(false);
             this.pnlControl.ResumeLayout(false);
+            this.pnlControl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,5 +245,7 @@
         private System.Windows.Forms.Button cmdRun;
         private System.Windows.Forms.ListBox lstViolations;
         private System.Windows.Forms.ListView lvRules;
+        private System.Windows.Forms.Label lblProjectDir;
+        private System.Windows.Forms.LinkLabel lnkSourceDirectory;
     }
 }

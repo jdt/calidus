@@ -15,7 +15,7 @@ namespace JDT.Calidus.Projects.Files
     {
         private static readonly String SEPARATOR = Path.DirectorySeparatorChar.ToString();
 
-        private IEnumerable<String> _files;
+        private IList<String> _files;
         private IFileValidator _validator;
 
         /// <summary>
@@ -25,6 +25,7 @@ namespace JDT.Calidus.Projects.Files
         public FileTree(IFileValidator validator)
         {
             _validator = validator;
+            _files = new List<String>();
         }
 
         /// <summary>
@@ -33,24 +34,33 @@ namespace JDT.Calidus.Projects.Files
         /// <param name="files">The files to put in the tree</param>
         public void Add(IEnumerable<String> files)
         {
-            foreach(String aLine in files)
+            foreach (String aLine in files)
             {
-                if (_validator.IsValidFile(aLine) == false)
-                    throw new CalidusException("File " + aLine + " is not a valid file");
+                Add(aLine);
             }
+        }
 
-            _files = files;
+        /// <summary>
+        /// Adds a single file to the file tree
+        /// </summary>
+        /// <param name="file">The file to put in the tree</param>
+        public void Add(String file)
+        {
+            if (_validator.IsValidFile(file) == false)
+                throw new CalidusException("File " + file + " is not a valid file");
+
+            _files.Add(file);
         }
 
         /// <summary>
         /// Gets the common root of all the files
         /// </summary>
-        public String Root
+        public FileTreeItem Root
         {
             get
             {
                 if (_files.Count() == 0)
-                    return SEPARATOR;
+                    return new FileTreeItem(null, SEPARATOR);
 
                 String root = Path.GetDirectoryName(_files.ElementAt(0));
                 foreach(String aFile in _files)
@@ -71,15 +81,12 @@ namespace JDT.Calidus.Projects.Files
 
                 //return at least separator
                 if (root.Length == 0)
-                    return SEPARATOR;
+                    return new FileTreeItem(null, SEPARATOR);
                 else
                 {
-                    //append at least the start and end
-                    if (root.StartsWith(SEPARATOR) == false)
-                        root = SEPARATOR + root;
                     if (root.EndsWith(SEPARATOR) == false)
                         root = root + SEPARATOR;
-                    return root;
+                    return new FileTreeItem(null, root);
                 }
             }
         }
@@ -87,18 +94,18 @@ namespace JDT.Calidus.Projects.Files
         /// <summary>
         /// Gets the list of child elements of the path provided
         /// </summary>
-        /// <param name="path">The path</param>
+        /// <param name="item">The parent item</param>
         /// <returns>The child list</returns>
-        public IEnumerable<String> GetChildrenOf(String path)
+        public IEnumerable<FileTreeItem> GetChildrenOf(FileTreeItem item)
         {
             IList<String> result = new List<String>();
 
             foreach(String aFile in _files)
             {
-                if(aFile.StartsWith(path))
+                if(aFile.StartsWith(item.Location))
                 {
-                    String child = path;
-                    int i = path.Length;
+                    String child = item.Location;
+                    int i = child.Length;
                     while(i < aFile.Length
                         && aFile[i].Equals(Path.DirectorySeparatorChar) == false)
                     {
@@ -106,12 +113,27 @@ namespace JDT.Calidus.Projects.Files
                         i++;
                     }
 
+                    //add the last separator char 
+                    if(i < aFile.Length)
+                        child += aFile[i];
+
                     if (result.Contains(child) == false)
                         result.Add(child);
                 }
             }
 
-            return result;
+            if (result.Count == 1
+                && result[0].Equals(item.Location))
+                return new List<FileTreeItem>();
+            else
+            {
+                IList<FileTreeItem> resultList = new List<FileTreeItem>();
+                foreach(String aFile in result)
+                {
+                    resultList.Add(new FileTreeItem(item, aFile));
+                }
+                return resultList;
+            }
         }
     }
 }
