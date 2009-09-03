@@ -29,6 +29,14 @@ namespace JDT.Calidus.Projects.Files
         }
 
         /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        public FileTree()
+            : this(ObjectFactory.Get<IFileValidator>())
+        {
+        }
+
+        /// <summary>
         /// Adds the list of files to the file tree
         /// </summary>
         /// <param name="files">The files to put in the tree</param>
