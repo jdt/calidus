@@ -37,11 +37,11 @@
             this.lvRules = new System.Windows.Forms.ListView();
             this.lstViolations = new System.Windows.Forms.ListBox();
             this.pnlControl = new System.Windows.Forms.Panel();
+            this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
+            this.lblSourceDir = new System.Windows.Forms.Label();
             this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.cmdRun = new System.Windows.Forms.Button();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
-            this.lblProjectDir = new System.Windows.Forms.Label();
-            this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -151,7 +151,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlControl.Controls.Add(this.lnkSourceDirectory);
-            this.pnlControl.Controls.Add(this.lblProjectDir);
+            this.pnlControl.Controls.Add(this.lblSourceDir);
             this.pnlControl.Controls.Add(this.prgProgress);
             this.pnlControl.Controls.Add(this.cmdRun);
             this.pnlControl.Location = new System.Drawing.Point(3, 3);
@@ -159,21 +159,41 @@
             this.pnlControl.Size = new System.Drawing.Size(486, 100);
             this.pnlControl.TabIndex = 0;
             // 
+            // lnkSourceDirectory
+            // 
+            this.lnkSourceDirectory.AutoSize = true;
+            this.lnkSourceDirectory.Location = new System.Drawing.Point(164, 9);
+            this.lnkSourceDirectory.Name = "lnkSourceDirectory";
+            this.lnkSourceDirectory.Size = new System.Drawing.Size(55, 13);
+            this.lnkSourceDirectory.TabIndex = 3;
+            this.lnkSourceDirectory.TabStop = true;
+            this.lnkSourceDirectory.Text = "<Not Set>";
+            this.lnkSourceDirectory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSourceDirectory_LinkClicked);
+            // 
+            // lblSourceDir
+            // 
+            this.lblSourceDir.AutoSize = true;
+            this.lblSourceDir.Location = new System.Drawing.Point(96, 9);
+            this.lblSourceDir.Name = "lblSourceDir";
+            this.lblSourceDir.Size = new System.Drawing.Size(44, 13);
+            this.lblSourceDir.TabIndex = 2;
+            this.lblSourceDir.Text = "Source:";
+            // 
             // prgProgress
             // 
             this.prgProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.prgProgress.Location = new System.Drawing.Point(15, 33);
+            this.prgProgress.Location = new System.Drawing.Point(15, 36);
             this.prgProgress.Name = "prgProgress";
-            this.prgProgress.Size = new System.Drawing.Size(451, 52);
+            this.prgProgress.Size = new System.Drawing.Size(451, 49);
             this.prgProgress.TabIndex = 1;
             // 
             // cmdRun
             // 
             this.cmdRun.Location = new System.Drawing.Point(15, 4);
             this.cmdRun.Name = "cmdRun";
-            this.cmdRun.Size = new System.Drawing.Size(75, 23);
+            this.cmdRun.Size = new System.Drawing.Size(75, 26);
             this.cmdRun.TabIndex = 0;
             this.cmdRun.Text = "Run";
             this.cmdRun.UseVisualStyleBackColor = true;
@@ -185,25 +205,6 @@
             this.stripStatus.Size = new System.Drawing.Size(741, 22);
             this.stripStatus.TabIndex = 2;
             this.stripStatus.Text = "statusStrip1";
-            // 
-            // lblProjectDir
-            // 
-            this.lblProjectDir.AutoSize = true;
-            this.lblProjectDir.Location = new System.Drawing.Point(96, 9);
-            this.lblProjectDir.Name = "lblProjectDir";
-            this.lblProjectDir.Size = new System.Drawing.Size(44, 13);
-            this.lblProjectDir.TabIndex = 2;
-            this.lblProjectDir.Text = "Source:";
-            // 
-            // lnkSourceDirectory
-            // 
-            this.lnkSourceDirectory.AutoSize = true;
-            this.lnkSourceDirectory.Location = new System.Drawing.Point(146, 9);
-            this.lnkSourceDirectory.Name = "lnkSourceDirectory";
-            this.lnkSourceDirectory.Size = new System.Drawing.Size(55, 13);
-            this.lnkSourceDirectory.TabIndex = 3;
-            this.lnkSourceDirectory.TabStop = true;
-            this.lnkSourceDirectory.Text = "<Not Set>";
             // 
             // MainWindow
             // 
@@ -245,7 +246,7 @@
         private System.Windows.Forms.Button cmdRun;
         private System.Windows.Forms.ListBox lstViolations;
         private System.Windows.Forms.ListView lvRules;
-        private System.Windows.Forms.Label lblProjectDir;
+        private System.Windows.Forms.Label lblSourceDir;
         private System.Windows.Forms.LinkLabel lnkSourceDirectory;
     }
 }
