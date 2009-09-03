@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<castle>
+  <components>
+    
+    <component id="IFileValidator" type="JDT.Calidus.Projects.Files.Validators.CSharpFileValidator, JDT.Calidus.Projects.Files.Validators" />
+
+  </components>
+</castle>
