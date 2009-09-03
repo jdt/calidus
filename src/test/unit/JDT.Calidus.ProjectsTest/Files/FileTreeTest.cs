@@ -43,56 +43,81 @@ namespace JDT.Calidus.ProjectsTest.Files
         }
 
         [Test]
-        public void TreeRootShouldGetCommonRoot()
+        public void CommonRootShouldBeFileSeparator()
         {
-            IList<String> files = new List<String>();
-            files.Add(GetFile(new String[] { "the", "root", "one.cs"}));
-            files.Add(GetFile(new String[] { "the", "root", "two.cs" }));
-            files.Add(GetFile(new String[] { "the", "root", "three.cs" }));
-
-            _fileTree.Add(files);
-            Assert.AreEqual(GetRoot(new String[] { "the", "root"}), _fileTree.Root);
+            Assert.AreEqual(Path.DirectorySeparatorChar.ToString(), _fileTree.Root.Location);
         }
+
+        [Test]
+        public void CommonRootShouldHaveNullParent()
+        {
+            Assert.AreEqual(null, _fileTree.Root.Parent);
+        }
+
 
         [Test]
         public void NoRootInCommonShouldGetPathSeparatorRoot()
         {
-            IList<String> files = new List<String>();
-            files.Add(GetFile(new String[] { "one", "root", "one.cs" }));
-            files.Add(GetFile(new String[] { "two", "root", "two.cs" }));
-            files.Add(GetFile(new String[] { "three", "root", "three.cs" }));
-
-            _fileTree.Add(files);
-            Assert.AreEqual(Path.DirectorySeparatorChar.ToString(), _fileTree.Root);
+            _fileTree.Add(GetFile(new String[] {"one", "two", "three.cs"}));
+            _fileTree.Add(GetFile(new String[] { "four", "five", "six.cs" }));
+            
+            Assert.AreEqual(Path.DirectorySeparatorChar.ToString(), _fileTree.Root.Location);
         }
 
         [Test]
         public void TreeRootShouldEndWithPathSeparator()
         {
-            IList<String> files = new List<String>();
-            files.Add(GetFile(new String[] { "the", "root", "one.cs" }));
-            files.Add(GetFile(new String[] { "the", "root", "two.cs" }));
-            files.Add(GetFile(new String[] { "the", "root", "three.cs" }));
+            _fileTree.Add(GetFile(new String[] { "one", "two", "three.cs" }));
+            _fileTree.Add(GetFile(new String[] { "one", "two", "four.cs" }));
 
-            _fileTree.Add(files);
-            Assert.AreEqual(GetRoot(new String[] { "the", "root" }), _fileTree.Root);
+            Assert.IsTrue(_fileTree.Root.Location.EndsWith(Path.DirectorySeparatorChar.ToString()));
         }
 
         [Test]
         public void GetChildrenShouldReturnListOfChildren()
         {
-            IList<String> files = new List<String>();
-            files.Add(GetFile(new String[] { "the", "root", "one.cs" }));
-            files.Add(GetFile(new String[] { "the", "root", "two.cs" }));
-            files.Add(GetFile(new String[] { "the", "nonroot", "two.cs" }));
+            _fileTree.Add(GetFile(new String[] { "one", "two", "three.cs" }));
+            _fileTree.Add(GetFile(new String[] { "one", "two", "four.cs" }));
 
-            _fileTree.Add(files);
+            StringBuilder path = new StringBuilder();
+            path.Append(Path.DirectorySeparatorChar);
 
-            IList<String> theChildren = new List<String>();
-            theChildren.Add(GetFile(new String[] { "the", "root" }));
-            theChildren.Add(GetFile(new String[] { "the", "nonroot" }));
+            FileTreeItem root = new FileTreeItem(null, path.ToString());
+            path.Append("one" + Path.DirectorySeparatorChar);
+            FileTreeItem one = new FileTreeItem(root, path.ToString());
+            path.Append("two" + Path.DirectorySeparatorChar);
+            FileTreeItem two = new FileTreeItem(one, path.ToString());
 
-            CollectionAssert.AreEquivalent(theChildren, _fileTree.GetChildrenOf(_fileTree.Root));
+            FileTreeItem three = new FileTreeItem(two, path.ToString() + "three.cs");
+            FileTreeItem four = new FileTreeItem(two, path.ToString() + "four.cs");
+            
+            IList<FileTreeItem> expected = new List<FileTreeItem>();
+            expected.Add(three);
+            expected.Add(four);
+
+            IList<FileTreeItem> actual = new List<FileTreeItem>(_fileTree.GetChildrenOf(two));
+
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [Test]
+        public void GetChildrenShouldReturnEmptyListOfChildrenIfNoChildren()
+        {
+            _fileTree.Add(GetFile(new String[] { "one", "two" }));
+
+            StringBuilder path = new StringBuilder();
+            path.Append(Path.DirectorySeparatorChar);
+
+            FileTreeItem root = new FileTreeItem(null, path.ToString());
+            path.Append("one" + Path.DirectorySeparatorChar);
+            FileTreeItem one = new FileTreeItem(root, path.ToString());
+            path.Append("two" + Path.DirectorySeparatorChar);
+            FileTreeItem two = new FileTreeItem(one, path.ToString());
+
+            IList<FileTreeItem> expected = new List<FileTreeItem>();
+            IList<FileTreeItem> actual = new List<FileTreeItem>(_fileTree.GetChildrenOf(two));
+
+            CollectionAssert.AreEquivalent(expected, actual);
         }
 
         private String GetFile(IEnumerable<String> parts)
@@ -102,6 +127,9 @@ namespace JDT.Calidus.ProjectsTest.Files
             {
                 result.Append(Path.DirectorySeparatorChar + aPart);
             }
+
+            if (parts.Last().EndsWith(".cs") == false)
+                result.Append(Path.DirectorySeparatorChar);
             return result.ToString();
         }
 
