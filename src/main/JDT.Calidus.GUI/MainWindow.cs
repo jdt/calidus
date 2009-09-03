@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Projects;
+using JDT.Calidus.Projects.Files;
 
 namespace JDT.Calidus.GUI
 {
@@ -67,6 +68,27 @@ namespace JDT.Calidus.GUI
 
                 Text = String.Format(TITLE, projectName);
                 lnkSourceDirectory.Text = CurrentProject.SourceLocation;
+
+                FileTree tree = new FileTree();
+                foreach(String aFile in Directory.GetFiles(CurrentProject.SourceLocation, "*.cs", SearchOption.AllDirectories))
+                {
+                    tree.Add(aFile);
+                }
+
+                TreeNode root = new TreeNode(tree.Root.GetItemName());
+                FillNode(tree, tree.Root, root);
+                tvFiles.Nodes.Add(root);
+            }
+        }
+
+        private void FillNode(FileTree treeToAddFrom, FileTreeItem parent, TreeNode nodeToAddTo)
+        {
+            foreach (FileTreeItem aChild in treeToAddFrom.GetChildrenOf(parent))
+            {
+                TreeNode childNode = new TreeNode(aChild.GetItemName());
+                if (treeToAddFrom.GetChildrenOf(aChild).Count() != 0)
+                    FillNode(treeToAddFrom, aChild, childNode);
+                nodeToAddTo.Nodes.Add(childNode);
             }
         }
 
