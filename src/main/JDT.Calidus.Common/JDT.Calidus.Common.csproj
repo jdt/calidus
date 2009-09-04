@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -69,6 +69,7 @@
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
     <Compile Include="Statements\GenericStatement.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />
+    <Compile Include="Statements\IStatementRuleFactory.cs" />
     <Compile Include="Statements\StatementBase.cs" />
     <Compile Include="Tokens\GenericToken.cs" />
     <Compile Include="Tokens\IGenericsTokenParser.cs" />
