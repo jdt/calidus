@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -79,9 +79,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+      <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
+      <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Projects\JDT.Calidus.Projects.csproj">
       <Project>{82A229F6-50DD-4B51-95EB-3940B5C65454}</Project>
       <Name>JDT.Calidus.Projects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Rules\JDT.Calidus.Rules.csproj">
+      <Project>{E5FCEF48-73FC-4316-AB4A-413F541A353D}</Project>
+      <Name>JDT.Calidus.Rules</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

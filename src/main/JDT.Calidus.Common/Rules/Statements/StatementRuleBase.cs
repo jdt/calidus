@@ -12,6 +12,31 @@ namespace JDT.Calidus.Common.Rules.Statements
     public abstract class StatementRuleBase : IRule
     {
         /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="category">The rule category</param>
+        protected StatementRuleBase(String category)
+        {
+            Category = category;
+        }
+
+        /// <summary>
+        /// Gets the rule name
+        /// </summary>
+        public String Name
+        {
+            get
+            {
+                return GetType().Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the rule category
+        /// </summary>
+        public String Category { get; private set; }
+
+        /// <summary>
         /// Checks if the rule validates the supplied statement
         /// </summary>
         /// <param name="statement">The statement</param>

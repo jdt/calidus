@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Statements;
@@ -24,6 +25,7 @@ namespace JDT.Calidus.Rules.Statements.Declaration
         /// </summary>
         /// <param name="expression">The expression to match with</param>
         public MemberNameMatchesPatternRule(Regex expression)
+            : base(RuleCategories.Naming)
         {
             _expression = expression;
         }

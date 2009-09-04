@@ -7,8 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Projects;
 using JDT.Calidus.Projects.Files;
+using JDT.Calidus.Rules;
 
 namespace JDT.Calidus.GUI
 {

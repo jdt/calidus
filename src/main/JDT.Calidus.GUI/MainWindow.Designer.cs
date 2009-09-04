@@ -34,7 +34,6 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
-            this.lvRules = new System.Windows.Forms.ListView();
             this.lstViolations = new System.Windows.Forms.ListBox();
             this.pnlControl = new System.Windows.Forms.Panel();
             this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
@@ -42,6 +41,7 @@
             this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.cmdRun = new System.Windows.Forms.Button();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
+            this.tvRules = new System.Windows.Forms.TreeView();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -118,7 +118,7 @@
             // 
             // splitRulesViolations.Panel1
             // 
-            this.splitRulesViolations.Panel1.Controls.Add(this.lvRules);
+            this.splitRulesViolations.Panel1.Controls.Add(this.tvRules);
             // 
             // splitRulesViolations.Panel2
             // 
@@ -126,15 +126,6 @@
             this.splitRulesViolations.Size = new System.Drawing.Size(486, 303);
             this.splitRulesViolations.SplitterDistance = 151;
             this.splitRulesViolations.TabIndex = 1;
-            // 
-            // lvRules
-            // 
-            this.lvRules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvRules.Location = new System.Drawing.Point(0, 0);
-            this.lvRules.Name = "lvRules";
-            this.lvRules.Size = new System.Drawing.Size(486, 151);
-            this.lvRules.TabIndex = 0;
-            this.lvRules.UseCompatibleStateImageBehavior = false;
             // 
             // lstViolations
             // 
@@ -206,6 +197,14 @@
             this.stripStatus.TabIndex = 2;
             this.stripStatus.Text = "statusStrip1";
             // 
+            // tvRules
+            // 
+            this.tvRules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvRules.Location = new System.Drawing.Point(0, 0);
+            this.tvRules.Name = "tvRules";
+            this.tvRules.Size = new System.Drawing.Size(486, 151);
+            this.tvRules.TabIndex = 0;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,8 +244,8 @@
         private System.Windows.Forms.ProgressBar prgProgress;
         private System.Windows.Forms.Button cmdRun;
         private System.Windows.Forms.ListBox lstViolations;
-        private System.Windows.Forms.ListView lvRules;
         private System.Windows.Forms.Label lblSourceDir;
         private System.Windows.Forms.LinkLabel lnkSourceDirectory;
+        private System.Windows.Forms.TreeView tvRules;
     }
 }

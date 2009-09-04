@@ -10,5 +10,13 @@ namespace JDT.Calidus.Common.Rules
     /// </summary>
     public interface IRule
     {
+        /// <summary>
+        /// Gets the rule name
+        /// </summary>
+        String Name { get; }
+        /// <summary>
+        /// Gets the rule category
+        /// </summary>
+        String Category { get; }
     }
 }

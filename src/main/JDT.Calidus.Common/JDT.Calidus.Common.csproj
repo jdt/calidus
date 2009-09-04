@@ -67,6 +67,7 @@
     <Compile Include="Providers\IStatementFactoryProvider.cs" />
     <Compile Include="Providers\IStatementRuleFactoryProvider.cs" />
     <Compile Include="Rules\IRule.cs" />
+    <Compile Include="Rules\RuleCategories.cs" />
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
     <Compile Include="Statements\GenericStatement.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />
