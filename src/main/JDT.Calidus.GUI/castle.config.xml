@@ -3,6 +3,7 @@
   <components>
     
     <component id="IFileValidator" type="JDT.Calidus.Projects.Files.Validators.CSharpFileValidator, JDT.Calidus.Projects.Files.Validators" />
-
+    <component id="IStatementRuleFactoryProvider" type="JDT.Calidus.Providers.StatementRuleFactoryProviders.AssemblyBasedStatementRuleFactoryProvider, JDT.Calidus.Providers" />
+  
   </components>
 </castle>
