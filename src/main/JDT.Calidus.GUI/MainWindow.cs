@@ -28,6 +28,7 @@ namespace JDT.Calidus.GUI
             CurrentProject = null;
 
             DisplayProjectDetails();
+            DisplayProjectRules();
         }
 
         #region Events
@@ -80,6 +81,23 @@ namespace JDT.Calidus.GUI
                 TreeNode root = new TreeNode(tree.Root.GetItemName());
                 FillNode(tree, tree.Root, root);
                 tvFiles.Nodes.Add(root);
+            }
+        }
+        
+        private void DisplayProjectRules()
+        {
+            CalidusRuleProvider ruleProvider = new CalidusRuleProvider();
+            IEnumerable<IRule> rules = ruleProvider.GetRules();
+
+            foreach (String aCategory in rules.Select<IRule, String>(p => p.Category).Distinct())
+            {
+                TreeNode category = new TreeNode(aCategory);
+                foreach (IRule aRule in rules.Where<IRule>(p => p.Category.Equals(aCategory)))
+                {
+                    TreeNode ruleNode = new TreeNode(aRule.Name);
+                    category.Nodes.Add(ruleNode);
+                }
+                tvRules.Nodes.Add(category);
             }
         }
 
