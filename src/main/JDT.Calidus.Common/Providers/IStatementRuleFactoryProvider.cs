@@ -15,6 +15,6 @@ namespace JDT.Calidus.Common.Providers
         /// Loads the statement rule factories from the provider
         /// </summary>
         /// <returns>The factory</returns>
-        IEnumerable<IStatementRuleFactory> GetStatementRules();
+        IEnumerable<IStatementRuleFactory> GetStatementRuleFactories();
     }
 }

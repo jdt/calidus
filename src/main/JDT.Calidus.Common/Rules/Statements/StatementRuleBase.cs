@@ -9,7 +9,7 @@ namespace JDT.Calidus.Common.Rules.Statements
     /// <summary>
     /// This class is the base class for all statement rules
     /// </summary>
-    public abstract class StatementRuleBase
+    public abstract class StatementRuleBase : IRule
     {
         /// <summary>
         /// Checks if the rule validates the supplied statement
