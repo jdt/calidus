@@ -78,6 +78,7 @@
     <Compile Include="Tokens\ITokenParser.cs" />
     <Compile Include="Tokens\IWhiteSpaceTokenParser.cs" />
     <Compile Include="Tokens\TokenBase.cs" />
+    <Compile Include="Util\AssemblyBasedAssignableClassCreator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

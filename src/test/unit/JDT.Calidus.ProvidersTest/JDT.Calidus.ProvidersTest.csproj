@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DBEB50B8-CB64-46A7-B95E-B809161663CC}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatementFactoryProviders\AssemblyBasedStatementFactoryProviderTest.cs" />
     <Compile Include="StatementFactoryProviders\DefaultStatementFactoryProviderTest.cs" />
   </ItemGroup>
   <ItemGroup>
