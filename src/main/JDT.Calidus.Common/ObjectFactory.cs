@@ -24,14 +24,51 @@ namespace JDT.Calidus.Common
         /// <returns>The object</returns>
         public static TObject Get<TObject>()
         {
-            //first attempt manual registrations
-            if (ManualContainer.HasComponent(typeof(TObject)))
-                return (TObject)_manualContainer[typeof(TObject)];
-            //if no objects in manual registrations, start configuration-based registrations
-            if (Container.Kernel.HasComponent(typeof(TObject).Name))
-                return (TObject)Container[typeof(TObject).Name];
+            return (TObject)Get(typeof (TObject));
+        }
 
-            throw new CalidusException("Could not find an appropriate instance of " + typeof(TObject).Name + " to return");
+        /// <summary>
+        /// Gets an instance of the specified type
+        /// </summary>
+        /// <param name="type">The type to get</param>
+        /// <returns>The object</returns>
+        public static object Get(Type type)
+        {
+            //first attempt manual registrations
+            if (ManualContainer.HasComponent(type))
+                return _manualContainer[type];
+            //if no objects in manual registrations, start configuration-based registrations
+            if (Container.Kernel.HasComponent(type.Name))
+                return Container[type.Name];
+
+            throw new CalidusException("Could not find an appropriate instance of " + type.Name + " to return");
+        }
+
+        /// <summary>
+        /// Checks if the specified type is registered with the factory
+        /// </summary>
+        /// <typeparam name="TInterface">The type</typeparam>
+        /// <returns>True if registered, otherwise false</returns>
+        public static bool Has<TInterface>()
+        {
+            return Has(typeof (TInterface));
+        }
+
+        /// <summary>
+        /// Checks if the specified type is registered with the factory
+        /// </summary>
+        /// <param name="type">The type</param>
+        /// <returns>True if registered, otherwise false</returns>
+        public static bool Has(Type type)
+        {
+            //first attempt manual registrations
+            if (ManualContainer.HasComponent(type))
+                return true;
+            //if no objects in manual registrations, start configuration-based registrations
+            if (Container.Kernel.HasComponent(type.Name))
+                return true;
+
+            return false;
         }
 
         /// <summary>

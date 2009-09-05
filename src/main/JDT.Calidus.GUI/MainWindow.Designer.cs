@@ -34,6 +34,7 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
+            this.tvRules = new System.Windows.Forms.TreeView();
             this.lstViolations = new System.Windows.Forms.ListBox();
             this.pnlControl = new System.Windows.Forms.Panel();
             this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
@@ -41,7 +42,6 @@
             this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.cmdRun = new System.Windows.Forms.Button();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
-            this.tvRules = new System.Windows.Forms.TreeView();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -127,6 +127,14 @@
             this.splitRulesViolations.SplitterDistance = 151;
             this.splitRulesViolations.TabIndex = 1;
             // 
+            // tvRules
+            // 
+            this.tvRules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvRules.Location = new System.Drawing.Point(0, 0);
+            this.tvRules.Name = "tvRules";
+            this.tvRules.Size = new System.Drawing.Size(486, 151);
+            this.tvRules.TabIndex = 0;
+            // 
             // lstViolations
             // 
             this.lstViolations.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -196,14 +204,6 @@
             this.stripStatus.Size = new System.Drawing.Size(741, 22);
             this.stripStatus.TabIndex = 2;
             this.stripStatus.Text = "statusStrip1";
-            // 
-            // tvRules
-            // 
-            this.tvRules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvRules.Location = new System.Drawing.Point(0, 0);
-            this.tvRules.Name = "tvRules";
-            this.tvRules.Size = new System.Drawing.Size(486, 151);
-            this.tvRules.TabIndex = 0;
             // 
             // MainWindow
             // 
