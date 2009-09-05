@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -45,6 +44,12 @@ namespace JDT.Calidus.GUI
                 CurrentProject = new CalidusProject(selectedDir, null);
                 DisplayProjectDetails();
             }
+        }
+
+        private void tvRules_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            foreach (TreeNode aNode in e.Node.Nodes)
+                aNode.Checked = e.Node.Checked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
