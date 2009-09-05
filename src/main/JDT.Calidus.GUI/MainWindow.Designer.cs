@@ -129,11 +129,13 @@
             // 
             // tvRules
             // 
+            this.tvRules.CheckBoxes = true;
             this.tvRules.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvRules.Location = new System.Drawing.Point(0, 0);
             this.tvRules.Name = "tvRules";
             this.tvRules.Size = new System.Drawing.Size(486, 151);
             this.tvRules.TabIndex = 0;
+            this.tvRules.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvRules_AfterCheck);
             // 
             // lstViolations
             // 
