@@ -23,6 +23,15 @@ namespace JDT.Calidus.Rules.Statements.Declaration
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
+        /// <param name="pattern">The pattern to match with</param>
+        public MemberNameMatchesPatternRule(String pattern)
+            : this(new Regex(pattern))
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of this class
+        /// </summary>
         /// <param name="expression">The expression to match with</param>
         public MemberNameMatchesPatternRule(Regex expression)
             : base(RuleCategories.Naming)

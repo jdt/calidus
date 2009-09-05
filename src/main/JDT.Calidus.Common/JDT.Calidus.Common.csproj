@@ -67,8 +67,10 @@
     <Compile Include="Providers\IStatementFactoryProvider.cs" />
     <Compile Include="Providers\IStatementRuleFactoryProvider.cs" />
     <Compile Include="Rules\IRule.cs" />
+    <Compile Include="Rules\IRuleCreator.cs" />
     <Compile Include="Rules\RuleCategories.cs" />
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
+    <Compile Include="Rules\RuleFactory.cs" />
     <Compile Include="Statements\GenericStatement.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />
     <Compile Include="Statements\IStatementRuleFactory.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Tokens\IWhiteSpaceTokenParser.cs" />
     <Compile Include="Tokens\TokenBase.cs" />
     <Compile Include="Util\AssemblyBasedAssignableClassCreator.cs" />
+    <Compile Include="Util\ObjectFactoryRuleCreator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
