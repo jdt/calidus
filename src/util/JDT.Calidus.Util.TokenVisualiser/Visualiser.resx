@@ -120,6 +120,29 @@
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="rtSource.Text" xml:space="preserve">
+    <value>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace JDT.Calidus.Common.Rules
+{
+    /// &lt;summary&gt;
+    /// This interface is implemented by custom rule creators
+    /// &lt;/summary&gt;
+    public interface IRuleCreator&lt;TRuleType&gt; where TRuleType : IRule
+    {
+        /// &lt;summary&gt;
+        /// Creates an instance of the rule specified or null if unable to create a rule
+        /// &lt;/summary&gt;
+        /// &lt;param name="aType"&gt;The type to create an instance of&lt;/param&gt;
+        /// &lt;returns&gt;The rule&lt;/returns&gt;
+        TRuleType CreateRule(Type aType);
+    }
+}
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>79</value>
   </metadata>

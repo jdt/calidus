@@ -198,6 +198,7 @@
             this.cmdRun.TabIndex = 0;
             this.cmdRun.Text = "Run";
             this.cmdRun.UseVisualStyleBackColor = true;
+            this.cmdRun.Click += new System.EventHandler(this.cmdRun_Click);
             // 
             // stripStatus
             // 

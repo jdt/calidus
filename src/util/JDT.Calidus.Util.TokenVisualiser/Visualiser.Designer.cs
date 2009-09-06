@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Visualiser));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmdParse = new System.Windows.Forms.Button();
@@ -102,7 +103,7 @@
             this.rtSource.Name = "rtSource";
             this.rtSource.Size = new System.Drawing.Size(886, 531);
             this.rtSource.TabIndex = 9;
-            this.rtSource.Text = "";
+            this.rtSource.Text = resources.GetString("rtSource.Text");
             this.rtSource.SelectionChanged += new System.EventHandler(this.rtSource_SelectionChanged);
             // 
             // tabDisplay

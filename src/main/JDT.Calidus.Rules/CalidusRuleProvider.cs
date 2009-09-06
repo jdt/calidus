@@ -48,7 +48,11 @@ namespace JDT.Calidus.Rules
             return rules;
         }
 
-        private IEnumerable<StatementRuleBase> GetStatementRules()
+        /// <summary>
+        /// Gets a  list of all statement rules
+        /// </summary>
+        /// <returns>The rules</returns>
+        public IEnumerable<StatementRuleBase> GetStatementRules()
         {
             IList<StatementRuleBase> rules = new List<StatementRuleBase>();
 
