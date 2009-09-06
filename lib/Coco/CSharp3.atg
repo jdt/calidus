@@ -2366,10 +2366,7 @@ TypeArgumentList                                                          (. Typ
 
 TypeParameterConstraintsClause
 =
-  ident                                                              (. if (!t.val.Equals("where")) {
-                                                                          Error("type parameter constraints clause must start with: where");
-                                                                        }
-                                                                     .)
+  where
   ident
   ":"
   (
