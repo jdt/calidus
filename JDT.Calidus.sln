@@ -53,8 +53,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.ProvidersTest",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.CommonTest", "src\test\unit\JDT.Calidus.CommonTest\JDT.Calidus.CommonTest.csproj", "{BDACBA7E-5D23-4730-AE7F-B3B38FA44C54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.GUI", "src\main\JDT.Calidus.GUI\JDT.Calidus.GUI.csproj", "{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{9A337EE1-5B78-4F48-B60D-EA5275427BCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.Projects", "src\main\JDT.Calidus.Projects\JDT.Calidus.Projects.csproj", "{82A229F6-50DD-4B51-95EB-3940B5C65454}"
@@ -68,6 +66,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.Rules", "src\main\JDT.Calidus.Rules\JDT.Calidus.Rules.csproj", "{E5FCEF48-73FC-4316-AB4A-413F541A353D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.RulesTest", "src\test\unit\JDT.Calidus.RulesTest\JDT.Calidus.RulesTest.csproj", "{9C0A9C08-3889-470D-A2F4-277CA14A95A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.GUI", "src\main\JDT.Calidus.GUI\JDT.Calidus.GUI.csproj", "{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -155,10 +155,6 @@ Global
 		{BDACBA7E-5D23-4730-AE7F-B3B38FA44C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDACBA7E-5D23-4730-AE7F-B3B38FA44C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDACBA7E-5D23-4730-AE7F-B3B38FA44C54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82A229F6-50DD-4B51-95EB-3940B5C65454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82A229F6-50DD-4B51-95EB-3940B5C65454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82A229F6-50DD-4B51-95EB-3940B5C65454}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -183,6 +179,10 @@ Global
 		{9C0A9C08-3889-470D-A2F4-277CA14A95A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0A9C08-3889-470D-A2F4-277CA14A95A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0A9C08-3889-470D-A2F4-277CA14A95A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

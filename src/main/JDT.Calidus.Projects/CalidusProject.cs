@@ -40,5 +40,23 @@ namespace JDT.Calidus.Projects
                 return Path.GetFileName(ProjectLocation);
             }
         }
+
+        /// <summary>
+        /// Gets the list of source files in the project that should be validated
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<String> GetSourceFilesToValidate()
+        {
+            return GetAllSourceFiles();
+        }
+
+        /// <summary>
+        /// Gets a list of all source files
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<String> GetAllSourceFiles()
+        {
+            return Directory.GetFiles(SourceLocation, "*.cs", SearchOption.AllDirectories);
+        }
     }
 }

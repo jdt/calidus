@@ -69,6 +69,7 @@
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\IRuleCreator.cs" />
     <Compile Include="Rules\RuleCategories.cs" />
+    <Compile Include="Rules\RuleViolation.cs" />
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
     <Compile Include="Rules\RuleFactory.cs" />
     <Compile Include="Statements\GenericStatement.cs" />
