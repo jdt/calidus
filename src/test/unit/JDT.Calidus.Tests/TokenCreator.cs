@@ -33,6 +33,22 @@ namespace JDT.Calidus.Tests
         /// <typeparam name="TTokenType">The token type</typeparam>
         /// <param name="content">The token content</param>
         /// <returns>The requested token</returns>
+        public TokenBase Create<TTokenType>(int content) where TTokenType : TokenBase
+        {
+            object[] args = new object[] { _currentLine, _currentColumn, _currentPosition, content };
+            TokenBase result = (TTokenType)Activator.CreateInstance(typeof(TTokenType), args);
+
+            UpdateInformation(result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new token at the next position
+        /// </summary>
+        /// <typeparam name="TTokenType">The token type</typeparam>
+        /// <param name="content">The token content</param>
+        /// <returns>The requested token</returns>
         public TokenBase Create<TTokenType>(String content) where TTokenType:TokenBase
         {
             object[] args = new object[] { _currentLine, _currentColumn, _currentPosition, content };

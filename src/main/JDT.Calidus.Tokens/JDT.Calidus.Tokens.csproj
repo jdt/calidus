@@ -49,6 +49,10 @@
     <Compile Include="Common\Brackets\CloseAngleBracketToken.cs" />
     <Compile Include="Common\Brackets\CloseCurlyBracketToken.cs" />
     <Compile Include="Common\Brackets\CloseRoundBracketToken.cs" />
+    <Compile Include="Common\Brackets\CloseSquareBracketToken.cs" />
+    <Compile Include="Common\Brackets\OpenSquareBracketToken.cs" />
+    <Compile Include="Common\EqualsToken.cs" />
+    <Compile Include="Common\NewToken.cs" />
     <Compile Include="Common\ForwardSlashToken.cs" />
     <Compile Include="Common\LineCommentToken.cs" />
     <Compile Include="Common\NewLineToken.cs" />
@@ -60,6 +64,7 @@
     <Compile Include="Common\SpaceToken.cs" />
     <Compile Include="Common\TabToken.cs" />
     <Compile Include="Common\WhiteSpaceToken.cs" />
+    <Compile Include="Constants\IntegerConstantToken.cs" />
     <Compile Include="Modifiers\AccessModifierToken.cs" />
     <Compile Include="Modifiers\InternalModifierToken.cs" />
     <Compile Include="Modifiers\PrivateModifierToken.cs" />
