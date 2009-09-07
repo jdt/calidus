@@ -46,42 +46,16 @@ namespace JDT.Calidus.Statements.Factories.Fluent
             if (tokenList.Count() == 0)
                 return false;
 
-            EndingTokenOccurence endingOccurence = null;
-            IList<TokenBase> endingMatch = null;
+            KeyValuePair<EndingTokenOccurence, IList<TokenBase>>? endingPair = CreateEndingTokenPair(tokenList);
 
-            //check for an EndingTokenOccurence
-            IEnumerable<bool> occ =occurences.Select(p => p.GetType().Equals(typeof(EndingTokenOccurence))).Where(p => p == true);
-            if(occ.Count() != 0)
+            //exclude occurence and tokens from the list to be processed
+            //they will be appended manually at the end
+            if(endingPair.HasValue)
             {
-                IList<TokenBase> matching = new List<TokenBase>();
-
-                EndingTokenOccurence ending = (EndingTokenOccurence)occurences.First<TokenOccurenceBase>(p => p.GetType().Equals(typeof(EndingTokenOccurence)));
-                int i = checkList.Count() - 1;
-                while(i >= 0
-                        && (
-                                checkList.ElementAt(i).GetType().Equals(ending.TokenType)
-                                || 
-                                    (
-                                        checkList.ElementAt(i).GetType().Equals(typeof(WhiteSpaceToken))
-                                        ||
-                                        checkList.ElementAt(i).GetType().IsSubclassOf(typeof(WhiteSpaceToken))
-                                    )
-                            )
-                    )
-                {
-                    matching.Add(checkList.ElementAt(i));
-                    i--;
-                }
-
-                endingOccurence = ending;
-                endingMatch = matching;
-
-                //remove the tokens for the end from the actual token list
-                foreach (TokenBase aToken in matching)
+                foreach (TokenBase aToken in endingPair.Value.Value)
                     tokenList.Remove(aToken);
 
-                //remove the occurence itself
-                occurences.Remove(endingOccurence);
+                occurences.Remove(endingPair.Value.Key);
             }
 
             IDictionary<TokenOccurenceBase, IList<TokenBase>> occurencesWithAssociatedTokens = new Dictionary<TokenOccurenceBase, IList<TokenBase>>();
@@ -93,10 +67,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
                 //for every occurence, get the list of tokens that
                 //belong to the occurence
                 IList<TokenBase> matching = new List<TokenBase>();
-                while(currentIndex < tokenList.Count() 
-                      && (tokenList.ElementAt(currentIndex).GetType().Equals(anOccurence.TokenType)
-                          || 
-                          tokenList.ElementAt(currentIndex).GetType().IsSubclassOf(anOccurence.TokenType))    
+                while(currentIndex < tokenList.Count() && IsTokenTypeOrSubClass(tokenList.ElementAt(currentIndex), anOccurence.TokenType)    
                       )
                 {
                     matching.Add(tokenList.ElementAt(currentIndex));
@@ -106,22 +77,22 @@ namespace JDT.Calidus.Statements.Factories.Fluent
             }
 
             //check for ending tokens
-            if(endingMatch != null && endingOccurence != null)
+            if(endingPair.HasValue)
             {
                 IList<TokenBase> whitespace = new List<TokenBase>();
                 //split into whitespace tokens 
-                foreach(TokenBase aToken in new List<TokenBase>(endingMatch))
+                foreach(TokenBase aToken in new List<TokenBase>(endingPair.Value.Value))
                 {
                     if (aToken is WhiteSpaceToken)
                     {
                         whitespace.Add(aToken);
-                        endingMatch.Remove(aToken);
+                        endingPair.Value.Value.Remove(aToken);
                     }
                 }
                 //add whitespace
                 occurencesWithAssociatedTokens.Add(new AnyTokenOccurence(typeof(WhiteSpaceToken)), whitespace);
                 //and remaining ending token
-                occurencesWithAssociatedTokens.Add(endingOccurence, endingMatch);
+                occurencesWithAssociatedTokens.Add(endingPair.Value.Key, endingPair.Value.Value);
             }
 
             //check if every tokenoccurence was satisfied
@@ -173,6 +144,57 @@ namespace JDT.Calidus.Statements.Factories.Fluent
             _occurencesList.Add(new EndingTokenOccurence(typeof(TTokenType)));
             _occurencesList.Add(new AnyTokenOccurence(typeof(WhiteSpaceToken)));
             return this;
+        }
+
+        //attempts to parse an ending into a keyvaluepair of tokens
+        private KeyValuePair<EndingTokenOccurence, IList<TokenBase>>? CreateEndingTokenPair(IEnumerable<TokenBase> tokenList)
+        {
+            EndingTokenOccurence endingOccurence = null;
+            IList<TokenBase> endingMatch = null;
+
+            //check for an EndingTokenOccurence
+            IEnumerable<bool> occ = _occurencesList.Select(p => p.GetType().Equals(typeof(EndingTokenOccurence))).Where(p => p == true);
+            if (occ.Count() != 0)
+            {
+                IList<TokenBase> matching = new List<TokenBase>();
+
+                EndingTokenOccurence ending = (EndingTokenOccurence)_occurencesList.First<TokenOccurenceBase>(p => p.GetType().Equals(typeof(EndingTokenOccurence)));
+                //start parsing backwards
+                int i = tokenList.Count() - 1;
+                //keep going while either whitespace or the actual token
+                while (i >= 0 && IsTokenTypeOrWhiteSpace(tokenList.ElementAt(i), ending.TokenType))
+                {
+                    matching.Add(tokenList.ElementAt(i));
+                    i--;
+                }
+                //only set this if the ending token is actally of the correct type
+                if (matching.Count != 0 && matching.Last().GetType().Equals(ending.TokenType))
+                {
+                    endingOccurence = ending;
+                    endingMatch = matching;
+                }
+            }
+
+            if (endingOccurence != null && endingMatch != null)
+                return new KeyValuePair<EndingTokenOccurence, IList<TokenBase>>(endingOccurence, endingMatch);
+            else
+                return null;
+        }
+
+        private static bool IsTokenTypeOrWhiteSpace(TokenBase token, Type tokenType)
+        {
+            bool isTokenType = token.GetType().Equals(tokenType);
+            bool isWhiteSpace = token.GetType().IsSubclassOf(typeof(WhiteSpaceToken));
+
+            return isTokenType || isWhiteSpace;
+        }
+
+        private static bool IsTokenTypeOrSubClass(TokenBase token, Type tokenType)
+        {
+            bool isTokenType = token.GetType().Equals(tokenType);
+            bool isSubClass = token.GetType().IsSubclassOf(tokenType);
+
+            return isTokenType || isSubClass;
         }
     }
 }
