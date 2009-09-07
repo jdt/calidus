@@ -98,5 +98,35 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
 
             Assert.IsTrue(toMatch.Matches(input));
         }
+
+        [Test]
+        public void ExpressionEndsWithShouldMatchAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("variable"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            IStatementExpression toMatch = _expression.EndsWith<SemiColonToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionEndsWithShouldMatchAppropriateTokenListIgnoringWhitespace()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<NewLineToken>());
+            input.Add(TokenCreator.Create<TabToken>());
+
+            IStatementExpression toMatch = _expression.EndsWith<PrivateModifierToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
     }
 }
