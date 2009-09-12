@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{35751532-ECF6-4358-B071-EF16C0CF48D2}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -48,6 +48,7 @@
     <Compile Include="Common\LineCommentStatement.cs" />
     <Compile Include="Declaration\AttributeStatement.cs" />
     <Compile Include="Declaration\MemberStatement.cs" />
+    <Compile Include="Namespace\UsingStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
