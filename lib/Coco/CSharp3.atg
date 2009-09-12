@@ -12,6 +12,18 @@
 // 	pt = pt.next;
 // 	return pt;
 // }
+//
+// Patch the method Get() in your Parser.frame to:
+//
+//	void Get () {
+//		for (;;) {
+//			t = la;
+//			la = scanner.Scan();
+//			if (la.kind <= maxT) { switchTokenContext(); ++errDist; break; }
+//-->pragmas
+//			la = t;
+//		}
+//	}
 
 
 using System.Collections;
@@ -1259,7 +1271,7 @@ PRAGMAS
   
   cBlockCom = "/*" { "/" | blockComCh | "*"{"*"} blockComCh } "*"{"*"}"/".
   cLineCom = "//" { notNewLine } newLine.
-
+ 
 // ****************************************************************************
 // If you would like to use C# comments in your grammar, use
 // pragmas for that purpose and remove the COMMENTS.
@@ -1275,8 +1287,8 @@ PRAGMAS
 // CHARACTERS section).
 // ****************************************************************************
 
-//COMMENTS FROM "/*" TO "*/"
-//COMMENTS FROM "//" TO eol
+COMMENTS FROM "/*" TO "*/"
+COMMENTS FROM "//" TO eol
 
 IGNORE eol + cr + tab
 
@@ -2366,7 +2378,10 @@ TypeArgumentList                                                          (. Typ
 
 TypeParameterConstraintsClause
 =
-  where
+  ident                                                              (. if (!t.val.Equals("where")) {
+                                                                          Error("type parameter constraints clause must start with: where");
+                                                                        }
+                                                                     .)
   ident
   ":"
   (

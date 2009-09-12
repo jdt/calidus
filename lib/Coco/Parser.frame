@@ -63,7 +63,7 @@ public class Parser {
 		for (;;) {
 			t = la;
 			la = scanner.Scan();
-			if (la.kind <= maxT) { ++errDist; break; }
+			if (la.kind <= maxT) { switchTokenContext(); ++errDist; break; }
 -->pragmas
 			la = t;
 		}

@@ -4,7 +4,6 @@ using System.Collections;
 
 using System;
 
-
 namespace JDT.Calidus.Parsers.Coco
 {
 
@@ -1386,7 +1385,7 @@ public class Parser
         {
             t = la;
             la = scanner.Scan();
-            if (la.kind <= maxT) { ++errDist; break; }
+            if (la.kind <= maxT) { switchTokenContext(); ++errDist; break; }
             if (la.kind == 143)
             {
                 AddCCS(la.val);
@@ -1755,7 +1754,7 @@ public class Parser
                 {
                     ClassBase();
                 }
-                while (la.kind == 122)
+                while (la.kind == 1)
                 {
                     TypeParameterConstraintsClause();
                 }
@@ -1784,7 +1783,7 @@ public class Parser
                         TypeName();
                     }
                 }
-                while (la.kind == 122)
+                while (la.kind == 1)
                 {
                     TypeParameterConstraintsClause();
                 }
@@ -1813,7 +1812,7 @@ public class Parser
                         TypeName();
                     }
                 }
-                while (la.kind == 122)
+                while (la.kind == 1)
                 {
                     TypeParameterConstraintsClause();
                 }
@@ -1862,7 +1861,7 @@ public class Parser
                 FormalParameterList();
             }
             Expect(115);
-            while (la.kind == 122)
+            while (la.kind == 1)
             {
                 TypeParameterConstraintsClause();
             }
@@ -1904,7 +1903,12 @@ public class Parser
 
     void TypeParameterConstraintsClause()
     {
-        Expect(122);
+        Expect(1);
+        if (!t.val.Equals("where"))
+        {
+            Error("type parameter constraints clause must start with: where");
+        }
+
         Expect(1);
         Expect(87);
         if (StartOf(8))
@@ -2028,7 +2032,7 @@ public class Parser
                         FormalParameterList();
                     }
                     Expect(115);
-                    while (la.kind == 122)
+                    while (la.kind == 1)
                     {
                         TypeParameterConstraintsClause();
                     }
@@ -2437,7 +2441,7 @@ public class Parser
                         FormalParameterList();
                     }
                     Expect(115);
-                    while (la.kind == 122)
+                    while (la.kind == 1)
                     {
                         TypeParameterConstraintsClause();
                     }
