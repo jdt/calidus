@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CloseBlockStatementFactory.cs" />
     <Compile Include="Common\LineCommentStatementFactory.cs" />
+    <Compile Include="Common\OpenBlockStatementFactory.cs" />
     <Compile Include="Declaration\AttributeStatementFactory.cs" />
     <Compile Include="Declaration\MemberStatementResolver.cs" />
     <Compile Include="Namespace\UsingStatementFactory.cs" />
