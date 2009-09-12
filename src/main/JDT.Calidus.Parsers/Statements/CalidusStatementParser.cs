@@ -77,9 +77,13 @@ namespace JDT.Calidus.Parsers.Statements
                 }
             }
 
-            //throw an exception if tokens remain
+            //check: if the current statements were not successfully parsed
+            //the list is not cleared, add as a generic statement
             if (currentStatementTokens.Count != 0)
-                throw new CalidusException("No valid statement terminator found for the last " + currentStatementTokens.Count + " tokens");
+            {
+                res.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
+                currentStatementTokens.Clear();
+            }
 
             return res;
         }
