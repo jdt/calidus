@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tokens.NameSpace;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Coco;
 using JDT.Calidus.Tokens.Common;
@@ -206,6 +207,12 @@ namespace JDT.Calidus.Parsers.CocoTest
         public void LineCommentConstShouldReturnLineCommentToken()
         {
             Assert.IsInstanceOf(typeof(LineCommentToken), CocoTokenConverter.Convert(GetCocoToken(Parser._cLineCom)));
+        }
+
+        [Test]
+        public void UsingConstShouldReturnUsingToken()
+        {
+            Assert.IsInstanceOf(typeof(UsingToken), CocoTokenConverter.Convert(GetCocoToken(Parser._usingKW)));
         }
     }
 }
