@@ -51,6 +51,21 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             return Result;
         }
+
+        public IMiddleStatementExpression StartsWith<TTokenType>() where TTokenType : TokenBase
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEndingStatementExpression EndsWith<TTokenType>() where TTokenType : TokenBase
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMiddleStatementExpression Contains<TTokenType>() where TTokenType : TokenBase
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]

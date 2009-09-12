@@ -52,6 +52,12 @@
     <Compile Include="FluentStatementFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatementExpressionTest.cs" />
+    <Compile Include="TokenOccurences\ContainsTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\EndingTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\LooseTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\NextTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\StartingTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\StrictTokenOccurenceTest.cs" />
     <Compile Include="TokenOccurences\TokenOccurenceBaseTest.cs" />
     <Compile Include="TokenOccurences\TokenOccurenceTest.cs" />
   </ItemGroup>

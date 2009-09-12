@@ -14,7 +14,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
     [TestFixture]
     public class StatementExpressionTest : CalidusTestBase
     {
-        private StatementExpression _expression;
+        private IStatementExpression _expression;
 
         [SetUp]
         public override void SetUp()
@@ -125,6 +125,97 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
             input.Add(TokenCreator.Create<TabToken>());
 
             IStatementExpression toMatch = _expression.EndsWith<PrivateModifierToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionStartWithAndFollowedByStrictShouldMatchAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.StartsWith<PrivateModifierToken>()
+                    .FollowedByStrict<SemiColonToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionStartWithAndFollowedByStrictShouldNotMatchInAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.StartsWith<PrivateModifierToken>()
+                    .FollowedByStrict<SpaceToken>();
+
+            Assert.IsFalse(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionContainsShouldMatchAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.Contains<SemiColonToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionContainsShouldNotMatchInAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.Contains<SemiColonToken>();
+
+            Assert.IsFalse(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionStartWithAndFollowedByStrictShouldNotIgnoreWhiteSpace()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            IStatementExpression toMatch =
+                _expression.StartsWith<PrivateModifierToken>()
+                    .FollowedByStrict<SemiColonToken>();
+
+            Assert.IsFalse(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionShouldCheckEntireTokenListEvenIfFirstMatchWasInvalid()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<IdentifierToken>("notvalid"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("identifier"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>("isvalid"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("ending"));
+
+            IStatementExpression toMatch =
+                _expression.Contains<PrivateModifierToken>()
+                           .FollowedBy<SemiColonToken>();
 
             Assert.IsTrue(toMatch.Matches(input));
         }

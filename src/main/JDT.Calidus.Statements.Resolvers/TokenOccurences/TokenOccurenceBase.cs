@@ -23,45 +23,44 @@ namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
                 throw new CalidusException("The type passed to the token occurence must be a subclass of " + typeof(TokenBase).Name);
 
             TokenType = tokenType;
-            WasMatched = false;
         }
 
         /// <summary>
         /// Get the type of tokens
         /// </summary>
         public Type TokenType { get; private set; }
-        /// <summary>
-        /// Get if the occurence was matched successfully
-        /// </summary>
-        public bool WasMatched { get; private set; }
 
         /// <summary>
-        /// Checks to see if the list contains a set of same-type tokens that matches occurence
+        /// Pops a set of tokens from the token queue until the occurence
+        /// is satisfied
         /// </summary>
-        /// <param name="tokenList">The list</param>
+        /// <param name="tokens">The token list to pop from</param>
+        public abstract void PopFrom(Queue<TokenBase> tokens);
+        /// <summary>
+        /// Validates if the tokens match the occurence
+        /// </summary>
+        /// <param name="tokens">The tokens</param>
         /// <returns>True if matches, otherwise false</returns>
-        public bool Matches(IEnumerable<TokenBase> tokenList)
-        {
-            foreach (Type aTokenType in tokenList.Select(p => p.GetType()))
-            {
-                if(aTokenType.Equals(TokenType) == false
-                   && aTokenType.IsSubclassOf(TokenType) == false
-                    )
-                    throw new CalidusException("Token occurence can only match a list of same-type tokens of type " + TokenType.Name);
-            }
-            
-            //only set this if not matched before
-            if(WasMatched == false)
-                WasMatched = IsValidMatch(tokenList);
+        protected abstract bool Validate(Queue<TokenBase> tokens);
+        /// <summary>
+        /// Removes the validated tokens from the list
+        /// </summary>
+        /// <param name="tokens">The list to remove from</param>
+        protected abstract void PopValidated(Queue<TokenBase> tokens);
 
-            return WasMatched;
+        /// <summary>
+        /// Checks if the list of tokens is valid for the occurence
+        /// </summary>
+        /// <param name="tokens">The tokens</param>
+        /// <returns>True if valid, otherwise false</returns>
+        public bool IsValidFor(Queue<TokenBase> tokens)
+        {
+            bool isValid = Validate(tokens);
+            if (isValid)
+                PopValidated(tokens);
+
+            return isValid;
         }
 
-        /// <summary>
-        /// Checks to see if the list matches occurence
-        /// </summary>
-        /// <param name="tokenList">The list</param>
-        /// <returns>True if matches, otherwise false</returns>
-        protected abstract bool IsValidMatch(IEnumerable<TokenBase> tokenList);
     }
 }

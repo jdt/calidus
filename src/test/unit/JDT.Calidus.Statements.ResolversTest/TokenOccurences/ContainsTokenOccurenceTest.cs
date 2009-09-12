@@ -11,50 +11,38 @@ using NUnit.Framework;
 namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
 {
     [TestFixture]
-    public class TokenOccurenceTest : CalidusTestBase
+    public class ContainsTokenOccurenceTest : CalidusTestBase
     {
-        private TokenOccurence _occurence;
+        private ContainsTokenOccurence _occurence;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _occurence = new TokenOccurence(typeof(IdentifierToken));
+            _occurence = new ContainsTokenOccurence(typeof(SemiColonToken));
         }
 
         [Test]
-        public void TokenOccurencePopFromShouldNotPopFromEmptyQueue()
+        public void ContainsTokenOccurencePopFromShouldNotPopEmptyList()
         {
             Queue<TokenBase> input = new Queue<TokenBase>();
+
             _occurence.PopFrom(input);
 
             Assert.AreEqual(0, input.Count);
         }
 
         [Test]
-        public void TokenOccurencePopFromShouldPopWhiteSpace()
+        public void ContainsTokenOccurenceShouldPopUntilTokenTypeEncountered()
         {
             Queue<TokenBase> input = new Queue<TokenBase>();
             input.Enqueue(TokenCreator.Create<SpaceToken>());
-            input.Enqueue(TokenCreator.Create<TabToken>());
-            input.Enqueue(TokenCreator.Create<NewLineToken>());
-            input.Enqueue(TokenCreator.Create<IdentifierToken>("test"));
+            input.Enqueue(TokenCreator.Create<ForwardSlashToken>());
+            input.Enqueue(TokenCreator.Create<SemiColonToken>());
 
             _occurence.PopFrom(input);
 
             Assert.AreEqual(1, input.Count);
-        }
-
-        [Test]
-        public void TokenOccurencePopFromShouldNotPopNonWhiteSpace()
-        {
-            Queue<TokenBase> input = new Queue<TokenBase>();
-            input.Enqueue(TokenCreator.Create<SemiColonToken>());
-            input.Enqueue(TokenCreator.Create<IdentifierToken>("test"));
-
-            _occurence.PopFrom(input);
-
-            Assert.AreEqual(2, input.Count);
         }
     }
 }

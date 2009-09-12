@@ -12,16 +12,22 @@ namespace JDT.Calidus.Statements.Factories.Fluent
     public interface IMiddleStatementExpression : IStatementExpression
     {
         /// <summary>
-        /// Verify that the previously token is follwed by a token of the supplied type
+        /// Verify that the previously token is at any point follwed by a token of the supplied type
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
-        /// <returns>An expression followed by the specified token</returns>
-        IMiddleStatementExpression FollowedBy<TTokenType>() where TTokenType : TokenBase;
+        /// <returns>An expression followed loosely by the specified token</returns>
+        IMiddleStatementExpression FollowedLooselyBy<TTokenType>() where TTokenType : TokenBase;
         /// <summary>
-        /// Verify that the statement ends with a token of the supplied type
+        /// Verify that the previously token is exactly follwed by a token of the supplied type
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
-        /// <returns>An expression ending with the specified token type</returns>
-        IEndingStatementExpression EndsWith<TTokenType>() where TTokenType : TokenBase;
+        /// <returns>An expression exactly followed by the specified token</returns>
+        IMiddleStatementExpression FollowedByStrict<TTokenType>() where TTokenType : TokenBase;
+        /// <summary>
+        /// Verify that the previously token is follwed by any whitespace and a token of the supplied type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type</typeparam>
+        /// <returns>An expression followed by whitespace if applicable and the specified token</returns>
+        IMiddleStatementExpression FollowedBy<TTokenType>() where TTokenType : TokenBase;
     }
 }

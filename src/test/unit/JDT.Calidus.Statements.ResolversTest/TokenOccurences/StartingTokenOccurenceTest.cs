@@ -11,28 +11,27 @@ using NUnit.Framework;
 namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
 {
     [TestFixture]
-    public class TokenOccurenceTest : CalidusTestBase
+    public class StartingTokenOccurenceTest : CalidusTestBase
     {
-        private TokenOccurence _occurence;
+        private StartingTokenOccurence _occurence;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _occurence = new TokenOccurence(typeof(IdentifierToken));
+            _occurence = new StartingTokenOccurence(typeof(IdentifierToken));
         }
 
         [Test]
-        public void TokenOccurencePopFromShouldNotPopFromEmptyQueue()
+        public void StartingTokenOccurencePopFromShouldNotPopFromEmptyQueue()
         {
             Queue<TokenBase> input = new Queue<TokenBase>();
-            _occurence.PopFrom(input);
 
-            Assert.AreEqual(0, input.Count);
+            _occurence.PopFrom(input);
         }
 
         [Test]
-        public void TokenOccurencePopFromShouldPopWhiteSpace()
+        public void StartingTokenOccurencePopFromShouldPopWhiteSpace()
         {
             Queue<TokenBase> input = new Queue<TokenBase>();
             input.Enqueue(TokenCreator.Create<SpaceToken>());
@@ -46,7 +45,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
         }
 
         [Test]
-        public void TokenOccurencePopFromShouldNotPopNonWhiteSpace()
+        public void StartingTokenOccurencePopFromShouldNotPopNonWhiteSpace()
         {
             Queue<TokenBase> input = new Queue<TokenBase>();
             input.Enqueue(TokenCreator.Create<SemiColonToken>());

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 
 namespace JDT.Calidus.Tokens.Common
 {
     /// <summary>
     /// This class represents a forward slash
     /// </summary>
-    public class ForwardSlashToken : WhiteSpaceToken
+    public class ForwardSlashToken : TokenBase
     {
         /// <summary>
         /// Create a new instance of this class
