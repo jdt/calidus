@@ -198,6 +198,18 @@ namespace JDT.Calidus.Parsers.CocoTest
         }
 
         [Test]
+        public void LeftSquareBracketConstShouldReturnOpenSquareBracketToken()
+        {
+            Assert.IsInstanceOf(typeof(OpenSquareBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._lbrack)));
+        }
+
+        [Test]
+        public void RightSquareBracketConstShouldReturnCloseSquareBracketToken()
+        {
+            Assert.IsInstanceOf(typeof (CloseSquareBracketToken), CocoTokenConverter.Convert(GetCocoToken(Parser._rbrack)));
+        }
+
+        [Test]
         public void BlockCommentConstShouldReturnBlockCommentToken()
         {
             Assert.IsInstanceOf(typeof(BlockCommentToken), CocoTokenConverter.Convert(GetCocoToken(Parser._cBlockCom)));
