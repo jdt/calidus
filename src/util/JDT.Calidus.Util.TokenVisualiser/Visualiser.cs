@@ -63,14 +63,6 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 _currentStatements.Clear();
                 foreach (StatementBase aStatement in parsedStatements)
                     _currentStatements.Add(new VisualiserStatement(aStatement));
-
-                lstTokenList.DataSource = _currentTokens;
-                lstTokenList.Enabled = true;
-                lstStatementList.DataSource = _currentStatements;
-                lstStatementList.Enabled = true;
-
-                tabDisplay.SelectedIndex = 0;
-                DisplayCurrentToken();
             }
             catch(CalidusException ex)
             {
@@ -80,6 +72,14 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 lstTokenDetails.DataSource = null;
                 lstTokenList.DataSource = null;
             }
+
+            lstTokenList.DataSource = _currentTokens;
+            lstTokenList.Enabled = true;
+            lstStatementList.DataSource = _currentStatements;
+            lstStatementList.Enabled = true;
+
+            tabDisplay.SelectedIndex = 0;
+            DisplayCurrentToken();
         }
 
         //sets the content of the line, column label at the bottom to display current position of the caret
