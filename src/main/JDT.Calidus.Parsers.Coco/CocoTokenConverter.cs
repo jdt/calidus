@@ -5,7 +5,7 @@ using System.Text;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
-using JDT.Calidus.Tokens.NameSpace;
+using JDT.Calidus.Tokens.Namespace;
 using JDT.Calidus.Tokens.Types;
 using JDT.Calidus.Tokens.Common.Brackets;
 

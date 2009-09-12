@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Tokens.NameSpace;
+using JDT.Calidus.Tokens.Namespace;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Coco;
 using JDT.Calidus.Tokens.Common;

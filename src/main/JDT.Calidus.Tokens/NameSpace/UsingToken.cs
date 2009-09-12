@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tokens.NameSpace
+namespace JDT.Calidus.Tokens.Namespace
 {
     /// <summary>
     /// This class represents a using token
