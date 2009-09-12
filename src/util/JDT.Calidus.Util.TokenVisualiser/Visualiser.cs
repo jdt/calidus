@@ -52,22 +52,37 @@ namespace JDT.Calidus.Util.TokenVisualiser
             CalidusTokenParser tokenParser = new CalidusTokenParser();
             CalidusStatementParser statementParser = new CalidusStatementParser();
 
+            IEnumerable<TokenBase> parsedTokens = null;
             try
             {
-                IEnumerable<TokenBase> parsedTokens = tokenParser.Parse(rtSource.Text);
+                parsedTokens = tokenParser.Parse(rtSource.Text);
                 _currentTokens.Clear();
                 foreach (TokenBase aToken in parsedTokens)
                     _currentTokens.Add(new VisualiserToken(aToken));
-
-                IEnumerable<StatementBase> parsedStatements = statementParser.Parse(parsedTokens);
-                _currentStatements.Clear();
-                foreach (StatementBase aStatement in parsedStatements)
-                    _currentStatements.Add(new VisualiserStatement(aStatement));
             }
             catch(CalidusException ex)
             {
-                MessageBox.Show("Errors occured during parsing: " + ex.Message);
+                MessageBox.Show("Errors occured during token parsing: " + ex.Message);
                 
+                lstTokenList.Enabled = false;
+                lstTokenDetails.DataSource = null;
+                lstTokenList.DataSource = null;
+            }
+
+            try
+            {
+                if (parsedTokens != null)
+                {
+                    IEnumerable<StatementBase> parsedStatements = statementParser.Parse(parsedTokens);
+                    _currentStatements.Clear();
+                    foreach (StatementBase aStatement in parsedStatements)
+                        _currentStatements.Add(new VisualiserStatement(aStatement));
+                }
+            }
+            catch (CalidusException ex)
+            {
+                MessageBox.Show("Errors occured during statement parsing: " + ex.Message);
+
                 lstTokenList.Enabled = false;
                 lstTokenDetails.DataSource = null;
                 lstTokenList.DataSource = null;
