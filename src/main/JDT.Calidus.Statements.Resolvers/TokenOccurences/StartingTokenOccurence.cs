@@ -8,16 +8,15 @@ using JDT.Calidus.Tokens.Common;
 namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
 {
     /// <summary>
-    /// This class represents a token occurence of whitespace 
-    /// if applicable followed by a specified token type
+    /// This class represents a starting token occurence
     /// </summary>
-    public class TokenOccurence : NextTokenOccurenceBase
+    public class StartingTokenOccurence : NextTokenOccurenceBase
     {
         /// <summary>
         /// Create a new instance of this object
         /// </summary>
         /// <param name="tokenType">The token type</param>
-        public TokenOccurence(Type tokenType)
+        public StartingTokenOccurence(Type tokenType)
             : base(tokenType)
         {
         }

@@ -18,9 +18,20 @@ namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
         {
         }
 
-        protected override bool IsValidMatch(IEnumerable<TokenBase> tokenList)
+
+        public override void PopFrom(Queue<TokenBase> tokens)
         {
-            return true;
+            throw new NotImplementedException();
+        }
+
+        protected override bool Validate(Queue<TokenBase> tokens)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PopValidated(Queue<TokenBase> tokens)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -37,29 +48,6 @@ namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
         }
 
         [Test]
-        public void MatchingShouldThrowExceptionWhenTokenTypesAreNotEqual()
-        {
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<SemiColonToken>());
-
-            Assert.Throws<CalidusException>(delegate { _occurence.Matches(input); }, "Token occurence can only match a list of same-type tokens of type " + typeof(SpaceToken).Name);
-        }
-
-        [Test]
-        public void MatchingShouldNotThrowExceptionWhenTokenTypesAreSubclassOfType()
-        {
-            TokenOccurenceImpl occurence = new TokenOccurenceImpl(typeof(WhiteSpaceToken));
-
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<TabToken>());
-            occurence.Matches(input);
-
-            Assert.Pass();
-        }
-
-        [Test]
         public void ConstructorShouldNotThrowExceptionWhenTokenTypesIsTokenBase()
         {
             new TokenOccurenceImpl(typeof(TokenBase));
@@ -70,21 +58,6 @@ namespace JDT.Calidus.Statements.Factories.FluentTest.TokenOccurences
         public void ConstructorShouldThrowExceptionWhenTokenTypesIsNotTokenBase()
         {
             Assert.Throws<CalidusException>(delegate { new TokenOccurenceImpl(typeof(String)); }, "The type passed to the token occurence must be a subclass of " + typeof(TokenBase).Name);
-        }
-
-        [Test]
-        public void WhenMatchedWasMatchedShouldReturnTrue()
-        {
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<SpaceToken>());
-
-            Assert.AreEqual(_occurence.Matches(input), _occurence.WasMatched);
-        }
-
-        [Test]
-        public void DefaultWasMatchedShouldReturnFalse()
-        {
-            Assert.IsFalse(_occurence.WasMatched);
         }
     }
 }

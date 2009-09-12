@@ -8,4 +8,6 @@
     <component id="ITokenParser" type="JDT.Calidus.Parsers.Coco.CocoTokenParser, JDT.Calidus.Parsers.Coco" />
 
   </components>
+
+  <include uri="assembly://JDT.Calidus.Rules.Statements/RuleCreator.xml" />
 </castle>

@@ -48,13 +48,16 @@
     <Compile Include="FluentStatementFactory.cs" />
     <Compile Include="IEndingStatementExpression.cs" />
     <Compile Include="IMiddleStatementExpression.cs" />
-    <Compile Include="IStartingStatementExpression.cs" />
     <Compile Include="IStatementExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatementExpression.cs" />
-    <Compile Include="TokenOccurences\AnyTokenOccurence.cs" />
-    <Compile Include="TokenOccurences\EndingTokenOccurence.cs" />
+    <Compile Include="TokenOccurences\ContainsTokenOccurence.cs" />
     <Compile Include="TokenOccurences\TokenOccurence.cs" />
+    <Compile Include="TokenOccurences\NextTokenOccurenceBase.cs" />
+    <Compile Include="TokenOccurences\StartingTokenOccurence.cs" />
+    <Compile Include="TokenOccurences\EndingTokenOccurence.cs" />
+    <Compile Include="TokenOccurences\StrictTokenOccurence.cs" />
+    <Compile Include="TokenOccurences\LooseTokenOccurence.cs" />
     <Compile Include="TokenOccurences\TokenOccurenceBase.cs" />
   </ItemGroup>
   <ItemGroup>

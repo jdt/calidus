@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\LineCommentStatement.cs" />
     <Compile Include="Declaration\AttributeStatement.cs" />
     <Compile Include="Declaration\MemberStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

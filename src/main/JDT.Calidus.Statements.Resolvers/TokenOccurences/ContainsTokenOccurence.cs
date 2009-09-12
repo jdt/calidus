@@ -8,16 +8,15 @@ using JDT.Calidus.Tokens.Common;
 namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
 {
     /// <summary>
-    /// This class represents a token occurence of whitespace 
-    /// if applicable followed by a specified token type
+    /// This class checks for a token occurence at some point in a token list
     /// </summary>
-    public class TokenOccurence : NextTokenOccurenceBase
+    public class ContainsTokenOccurence : NextTokenOccurenceBase
     {
         /// <summary>
         /// Create a new instance of this object
         /// </summary>
         /// <param name="tokenType">The token type</param>
-        public TokenOccurence(Type tokenType)
+        public ContainsTokenOccurence(Type tokenType)
             : base(tokenType)
         {
         }
@@ -29,7 +28,9 @@ namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
         /// <param name="tokens">The token list to pop from</param>
         public override void PopFrom(Queue<TokenBase> tokens)
         {
-            while (tokens.Count != 0 && typeof(WhiteSpaceToken).IsAssignableFrom(tokens.Peek().GetType()))
+            while (tokens.Count != 0 
+                    && !Validate(tokens)
+                    )
             {
                 tokens.Dequeue();
             }
