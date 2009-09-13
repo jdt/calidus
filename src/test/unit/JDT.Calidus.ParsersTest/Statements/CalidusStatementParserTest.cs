@@ -77,16 +77,6 @@ namespace JDT.Calidus.ParsersTest.Statements
         }
 
         [Test]
-        public void ParseTokensNotEndedBySemiColonShouldThrowParseException()
-        {
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<GenericToken>("source", null));
-            input.Add(TokenCreator.Create<GenericToken>("code", null));
-
-            Assert.Throws<CalidusException>(delegate { _parser.Parse(input); }, "No valid statement terminator found for the last 2 tokens");
-        }
-
-        [Test]
         public void ParseCurlyBracketTokensShouldParseAsStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
