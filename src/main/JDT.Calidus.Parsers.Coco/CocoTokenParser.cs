@@ -33,12 +33,7 @@ namespace JDT.Calidus.Parsers.Coco
         public IEnumerable<TokenBase> Parse(String source)
         {            
             //write source to a stream
-            Stream codeStream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(codeStream);
-
-            StringReader reader = new StringReader(source);
-            writer.Write(reader.ReadToEnd());
-            writer.Flush();
+            Stream codeStream = new MemoryStream(Encoding.Default.GetBytes(source));
 
             //declare scanner and parser for validation
             Scanner cocoValidationScanner = new Scanner(codeStream);
