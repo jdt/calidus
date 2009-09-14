@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <castle>
   <properties>
-    <pattern>_e</pattern>
+    <pattern>_[a-z0-9]</pattern>
   </properties>
   
   <components>
