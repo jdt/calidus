@@ -92,5 +92,27 @@ namespace JDT.Calidus.ParsersTest.Statements
             CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, openList);
             CollectionAssert.AreEquivalent(actual.ElementAt(1).Tokens, closeList);
         }
+
+        [Test]
+        public void ParseLineCommentTokensShouldParseAsStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<LineCommentToken>("// test"));
+
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, input);
+        }
+
+        [Test]
+        public void ParseSquareBracketDelimitedTokensShouldParseAsStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<OpenSquareBracketToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("test"));
+            input.Add(TokenCreator.Create<CloseSquareBracketToken>());
+
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, input);
+        }
     }
 }
