@@ -51,10 +51,12 @@ namespace JDT.Calidus.Parsers.Statements
             {
                 currentStatementTokens.Add(aToken);
 
-                //when the token is a semicolon or a bracket, add a statement and reset the list
+                //when the token is a valid statement ender, add a statement and reset the list
                 if (aToken is SemiColonToken ||
                     aToken is OpenCurlyBracketToken || 
-                    aToken is CloseCurlyBracketToken
+                    aToken is CloseCurlyBracketToken ||
+                    aToken is LineCommentToken ||
+                    aToken is CloseSquareBracketToken
                     )
                 {
                     //check all statement factories
