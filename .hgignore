@@ -18,3 +18,6 @@ calidus.unit.VisualState.xml
 
 #Ignore resharper
 _ReSharper.JDT.Calidus
+
+#Ignore Mericurial .orig merge file
+*.orig
