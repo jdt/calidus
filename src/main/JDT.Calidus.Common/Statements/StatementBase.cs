@@ -29,6 +29,20 @@ namespace JDT.Calidus.Common.Statements
         /// </summary>
         public IEnumerable<TokenBase> Tokens { get; private set; }
 
+        /// <summary>
+        /// Gets the source code in the statement
+        /// </summary>
+        public String Source
+        {
+            get
+            {
+                StringBuilder res = new StringBuilder();
+                foreach (TokenBase aToken in Tokens)
+                    res.Append(aToken.Content);
+                return res.ToString();
+            }
+        }
+
         // override object.Equals
         public override bool Equals(object obj)
         {

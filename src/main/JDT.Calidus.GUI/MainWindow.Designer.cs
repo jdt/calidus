@@ -145,6 +145,7 @@
             this.lstViolations.Name = "lstViolations";
             this.lstViolations.Size = new System.Drawing.Size(486, 147);
             this.lstViolations.TabIndex = 0;
+            this.lstViolations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstViolations_MouseDoubleClick);
             // 
             // pnlControl
             // 

@@ -55,7 +55,7 @@ namespace JDT.Calidus.Projects
                         if (aStatementRule.Validates(aStatement))
                         {
                             if (aStatementRule.IsValidFor(aStatement) == false)
-                                currentFileViolations.Add(new RuleViolation(aFile, aStatementRule));
+                                currentFileViolations.Add(new RuleViolation(aFile, aStatementRule, aStatement));
                         }
                     }
                 }

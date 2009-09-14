@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Projects;
 using JDT.Calidus.Projects.Events;
 using JDT.Calidus.Projects.Files;
+using JDT.Calidus.Projects.Util;
 using JDT.Calidus.Rules;
 
 namespace JDT.Calidus.GUI
@@ -23,7 +21,8 @@ namespace JDT.Calidus.GUI
         private const String UNSAVED_PROJECT = "Unsaved Project";
 
         private RuleRunner _runner;
-       
+        private IList<RuleViolation> _violations;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +33,8 @@ namespace JDT.Calidus.GUI
 
             DisplayProjectDetails();
             DisplayProjectRules();
+
+            _violations = new List<RuleViolation>();
             
             _runner = new RuleRunner();
             _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
@@ -46,7 +47,9 @@ namespace JDT.Calidus.GUI
         private void _runner_Started(object source, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            lstViolations.DataSource = new List<RuleViolation>();
+            _violations.Clear();
+
+            lstViolations.DataSource = _violations;
         }
 
         private void _runner_FileCompleted(object source, FileCompletedEventArgs e)
@@ -56,11 +59,10 @@ namespace JDT.Calidus.GUI
             //update violation list
             if (e.Violations.Count() != 0)
             {
-                IList<RuleViolation> violations =
-                    new List<RuleViolation>((IEnumerable<RuleViolation>) lstViolations.DataSource);
                 foreach (RuleViolation aViolation in e.Violations)
-                    violations.Add(aViolation);
-                lstViolations.DataSource = violations;
+                    _violations.Add(aViolation);
+                
+                lstViolations.DataSource = new List<RuleViolation>(_violations);
                 lstViolations.Refresh();
             }
         }
@@ -92,6 +94,16 @@ namespace JDT.Calidus.GUI
         {
             foreach (TreeNode aNode in e.Node.Nodes)
                 aNode.Checked = e.Node.Checked;
+        }
+        
+        private void lstViolations_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int index = lstViolations.IndexFromPoint(e.Location);
+            if (ListBox.NoMatches != index)
+            {
+                RuleViolation currentViolation = _violations[index];
+                IDEFileOpener.OpenWithVisualStudio(currentViolation.File, currentViolation.FirstToken.Line);
+            }
         }
 
         private void cmdRun_Click(object sender, EventArgs e)
