@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.RuleCreators;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
-using JDT.Calidus.Common.Util;
 
 namespace JDT.Calidus.Rules.Statements
 {
