@@ -6,13 +6,13 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace JDT.Calidus.Common.Rules.Configuration
+namespace JDT.Calidus.Common.Rules.Configuration.Factories
 {
     /// <summary>
     /// This class provides a builder for a file-based configuration factory 
     /// using an xml file with a custom format
     /// </summary>
-    public class FileRuleConfigurationFactoryBuilder
+    public class FileRuleConfigurationFactory
     {
         /// <summary>
         /// Parses the xml reader into a set of rule configurations
@@ -32,13 +32,13 @@ namespace JDT.Calidus.Common.Rules.Configuration
                                         Description = e.Element("description").Value,
                                         Rule = Type.GetType(e.Attribute("type").Value, true),
                                         Parameters = ( 
-                                                        from f in e.Elements("params")
-                                                        select new
-                                                               {
-                                                                   Name = f.Element("param").Attribute("name").Value,
-                                                                   Value = f.Element("param").Attribute("value").Value
-                                                               }
-                                                      ).ToDictionary(p => p.Name, p => p.Value)
+                                                         from f in e.Elements("params")
+                                                         select new
+                                                                    {
+                                                                        Name = f.Element("param").Attribute("name").Value,
+                                                                        Value = f.Element("param").Attribute("value").Value
+                                                                    }
+                                                     ).ToDictionary(p => p.Name, p => p.Value)
                                                             
                                     };
 

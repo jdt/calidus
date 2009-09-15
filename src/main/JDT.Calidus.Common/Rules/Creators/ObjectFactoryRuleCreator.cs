@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Creators;
 
-namespace JDT.Calidus.Common.Rules.RuleCreators
+namespace JDT.Calidus.Common.Rules.Creators
 {
     /// <summary>
     /// This class is a utility class that uses the object factory to create instances of rules
