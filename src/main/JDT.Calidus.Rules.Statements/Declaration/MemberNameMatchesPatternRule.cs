@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
-using JDT.Calidus.Statements;
 using JDT.Calidus.Statements.Declaration;
 
 namespace JDT.Calidus.Rules.Statements.Declaration

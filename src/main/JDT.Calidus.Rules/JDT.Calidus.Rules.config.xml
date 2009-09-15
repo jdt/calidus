@@ -1,4 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <rules>
-  
+  <rule type="JDT.Calidus.Rules.Statements.Declaration.MemberNameMatchesPatternRule, JDT.Calidus.Rules.Statements">
+    <description>
+      This rule validates that member statement declarations match a given pattern
+    </description>
+    <params>
+      <param name="pattern" value="_[a-z0-9]" />
+    </params>
+  </rule>
 </rules>
