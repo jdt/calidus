@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using JDT.Calidus.Common.Rules.Creators;
+using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Rules
 {
@@ -32,23 +33,23 @@ namespace JDT.Calidus.Common.Rules
         /// Gets the list of rules
         /// </summary>
         /// <returns>The rules</returns>
-        public IList<TRuleType> GetRules()
+        public IEnumerable<StatementRuleBase> GetStatementRules()
         {
-            List<TRuleType> result = new List<TRuleType>();
+            List<StatementRuleBase> result = new List<StatementRuleBase>();
 
             foreach (Type aType in _toParse.GetTypes())
             {
-                TRuleType ruleInstance = default(TRuleType);
+                StatementRuleBase ruleInstance = null;
 
                 //make sure to ignore the interface itself
                 if (typeof(TRuleType).IsAssignableFrom(aType))
                 {
                     //not in default, ry for a no-args constructor
                     if (aType.GetConstructor(new Type[] { }) != null)
-                        ruleInstance = (TRuleType)Activator.CreateInstance(aType);
+                        ruleInstance = (StatementRuleBase)Activator.CreateInstance(aType);
                         //try the factory
                     else
-                        ruleInstance = _creator.CreateRule<TRuleType>();
+                        ruleInstance = _creator.CreateStatementRule(aType);
 
                     if (ruleInstance == null)
                         throw new CalidusException("Found rule " + aType.Name + ", but an instance could not be created because the rule creator did not register the rule and no default no-args constructor was found");

@@ -27,7 +27,7 @@ namespace JDT.Calidus.CommonTest.Rules.Creators
             mocker.ReplayAll();
 
             ConfigRuleCreator creator = new ConfigRuleCreator(factory);
-            creator.CreateRule<UnCreatableRule>();
+            creator.CreateStatementRule(typeof(UnCreatableRule));
 
             mocker.VerifyAll();
         }
@@ -45,7 +45,7 @@ namespace JDT.Calidus.CommonTest.Rules.Creators
             ConfigRuleCreator creator = new ConfigRuleCreator(factory);
             Assert.Throws<CalidusException>(delegate
                                                 {
-                                                    creator.CreateRule<UnCreatableRule>();
+                                                    creator.CreateStatementRule(typeof(UnCreatableRule));
                                                 }
                                             , "Rule UnCreatableRule does not have a default constructor and no configuration information could be found that matches a constructor");
 

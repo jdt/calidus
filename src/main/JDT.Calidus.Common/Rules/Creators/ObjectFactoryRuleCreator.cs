@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Creators;
+using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Rules.Creators
 {
@@ -15,14 +16,13 @@ namespace JDT.Calidus.Common.Rules.Creators
         /// <summary>
         /// Gets the rule from the object factory or null if not registered
         /// </summary>
-        /// <typeparam name="TRuleType">The rule type</typeparam>
         /// <returns>The rule or null if not found</returns>
-        public TRuleType CreateRule<TRuleType>() where TRuleType : IRule
+        public StatementRuleBase CreateStatementRule(Type type)
         {
-            if (ObjectFactory.Has(typeof(TRuleType)))
-                return (TRuleType)ObjectFactory.Get(typeof(TRuleType));
+            if (ObjectFactory.Has(type))
+                return (StatementRuleBase)ObjectFactory.Get(type);
             else
-                return default(TRuleType);
+                return null;
         }
     }
 }

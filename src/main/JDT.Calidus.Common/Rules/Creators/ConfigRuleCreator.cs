@@ -6,6 +6,7 @@ using System.Text;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Rules.Creators
 {
@@ -28,19 +29,22 @@ namespace JDT.Calidus.Common.Rules.Creators
         /// <summary>
         /// Creates an instance of the rule, checking for parameters in the configuration
         /// </summary>
-        /// <typeparam name="TRuleType">The rule type</typeparam>
+        /// <param name="rule">The rule</param>
         /// <returns>The rule</returns>
-        public TRuleType CreateRule<TRuleType>() where TRuleType : IRule
+        public StatementRuleBase CreateStatementRule(Type rule)
         {
-            IRuleConfiguration configFor = _configFactory.Get(typeof(TRuleType));
+            IRuleConfiguration configFor = _configFactory.Get(rule);
 
-            foreach(ConstructorInfo ctor in typeof(TRuleType).GetConstructors())
+            if (configFor != null)
             {
-                if (configFor.Matches(ctor))
-                    return (TRuleType)Activator.CreateInstance(typeof(TRuleType), configFor.ArgumentArray);
+                foreach (ConstructorInfo ctor in rule.GetConstructors())
+                {
+                    if (configFor.Matches(ctor))
+                        return (StatementRuleBase) Activator.CreateInstance(rule, configFor.ArgumentArray);
+                }
             }
 
-            throw new CalidusException("Rule " + typeof(TRuleType).Name + " does not have a default constructor and no configuration information could be found that matches a constructor");
+            throw new CalidusException("Rule " + rule.Name + " does not have a default constructor and no configuration information could be found that matches a constructor");
         }
     }
 }
