@@ -53,9 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateableRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\Configuration\DefaultRuleConfigurationTest.cs" />
+    <Compile Include="Rules\Configuration\FileRuleConfigurationFactoryBuilderTest.cs" />
     <Compile Include="Rules\RuleCreators\ConfigRuleCreatorTest.cs" />
     <Compile Include="Rules\RuleFactoryTest.cs" />
+    <Compile Include="Rules\UnCreateableRule.cs" />
     <Compile Include="Statements\StatementBaseTest.cs" />
     <Compile Include="Tokens\TokenBaseTest.cs" />
     <Compile Include="Util\AssemblyBasedAssignableClassCreatorTest.cs" />

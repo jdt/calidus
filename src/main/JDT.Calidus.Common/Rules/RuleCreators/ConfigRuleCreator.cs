@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Configuration;
 
 namespace JDT.Calidus.Common.Rules.RuleCreators
 {
