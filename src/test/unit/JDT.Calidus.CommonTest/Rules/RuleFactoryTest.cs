@@ -18,14 +18,14 @@ namespace JDT.Calidus.CommonTest.Rules
         {
             MockRepository mocker = new MockRepository();
             IRuleCreator creator = mocker.StrictMock<IRuleCreator>();
-            Expect.Call(creator.CreateRule<IRule>()).IgnoreArguments().Return(null).Repeat.Once();
+            Expect.Call(creator.CreateStatementRule(typeof(UnCreatableRule))).IgnoreArguments().Return(null).Repeat.Once();
             mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(GetType().Assembly, creator);
 
             Assert.Throws<CalidusException>(delegate
                                                 {
-                                                    factory.GetRules();
+                                                    factory.GetStatementRules();
                                                 },
                                             "Found rule UnCreateableRule, but an instance could not be created because the ObjectFactoryRuleCreator did not register the rule and no default no-args constructor was found");
 
@@ -37,11 +37,11 @@ namespace JDT.Calidus.CommonTest.Rules
         {
             MockRepository mocker = new MockRepository();
             IRuleCreator creator = mocker.StrictMock<IRuleCreator>();
-            Expect.Call(creator.CreateRule<IRule>()).Return(new UnCreatableRule("test")).Repeat.Once();
+            Expect.Call(creator.CreateStatementRule(typeof(UnCreatableRule))).Return(new UnCreatableRule("test")).Repeat.Once();
             mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(GetType().Assembly, creator);
-            factory.GetRules();
+            factory.GetStatementRules();
 
             mocker.VerifyAll();
         }

@@ -15,6 +15,6 @@ namespace JDT.Calidus.Common.Statements
         /// Gets the list of statement rules
         /// </summary>
         /// <returns>The rules</returns>
-        IList<StatementRuleBase> GetStatementRules();
+        IEnumerable<StatementRuleBase> GetStatementRules();
     }
 }

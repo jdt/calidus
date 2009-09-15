@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Statements;
+using JDT.Calidus.Common.Statements;
 
 namespace JDT.Calidus.CommonTest
 {
-    public class CreatableRule : IRule
+    public class CreatableRule : StatementRuleBase
     {
-        public CreatableRule() { }
+        public CreatableRule(): base("test") { }
 
-        public string Name
+        public override bool Validates(StatementBase statement)
         {
-            get { throw new NotImplementedException(); }
+            throw new NotImplementedException();
         }
 
-        public string Category
+        public override bool IsValidFor(StatementBase statement)
         {
-            get { throw new NotImplementedException(); }
+            throw new NotImplementedException();
         }
     }
 }

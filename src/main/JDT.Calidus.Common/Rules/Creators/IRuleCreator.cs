@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Rules.Creators
 {
@@ -13,8 +14,8 @@ namespace JDT.Calidus.Common.Rules.Creators
         /// <summary>
         /// Creates an instance of the rule specified or null if unable to create a rule
         /// </summary>
-        /// <typeparam name="TRule">The rule type</typeparam>
+        /// <param name="aRule">The rule type</param>
         /// <returns>The rule</returns>
-        TRule CreateRule<TRule>() where TRule : IRule;
+        StatementRuleBase CreateStatementRule(Type aRule);
     }
 }
