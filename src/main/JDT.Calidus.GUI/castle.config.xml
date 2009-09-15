@@ -8,8 +8,17 @@
     
     <component id="IFileValidator" type="JDT.Calidus.Projects.Files.Validators.CSharpFileValidator, JDT.Calidus.Projects.Files.Validators" />
     <component id="IStatementRuleFactoryProvider" type="JDT.Calidus.Providers.StatementRuleFactoryProviders.AssemblyBasedStatementRuleFactoryProvider, JDT.Calidus.Providers" />
-  
-  </components>
 
-  <include uri="assembly://JDT.Calidus.Rules.Statements/RuleCreator.xml" /> 
+    <component id="IRuleConfigurationFactory" type="JDT.Calidus.Common.Rules.Configuration.Factories.FileRuleConfigurationFactory, JDT.Calidus.Common">
+      <parameters>
+        <file>JDT.Calidus.Rules.config.xml</file>
+      </parameters>
+    </component>
+    
+    <component id="IRuleCreator" type="JDT.Calidus.Common.Rules.Creators.ConfigRuleCreator, JDT.Calidus.Common">
+      <parameters>
+        <configFactory>${IRuleConfigurationFactory}</configFactory>
+      </parameters>
+    </component>
+  </components>
 </castle>
