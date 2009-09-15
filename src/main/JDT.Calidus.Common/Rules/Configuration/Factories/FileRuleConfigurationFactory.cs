@@ -12,42 +12,60 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
     /// This class provides a builder for a file-based configuration factory 
     /// using an xml file with a custom format
     /// </summary>
-    public class FileRuleConfigurationFactory
+    public class FileRuleConfigurationFactory : IRuleConfigurationFactory
     {
+        private IList<IRuleConfiguration> _configList;
+
         /// <summary>
-        /// Parses the xml reader into a set of rule configurations
+        /// Create a new instance of this class
         /// </summary>
-        /// <param name="reader">The reader to parse from</param>
-        /// <returns>The list of configurations</returns>
-        public IEnumerable<IRuleConfiguration> ParseRules(XmlReader reader)
+        /// <param name="file">The file to parse</param>
+        public FileRuleConfigurationFactory(String file)
+            : this(new XmlTextReader(Path.GetFullPath(file)))
         {
-            IList<IRuleConfiguration> res = new List<IRuleConfiguration>();
+        }
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="reader">The reader to use</param>
+        public FileRuleConfigurationFactory(XmlReader reader)
+        {
+            _configList = new List<IRuleConfiguration>();
 
             XDocument doc = XDocument.Load(reader);
 
             //parse all rule declarations
             var result = from e in doc.Root.Elements("rule")
                          select new DefaultRuleConfiguration
-                                    {
-                                        Description = e.Element("description").Value,
-                                        Rule = Type.GetType(e.Attribute("type").Value, true),
-                                        Parameters = ( 
-                                                         from f in e.Elements("params")
-                                                         select new
-                                                                    {
-                                                                        Name = f.Element("param").Attribute("name").Value,
-                                                                        Value = f.Element("param").Attribute("value").Value
-                                                                    }
-                                                     ).ToDictionary(p => p.Name, p => p.Value)
-                                                            
-                                    };
+                         {
+                             Description = e.Element("description").Value,
+                             Rule = Type.GetType(e.Attribute("type").Value, true),
+                             Parameters = (
+                                              from f in e.Elements("params")
+                                              select new
+                                              {
+                                                  Name = f.Element("param").Attribute("name").Value,
+                                                  Value = f.Element("param").Attribute("value").Value
+                                              }
+                                          ).ToDictionary(p => p.Name, p => p.Value)
+
+                         };
 
             foreach (DefaultRuleConfiguration w in result)
             {
-                res.Add(w);
+                _configList.Add(w);
             }
+        }
 
-            return res;
+        /// <summary>
+        /// Gets the configuration for the specified rule type
+        /// </summary>
+        /// <param name="type">The type</param>
+        /// <returns>The configuration</returns>
+        public IRuleConfiguration Get(Type type)
+        {
+            return _configList.FirstOrDefault(p => p.Rule.Equals(type));
         }
     }
 }

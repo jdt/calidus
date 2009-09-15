@@ -13,14 +13,6 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
     [TestFixture]
     public class FileRuleConfigurationFactoryTest
     {
-        private FileRuleConfigurationFactory _builder;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _builder = new FileRuleConfigurationFactory();
-        }
-
         [Test]
         public void ParsingStreamWithRegistrationShouldReturnInformation()
         {
@@ -40,15 +32,15 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
             XmlReader reader = new XmlTextReader(stream);
 
-            IEnumerable<IRuleConfiguration> actual = _builder.ParseRules(reader);
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(reader);
+            IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
 
             IDictionary<String, String> expectedParam = new Dictionary<String, String>();
             expectedParam.Add("param1", "theValue");
 
-            Assert.AreEqual(1, actual.Count());
-            Assert.AreEqual("Description text", actual.ElementAt(0).Description);
-            Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.ElementAt(0).Rule);
-            CollectionAssert.AreEquivalent(expectedParam, actual.ElementAt(0).Parameters);
+            Assert.AreEqual("Description text", actual.Description);
+            Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.Rule);
+            CollectionAssert.AreEquivalent(expectedParam, actual.Parameters);
         }
 
         [Test]
@@ -70,15 +62,15 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
             XmlReader reader = new XmlTextReader(stream);
 
-            IEnumerable<IRuleConfiguration> actual = _builder.ParseRules(reader);
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(reader);
+            IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
 
             IDictionary<String, String> expectedParam = new Dictionary<String, String>();
             expectedParam.Add("param1", "theValue");
 
-            Assert.AreEqual(1, actual.Count());
-            Assert.AreEqual("Description text", actual.ElementAt(0).Description);
-            Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.ElementAt(0).Rule);
-            CollectionAssert.AreEquivalent(expectedParam, actual.ElementAt(0).Parameters);
+            Assert.AreEqual("Description text", actual.Description);
+            Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.Rule);
+            CollectionAssert.AreEquivalent(expectedParam, actual.Parameters);
         }
 
         [Test]
@@ -102,8 +94,8 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 
             Assert.Throws<TypeLoadException>(
                 delegate
-                    {
-                        _builder.ParseRules(reader);
+                {
+                        FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(reader);
                     }
                 );
         }

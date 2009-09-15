@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Creators;
 using JDT.Calidus.Common.Rules.Statements;
@@ -21,7 +22,7 @@ namespace JDT.Calidus.Rules.Statements
         /// </summary>
         public StatementRuleFactory()
         {
-            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly, new ObjectFactoryRuleCreator());
+            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly, ObjectFactory.Get<IRuleCreator>());
         }
 
         /// <summary>
