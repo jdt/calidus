@@ -5,8 +5,9 @@ using System.Reflection;
 using System.Text;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 
-namespace JDT.Calidus.Common.Rules.RuleCreators
+namespace JDT.Calidus.Common.Rules.Creators
 {
     /// <summary>
     /// This class is a utility class that uses a standardized rule configuration to create rules

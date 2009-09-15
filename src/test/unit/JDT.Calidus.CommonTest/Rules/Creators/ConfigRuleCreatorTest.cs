@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.RuleCreators;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules.Creators;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace JDT.Calidus.CommonTest.Rules.RuleCreators
+namespace JDT.Calidus.CommonTest.Rules.Creators
 {
     [TestFixture]
     public class ConfigRuleCreatorTest
@@ -46,7 +47,7 @@ namespace JDT.Calidus.CommonTest.Rules.RuleCreators
                                                 {
                                                     creator.CreateRule<UnCreatableRule>();
                                                 }
-                , "Rule UnCreatableRule does not have a default constructor and no configuration information could be found that matches a constructor");
+                                            , "Rule UnCreatableRule does not have a default constructor and no configuration information could be found that matches a constructor");
 
             mocker.VerifyAll();
         }

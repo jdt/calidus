@@ -5,19 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using JDT.Calidus.Common.Rules.Configuration;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 using NUnit.Framework;
 
-namespace JDT.Calidus.CommonTest.Rules.Configuration
+namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 {
     [TestFixture]
-    public class FileRuleConfigurationFactoryBuilderTest
+    public class FileRuleConfigurationFactoryTest
     {
-        private FileRuleConfigurationFactoryBuilder _builder;
+        private FileRuleConfigurationFactory _builder;
 
         [SetUp]
         public void SetUp()
         {
-            _builder = new FileRuleConfigurationFactoryBuilder();
+            _builder = new FileRuleConfigurationFactory();
         }
 
         [Test]
