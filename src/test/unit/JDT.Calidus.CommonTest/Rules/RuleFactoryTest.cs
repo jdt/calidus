@@ -16,8 +16,8 @@ namespace JDT.Calidus.CommonTest.Rules
         public void FactoryShouldThrowExceptionForUnCreateableRules()
         {
             MockRepository mocker = new MockRepository();
-            IRuleCreator<IRule> creator = mocker.StrictMock<IRuleCreator<IRule>>();
-            Expect.Call(creator.CreateRule(GetType())).IgnoreArguments().Return(null).Repeat.Once();
+            IRuleCreator creator = mocker.StrictMock<IRuleCreator>();
+            Expect.Call(creator.CreateRule<IRule>()).IgnoreArguments().Return(null).Repeat.Once();
             mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(GetType().Assembly, creator);
@@ -35,8 +35,8 @@ namespace JDT.Calidus.CommonTest.Rules
         public void FactoryShouldTryDefaultConstructorBeforeCustomCreator()
         {
             MockRepository mocker = new MockRepository();
-            IRuleCreator<IRule> creator = mocker.StrictMock<IRuleCreator<IRule>>();
-            Expect.Call(creator.CreateRule(typeof(UnCreatableRule))).Return(new UnCreatableRule("test")).Repeat.Once();
+            IRuleCreator creator = mocker.StrictMock<IRuleCreator>();
+            Expect.Call(creator.CreateRule<IRule>()).Return(new UnCreatableRule("test")).Repeat.Once();
             mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(GetType().Assembly, creator);
