@@ -9,35 +9,6 @@ using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Rules
 {
-    public class UnCreatableRule : IRule
-    {
-        public UnCreatableRule(String arg){}
-
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string Category
-        {
-            get { throw new NotImplementedException(); }
-        }
-    }
-
-    public class CreatableRule : IRule
-    {
-        public CreatableRule() { }
-
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string Category
-        {
-            get { throw new NotImplementedException(); }
-        }
-    }
     [TestFixture]
     public class RuleFactoryTest
     {
