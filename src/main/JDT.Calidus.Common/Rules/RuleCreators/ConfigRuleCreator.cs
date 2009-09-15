@@ -11,7 +11,7 @@ namespace JDT.Calidus.Common.Rules.RuleCreators
     /// <summary>
     /// This class is a utility class that uses a standardized rule configuration to create rules
     /// </summary>
-    public class ConfigRuleCreator<TRuleType> : IRuleCreator<TRuleType> where TRuleType : IRule
+    public class ConfigRuleCreator : IRuleCreator
     {
         private IRuleConfigurationFactory _configFactory;
 
@@ -27,19 +27,19 @@ namespace JDT.Calidus.Common.Rules.RuleCreators
         /// <summary>
         /// Creates an instance of the rule, checking for parameters in the configuration
         /// </summary>
-        /// <param name="type">The rule type</param>
+        /// <typeparam name="TRuleType">The rule type</typeparam>
         /// <returns>The rule</returns>
-        public TRuleType CreateRule(Type type)
+        public TRuleType CreateRule<TRuleType>() where TRuleType : IRule
         {
-            IRuleConfiguration configFor = _configFactory.Get(type);
+            IRuleConfiguration configFor = _configFactory.Get(typeof(TRuleType));
 
-            foreach(ConstructorInfo ctor in type.GetConstructors())
+            foreach(ConstructorInfo ctor in typeof(TRuleType).GetConstructors())
             {
                 if (configFor.Matches(ctor))
-                    return (TRuleType)Activator.CreateInstance(type, configFor.ArgumentArray);
+                    return (TRuleType)Activator.CreateInstance(typeof(TRuleType), configFor.ArgumentArray);
             }
 
-            throw new CalidusException("Rule " + type.Name + " does not have a default constructor and no configuration information could be found that matches a constructor");
+            throw new CalidusException("Rule " + typeof(TRuleType).Name + " does not have a default constructor and no configuration information could be found that matches a constructor");
         }
     }
 }

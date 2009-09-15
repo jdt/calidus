@@ -13,7 +13,7 @@ namespace JDT.Calidus.Common.Rules
     /// </summary>
     public class RuleFactory<TRuleType> where TRuleType : IRule 
     {
-        private IRuleCreator<TRuleType> _creator;
+        private IRuleCreator _creator;
         private Assembly _toParse;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace JDT.Calidus.Common.Rules
         /// </summary>
         /// <param name="toParse">The assembly to parse for rules</param>
         /// <param name="creator">The rulecreator to use</param>
-        public RuleFactory(Assembly toParse, IRuleCreator<TRuleType> creator)
+        public RuleFactory(Assembly toParse, IRuleCreator creator)
         {
             _creator = creator;
             _toParse = toParse;
@@ -47,7 +47,7 @@ namespace JDT.Calidus.Common.Rules
                         ruleInstance = (TRuleType)Activator.CreateInstance(aType);
                         //try the factory
                     else
-                        ruleInstance = (TRuleType)_creator.CreateRule(aType);
+                        ruleInstance = _creator.CreateRule<TRuleType>();
 
                     if (ruleInstance == null)
                         throw new CalidusException("Found rule " + aType.Name + ", but an instance could not be created because the rule creator did not register the rule and no default no-args constructor was found");

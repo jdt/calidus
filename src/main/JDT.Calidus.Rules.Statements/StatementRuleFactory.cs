@@ -21,7 +21,7 @@ namespace JDT.Calidus.Rules.Statements
         /// </summary>
         public StatementRuleFactory()
         {
-            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly, new ObjectFactoryRuleCreator<StatementRuleBase>());
+            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly, new ObjectFactoryRuleCreator());
         }
 
         /// <summary>
