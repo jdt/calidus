@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blocks\CalidusBlockParser.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParser.cs" />
     <Compile Include="Statements\CalidusStatementParser.cs" />
     <Compile Include="Tokens\GenericsTokenParser.cs" />
