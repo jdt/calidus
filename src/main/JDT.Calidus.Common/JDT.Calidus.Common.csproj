@@ -61,9 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blocks\IBlockFactory.cs" />
+    <Compile Include="Blocks\BlockBase.cs" />
     <Compile Include="CalidusException.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IBlockFactoryProvider.cs" />
     <Compile Include="Providers\IStatementFactoryProvider.cs" />
     <Compile Include="Providers\IStatementRuleFactoryProvider.cs" />
     <Compile Include="Rules\Configuration\DefaultRuleConfiguration.cs" />
