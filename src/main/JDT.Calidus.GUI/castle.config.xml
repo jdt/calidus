@@ -2,12 +2,16 @@
 <castle>
   <components>
     <component id="IStatementFactoryProvider" type="JDT.Calidus.Providers.StatementFactoryProviders.AssemblyBasedStatementFactoryProvider, JDT.Calidus.Providers" />
+    <component id="IBlockFactoryProvider" type="JDT.Calidus.Providers.BlockFactoryProviders.AssemblyBasedBlockFactoryProvider, JDT.Calidus.Providers" />
+    
     <component id="IWhiteSpaceTokenParser" type="JDT.Calidus.Parsers.Tokens.WhiteSpaceTokenParser, JDT.Calidus.Parsers" />
     <component id="IGenericsTokenParser" type="JDT.Calidus.Parsers.Tokens.GenericsTokenParser, JDT.Calidus.Parsers" />
     <component id="ITokenParser" type="JDT.Calidus.Parsers.Coco.CocoTokenParser, JDT.Calidus.Parsers.Coco" />
     
     <component id="IFileValidator" type="JDT.Calidus.Projects.Files.Validators.CSharpFileValidator, JDT.Calidus.Projects.Files.Validators" />
+
     <component id="IStatementRuleFactoryProvider" type="JDT.Calidus.Providers.StatementRuleFactoryProviders.AssemblyBasedStatementRuleFactoryProvider, JDT.Calidus.Providers" />
+    <component id="IBlockRuleFactoryProvider" type="JDT.Calidus.Providers.BlockRuleFactoryProviders.AssemblyBasedBlockRuleFactoryProvider, JDT.Calidus.Providers" />
 
     <component id="IRuleConfigurationFactory" type="JDT.Calidus.Common.Rules.Configuration.Factories.FileRuleConfigurationFactory, JDT.Calidus.Common">
       <parameters>

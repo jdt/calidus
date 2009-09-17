@@ -13,6 +13,7 @@
     <assembly path="bin\test\unit\JDT.Calidus.Projects.Files.ValidatorsTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Statements.Factories.FluentTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Blocks.FactoriesTest.dll" />
+    <assembly path="bin\test\unit\JDT.Calidus.Rules.BlocksTest.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

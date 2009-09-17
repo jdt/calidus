@@ -45,7 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockFactoryProviders\AssemblyBasedStatementFactoryProvider.cs" />
+    <Compile Include="BlockFactoryProviders\AssemblyBasedBlockFactoryProvider.cs" />
+    <Compile Include="BlockRuleFactoryProviders\AssemblyBasedBlockRuleFactoryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatementFactoryProviders\AssemblyBasedStatementFactoryProvider.cs" />
     <Compile Include="StatementFactoryProviders\DefaultStatementFactoryProvider.cs" />
