@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
@@ -45,6 +46,32 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<SemiColonToken>());
 
             return new MemberStatement(input);
+        }
+
+        /// <summary>
+        /// Create a line comment statement with the supplied identifier
+        /// </summary>
+        /// <param name="commentText">The text</param>
+        /// <param name="withNewLine">True to append a newline token as well</param>
+        /// <returns>A line comment with the text</returns>
+        public LineCommentStatement CreateLineCommentStatement(String commentText, bool withNewLine)
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<LineCommentToken>("//" + commentText));
+            if (withNewLine)
+                input.Add(TokenCreator.Create<NewLineToken>());
+
+            return new LineCommentStatement(input);
+        }
+
+        /// <summary>
+        /// Create a line comment statement with the supplied identifier
+        /// </summary>
+        /// <param name="commentText">The text</param>
+        /// <returns>A line comment with the text</returns>
+        public LineCommentStatement CreateLineCommentStatement(String commentText)
+        {
+            return CreateLineCommentStatement(commentText, false);
         }
     }
 }

@@ -20,5 +20,16 @@ namespace JDT.Calidus.Common.Rules
                 return "Naming";
             }
         }
+
+        /// <summary>
+        /// Gets the documentation category
+        /// </summary>
+        public static String Documentation
+        {
+            get
+            {
+                return "Documentation";
+            }
+        }
     }
 }
