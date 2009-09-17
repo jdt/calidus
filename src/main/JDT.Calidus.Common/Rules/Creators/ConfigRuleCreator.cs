@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Statements;
@@ -41,6 +42,27 @@ namespace JDT.Calidus.Common.Rules.Creators
                 {
                     if (configFor.Matches(ctor))
                         return (StatementRuleBase) Activator.CreateInstance(rule, configFor.ArgumentArray);
+                }
+            }
+
+            throw new CalidusException("Rule " + rule.Name + " does not have a default constructor and no configuration information could be found that matches a constructor");
+        }
+
+        /// <summary>
+        /// Create an instance of the rule specified or null if unable to create a rule
+        /// </summary>
+        /// <param name="rule">The rule type</param>
+        /// <returns>The rule</returns>
+        public BlockRuleBase CreateBlockRule(Type rule)
+        {
+            IRuleConfiguration configFor = _configFactory.Get(rule);
+
+            if (configFor != null)
+            {
+                foreach (ConstructorInfo ctor in rule.GetConstructors())
+                {
+                    if (configFor.Matches(ctor))
+                        return (BlockRuleBase)Activator.CreateInstance(rule, configFor.ArgumentArray);
                 }
             }
 

@@ -8,4 +8,13 @@
       <param name="pattern" value="_[a-z0-9]" />
     </params>
   </rule>
+
+  <rule type="JDT.Calidus.Rules.Blocks.Common.FileBlockStartsWithHeaderRule, JDT.Calidus.Rules.Blocks">
+    <description>
+      This rule validates that files start with a defined header
+    </description>
+    <params>
+      <param name="headerContent" value="MyHeader" />
+    </params>
+  </rule>
 </rules>

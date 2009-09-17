@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Parsers.Blocks;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Parsers.Tokens;
 using JDT.Calidus.Projects.Events;
@@ -33,6 +36,7 @@ namespace JDT.Calidus.Projects
 
             CalidusTokenParser parser = new CalidusTokenParser();
             CalidusStatementParser statementParser = new CalidusStatementParser();
+            CalidusBlockParser blockParser = new CalidusBlockParser();
 
             CalidusRuleProvider ruleProvider = new CalidusRuleProvider();
 
@@ -46,6 +50,8 @@ namespace JDT.Calidus.Projects
                 currentFile++;
                 IEnumerable<TokenBase> parsedTokens = parser.Parse(File.ReadAllText(aFile));
                 IEnumerable<StatementBase> parsedStatements = statementParser.Parse(parsedTokens);
+                IEnumerable<BlockBase> parsedBlocks = blockParser.Parse(parsedStatements);
+                
                 IList<RuleViolation> currentFileViolations = new List<RuleViolation>();
 
                 foreach (StatementRuleBase aStatementRule in ruleProvider.GetStatementRules())
@@ -56,6 +62,18 @@ namespace JDT.Calidus.Projects
                         {
                             if (aStatementRule.IsValidFor(aStatement) == false)
                                 currentFileViolations.Add(new RuleViolation(aFile, aStatementRule, aStatement));
+                        }
+                    }
+                }
+
+                foreach (BlockRuleBase aBlockRule in ruleProvider.GetBlockRules())
+                {
+                    foreach (BlockBase aBlock in parsedBlocks)
+                    {
+                        if (aBlockRule.Validates(aBlock))
+                        {
+                            if (aBlockRule.IsValidFor(aBlock) == false)
+                                currentFileViolations.Add(new RuleViolation(aFile, aBlockRule, aBlock.Statements.ElementAt(0)));
                         }
                     }
                 }

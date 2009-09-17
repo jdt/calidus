@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Rules;
@@ -14,15 +15,19 @@ namespace JDT.Calidus.RulesTest
     public class CalidusRuleProviderTest
     {
         [Test]
-        public void GetRulesShouldCallStatementRuleFactoryProvider()
+        public void GetRulesShouldCallStatementAndBlockRuleFactoryProvider()
         {
             MockRepository mocker = new MockRepository();
             IStatementRuleFactoryProvider ruleFactoryProvider = mocker.StrictMock<IStatementRuleFactoryProvider>();
             Expect.Call(ruleFactoryProvider.GetStatementRuleFactories()).Return(new List<IStatementRuleFactory>()).Repeat.Once();
 
+            IBlockRuleFactoryProvider blockRuleFactoryProvider = mocker.StrictMock<IBlockRuleFactoryProvider>();
+            Expect.Call(blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new List<IBlockRuleFactory>()).Repeat.Once();
+
+
             mocker.ReplayAll();
 
-            CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider);
+            CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider);
             provider.GetRules();
 
             mocker.VerifyAll();
