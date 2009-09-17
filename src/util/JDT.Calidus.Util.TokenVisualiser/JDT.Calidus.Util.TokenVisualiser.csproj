@@ -78,10 +78,15 @@
     <Compile Include="Visualiser.Designer.cs">
       <DependentUpon>Visualiser.cs</DependentUpon>
     </Compile>
+    <Compile Include="VisualiserBlock.cs" />
     <Compile Include="VisualiserStatement.cs" />
     <Compile Include="VisualiserToken.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\main\JDT.Calidus.Blocks.Factories\JDT.Calidus.Blocks.Factories.csproj">
+      <Project>{91F902C7-E38B-45F5-8887-63FE29B4C16D}</Project>
+      <Name>JDT.Calidus.Blocks.Factories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>

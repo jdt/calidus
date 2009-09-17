@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Common;
+using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Parsers;
+using JDT.Calidus.Parsers.Blocks;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Parsers.Tokens;
 using JDT.Calidus.Statements;
@@ -21,6 +23,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
     {
         private IList<VisualiserToken> _currentTokens;
         private IList<VisualiserStatement> _currentStatements;
+        private IList<VisualiserBlock> _currentBlocks;
 
         private bool _suspendSourceSelectionChanged;
 
@@ -30,6 +33,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
 
             _currentTokens = new List<VisualiserToken>();
             _currentStatements = new List<VisualiserStatement>();
+            _currentBlocks = new List<VisualiserBlock>();
 
             _suspendSourceSelectionChanged = false;
         }
@@ -44,6 +48,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
                     UpdateTokenListSelectedToken();
                 else if (StatementsTabActive)
                     UpdateStatementListSelectedToken();
+                else if (BlocksTabActive)
+                    UpdateBlockListSelectedToken();
             }
         }      
 
@@ -51,6 +57,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
         {
             CalidusTokenParser tokenParser = new CalidusTokenParser();
             CalidusStatementParser statementParser = new CalidusStatementParser();
+            CalidusBlockParser blockParser = new CalidusBlockParser();
 
             IEnumerable<TokenBase> parsedTokens = null;
             try
@@ -69,11 +76,12 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 lstTokenList.DataSource = null;
             }
 
+            IEnumerable<StatementBase> parsedStatements = null;
             try
             {
                 if (parsedTokens != null)
                 {
-                    IEnumerable<StatementBase> parsedStatements = statementParser.Parse(parsedTokens);
+                    parsedStatements = statementParser.Parse(parsedTokens);
                     _currentStatements.Clear();
                     foreach (StatementBase aStatement in parsedStatements)
                         _currentStatements.Add(new VisualiserStatement(aStatement));
@@ -86,12 +94,38 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 lstTokenList.Enabled = false;
                 lstTokenDetails.DataSource = null;
                 lstTokenList.DataSource = null;
+
+                    
+                lstStatementList.Enabled = false;
+                lstStatementDetails.DataSource = null;
+                lstStatementList.DataSource = null;
+            }
+
+            try
+            {
+                if (parsedStatements != null)
+                {
+                    IEnumerable<BlockBase> parsedBlocks = blockParser.Parse(parsedStatements);
+                    _currentBlocks.Clear();
+                    foreach (BlockBase aBlock in parsedBlocks)
+                        _currentBlocks.Add(new VisualiserBlock(aBlock));
+                }
+            }
+            catch (CalidusException ex)
+            {
+                MessageBox.Show("Errors occured during block parsing: " + ex.Message);
+
+                lstTokenList.Enabled = false;
+                lstTokenDetails.DataSource = null;
+                lstTokenList.DataSource = null;
             }
 
             lstTokenList.DataSource = _currentTokens;
             lstTokenList.Enabled = true;
             lstStatementList.DataSource = _currentStatements;
             lstStatementList.Enabled = true;
+            lstBlockList.DataSource = _currentBlocks;
+            lstBlockList.Enabled = true;
 
             tabDisplay.SelectedIndex = 0;
             DisplayCurrentToken();
@@ -118,6 +152,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 DisplayCurrentToken();
             else if (StatementsTabActive)
                 DisplayCurrentStatement();
+            else if (BlocksTabActive)
+                DisplayCurrentBlock();
         }
 
         #region Display list index changed
@@ -130,6 +166,11 @@ namespace JDT.Calidus.Util.TokenVisualiser
         private void lstStatementList_SelectedIndexChanged(object sender, EventArgs e)
         {
             DisplayCurrentStatement();
+        }
+
+        private void lstBlockList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayCurrentBlock();
         }
 
         #endregion
@@ -149,7 +190,13 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 foreach (VisualiserToken aToken in _currentTokens)
                 {
                     if (aToken.Position > selectionStart)
-                        lstTokenList.SelectedItem = tokenCaretIsIn;
+                    {
+                        if(lstTokenList.SelectedItem.Equals(aToken))
+                            MarkTokenInSource(aToken);
+                        else
+                            lstTokenList.SelectedItem = tokenCaretIsIn;
+
+                    }
                     else
                         tokenCaretIsIn = aToken;
                 }
@@ -172,8 +219,44 @@ namespace JDT.Calidus.Util.TokenVisualiser
                     {
                         foreach(VisualiserStatement aStatement in _currentStatements)
                         {
-                            if(aStatement.Tokens.Contains<TokenBase>(tokenCaretIsIn.BaseToken))
-                                lstStatementList.SelectedItem = aStatement;
+                            if (aStatement.Tokens.Contains<TokenBase>(tokenCaretIsIn.BaseToken))
+                            {
+                                if (lstStatementList.SelectedItem.Equals(aStatement))
+                                    MarkStatementInSource(aStatement);
+                                else
+                                    lstStatementList.SelectedItem = aStatement;
+                            }
+                        }
+                    }
+                    else
+                        tokenCaretIsIn = aToken;
+                }
+            }
+        }
+
+        //updates the block list by selecting the block for the statement for the token the caret is in
+        private void UpdateBlockListSelectedToken()
+        {
+            //get selection start
+            int selectionStart = rtSource.SelectionStart;
+            if (_currentTokens.Count > 0)
+            {
+                //get the first token
+                VisualiserToken tokenCaretIsIn = _currentTokens[0];
+                //if the position of the token is beyond the caret position, the previous token was the right one
+                foreach (VisualiserToken aToken in _currentTokens)
+                {
+                    if (aToken.Position > selectionStart)
+                    {
+                        foreach(VisualiserBlock aBlock in _currentBlocks)
+                        {
+                            if (aBlock.Tokens.Contains<TokenBase>(aToken.BaseToken))
+                            {
+                                if (lstBlockList.SelectedItem.Equals(aBlock))
+                                    MarkBlockInSource(aBlock);
+                                else
+                                    lstBlockList.SelectedItem = aBlock;
+                            }
                         }
                     }
                     else
@@ -197,6 +280,13 @@ namespace JDT.Calidus.Util.TokenVisualiser
         private void MarkStatementInSource(VisualiserStatement statement)
         {
             rtSource.Select(statement.Position, statement.Content.Length);
+            rtSource.Focus();
+        }
+
+        //marks the text of the specified block in the source
+        private void MarkBlockInSource(VisualiserBlock block)
+        {
+            rtSource.Select(block.Position, block.Content.Length);
             rtSource.Focus();
         }
 
@@ -230,6 +320,15 @@ namespace JDT.Calidus.Util.TokenVisualiser
             lstStatementDetails.DataSource = details;
         }
 
+        private void DisplayBlockDetails(VisualiserBlock block)
+        {
+            //display details
+            IList<String> details = new List<String>();
+            details.Add(String.Format("Type: {0}", block.Type));
+
+            lstBlockDetails.DataSource = details;
+        }
+
         #endregion
 
         #region Display methods
@@ -260,6 +359,19 @@ namespace JDT.Calidus.Util.TokenVisualiser
             }
         }
 
+        private void DisplayCurrentBlock()
+        {
+            if (lstBlockList.SelectedItem != null)
+            {
+                VisualiserBlock currentBlock = (VisualiserBlock)lstBlockList.SelectedItem;
+
+                _suspendSourceSelectionChanged = true;
+                DisplayBlockDetails(currentBlock);
+                MarkBlockInSource(currentBlock);
+                _suspendSourceSelectionChanged = false;
+            }
+        }
+
         #endregion
 
         #region Active tab properties
@@ -272,6 +384,11 @@ namespace JDT.Calidus.Util.TokenVisualiser
         private bool StatementsTabActive
         {
             get { return tabDisplay.SelectedTab.Equals(tabStatements); }
+        }
+
+        private bool BlocksTabActive
+        {
+            get { return tabDisplay.SelectedTab.Equals(tabBlocks); }
         }
 
         #endregion

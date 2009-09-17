@@ -43,6 +43,10 @@
             this.lstStatementDetails = new System.Windows.Forms.ListBox();
             this.lstStatementList = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tabBlocks = new System.Windows.Forms.TabPage();
+            this.lstBlockDetails = new System.Windows.Forms.ListBox();
+            this.lstBlockList = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.windowContainer.Panel1.SuspendLayout();
             this.windowContainer.Panel2.SuspendLayout();
@@ -50,6 +54,7 @@
             this.tabDisplay.SuspendLayout();
             this.tabTokens.SuspendLayout();
             this.tabStatements.SuspendLayout();
+            this.tabBlocks.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -110,6 +115,7 @@
             // 
             this.tabDisplay.Controls.Add(this.tabTokens);
             this.tabDisplay.Controls.Add(this.tabStatements);
+            this.tabDisplay.Controls.Add(this.tabBlocks);
             this.tabDisplay.Location = new System.Drawing.Point(8, 36);
             this.tabDisplay.Name = "tabDisplay";
             this.tabDisplay.SelectedIndex = 0;
@@ -197,6 +203,45 @@
             this.label2.TabIndex = 20;
             this.label2.Text = "Statement details:";
             // 
+            // tabBlocks
+            // 
+            this.tabBlocks.Controls.Add(this.lstBlockDetails);
+            this.tabBlocks.Controls.Add(this.lstBlockList);
+            this.tabBlocks.Controls.Add(this.label3);
+            this.tabBlocks.Location = new System.Drawing.Point(4, 22);
+            this.tabBlocks.Name = "tabBlocks";
+            this.tabBlocks.Size = new System.Drawing.Size(182, 466);
+            this.tabBlocks.TabIndex = 2;
+            this.tabBlocks.Text = "Blocks";
+            this.tabBlocks.UseVisualStyleBackColor = true;
+            // 
+            // lstBlockDetails
+            // 
+            this.lstBlockDetails.FormattingEnabled = true;
+            this.lstBlockDetails.Location = new System.Drawing.Point(5, 365);
+            this.lstBlockDetails.Name = "lstBlockDetails";
+            this.lstBlockDetails.Size = new System.Drawing.Size(173, 95);
+            this.lstBlockDetails.TabIndex = 24;
+            // 
+            // lstBlockList
+            // 
+            this.lstBlockList.DisplayMember = "Type";
+            this.lstBlockList.FormattingEnabled = true;
+            this.lstBlockList.Location = new System.Drawing.Point(5, 6);
+            this.lstBlockList.Name = "lstBlockList";
+            this.lstBlockList.Size = new System.Drawing.Size(173, 342);
+            this.lstBlockList.TabIndex = 22;
+            this.lstBlockList.SelectedIndexChanged += new System.EventHandler(this.lstBlockList_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 349);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Block details:";
+            // 
             // Visualiser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -216,6 +261,8 @@
             this.tabTokens.PerformLayout();
             this.tabStatements.ResumeLayout(false);
             this.tabStatements.PerformLayout();
+            this.tabBlocks.ResumeLayout(false);
+            this.tabBlocks.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -237,5 +284,9 @@
         private System.Windows.Forms.ListBox lstStatementDetails;
         private System.Windows.Forms.ListBox lstStatementList;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TabPage tabBlocks;
+        private System.Windows.Forms.ListBox lstBlockDetails;
+        private System.Windows.Forms.ListBox lstBlockList;
+        private System.Windows.Forms.Label label3;
     }
 }

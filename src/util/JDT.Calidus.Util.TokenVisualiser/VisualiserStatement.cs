@@ -48,5 +48,10 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 return builder.ToString();
             }
         }
+
+        public StatementBase BaseStatement
+        {
+            get { return _statement; }
+        }
     }
 }

@@ -28,6 +28,35 @@ namespace JDT.Calidus.Common.Blocks
         /// Get the statements contained in the block
         /// </summary>
         public IEnumerable<StatementBase> Statements { get; private set; }
+        /// <summary>
+        /// Gets the source of the block
+        /// </summary>
+        public String Source
+        {
+            get
+            {
+                StringBuilder bldr = new StringBuilder();
+                foreach (StatementBase aStatement in Statements)
+                {
+                    bldr.Append(aStatement.Source);
+                }
+                return bldr.ToString();
+            }
+        }
+        /// <summary>
+        /// Gets the tokens in the block
+        /// </summary>
+        public IEnumerable<TokenBase> Tokens
+        {
+            get
+            {
+                IList<TokenBase> tokens = new List<TokenBase>();
+                foreach (StatementBase aStatement in Statements)
+                    foreach (TokenBase aToken in aStatement.Tokens)
+                        tokens.Add(aToken);
+                return tokens;
+            }
+        }
 
         // override object.Equals
         public override bool Equals(object obj)
