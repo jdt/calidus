@@ -20,5 +20,17 @@ namespace JDT.Calidus.Statements.Common
             : base(tokens)
         {
         }
+
+        /// <summary>
+        /// Gets the comment text
+        /// </summary>
+        public String CommentText
+        {
+            get
+            {
+                //gets the substring starting at the second forward slash
+                return Source.Substring(Source.IndexOf('/') + 2);
+            }
+        }
     }
 }

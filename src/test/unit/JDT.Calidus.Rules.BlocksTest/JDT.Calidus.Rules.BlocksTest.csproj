@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{930945EB-657A-48B2-AC33-FBA8F3FD3DE8}</ProjectGuid>
+    <ProjectGuid>{99A681C8-FDB5-4C74-A9D4-BD907414C8F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.StatementsTest</RootNamespace>
-    <AssemblyName>JDT.Calidus.StatementsTest</AssemblyName>
+    <RootNamespace>JDT.Calidus.Rules.BlocksTest</RootNamespace>
+    <AssemblyName>JDT.Calidus.Rules.BlocksTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,14 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\LineCommentStatementTest.cs" />
-    <Compile Include="Declaration\MemberStatementTest.cs" />
+    <Compile Include="Common\FileBlockStartsWithHeaderRuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Blocks\JDT.Calidus.Blocks.csproj">
+      <Project>{C773EB06-B309-4D36-B322-224DA915025F}</Project>
+      <Name>JDT.Calidus.Blocks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Rules.Blocks\JDT.Calidus.Rules.Blocks.csproj">
+      <Project>{77CE4AD4-34C7-4782-83BC-45D2A726EB74}</Project>
+      <Name>JDT.Calidus.Rules.Blocks</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
