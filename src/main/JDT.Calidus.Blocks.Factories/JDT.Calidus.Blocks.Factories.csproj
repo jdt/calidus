@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2FE49636-3B5B-45E5-ADD9-457A956C6542}</ProjectGuid>
+    <ProjectGuid>{91F902C7-E38B-45F5-8887-63FE29B4C16D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Providers</RootNamespace>
-    <AssemblyName>JDT.Calidus.Providers</AssemblyName>
+    <RootNamespace>JDT.Calidus.Blocks.Factories</RootNamespace>
+    <AssemblyName>JDT.Calidus.Blocks.Factories</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,13 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockFactoryProviders\AssemblyBasedStatementFactoryProvider.cs" />
+    <Compile Include="Common\FileBlockFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatementFactoryProviders\AssemblyBasedStatementFactoryProvider.cs" />
-    <Compile Include="StatementFactoryProviders\DefaultStatementFactoryProvider.cs" />
-    <Compile Include="StatementRuleFactoryProviders\AssemblyBasedStatementRuleFactoryProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JDT.Calidus.Blocks\JDT.Calidus.Blocks.csproj">
+      <Project>{C773EB06-B309-4D36-B322-224DA915025F}</Project>
+      <Name>JDT.Calidus.Blocks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>

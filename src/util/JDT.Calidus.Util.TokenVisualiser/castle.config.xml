@@ -6,8 +6,7 @@
     <component id="IWhiteSpaceTokenParser" type="JDT.Calidus.Parsers.Tokens.WhiteSpaceTokenParser, JDT.Calidus.Parsers" />
     <component id="IGenericsTokenParser" type="JDT.Calidus.Parsers.Tokens.GenericsTokenParser, JDT.Calidus.Parsers" />
     <component id="ITokenParser" type="JDT.Calidus.Parsers.Coco.CocoTokenParser, JDT.Calidus.Parsers.Coco" />
+    <component id="IBlockFactoryProvider" type="JDT.Calidus.Providers.BlockFactoryProviders.AssemblyBasedBlockFactoryProvider, JDT.Calidus.Providers" />
 
   </components>
-
-  <include uri="assembly://JDT.Calidus.Rules.Statements/RuleCreator.xml" />
 </castle>
