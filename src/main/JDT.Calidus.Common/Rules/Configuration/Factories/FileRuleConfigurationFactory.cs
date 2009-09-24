@@ -46,7 +46,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                                               select new
                                               {
                                                   Name = f.Element("param").Attribute("name").Value,
-                                                  Value = f.Element("param").Attribute("value").Value
+                                                  Value = f.Element("param").Value
                                               }
                                           ).ToDictionary(p => p.Name, p => p.Value)
 
