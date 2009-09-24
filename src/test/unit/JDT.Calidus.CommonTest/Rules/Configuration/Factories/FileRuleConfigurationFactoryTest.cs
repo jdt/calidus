@@ -24,7 +24,9 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("Description text");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"" value=""theValue"" />");
+            bldr.Append(@"<param name=""param1"">");
+            bldr.Append("theValue");
+            bldr.Append(@"</param>");
             bldr.Append("</params>");
             bldr.Append("</rule>");
             bldr.Append("</rules>");
@@ -54,7 +56,9 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("<![CDATA[Description text]]>");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"" value=""theValue"" />");
+            bldr.Append(@"<param name=""param1"">");
+            bldr.Append("theValue");
+            bldr.Append(@"</param>");
             bldr.Append("</params>");
             bldr.Append("</rule>");
             bldr.Append("</rules>");
@@ -84,7 +88,9 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("<![CDATA[Description text]]>");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"" value=""theValue"" />");
+            bldr.Append(@"<param name=""param1"">");
+            bldr.Append("theValue");
+            bldr.Append(@"</param>");
             bldr.Append("</params>");
             bldr.Append("</rule>");
             bldr.Append("</rules>");
@@ -95,8 +101,8 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             Assert.Throws<TypeLoadException>(
                 delegate
                 {
-                        FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(reader);
-                    }
+                    FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(reader);
+                }
                 );
         }
     }
