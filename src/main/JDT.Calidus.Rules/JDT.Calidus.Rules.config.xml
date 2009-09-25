@@ -5,7 +5,7 @@
       This rule validates that member statement declarations match a given pattern
     </description>
     <params>
-      <param name="pattern" value="_[a-z0-9]" />
+      <param name="pattern">_[a-z0-9]</param>
     </params>
   </rule>
 
@@ -14,7 +14,7 @@
       This rule validates that files start with a defined header
     </description>
     <params>
-      <param name="headerContent" value="MyHeader" />
+      <param name="headerContent">MyHeader</param>
     </params>
   </rule>
 </rules>

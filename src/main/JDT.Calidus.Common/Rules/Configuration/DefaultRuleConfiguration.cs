@@ -12,6 +12,27 @@ namespace JDT.Calidus.Common.Rules.Configuration
     public class DefaultRuleConfiguration : IRuleConfiguration
     {
         /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        public DefaultRuleConfiguration()
+            : this(null, null, null)
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="rule">The rule type</param>
+        /// <param name="description">The description</param>
+        /// <param name="parameters">The rule parameters</param>
+        public DefaultRuleConfiguration(Type rule, String description, IDictionary<String, String> parameters)
+        {
+            Rule = rule;
+            Description = description;
+            Parameters = parameters;
+        }
+
+        /// <summary>
         /// Gets the type rule
         /// </summary>
         public Type Rule { get; set; }
