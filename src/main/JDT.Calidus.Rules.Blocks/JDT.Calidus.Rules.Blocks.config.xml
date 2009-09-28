@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <rules>
-  <rule type="JDT.Calidus.Rules.Statements.Declaration.MemberNameMatchesPatternRule, JDT.Calidus.Rules.Statements">
-    <description>
-      This rule validates that member statement declarations match a given pattern
-    </description>
-    <params>
-      <param name="pattern">_[a-z0-9]</param>
-    </params>
-  </rule>
-
   <rule type="JDT.Calidus.Rules.Blocks.Common.FileBlockStartsWithHeaderRule, JDT.Calidus.Rules.Blocks">
     <description>
       This rule validates that files start with a defined header

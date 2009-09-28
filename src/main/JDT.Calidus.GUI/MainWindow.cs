@@ -190,5 +190,11 @@ namespace JDT.Calidus.GUI
         private CalidusProject CurrentProject { get; set; }
 
         #endregion
+
+        private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RuleConfigurationWindow config = new RuleConfigurationWindow();
+            config.ShowDialog();
+        }
     }
 }

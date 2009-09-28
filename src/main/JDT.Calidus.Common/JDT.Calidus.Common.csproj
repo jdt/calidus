@@ -74,12 +74,9 @@
     <Compile Include="Rules\Blocks\BlockRuleBase.cs" />
     <Compile Include="Rules\Configuration\DefaultRuleConfiguration.cs" />
     <Compile Include="Rules\Configuration\Factories\FileRuleConfigurationFactory.cs" />
-    <Compile Include="Rules\Configuration\Factories\FileRuleConfigurationFactoryStreamProvider.cs" />
-    <Compile Include="Rules\Configuration\Factories\IFileRuleConfigurationFactoryStreamProvider.cs" />
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\Configuration\IRuleConfiguration.cs" />
     <Compile Include="Rules\Configuration\Factories\IRuleConfigurationFactory.cs" />
-    <Compile Include="Rules\Creators\IRuleCreator.cs" />
     <Compile Include="Rules\RuleCategories.cs" />
     <Compile Include="Rules\RuleViolation.cs" />
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
@@ -94,8 +91,6 @@
     <Compile Include="Tokens\IWhiteSpaceTokenParser.cs" />
     <Compile Include="Tokens\TokenBase.cs" />
     <Compile Include="Util\AssemblyBasedAssignableClassCreator.cs" />
-    <Compile Include="Rules\Creators\ConfigRuleCreator.cs" />
-    <Compile Include="Rules\Creators\ObjectFactoryRuleCreator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,22 +12,5 @@
 
     <component id="IStatementRuleFactoryProvider" type="JDT.Calidus.Providers.StatementRuleFactoryProviders.AssemblyBasedStatementRuleFactoryProvider, JDT.Calidus.Providers" />
     <component id="IBlockRuleFactoryProvider" type="JDT.Calidus.Providers.BlockRuleFactoryProviders.AssemblyBasedBlockRuleFactoryProvider, JDT.Calidus.Providers" />
-
-    <component id="IRuleConfigurationFactory" type="JDT.Calidus.Common.Rules.Configuration.Factories.FileRuleConfigurationFactory, JDT.Calidus.Common">
-      <parameters>
-        <provider>${IFileRuleConfigurationFactoryStreamProvider}</provider>
-      </parameters>
-    </component>
-    <component id="IFileRuleConfigurationFactoryStreamProvider" type="JDT.Calidus.Common.Rules.Configuration.Factories.FileRuleConfigurationFactoryStreamProvider, JDT.Calidus.Common">
-      <parameters>
-        <file>JDT.Calidus.Rules.config.xml</file>
-      </parameters>
-    </component>
-    
-    <component id="IRuleCreator" type="JDT.Calidus.Common.Rules.Creators.ConfigRuleCreator, JDT.Calidus.Common">
-      <parameters>
-        <configFactory>${IRuleConfigurationFactory}</configFactory>
-      </parameters>
-    </component>
   </components>
 </castle>

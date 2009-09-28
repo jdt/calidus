@@ -7,6 +7,7 @@ using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 
@@ -19,6 +20,9 @@ namespace JDT.Calidus.Rules
     {
         private IStatementRuleFactoryProvider _statementRuleProvider;
         private IBlockRuleFactoryProvider _blockRuleProvider;
+
+        private IDictionary<StatementRuleBase, IRuleConfigurationFactory> _statementRules;
+        private IDictionary<BlockRuleBase, IRuleConfigurationFactory> _blockRules;
 
         /// <summary>
         /// Create a new instance of this class
@@ -62,17 +66,21 @@ namespace JDT.Calidus.Rules
         /// <returns>The rules</returns>
         public IEnumerable<StatementRuleBase> GetStatementRules()
         {
-            IList<StatementRuleBase> rules = new List<StatementRuleBase>();
-
-            foreach (IStatementRuleFactory aFactory in _statementRuleProvider.GetStatementRuleFactories())
+            if (_statementRules == null)
             {
-                foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules())
+                _statementRules = new Dictionary<StatementRuleBase, IRuleConfigurationFactory>();
+
+                foreach (IStatementRuleFactory aFactory in _statementRuleProvider.GetStatementRuleFactories())
                 {
-                    rules.Add(aStatementRule);
+                    IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
+                    foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules())
+                    {
+                        _statementRules.Add(aStatementRule, configFactory);
+                    }
                 }
             }
 
-            return rules;
+            return _statementRules.Keys.ToList();
         }
 
         /// <summary>
@@ -81,17 +89,43 @@ namespace JDT.Calidus.Rules
         /// <returns>The rules</returns>
         public IEnumerable<BlockRuleBase> GetBlockRules()
         {
-            IList<BlockRuleBase> rules = new List<BlockRuleBase>();
-
-            foreach (IBlockRuleFactory aFactory in _blockRuleProvider.GetBlockRuleFactories())
+            if (_blockRules == null)
             {
-                foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules())
+                _blockRules = new Dictionary<BlockRuleBase, IRuleConfigurationFactory>();
+
+                foreach (IBlockRuleFactory aFactory in _blockRuleProvider.GetBlockRuleFactories())
                 {
-                    rules.Add(aBlockRule);
+                    IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
+                    foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules())
+                    {
+                        _blockRules.Add(aBlockRule, configFactory);
+                    }
                 }
             }
 
-            return rules;
+            return _blockRules.Keys.ToList();
+        }
+
+        /// <summary>
+        /// Gets the configuration factory for the specified rule
+        /// </summary>
+        /// <param name="type">The rule</param>
+        /// <returns>The configuration</returns>
+        public IRuleConfigurationFactory GetConfigurationFactoryFor(Type type)
+        {
+            foreach(StatementRuleBase aRule in _statementRules.Keys)
+            {
+                if (aRule.GetType().Equals(type))
+                    return _statementRules[aRule];
+            }
+
+            foreach (BlockRuleBase aRule in _blockRules.Keys)
+            {
+                if (aRule.GetType().Equals(type))
+                    return _blockRules[aRule];
+            }
+
+            throw new CalidusException("Cannot find an appropriate IRuleConfigurationFactory for the supplied rule type");
         }
     }
 }

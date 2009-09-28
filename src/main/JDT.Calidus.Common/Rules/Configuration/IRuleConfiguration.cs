@@ -18,11 +18,11 @@ namespace JDT.Calidus.Common.Rules.Configuration
         /// <summary>
         /// Gets the description
         /// </summary>
-        String Description { get; }
+        String Description { get; set; }
         /// <summary>
         /// Gets the list of parameters
         /// </summary>
-        IDictionary<String, String> Parameters { get; }
+        IDictionary<String, String> Parameters { get; set; }
         /// <summary>
         /// Checks if the configuration parameters match the constructor arguments
         /// </summary>

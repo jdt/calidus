@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Declaration\MemberNameMatchesPatternRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatementRuleConfigurationFactory.cs" />
     <Compile Include="StatementRuleFactory.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +63,11 @@
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JDT.Calidus.Rules.Statements.config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

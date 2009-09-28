@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Creators;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Rules
@@ -14,20 +14,38 @@ namespace JDT.Calidus.Common.Rules
     /// This class is a reflection based assembly rule factory, it creates rules with default constructors or uses a custom creator
     /// for classes that do not have a default no-args constructor
     /// </summary>
-    public class RuleFactory<TRuleType> where TRuleType : IRule 
+    public class RuleFactory<TRuleType> where TRuleType : IRule
     {
-        private IRuleCreator _creator;
+        private static String exMsg = "Found rule {0}, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found";
+
         private Assembly _toParse;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="toParse">The assembly to parse for rules</param>
-        /// <param name="creator">The rulecreator to use</param>
-        public RuleFactory(Assembly toParse, IRuleCreator creator)
+        public RuleFactory(Assembly toParse)
         {
-            _creator = creator;
             _toParse = toParse;
+        }
+
+        /// <summary>
+        /// Gets the configuration factory that provides configuration information
+        /// </summary>
+        /// <returns></returns>
+        public IRuleConfigurationFactory GetConfigurationFactory()
+        {
+            foreach (Type aType in _toParse.GetTypes())
+            {
+                //make sure to ignore the interface itself
+                if (typeof(IRuleConfigurationFactory).IsAssignableFrom(aType))
+                {
+                    IRuleConfigurationFactory ruleInstance = (IRuleConfigurationFactory)Activator.CreateInstance(aType);
+                    return ruleInstance;
+                }
+            }
+
+            throw new CalidusException("Could not find an appropriate IRuleConfigurationFactory in the assembly");
         }
 
         /// <summary>
@@ -45,16 +63,24 @@ namespace JDT.Calidus.Common.Rules
                 //make sure to ignore the interface itself
                 if (typeof(TRuleType).IsAssignableFrom(aType))
                 {
-                    //not in default, ry for a no-args constructor
-                    if (aType.GetConstructor(new Type[] { }) != null)
-                        ruleInstance = (StatementRuleBase)Activator.CreateInstance(aType);
-                        //try the factory
-                    else
-                        ruleInstance = _creator.CreateStatementRule(aType);
+                    try
+                    {
+                        //not in default, try for a no-args constructor
+                        if (aType.GetConstructor(new Type[] {}) != null)
+                            ruleInstance = (StatementRuleBase) Activator.CreateInstance(aType);
+                            //try the factory
+                        else
+                            ruleInstance = (StatementRuleBase)Activator.CreateInstance(aType, GetConfigurationFactory().Get(aType).ArgumentArray);
+                    }
+                    catch(Exception ex)
+                    {
+                        if (ruleInstance == null)
+                            throw new CalidusException(String.Format(exMsg, aType.Name), ex);    
+                    }
 
                     if (ruleInstance == null)
-                        throw new CalidusException("Found rule " + aType.Name + ", but an instance could not be created because the rule creator did not register the rule and no default no-args constructor was found");
-                    
+                        throw new CalidusException(String.Format(exMsg, aType.Name));
+
                     result.Add(ruleInstance);
                 }
             }
@@ -77,15 +103,23 @@ namespace JDT.Calidus.Common.Rules
                 //make sure to ignore the interface itself
                 if (typeof(TRuleType).IsAssignableFrom(aType))
                 {
-                    //not in default, ry for a no-args constructor
-                    if (aType.GetConstructor(new Type[] { }) != null)
-                        ruleInstance = (BlockRuleBase)Activator.CreateInstance(aType);
-                    //try the factory
-                    else
-                        ruleInstance = _creator.CreateBlockRule(aType);
+                    try
+                    {
+                        //not in default, try for a no-args constructor
+                        if (aType.GetConstructor(new Type[] { }) != null)
+                            ruleInstance = (BlockRuleBase)Activator.CreateInstance(aType);
+                        //try the factory
+                        else
+                            ruleInstance = (BlockRuleBase)Activator.CreateInstance(aType, GetConfigurationFactory().Get(aType).ArgumentArray);
+                    }
+                    catch(Exception ex)
+                    {
+                        if (ruleInstance == null)
+                            throw new CalidusException(String.Format(exMsg, aType.Name), ex);    
+                    }
 
                     if (ruleInstance == null)
-                        throw new CalidusException("Found rule " + aType.Name + ", but an instance could not be created because the rule creator did not register the rule and no default no-args constructor was found");
+                        throw new CalidusException(String.Format(exMsg, aType.Name));
 
                     result.Add(ruleInstance);
                 }

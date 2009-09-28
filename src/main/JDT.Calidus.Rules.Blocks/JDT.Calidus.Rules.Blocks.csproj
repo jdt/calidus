@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{77CE4AD4-34C7-4782-83BC-45D2A726EB74}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockRuleConfigurationFactory.cs" />
     <Compile Include="BlockRuleFactory.cs" />
     <Compile Include="Common\FileBlockStartsWithHeaderRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,6 +63,11 @@
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
       <Name>JDT.Calidus.Statements</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JDT.Calidus.Rules.Blocks.config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

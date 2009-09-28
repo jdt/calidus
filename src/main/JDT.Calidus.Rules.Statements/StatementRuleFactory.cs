@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules;
-using JDT.Calidus.Common.Rules.Creators;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 
@@ -22,7 +22,7 @@ namespace JDT.Calidus.Rules.Statements
         /// </summary>
         public StatementRuleFactory()
         {
-            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly, ObjectFactory.Get<IRuleCreator>());
+            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly);
         }
 
         /// <summary>
@@ -32,6 +32,15 @@ namespace JDT.Calidus.Rules.Statements
         public IEnumerable<StatementRuleBase> GetStatementRules()
         {
             return _factory.GetStatementRules();
+        }
+
+        /// <summary>
+        /// Gets the configuration factory that provides configuration information for the statement rules in this factory
+        /// </summary>
+        /// <returns></returns>
+        public IRuleConfigurationFactory GetConfigurationFactory()
+        {
+            return _factory.GetConfigurationFactory();
         }
     }
 }

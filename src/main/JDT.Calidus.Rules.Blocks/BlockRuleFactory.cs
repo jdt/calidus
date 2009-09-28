@@ -6,7 +6,7 @@ using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Creators;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 
 namespace JDT.Calidus.Rules.Blocks
 {
@@ -22,7 +22,7 @@ namespace JDT.Calidus.Rules.Blocks
         /// </summary>
         public BlockRuleFactory()
         {
-            _factory = new RuleFactory<BlockRuleBase>(GetType().Assembly, ObjectFactory.Get<IRuleCreator>());
+            _factory = new RuleFactory<BlockRuleBase>(GetType().Assembly);
         }
 
         /// <summary>
@@ -32,6 +32,15 @@ namespace JDT.Calidus.Rules.Blocks
         public IEnumerable<BlockRuleBase> GetBlockRules()
         {
             return _factory.GetBlockRules();
+        }
+
+        /// <summary>
+        /// Gets the configuration factory that provides configuration information for the statement rules in this factory
+        /// </summary>
+        /// <returns></returns>
+        public IRuleConfigurationFactory GetConfigurationFactory()
+        {
+            return _factory.GetConfigurationFactory();
         }
     }
 }
