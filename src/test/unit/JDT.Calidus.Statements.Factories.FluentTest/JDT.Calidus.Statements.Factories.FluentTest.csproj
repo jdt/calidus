@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E5E51661-451F-4CCC-8B23-EDA0FC6C001B}</ProjectGuid>
+    <ProjectGuid>{0582D5E2-D6C0-49F2-89AF-F10BCD564D2D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Statements.FactoriesTest</RootNamespace>
-    <AssemblyName>JDT.Calidus.Statements.FactoriesTest</AssemblyName>
+    <RootNamespace>JDT.Calidus.Statements.Factories.FluentTest</RootNamespace>
+    <AssemblyName>JDT.Calidus.Statements.Factories.FluentTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,13 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\CloseBlockStatementFactoryTest.cs" />
-    <Compile Include="Common\LineCommentStatementFactoryTest.cs" />
-    <Compile Include="Common\OpenBlockStatementFactoryTest.cs" />
-    <Compile Include="Declaration\AttributeStatementFactoryTest.cs" />
-    <Compile Include="Declaration\MemberStatementFactoryTest.cs" />
-    <Compile Include="Namespace\UsingStatementFactoryTest.cs" />
+    <Compile Include="FluentStatementFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatementExpressionTest.cs" />
+    <Compile Include="TokenOccurences\ContainsTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\EndingTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\LooseTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\NextTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\StartingTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\StrictTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\TokenOccurenceBaseTest.cs" />
+    <Compile Include="TokenOccurences\TokenOccurenceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
@@ -66,11 +70,7 @@
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\main\JDT.Calidus.Resolvers\JDT.Calidus.Statements.Factories.csproj">
-      <Project>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</Project>
-      <Name>JDT.Calidus.Statements.Factories</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Factories.Fluent.csproj">
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements.Factories.Fluent\JDT.Calidus.Statements.Factories.Fluent.csproj">
       <Project>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</Project>
       <Name>JDT.Calidus.Statements.Factories.Fluent</Name>
     </ProjectReference>
