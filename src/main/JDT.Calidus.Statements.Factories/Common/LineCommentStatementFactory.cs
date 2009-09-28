@@ -24,8 +24,7 @@ namespace JDT.Calidus.Statements.Factories.Common
             get
             {
                 StatementExpression expression = new StatementExpression();
-                expression.StartsWith<ForwardSlashToken>()
-                    .FollowedByStrict<ForwardSlashToken>();
+                expression.StartsWith<LineCommentToken>();
 
                 return expression;
             }
