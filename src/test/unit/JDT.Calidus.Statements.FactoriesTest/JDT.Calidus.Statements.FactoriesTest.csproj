@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</ProjectGuid>
+    <ProjectGuid>{E5E51661-451F-4CCC-8B23-EDA0FC6C001B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Statements.Factories</RootNamespace>
-    <AssemblyName>JDT.Calidus.Statements.Factories</AssemblyName>
+    <RootNamespace>JDT.Calidus.Statements.FactoriesTest</RootNamespace>
+    <AssemblyName>JDT.Calidus.Statements.FactoriesTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,11 +17,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\main\</OutputPath>
+    <OutputPath>..\..\..\..\bin\test\unit\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\NUnit\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -46,34 +49,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\CloseBlockStatementFactory.cs" />
-    <Compile Include="Common\LineCommentStatementFactory.cs" />
-    <Compile Include="Common\OpenBlockStatementFactory.cs" />
-    <Compile Include="Declaration\AttributeStatementFactory.cs" />
-    <Compile Include="Declaration\MemberStatementResolver.cs" />
-    <Compile Include="Namespace\UsingStatementFactory.cs" />
+    <Compile Include="Common\CloseBlockStatementFactoryTest.cs" />
+    <Compile Include="Common\LineCommentStatementFactoryTest.cs" />
+    <Compile Include="Common\OpenBlockStatementFactoryTest.cs" />
+    <Compile Include="Declaration\AttributeStatementFactoryTest.cs" />
+    <Compile Include="Declaration\MemberStatementFactoryTest.cs" />
+    <Compile Include="Namespace\UsingStatementFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Factories.Fluent.csproj">
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements.Factories.Fluent\JDT.Calidus.Statements.Factories.Fluent.csproj">
       <Project>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</Project>
       <Name>JDT.Calidus.Statements.Factories.Fluent</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements.Factories\JDT.Calidus.Statements.Factories.csproj">
+      <Project>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</Project>
+      <Name>JDT.Calidus.Statements.Factories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
       <Name>JDT.Calidus.Statements</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
       <Name>JDT.Calidus.Tokens</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.Tests\JDT.Calidus.Tests.csproj">
+      <Project>{8C956493-60B9-4099-9685-8BB8C451AAD3}</Project>
+      <Name>JDT.Calidus.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

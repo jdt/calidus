@@ -107,17 +107,9 @@
       <Project>{2FE49636-3B5B-45E5-ADD9-457A956C6542}</Project>
       <Name>JDT.Calidus.Providers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\main\JDT.Calidus.Resolvers\JDT.Calidus.Statements.Factories.csproj">
-      <Project>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</Project>
-      <Name>JDT.Calidus.Statements.Factories</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Rules.Statements\JDT.Calidus.Rules.Statements.csproj">
       <Project>{0552D015-5AD0-4E7B-B99A-7514109DAD2D}</Project>
       <Name>JDT.Calidus.Rules.Statements</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\main\JDT.Calidus.Statements.Resolvers\JDT.Calidus.Statements.Factories.Fluent.csproj">
-      <Project>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</Project>
-      <Name>JDT.Calidus.Statements.Factories.Fluent</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
