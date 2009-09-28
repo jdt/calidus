@@ -23,14 +23,23 @@ namespace JDT.Calidus.Statements.FactoriesTest.Common
         }
 
         [Test]
-        public void TwoForwardSlashTokensShouldBeLineComment()
+        public void LineCommentTokenShouldBeLineComment()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<LineCommentToken>("Test"));
+
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+        }
+
+        [Test]
+        public void TwoForwardSlashTokensShouldNotBeLineComment()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<ForwardSlashToken>());
             input.Add(TokenCreator.Create<ForwardSlashToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
         }
     }
 }
