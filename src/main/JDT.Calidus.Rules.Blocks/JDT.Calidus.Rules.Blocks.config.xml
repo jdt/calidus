@@ -5,7 +5,7 @@
       This rule validates that files start with a defined header
     </description>
     <params>
-      <param name="headerContent">MyHeader</param>
+      <param name="headerContent" type="MultilineString">MyHeader</param>
     </params>
   </rule>
 </rules>
