@@ -18,7 +18,7 @@ namespace JDT.Calidus.GUI.Controls.Parameters
 
         public override void SetValue(String value)
         {
-            txtValue.Text = value;
+            txtValue.Text = value.Replace("\n", "\r\n");
         }
 
         public override string GetValue()
