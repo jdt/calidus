@@ -72,12 +72,13 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                                  Rule = Type.GetType(e.Attribute("type").Value, true),
                                  Parameters = (
                                                   from f in e.Elements("params")
-                                                  select new
+                                                  select new DefaultRuleConfigurationParameter
                                                   {
                                                       Name = f.Element("param").Attribute("name").Value,
-                                                      Value = f.Element("param").Value
+                                                      Value = f.Element("param").Value,
+                                                      ParameterType = (ParameterType)Enum.Parse(typeof(ParameterType), f.Element("param").Attribute("type").Value)
                                                   }
-                                              ).ToDictionary(p => p.Name, p => p.Value)
+                                              ).ToArray()
 
                              };
 
@@ -107,10 +108,11 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
 
                     //write parameters
                     XElement parametersElement = new XElement("params");
-                    foreach (String key in aConfiguration.Parameters.Keys)
+                    foreach (IRuleConfigurationParameter param in aConfiguration.Parameters)
                     {
-                        XElement paramElement = new XElement("param", aConfiguration.Parameters[key]);
-                        paramElement.Add(new XAttribute("name", key));
+                        XElement paramElement = new XElement("param", param.Value);
+                        paramElement.Add(new XAttribute("name", param.Name));
+                        paramElement.Add(new XAttribute("type", param.ParameterType.ToString()));
 
                         parametersElement.Add(paramElement);
                     }

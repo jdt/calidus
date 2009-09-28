@@ -21,7 +21,7 @@ namespace JDT.Calidus.GUI
         private IDictionary<TreeNode, Type> _typeNodes;
 
         private EditParameterControl _currentParameterControl;
-        private IDictionary<String, EditParameterControl> _paramControls;
+        private IDictionary<IRuleConfigurationParameter, EditParameterControl> _paramControls;
 
         public RuleConfigurationWindow()
         {
@@ -38,7 +38,7 @@ namespace JDT.Calidus.GUI
         private void tvRules_AfterSelect(object sender, TreeViewEventArgs e)
         {
             //reset parameter list
-            _paramControls = new Dictionary<String, EditParameterControl>();
+            _paramControls = new Dictionary<IRuleConfigurationParameter, EditParameterControl>();
 
             if (e.Node.Nodes.Count == 0)
             {
@@ -49,13 +49,13 @@ namespace JDT.Calidus.GUI
                 //set values
                 lblRuleName.Text = String.Format(RULE_NAME, config.GetType().Name);
                 txtDescription.Text = config.Description;
-                lstParameters.DataSource = config.Parameters.Keys.ToList<String>();
+                lstParameters.DataSource = config.Parameters.Select(p => p.Name).ToList<String>();
 
                 //create parameter controls
-                foreach(String aParameter in config.Parameters.Keys)
+                foreach(IRuleConfigurationParameter aParameter in config.Parameters)
                 {
-                    BasicParameterControl paramControl = new BasicParameterControl();
-                    paramControl.SetValue(config.Parameters[aParameter]);
+                    EditParameterControl paramControl = GetControlFor(aParameter);
+                    paramControl.SetValue(aParameter.Value);
                     paramControl.ValueChanged += new EventHandler(paramControl_ValueChanged);
 
                     _paramControls.Add(aParameter, paramControl);
@@ -146,7 +146,7 @@ namespace JDT.Calidus.GUI
                 if (_paramControls.Count != 0 && lstParameters.SelectedValue != null)
                 {
                     String paramName = lstParameters.SelectedValue.ToString();
-                    _currentParameterControl = _paramControls[paramName];
+                    _currentParameterControl = _paramControls.First(p => p.Key.Name.Equals(paramName)).Value;
                     parameterLayoutPanel.Controls.Clear();
                     parameterLayoutPanel.Controls.Add(_currentParameterControl);
                 }
@@ -169,10 +169,10 @@ namespace JDT.Calidus.GUI
             {
                 IRuleConfiguration ruleConfig =_provider.GetConfigurationFactoryFor(_typeNodes[tvRules.SelectedNode]).Get(_typeNodes[tvRules.SelectedNode]);
                 ruleConfig.Description = txtDescription.Text;
-                ruleConfig.Parameters.Clear();
-                foreach(String param in _paramControls.Keys)
+
+                foreach(IRuleConfigurationParameter param in ruleConfig.Parameters)
                 {
-                    ruleConfig.Parameters[param] = _paramControls[param].GetValue();
+                    param.Value = _paramControls[param].GetValue();
                 }
 
                 _provider.GetConfigurationFactoryFor(_typeNodes[tvRules.SelectedNode]).Set(ruleConfig);
@@ -198,6 +198,14 @@ namespace JDT.Calidus.GUI
                     category.Checked = true;
                     tvRules.Nodes.Add(category);
                 }
+            }
+
+            private EditParameterControl GetControlFor(IRuleConfigurationParameter param)
+            {
+                if (param.ParameterType == ParameterType.MultilineString)
+                    return new MultilineParameterControl();
+                else
+                    return new BasicParameterControl();
             }
 
         #endregion

@@ -19,10 +19,12 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration
             _config.Description = "Description";
             _config.Rule = typeof(UnCreatableRule);
 
-            IDictionary<String, String> param = new Dictionary<String, String>();
-            param.Add("arg", "argumentValue");
+            DefaultRuleConfigurationParameter param = new DefaultRuleConfigurationParameter();
+            param.Name = "arg";
+            param.Value = "argumentValue";
+            param.ParameterType = ParameterType.String;
 
-            _config.Parameters = param;
+            _config.Parameters = new DefaultRuleConfigurationParameter[]{param};
         }
 
         [Test]

@@ -22,7 +22,7 @@ namespace JDT.Calidus.Common.Rules.Configuration
         /// <summary>
         /// Gets the list of parameters
         /// </summary>
-        IDictionary<String, String> Parameters { get; set; }
+        IList<IRuleConfigurationParameter> Parameters { get; }
         /// <summary>
         /// Checks if the configuration parameters match the constructor arguments
         /// </summary>

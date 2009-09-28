@@ -5,7 +5,7 @@
       This rule validates that member statement declarations match a given pattern
     </description>
     <params>
-      <param name="pattern">_[a-z0-9]</param>
+      <param name="pattern" type="String">_[a-z0-9]</param>
     </params>
   </rule>
 </rules>

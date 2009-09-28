@@ -51,7 +51,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("Description text");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"">");
+            bldr.Append(@"<param name=""param1"" type=""String"">");
             bldr.Append("theValue");
             bldr.Append(@"</param>");
             bldr.Append("</params>");
@@ -64,12 +64,16 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
             IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
 
-            IDictionary<String, String> expectedParam = new Dictionary<String, String>();
-            expectedParam.Add("param1", "theValue");
+            IList<IRuleConfigurationParameter> paramList = new List<IRuleConfigurationParameter>();
+            DefaultRuleConfigurationParameter param = new DefaultRuleConfigurationParameter();
+            param.ParameterType = ParameterType.String;
+            param.Name = "param1";
+            param.Value = "theValue";
+            paramList.Add(param);
 
             Assert.AreEqual("Description text", actual.Description);
             Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.Rule);
-            CollectionAssert.AreEquivalent(expectedParam, actual.Parameters);
+            CollectionAssert.AreEquivalent(paramList, actual.Parameters);
         }
 
         [Test]
@@ -83,7 +87,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("<![CDATA[Description text]]>");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"">");
+            bldr.Append(@"<param name=""param1"" type=""String"">");
             bldr.Append("theValue");
             bldr.Append(@"</param>");
             bldr.Append("</params>");
@@ -96,12 +100,16 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
             IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
 
-            IDictionary<String, String> expectedParam = new Dictionary<String, String>();
-            expectedParam.Add("param1", "theValue");
+            IList<IRuleConfigurationParameter> paramList = new List<IRuleConfigurationParameter>();
+            DefaultRuleConfigurationParameter param = new DefaultRuleConfigurationParameter();
+            param.ParameterType = ParameterType.String;
+            param.Name = "param1";
+            param.Value = "theValue";
+            paramList.Add(param);
 
             Assert.AreEqual("Description text", actual.Description);
             Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.Rule);
-            CollectionAssert.AreEquivalent(expectedParam, actual.Parameters);
+            CollectionAssert.AreEquivalent(paramList, actual.Parameters);
         }
 
         [Test]
@@ -115,7 +123,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("<![CDATA[Description text]]>");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"">");
+            bldr.Append(@"<param name=""param1"" type=""String"">");
             bldr.Append("theValue");
             bldr.Append(@"</param>");
             bldr.Append("</params>");
@@ -147,7 +155,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             before.Append("Set description text");
             before.Append("</description>");
             before.Append("<params>");
-            before.Append(@"<param name=""param1"">");
+            before.Append(@"<param name=""param1"" type=""String"">");
             before.Append("Set parameter value");
             before.Append(@"</param>");
             before.Append("</params>");
@@ -162,7 +170,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("Description text");
             bldr.Append("</description>");
             bldr.Append("<params>");
-            bldr.Append(@"<param name=""param1"">");
+            bldr.Append(@"<param name=""param1"" type=""String"">");
             bldr.Append("theValue");
             bldr.Append(@"</param>");
             bldr.Append("</params>");
@@ -176,14 +184,12 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 
             Type type = Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest");
             String desc = "Description text";
-            IDictionary<String, String> param = new Dictionary<String, String>();
-            param.Add("param1", "theValue");
 
             FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, writer);
 
             IRuleConfiguration config = builder.Get(type);
             config.Description = desc;
-            config.Parameters = param;
+            config.Parameters[0].Value = "theValue";
 
             builder.Set(config);
 

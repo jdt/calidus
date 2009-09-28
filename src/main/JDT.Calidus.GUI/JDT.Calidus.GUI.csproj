@@ -60,6 +60,12 @@
     <Compile Include="Controls\Parameters\EditParameterControl.Designer.cs">
       <DependentUpon>EditParameterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Parameters\MultilineParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\MultilineParameterControl.Designer.cs">
+      <DependentUpon>MultilineParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\EditParameterControl.resx">
       <DependentUpon>EditParameterControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\MultilineParameterControl.resx">
+      <DependentUpon>MultilineParameterControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
