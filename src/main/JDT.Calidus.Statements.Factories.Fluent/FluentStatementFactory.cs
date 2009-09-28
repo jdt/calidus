@@ -35,7 +35,8 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// <returns>True if able to parse, otherwise false</returns>
         public bool CanCreateStatementFrom(IList<TokenBase> tokenList)
         {
-            return Expression.Matches(tokenList);
+            bool res = Expression.Matches(tokenList);
+            return res;
         }
 
         /// <summary>

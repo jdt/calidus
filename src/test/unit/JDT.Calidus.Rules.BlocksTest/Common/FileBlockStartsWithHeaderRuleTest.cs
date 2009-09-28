@@ -22,9 +22,28 @@ namespace JDT.Calidus.Rules.BlocksTest.Common
             header.Append("And copyrights");
 
             IList<StatementBase> statements = new List<StatementBase>();
-            statements.Add(StatementCreator.CreateLineCommentStatement("A file header", true));
-            statements.Add(StatementCreator.CreateLineCommentStatement("Containing information", true));
-            statements.Add(StatementCreator.CreateLineCommentStatement("And copyrights"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("A file header\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("Containing information\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("And copyrights\n"));
+
+            FileBlock block = new FileBlock(statements);
+
+            FileBlockStartsWithHeaderRule rule = new FileBlockStartsWithHeaderRule(header.ToString());
+            Assert.IsTrue(rule.IsValidFor(block));
+        }
+
+        [Test]
+        public void RuleShouldIgnoreOneLeadingSpaceFromTheCommentIfNoMatch()
+        {
+            StringBuilder header = new StringBuilder();
+            header.Append("A file header\n");
+            header.Append("Containing information\n");
+            header.Append("And copyrights");
+
+            IList<StatementBase> statements = new List<StatementBase>();
+            statements.Add(StatementCreator.CreateLineCommentStatement(" A file header\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement(" Containing information\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement(" And copyrights\n"));
 
             FileBlock block = new FileBlock(statements);
 

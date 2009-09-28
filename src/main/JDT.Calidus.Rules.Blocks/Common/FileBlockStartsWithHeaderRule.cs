@@ -26,6 +26,11 @@ namespace JDT.Calidus.Rules.Blocks.Common
             : base(RuleCategories.Documentation)
         {
             _content = headerContent;
+            //comments are always parsed with newline,
+            //make sure that rule appends a newline because it is not
+            //explicitly required
+            if (_content.EndsWith("\n") == false)
+                _content += "\n";
         }
 
         /// <summary>
@@ -45,7 +50,7 @@ namespace JDT.Calidus.Rules.Blocks.Common
         /// <returns>True if valid, otherwise false</returns>
         public override bool IsValidFor(BlockBase block)
         {
-            IList<StatementBase> comments = new List<StatementBase>();
+            IList<LineCommentStatement> comments = new List<LineCommentStatement>();
             
             foreach(StatementBase aStatement in block.Statements)
             {
@@ -55,13 +60,30 @@ namespace JDT.Calidus.Rules.Blocks.Common
                     break;
             }
 
-            StringBuilder content = new StringBuilder();
-            foreach(LineCommentStatement aLineComment in comments)
+            String content = "";
+            foreach (LineCommentStatement aStatement in comments)
             {
-                content.Append(aLineComment.CommentText);
+                content += aStatement.CommentText;
             }
 
-            return content.ToString().Equals(_content);
+            bool isEqual = content.Equals(_content);
+            //flexible check: if no match, trim first leading space
+            //from the line comment and check again
+            if(!isEqual)
+            {
+                String trimmedContent = "";
+                foreach (LineCommentStatement aStatement in comments)
+                {
+                    if (aStatement.CommentText.StartsWith(" "))
+                        trimmedContent += aStatement.CommentText.Substring(1);
+                    else
+                        trimmedContent += aStatement.CommentText;
+                }
+
+                isEqual = trimmedContent.Equals(_content);
+            }
+
+            return isEqual;
         }
     }
 }
