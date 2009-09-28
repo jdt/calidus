@@ -52,26 +52,12 @@ namespace JDT.Calidus.Tests
         /// Create a line comment statement with the supplied identifier
         /// </summary>
         /// <param name="commentText">The text</param>
-        /// <param name="withNewLine">True to append a newline token as well</param>
-        /// <returns>A line comment with the text</returns>
-        public LineCommentStatement CreateLineCommentStatement(String commentText, bool withNewLine)
-        {
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<LineCommentToken>("//" + commentText));
-            if (withNewLine)
-                input.Add(TokenCreator.Create<NewLineToken>());
-
-            return new LineCommentStatement(input);
-        }
-
-        /// <summary>
-        /// Create a line comment statement with the supplied identifier
-        /// </summary>
-        /// <param name="commentText">The text</param>
         /// <returns>A line comment with the text</returns>
         public LineCommentStatement CreateLineCommentStatement(String commentText)
         {
-            return CreateLineCommentStatement(commentText, false);
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<LineCommentToken>("//" + commentText));
+            return new LineCommentStatement(input);
         }
     }
 }

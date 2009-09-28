@@ -111,6 +111,10 @@
       <Project>{0552D015-5AD0-4E7B-B99A-7514109DAD2D}</Project>
       <Name>JDT.Calidus.Rules.Statements</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\main\JDT.Calidus.Statements.Factories\JDT.Calidus.Statements.Factories.csproj">
+      <Project>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</Project>
+      <Name>JDT.Calidus.Statements.Factories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
       <Name>JDT.Calidus.Statements</Name>

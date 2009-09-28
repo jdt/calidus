@@ -59,12 +59,14 @@ namespace JDT.Calidus.Parsers.Tokens
         /// <returns>True if succeeded, otherwise false</returns>
         public IEnumerable<TokenBase> Parse(String source)
         {
-            IEnumerable<TokenBase> result = _parser.Parse(source);
+            String fixedSource = source.Replace("\r\n", "\n");
+
+            IEnumerable<TokenBase> result = _parser.Parse(fixedSource);
 
             //check for whitespace support
             if (!_parser.SupportsWhiteSpaceParsing)
             {
-                result = _whiteSpaceParser.Parse(source, result);
+                result = _whiteSpaceParser.Parse(fixedSource, result);
             }
             //check for generics support
             if (!_parser.SupportsGenericsParsing)
