@@ -9,25 +9,14 @@ using System.Xml.Linq;
 namespace JDT.Calidus.Common.Rules.Configuration.Factories
 {
     /// <summary>
-    /// This class provides a builder for a file-based configuration factory 
+    /// This abstract class provides a builder for a file-based configuration factory 
     /// using an xml file with a custom format
     /// </summary>
-    public class FileRuleConfigurationFactory : IRuleConfigurationFactory
+    public abstract class FileRuleConfigurationFactory : IRuleConfigurationFactory
     {
-        private IFileRuleConfigurationFactoryStreamProvider _provider;
         private XDocument _doc;
 
-        private IList<IRuleConfiguration> _configList;
-
-        /// <summary>
-        /// Createa a new instance of this class
-        /// </summary>
-        /// <param name="provider">The provider to use</param>
-        public FileRuleConfigurationFactory(IFileRuleConfigurationFactoryStreamProvider provider)
-        {
-            _provider = provider;
-            LoadDocumentContent();
-        }
+        private IDictionary<Type, IRuleConfiguration> _configList;
 
         /// <summary>
         /// Gets the configuration for the specified rule type
@@ -36,27 +25,45 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
         /// <returns>The configuration</returns>
         public IRuleConfiguration Get(Type type)
         {
-            return _configList.FirstOrDefault(p => p.Rule.Equals(type));
+            if (_doc == null)
+                LoadDocumentContent();
+
+            return _configList.Values.FirstOrDefault(p => p.Rule.Equals(type));
+        }
+        
+        /// <summary>
+        /// Adds or updates a configuration in the factory
+        /// </summary>
+        /// <param name="ruleConfig">The configuration</param>
+        public void Set(IRuleConfiguration ruleConfig)
+        {
+            if (_doc == null)
+                LoadDocumentContent();
+
+            _configList[ruleConfig.Rule.GetType()] = ruleConfig;
+            WriteDocumentContent();
         }
 
         /// <summary>
-        /// Sets the configuration of the specified rule type
+        /// Gets an Xml writer to use to write the configuration information to
         /// </summary>
-        /// <param name="ruleType">The rule type</param>
-        /// <param name="description">The description</param>
-        /// <param name="parameters">The parameters</param>
-        public void Set(Type ruleType, String description, IDictionary<String, String> parameters)
-        {
-            _configList.Add(new DefaultRuleConfiguration(ruleType, description, parameters));
-            WriteDocumentContent();
-        }
+        /// <returns>The writer</returns>
+        protected abstract XmlWriter GetWriter();
+
+        /// <summary>
+        /// Gets an Xml reader to use to read the configuration information from
+        /// </summary>
+        /// <returns>The reader</returns>
+        protected abstract XmlReader GetReader();
 
         #region Write and load
 
             private void LoadDocumentContent()
             {
-                _configList = new List<IRuleConfiguration>();
-                _doc = XDocument.Load(_provider.GetReader());
+                XmlReader reader = GetReader();
+
+                _configList = new Dictionary<Type, IRuleConfiguration>();
+                _doc = XDocument.Load(reader);
                 //parse all rule declarations
                 var result = from e in _doc.Root.Elements("rule")
                              select new DefaultRuleConfiguration
@@ -74,9 +81,11 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
 
                              };
 
+                reader.Close();
+
                 foreach (DefaultRuleConfiguration w in result)
                 {
-                    _configList.Add(w);
+                    _configList.Add(w.Rule.GetType(), w);
                 }
             }
 
@@ -88,7 +97,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                     aRule.Remove();
 
                 //and rewrite
-                foreach (IRuleConfiguration aConfiguration in _configList)
+                foreach (IRuleConfiguration aConfiguration in _configList.Values)
                 {
                     String fullAssembly = aConfiguration.Rule.Assembly.FullName;
                     String assembly = fullAssembly.Substring(0, fullAssembly.IndexOf(" ") - 1);
@@ -112,7 +121,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                     _doc.Root.Add(ruleElement);
                 }
 
-                XmlWriter writer = _provider.GetWriter();
+                XmlWriter writer = GetWriter();
                 _doc.Save(writer);
                 writer.Flush();
             }

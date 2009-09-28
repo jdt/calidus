@@ -4,30 +4,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 
-namespace JDT.Calidus.Common.Rules.Configuration.Factories
-{ 
-    /// <summary>
-    /// Default implementation of the IFileRuleConfigurationFactoryStreamProvider interface
-    /// </summary>
-    public class FileRuleConfigurationFactoryStreamProvider : IFileRuleConfigurationFactoryStreamProvider
+namespace JDT.Calidus.Rules.Statements
+{
+    public class StatementRuleConfigurationFactory : FileRuleConfigurationFactory
     {
-        private String _file;
+        private static String _file;
 
-        /// <summary>
-        /// Create a new instance of this class
-        /// </summary>
-        /// <param name="file">The file to use</param>
-        public FileRuleConfigurationFactoryStreamProvider(String file)
+        static StatementRuleConfigurationFactory()
         {
-            _file = Path.GetFullPath(file);
+                String loc = Path.Combine( Path.GetDirectoryName(typeof(StatementRuleConfigurationFactory).Assembly.Location), "JDT.Calidus.Rules.Statements.config.xml");
+                _file = Path.GetFullPath(loc);
         }
 
         /// <summary>
         /// Gets a reader for an xml-based configuration file
         /// </summary>
         /// <returns>A reader</returns>
-        public XmlReader GetReader()
+        protected override XmlReader GetReader()
         {
             return XmlReader.Create(_file);
         }
@@ -36,7 +31,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
         /// Gets a writer for an xml-based configuration file
         /// </summary>
         /// <returns>A writer</returns>
-        public XmlWriter GetWriter()
+        protected override XmlWriter GetWriter()
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Encoding = Encoding.UTF8;

@@ -10,25 +10,25 @@ using NUnit.Framework;
 
 namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 {
-    public class TestStreamProvider : IFileRuleConfigurationFactoryStreamProvider
+    public class FileRuleConfigurationFactoryImpl: FileRuleConfigurationFactory
     {
-        private XmlReader _reader;
         private XmlWriter _writer;
+        private XmlReader _reader;
 
-        public TestStreamProvider(XmlReader reader, XmlWriter writer)
+        public FileRuleConfigurationFactoryImpl(XmlReader reader, XmlWriter writer)
         {
             _reader = reader;
             _writer = writer;
         }
 
-        public XmlReader GetReader()
-        {
-            return _reader;
-        }
-
-        public XmlWriter GetWriter()
+        protected override XmlWriter GetWriter()
         {
             return _writer;
+        }
+
+        protected override XmlReader GetReader()
+        {
+            return _reader;
         }
     }
 
@@ -61,7 +61,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
             XmlReader reader = new XmlTextReader(stream);
 
-            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(new TestStreamProvider(reader, GetEmptyWriter()));
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
             IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
 
             IDictionary<String, String> expectedParam = new Dictionary<String, String>();
@@ -93,7 +93,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
             XmlReader reader = new XmlTextReader(stream);
 
-            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(new TestStreamProvider(reader, GetEmptyWriter()));
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
             IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
 
             IDictionary<String, String> expectedParam = new Dictionary<String, String>();
@@ -125,21 +125,34 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
             XmlReader reader = new XmlTextReader(stream);
 
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
+
             Assert.Throws<TypeLoadException>(
-                delegate
-                {
-                    FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(new TestStreamProvider(reader, GetEmptyWriter()));
-                }
+                    delegate
+                    {
+
+                        IRuleConfiguration config = builder.Get(GetType());
+                    }
                 );
         }
 
         [Test]
-        public void AddingRuleTypeShouldWriteDocumentToXmlWriter()
+        public void ModifyingRuleSettingsShouldWriteDocumentToXmlWriter()
         {
-            StringBuilder empty = new StringBuilder();
-            empty.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
-            empty.Append("<rules>");
-            empty.Append("</rules>");
+            StringBuilder before = new StringBuilder();
+            before.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
+            before.Append("<rules>");
+            before.Append(@"<rule type=""JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"">");
+            before.Append("<description>");
+            before.Append("Set description text");
+            before.Append("</description>");
+            before.Append("<params>");
+            before.Append(@"<param name=""param1"">");
+            before.Append("Set parameter value");
+            before.Append(@"</param>");
+            before.Append("</params>");
+            before.Append("</rule>");
+            before.Append("</rules>");
 
             StringBuilder bldr = new StringBuilder();
             bldr.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
@@ -158,7 +171,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 
             Stream writerStream = new MemoryStream();
 
-            XmlReader reader = new XmlTextReader(new StringReader(empty.ToString()));
+            XmlReader reader = new XmlTextReader(new StringReader(before.ToString()));
             XmlWriter writer = XmlTextWriter.Create(writerStream, new XmlWriterSettings());
 
             Type type = Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest");
@@ -166,8 +179,13 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             IDictionary<String, String> param = new Dictionary<String, String>();
             param.Add("param1", "theValue");
 
-            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactory(new TestStreamProvider(reader, writer));
-            builder.Set(type, desc, param);
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, writer);
+
+            IRuleConfiguration config = builder.Get(type);
+            config.Description = desc;
+            config.Parameters = param;
+
+            builder.Set(config);
 
             writerStream.Seek(0, SeekOrigin.Begin);
             TextReader actualReader = new StreamReader(writerStream);

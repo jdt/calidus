@@ -16,5 +16,7 @@ namespace JDT.Calidus.Common.Blocks
         /// </summary>
         /// <returns>The rules</returns>
         IEnumerable<BlockRuleBase> GetBlockRules();
+
+        JDT.Calidus.Common.Rules.Configuration.Factories.IRuleConfigurationFactory GetConfigurationFactory();
     }
 }
