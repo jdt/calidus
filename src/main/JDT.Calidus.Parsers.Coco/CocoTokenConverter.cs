@@ -6,6 +6,7 @@ using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Namespace;
+using JDT.Calidus.Tokens.PreProcessor;
 using JDT.Calidus.Tokens.Types;
 using JDT.Calidus.Tokens.Common.Brackets;
 
@@ -49,6 +50,8 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._cBlockCom, typeof(BlockCommentToken));
             _simpleTokenTypeMap.Add(Parser._cLineCom, typeof(LineCommentToken));
             _simpleTokenTypeMap.Add(Parser._usingKW, typeof(UsingToken));
+            _simpleTokenTypeMap.Add(Parser._ppRegion, typeof(RegionStartToken));
+            _simpleTokenTypeMap.Add(Parser._ppEndReg, typeof(RegionEndToken));
 
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));
