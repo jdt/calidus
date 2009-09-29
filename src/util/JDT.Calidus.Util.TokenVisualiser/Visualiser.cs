@@ -8,13 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
+using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Parsers;
 using JDT.Calidus.Parsers.Blocks;
-using JDT.Calidus.Tokens;
+using JDT.Calidus.Parsers.Lines;
 using JDT.Calidus.Parsers.Tokens;
-using JDT.Calidus.Statements;
 using JDT.Calidus.Parsers.Statements;
 
 namespace JDT.Calidus.Util.TokenVisualiser
@@ -24,6 +23,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
         private IList<VisualiserToken> _currentTokens;
         private IList<VisualiserStatement> _currentStatements;
         private IList<VisualiserBlock> _currentBlocks;
+        private IList<VisualiserLine> _currentLines;
 
         private bool _suspendSourceSelectionChanged;
 
@@ -34,6 +34,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
             _currentTokens = new List<VisualiserToken>();
             _currentStatements = new List<VisualiserStatement>();
             _currentBlocks = new List<VisualiserBlock>();
+            _currentLines = new List<VisualiserLine>();
 
             _suspendSourceSelectionChanged = false;
         }
@@ -50,6 +51,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
                     UpdateStatementListSelectedToken();
                 else if (BlocksTabActive)
                     UpdateBlockListSelectedToken();
+                else if (LinesTabActive)
+                    UpdateLineListSelectedToken();
             }
         }      
 
@@ -58,6 +61,7 @@ namespace JDT.Calidus.Util.TokenVisualiser
             CalidusTokenParser tokenParser = new CalidusTokenParser();
             CalidusStatementParser statementParser = new CalidusStatementParser();
             CalidusBlockParser blockParser = new CalidusBlockParser();
+            CalidusLineParser lineParser = new CalidusLineParser();
 
             IEnumerable<TokenBase> parsedTokens = null;
             try
@@ -120,12 +124,33 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 lstTokenList.DataSource = null;
             }
 
+            try
+            {
+                if (parsedTokens != null)
+                {
+                    IEnumerable<LineBase> parsedLines = lineParser.Parse(parsedTokens);
+                    _currentLines.Clear();
+                    foreach (LineBase aLine in parsedLines)
+                        _currentLines.Add(new VisualiserLine(aLine));
+                }
+            }
+            catch (CalidusException ex)
+            {
+                MessageBox.Show("Errors occured during line parsing: " + ex.Message);
+
+                lstLineList.Enabled = false;
+                lstLineDetails.DataSource = null;
+                lstLineList.DataSource = null;
+            }
+
             lstTokenList.DataSource = _currentTokens;
             lstTokenList.Enabled = true;
             lstStatementList.DataSource = _currentStatements;
             lstStatementList.Enabled = true;
             lstBlockList.DataSource = _currentBlocks;
             lstBlockList.Enabled = true;
+            lstLineList.DataSource = _currentLines;
+            lstLineList.Enabled = true;
 
             tabDisplay.SelectedIndex = 0;
             DisplayCurrentToken();
@@ -154,242 +179,314 @@ namespace JDT.Calidus.Util.TokenVisualiser
                 DisplayCurrentStatement();
             else if (BlocksTabActive)
                 DisplayCurrentBlock();
+            else if (LinesTabActive)
+                DisplayCurrentLine();
         }
 
         #region Display list index changed
 
-        private void lstTokens_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DisplayCurrentToken();
-        }
+            private void lstTokens_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                DisplayCurrentToken();
+            }
 
-        private void lstStatementList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DisplayCurrentStatement();
-        }
+            private void lstStatementList_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                DisplayCurrentStatement();
+            }
 
-        private void lstBlockList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DisplayCurrentBlock();
-        }
+            private void lstBlockList_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                DisplayCurrentBlock();
+            }
+
+            private void lstLineList_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                DisplayCurrentLine();
+            }
 
         #endregion
 
         #region Select in list methods
 
-        //updates the token list by selecting the token for the token the caret is in
-        private void UpdateTokenListSelectedToken()
-        {
-            //get selection start
-            int selectionStart = rtSource.SelectionStart;
-            if (_currentTokens.Count > 0)
+            //updates the token list by selecting the token for the token the caret is in
+            private void UpdateTokenListSelectedToken()
             {
-                //get the first token
-                VisualiserToken tokenCaretIsIn = _currentTokens[0];
-                //if the position of the token is beyond the caret position, the previous token was the right one
-                foreach (VisualiserToken aToken in _currentTokens)
+                //get selection start
+                int selectionStart = rtSource.SelectionStart;
+                if (_currentTokens.Count > 0)
                 {
-                    if (aToken.Position > selectionStart)
+                    //get the first token
+                    VisualiserToken tokenCaretIsIn = _currentTokens[0];
+                    //if the position of the token is beyond the caret position, the previous token was the right one
+                    foreach (VisualiserToken aToken in _currentTokens)
                     {
-                        if(lstTokenList.SelectedItem.Equals(aToken))
-                            MarkTokenInSource(aToken);
+                        if (aToken.Position > selectionStart)
+                        {
+                            if(lstTokenList.SelectedItem.Equals(aToken))
+                                MarkTokenInSource(aToken);
+                            else
+                                lstTokenList.SelectedItem = tokenCaretIsIn;
+
+                        }
                         else
-                            lstTokenList.SelectedItem = tokenCaretIsIn;
-
+                            tokenCaretIsIn = aToken;
                     }
-                    else
-                        tokenCaretIsIn = aToken;
                 }
             }
-        }
 
-        //updates the statement list by selecting the statement for the token the caret is in
-        private void UpdateStatementListSelectedToken()
-        {
-            //get selection start
-            int selectionStart = rtSource.SelectionStart;
-            if (_currentTokens.Count > 0)
+            //updates the statement list by selecting the statement for the token the caret is in
+            private void UpdateStatementListSelectedToken()
             {
-                //get the first token
-                VisualiserToken tokenCaretIsIn = _currentTokens[0];
-                //if the position of the token is beyond the caret position, the previous token was the right one
-                foreach (VisualiserToken aToken in _currentTokens)
+                //get selection start
+                int selectionStart = rtSource.SelectionStart;
+                if (_currentTokens.Count > 0)
                 {
-                    if (aToken.Position > selectionStart)
+                    //get the first token
+                    VisualiserToken tokenCaretIsIn = _currentTokens[0];
+                    //if the position of the token is beyond the caret position, the previous token was the right one
+                    foreach (VisualiserToken aToken in _currentTokens)
                     {
-                        foreach(VisualiserStatement aStatement in _currentStatements)
+                        if (aToken.Position > selectionStart)
                         {
-                            if (aStatement.Tokens.Contains<TokenBase>(tokenCaretIsIn.BaseToken))
+                            foreach(VisualiserStatement aStatement in _currentStatements)
                             {
-                                if (lstStatementList.SelectedItem.Equals(aStatement))
-                                    MarkStatementInSource(aStatement);
-                                else
-                                    lstStatementList.SelectedItem = aStatement;
+                                if (aStatement.Tokens.Contains<TokenBase>(tokenCaretIsIn.BaseToken))
+                                {
+                                    if (lstStatementList.SelectedItem.Equals(aStatement))
+                                        MarkStatementInSource(aStatement);
+                                    else
+                                        lstStatementList.SelectedItem = aStatement;
+                                }
                             }
                         }
+                        else
+                            tokenCaretIsIn = aToken;
                     }
-                    else
-                        tokenCaretIsIn = aToken;
                 }
             }
-        }
 
-        //updates the block list by selecting the block for the statement for the token the caret is in
-        private void UpdateBlockListSelectedToken()
-        {
-            //get selection start
-            int selectionStart = rtSource.SelectionStart;
-            if (_currentTokens.Count > 0)
+            //updates the block list by selecting the block for the statement for the token the caret is in
+            private void UpdateBlockListSelectedToken()
             {
-                //get the first token
-                VisualiserToken tokenCaretIsIn = _currentTokens[0];
-                //if the position of the token is beyond the caret position, the previous token was the right one
-                foreach (VisualiserToken aToken in _currentTokens)
+                //get selection start
+                int selectionStart = rtSource.SelectionStart;
+                if (_currentTokens.Count > 0)
                 {
-                    if (aToken.Position > selectionStart)
+                    //get the first token
+                    VisualiserToken tokenCaretIsIn = _currentTokens[0];
+                    //if the position of the token is beyond the caret position, the previous token was the right one
+                    foreach (VisualiserToken aToken in _currentTokens)
                     {
-                        foreach(VisualiserBlock aBlock in _currentBlocks)
+                        if (aToken.Position > selectionStart)
                         {
-                            if (aBlock.Tokens.Contains<TokenBase>(aToken.BaseToken))
+                            foreach(VisualiserBlock aBlock in _currentBlocks)
                             {
-                                if (lstBlockList.SelectedItem.Equals(aBlock))
-                                    MarkBlockInSource(aBlock);
-                                else
-                                    lstBlockList.SelectedItem = aBlock;
+                                if (aBlock.Tokens.Contains<TokenBase>(aToken.BaseToken))
+                                {
+                                    if (lstBlockList.SelectedItem.Equals(aBlock))
+                                        MarkBlockInSource(aBlock);
+                                    else
+                                        lstBlockList.SelectedItem = aBlock;
+                                }
                             }
                         }
+                        else
+                            tokenCaretIsIn = aToken;
                     }
-                    else
-                        tokenCaretIsIn = aToken;
                 }
             }
-        }
+
+            //updates the line list by selecting the line for the token the caret is in
+            private void UpdateLineListSelectedToken()
+            {
+                //get selection start
+                int selectionStart = rtSource.SelectionStart;
+                if (_currentTokens.Count > 0)
+                {
+                    //get the first token
+                    VisualiserToken tokenCaretIsIn = _currentTokens[0];
+                    //if the position of the token is beyond the caret position, the previous token was the right one
+                    foreach (VisualiserToken aToken in _currentTokens)
+                    {
+                        if (aToken.Position > selectionStart)
+                        {
+                            foreach (VisualiserLine aLine in _currentLines)
+                            {
+                                if (aLine.Tokens.Contains<TokenBase>(tokenCaretIsIn.BaseToken))
+                                {
+                                    if (lstLineList.SelectedItem.Equals(aLine))
+                                        MarkLineInSource(aLine);
+                                    else
+                                        lstLineList.SelectedItem = aLine;
+                                }
+                            }
+                        }
+                        else
+                            tokenCaretIsIn = aToken;
+                    }
+                }
+            }
 
         #endregion
 
         #region Source marking methods
 
-        //marks the text of the specified token in the source
-        private void MarkTokenInSource(VisualiserToken token)
-        {
-            rtSource.Select(token.Position, token.Content.Length);
-            rtSource.Focus();
-        }
+            //marks the text of the specified token in the source
+            private void MarkTokenInSource(VisualiserToken token)
+            {
+                rtSource.Select(token.Position, token.Content.Length);
+                rtSource.Focus();
+            }
 
-        //marks the text of the specified token in the source
-        private void MarkStatementInSource(VisualiserStatement statement)
-        {
-            rtSource.Select(statement.Position, statement.Content.Length);
-            rtSource.Focus();
-        }
+            //marks the text of the specified token in the source
+            private void MarkStatementInSource(VisualiserStatement statement)
+            {
+                rtSource.Select(statement.Position, statement.Content.Length);
+                rtSource.Focus();
+            }
 
-        //marks the text of the specified block in the source
-        private void MarkBlockInSource(VisualiserBlock block)
-        {
-            rtSource.Select(block.Position, block.Content.Length);
-            rtSource.Focus();
-        }
+            //marks the text of the specified block in the source
+            private void MarkBlockInSource(VisualiserBlock block)
+            {
+                rtSource.Select(block.Position, block.Content.Length);
+                rtSource.Focus();
+            }
+
+            //marks the text of the specified block in the source
+            private void MarkLineInSource(VisualiserLine line)
+            {
+                rtSource.Select(line.Position, line.Content.Length);
+                rtSource.Focus();
+            }
 
         #endregion
 
         #region Token detail display methods
 
-        //display details for the specified token
-        private void DisplayTokenDetails(VisualiserToken token)
-        {
-            //display details
-            IList<String> details = new List<String>();
-            details.Add(String.Format("Type: {0}", token.Type));
-            details.Add(String.Format("Line: {0}", token.Line));
-            details.Add(String.Format("Column: {0}", token.Column));
-            details.Add(String.Format("Position: {0}", token.Position));
-            details.Add(String.Format("Content: {0}", token.Content));
-            details.Add(String.Format("Content size: {0}", token.Content.Length));
-            details.Add(String.Format("Hint: {0}", token.Hint));
+            //display details for the specified token
+            private void DisplayTokenDetails(VisualiserToken token)
+            {
+                //display details
+                IList<String> details = new List<String>();
+                details.Add(String.Format("Type: {0}", token.Type));
+                details.Add(String.Format("Line: {0}", token.Line));
+                details.Add(String.Format("Column: {0}", token.Column));
+                details.Add(String.Format("Position: {0}", token.Position));
+                details.Add(String.Format("Content: {0}", token.Content));
+                details.Add(String.Format("Content size: {0}", token.Content.Length));
+                details.Add(String.Format("Hint: {0}", token.Hint));
 
-            lstTokenDetails.DataSource = details;
-        }
+                lstTokenDetails.DataSource = details;
+            }
 
-        //display details for the specified statement
-        private void DisplayStatementDetails(VisualiserStatement statement)
-        {
-            //display details
-            IList<String> details = new List<String>();
-            details.Add(String.Format("Type: {0}", statement.Type));
+            //display details for the specified statement
+            private void DisplayStatementDetails(VisualiserStatement statement)
+            {
+                //display details
+                IList<String> details = new List<String>();
+                details.Add(String.Format("Type: {0}", statement.Type));
 
-            lstStatementDetails.DataSource = details;
-        }
+                lstStatementDetails.DataSource = details;
+            }
 
-        private void DisplayBlockDetails(VisualiserBlock block)
-        {
-            //display details
-            IList<String> details = new List<String>();
-            details.Add(String.Format("Type: {0}", block.Type));
+            private void DisplayBlockDetails(VisualiserBlock block)
+            {
+                //display details
+                IList<String> details = new List<String>();
+                details.Add(String.Format("Type: {0}", block.Type));
 
-            lstBlockDetails.DataSource = details;
-        }
+                lstBlockDetails.DataSource = details;
+            }
+
+            private void DisplayLineDetails(VisualiserLine line)
+            {
+                //display details
+                IList<String> details = new List<String>();
+                details.Add(String.Format("Type: {0}", line.Type));
+
+                lstLineDetails.DataSource = details;
+            }
 
         #endregion
 
         #region Display methods
 
-        private void DisplayCurrentStatement()
-        {
-            if (lstStatementList.SelectedItem != null)
+            private void DisplayCurrentStatement()
             {
-                VisualiserStatement currentStatement = (VisualiserStatement)lstStatementList.SelectedItem;
+                if (lstStatementList.SelectedItem != null)
+                {
+                    VisualiserStatement currentStatement = (VisualiserStatement)lstStatementList.SelectedItem;
 
-                _suspendSourceSelectionChanged = true;
-                DisplayStatementDetails(currentStatement);
-                MarkStatementInSource(currentStatement);
-                _suspendSourceSelectionChanged = false;
+                    _suspendSourceSelectionChanged = true;
+                    DisplayStatementDetails(currentStatement);
+                    MarkStatementInSource(currentStatement);
+                    _suspendSourceSelectionChanged = false;
+                }
             }
-        }
 
-        private void DisplayCurrentToken()
-        {
-            if (lstTokenList.SelectedItem != null)
+            private void DisplayCurrentToken()
             {
-                VisualiserToken currentToken = (VisualiserToken)lstTokenList.SelectedItem;
+                if (lstTokenList.SelectedItem != null)
+                {
+                    VisualiserToken currentToken = (VisualiserToken)lstTokenList.SelectedItem;
 
-                _suspendSourceSelectionChanged = true;
-                DisplayTokenDetails(currentToken);
-                MarkTokenInSource(currentToken);
-                _suspendSourceSelectionChanged = false;
+                    _suspendSourceSelectionChanged = true;
+                    DisplayTokenDetails(currentToken);
+                    MarkTokenInSource(currentToken);
+                    _suspendSourceSelectionChanged = false;
+                }
             }
-        }
 
-        private void DisplayCurrentBlock()
-        {
-            if (lstBlockList.SelectedItem != null)
+            private void DisplayCurrentBlock()
             {
-                VisualiserBlock currentBlock = (VisualiserBlock)lstBlockList.SelectedItem;
+                if (lstBlockList.SelectedItem != null)
+                {
+                    VisualiserBlock currentBlock = (VisualiserBlock)lstBlockList.SelectedItem;
 
-                _suspendSourceSelectionChanged = true;
-                DisplayBlockDetails(currentBlock);
-                MarkBlockInSource(currentBlock);
-                _suspendSourceSelectionChanged = false;
+                    _suspendSourceSelectionChanged = true;
+                    DisplayBlockDetails(currentBlock);
+                    MarkBlockInSource(currentBlock);
+                    _suspendSourceSelectionChanged = false;
+                }
             }
-        }
+
+            private void DisplayCurrentLine()
+            {
+                if (lstLineList.SelectedItem != null)
+                {
+                    VisualiserLine currentLine = (VisualiserLine)lstLineList.SelectedItem;
+
+                    _suspendSourceSelectionChanged = true;
+                    DisplayLineDetails(currentLine);
+                    MarkLineInSource(currentLine);
+                    _suspendSourceSelectionChanged = false;
+                }
+            }
 
         #endregion
 
         #region Active tab properties
 
-        private bool TokensTabActive
-        {
-            get { return tabDisplay.SelectedTab.Equals(tabTokens); }
-        }
+            private bool TokensTabActive
+            {
+                get { return tabDisplay.SelectedTab.Equals(tabTokens); }
+            }
 
-        private bool StatementsTabActive
-        {
-            get { return tabDisplay.SelectedTab.Equals(tabStatements); }
-        }
+            private bool StatementsTabActive
+            {
+                get { return tabDisplay.SelectedTab.Equals(tabStatements); }
+            }
 
-        private bool BlocksTabActive
-        {
-            get { return tabDisplay.SelectedTab.Equals(tabBlocks); }
-        }
+            private bool BlocksTabActive
+            {
+                get { return tabDisplay.SelectedTab.Equals(tabBlocks); }
+            }
+
+            private bool LinesTabActive
+            {
+                get { return tabDisplay.SelectedTab.Equals(tabLines); }
+            }
 
         #endregion
     }
