@@ -204,6 +204,8 @@ namespace JDT.Calidus.GUI
             {
                 if (param.ParameterType == ParameterType.MultilineString)
                     return new MultilineParameterControl();
+                else if (param.ParameterType == ParameterType.Boolean)
+                    return new BooleanParameterControl();
                 else
                     return new BasicParameterControl();
             }

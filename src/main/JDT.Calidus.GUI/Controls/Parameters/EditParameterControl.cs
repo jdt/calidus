@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace JDT.Calidus.GUI.Controls.Parameters
 {
-    public abstract partial class EditParameterControl : UserControl
+    public partial class EditParameterControl : UserControl
     {
         protected EditParameterControl()
         {
@@ -24,7 +24,7 @@ namespace JDT.Calidus.GUI.Controls.Parameters
                 ValueChanged(this, new EventArgs());
         }
 
-        public abstract void SetValue(Object value);
-        public abstract Object GetValue();
+        public virtual void SetValue(Object value){}
+        public virtual Object GetValue() { return null; }
     }
 }
