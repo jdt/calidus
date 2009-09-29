@@ -37,17 +37,20 @@
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
             this.tvRules = new System.Windows.Forms.TreeView();
+            this.lvViolations = new System.Windows.Forms.ListView();
+            this.headerRule = new System.Windows.Forms.ColumnHeader();
+            this.headerFile = new System.Windows.Forms.ColumnHeader();
+            this.headerLine = new System.Windows.Forms.ColumnHeader();
+            this.headerColumn = new System.Windows.Forms.ColumnHeader();
             this.pnlControl = new System.Windows.Forms.Panel();
             this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
             this.lblSourceDir = new System.Windows.Forms.Label();
             this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.cmdRun = new System.Windows.Forms.Button();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
-            this.lvViolations = new System.Windows.Forms.ListView();
-            this.headerRule = new System.Windows.Forms.ColumnHeader();
-            this.headerFile = new System.Windows.Forms.ColumnHeader();
-            this.headerLine = new System.Windows.Forms.ColumnHeader();
-            this.headerColumn = new System.Windows.Forms.ColumnHeader();
+            this.lblViolations = new System.Windows.Forms.ToolStripStatusLabel();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -56,13 +59,15 @@
             this.splitRulesViolations.Panel2.SuspendLayout();
             this.splitRulesViolations.SuspendLayout();
             this.pnlControl.SuspendLayout();
+            this.stripStatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuMain
             // 
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.rulesToolStripMenuItem});
+            this.rulesToolStripMenuItem,
+            this.projectToolStripMenuItem});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
             this.menuMain.Size = new System.Drawing.Size(741, 24);
@@ -159,6 +164,43 @@
             this.tvRules.TabIndex = 0;
             this.tvRules.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvRules_AfterCheck);
             // 
+            // lvViolations
+            // 
+            this.lvViolations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.headerRule,
+            this.headerFile,
+            this.headerLine,
+            this.headerColumn});
+            this.lvViolations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvViolations.Location = new System.Drawing.Point(0, 0);
+            this.lvViolations.MultiSelect = false;
+            this.lvViolations.Name = "lvViolations";
+            this.lvViolations.Size = new System.Drawing.Size(486, 148);
+            this.lvViolations.TabIndex = 0;
+            this.lvViolations.UseCompatibleStateImageBehavior = false;
+            this.lvViolations.View = System.Windows.Forms.View.Details;
+            this.lvViolations.DoubleClick += new System.EventHandler(this.lvViolations_DoubleClick);
+            // 
+            // headerRule
+            // 
+            this.headerRule.Text = "Rule";
+            this.headerRule.Width = 150;
+            // 
+            // headerFile
+            // 
+            this.headerFile.Text = "File";
+            this.headerFile.Width = 253;
+            // 
+            // headerLine
+            // 
+            this.headerLine.Text = "Line";
+            this.headerLine.Width = 32;
+            // 
+            // headerColumn
+            // 
+            this.headerColumn.Text = "Column";
+            this.headerColumn.Width = 47;
+            // 
             // pnlControl
             // 
             this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -215,48 +257,33 @@
             // 
             // stripStatus
             // 
+            this.stripStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblViolations});
             this.stripStatus.Location = new System.Drawing.Point(0, 445);
             this.stripStatus.Name = "stripStatus";
             this.stripStatus.Size = new System.Drawing.Size(741, 22);
             this.stripStatus.TabIndex = 2;
             this.stripStatus.Text = "statusStrip1";
             // 
-            // lvViolations
+            // lblViolations
             // 
-            this.lvViolations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.headerRule,
-            this.headerFile,
-            this.headerLine,
-            this.headerColumn});
-            this.lvViolations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvViolations.Location = new System.Drawing.Point(0, 0);
-            this.lvViolations.MultiSelect = false;
-            this.lvViolations.Name = "lvViolations";
-            this.lvViolations.Size = new System.Drawing.Size(486, 148);
-            this.lvViolations.TabIndex = 0;
-            this.lvViolations.UseCompatibleStateImageBehavior = false;
-            this.lvViolations.View = System.Windows.Forms.View.Details;
-            this.lvViolations.DoubleClick += new System.EventHandler(this.lvViolations_DoubleClick);
+            this.lblViolations.Name = "lblViolations";
+            this.lblViolations.Size = new System.Drawing.Size(0, 17);
             // 
-            // headerRule
+            // projectToolStripMenuItem
             // 
-            this.headerRule.Text = "Rule";
-            this.headerRule.Width = 150;
+            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.projectToolStripMenuItem.Text = "Project";
             // 
-            // headerFile
+            // settingsToolStripMenuItem
             // 
-            this.headerFile.Text = "File";
-            this.headerFile.Width = 253;
-            // 
-            // headerLine
-            // 
-            this.headerLine.Text = "Line";
-            this.headerLine.Width = 32;
-            // 
-            // headerColumn
-            // 
-            this.headerColumn.Text = "Column";
-            this.headerColumn.Width = 47;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -279,6 +306,8 @@
             this.splitRulesViolations.ResumeLayout(false);
             this.pnlControl.ResumeLayout(false);
             this.pnlControl.PerformLayout();
+            this.stripStatus.ResumeLayout(false);
+            this.stripStatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,5 +335,8 @@
         private System.Windows.Forms.ColumnHeader headerFile;
         private System.Windows.Forms.ColumnHeader headerLine;
         private System.Windows.Forms.ColumnHeader headerColumn;
+        private System.Windows.Forms.ToolStripStatusLabel lblViolations;
+        private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
