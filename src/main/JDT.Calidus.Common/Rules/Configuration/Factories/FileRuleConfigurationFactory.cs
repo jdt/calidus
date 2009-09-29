@@ -126,6 +126,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                 XmlWriter writer = GetWriter();
                 _doc.Save(writer);
                 writer.Flush();
+                writer.Close();
             }
         
             private object GetValueAsType(ParameterType parameterType, String value)
