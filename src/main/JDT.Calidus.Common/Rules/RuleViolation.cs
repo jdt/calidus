@@ -17,12 +17,25 @@ namespace JDT.Calidus.Common.Rules
         /// </summary>
         /// <param name="file">The file</param>
         /// <param name="violatedRule">The violated rule</param>
-        /// <param name="violatingStatement">The statement that violates the rule</param>
-        public RuleViolation(String file, IRule violatedRule, StatementBase violatingStatement)
+        /// <param name="violatingTokens">The list of tokens that violate the rule</param>
+        public RuleViolation(String file, IRule violatedRule, IEnumerable<TokenBase> violatingTokens)
         {
             File = file;
             ViolatedRule = violatedRule;
-            ViolatingStatement = violatingStatement;
+            ViolatingTokens = violatingTokens;
+        }
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="file">The file</param>
+        /// <param name="violatedRule">The violated rule</param>
+        /// <param name="statement">The statement that violates the rule</param>
+        public RuleViolation(String file, IRule violatedRule, StatementBase statement)
+        {
+            File = file;
+            ViolatedRule = violatedRule;
+            ViolatingTokens = statement.Tokens;
         }
 
         /// <summary>
@@ -34,9 +47,9 @@ namespace JDT.Calidus.Common.Rules
         /// </summary>
         public IRule ViolatedRule { get; private set; }
         /// <summary>
-        /// Get the statement that violated the rule
+        /// Get the list of tokens that violated the rule
         /// </summary>
-        public StatementBase ViolatingStatement { get; private set; }
+        public IEnumerable<TokenBase> ViolatingTokens { get; private set; }
         
         /// <summary>
         /// Gets the first token in the violating statement
@@ -45,7 +58,7 @@ namespace JDT.Calidus.Common.Rules
         {
             get
             {
-                return ViolatingStatement.Tokens.ElementAt(0);
+                return ViolatingTokens.ElementAt(0);
             }
         }
     }

@@ -4,12 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Blocks;
+using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
+using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Parsers.Blocks;
+using JDT.Calidus.Parsers.Lines;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Parsers.Tokens;
 using JDT.Calidus.Projects.Events;
@@ -37,6 +40,7 @@ namespace JDT.Calidus.Projects
             CalidusTokenParser parser = new CalidusTokenParser();
             CalidusStatementParser statementParser = new CalidusStatementParser();
             CalidusBlockParser blockParser = new CalidusBlockParser();
+            CalidusLineParser lineParser = new CalidusLineParser();
 
             CalidusRuleProvider ruleProvider = new CalidusRuleProvider();
 
@@ -51,7 +55,8 @@ namespace JDT.Calidus.Projects
                 IEnumerable<TokenBase> parsedTokens = parser.Parse(File.ReadAllText(aFile));
                 IEnumerable<StatementBase> parsedStatements = statementParser.Parse(parsedTokens);
                 IEnumerable<BlockBase> parsedBlocks = blockParser.Parse(parsedStatements);
-                
+                IEnumerable<LineBase> parsedLines = lineParser.Parse(parsedTokens);
+
                 IList<RuleViolation> currentFileViolations = new List<RuleViolation>();
 
                 foreach (StatementRuleBase aStatementRule in ruleProvider.GetStatementRules())
@@ -74,6 +79,18 @@ namespace JDT.Calidus.Projects
                         {
                             if (aBlockRule.IsValidFor(aBlock) == false)
                                 currentFileViolations.Add(new RuleViolation(aFile, aBlockRule, aBlock.Statements.ElementAt(0)));
+                        }
+                    }
+                }
+
+                foreach (LineRuleBase aLineRule in ruleProvider.GetLineRules())
+                {
+                    foreach (LineBase aLine in parsedLines)
+                    {
+                        if (aLineRule.Validates(aLine))
+                        {
+                            if (aLineRule.IsValidFor(aLine) == false)
+                                currentFileViolations.Add(new RuleViolation(aFile, aLineRule, aLine.Tokens));
                         }
                     }
                 }

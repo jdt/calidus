@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="BlockFactoryProviders\AssemblyBasedBlockFactoryProvider.cs" />
     <Compile Include="BlockRuleFactoryProviders\AssemblyBasedBlockRuleFactoryProvider.cs" />
+    <Compile Include="LineFactoryProviders\AssemblyBasedLineFactoryProvider.cs" />
+    <Compile Include="LineRuleFactoryProviders\AssemblyBasedStatementRuleFactoryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatementFactoryProviders\AssemblyBasedStatementFactoryProvider.cs" />
     <Compile Include="StatementFactoryProviders\DefaultStatementFactoryProvider.cs" />
