@@ -66,6 +66,10 @@
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Lines\JDT.Calidus.Lines.csproj">
+      <Project>{DC8047B1-2608-4806-A673-6045699260F9}</Project>
+      <Name>JDT.Calidus.Lines</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Parsers\JDT.Calidus.Parsers.csproj">
       <Project>{CB5C7389-D612-4EBB-B5AD-8FA55FC75856}</Project>
       <Name>JDT.Calidus.Parsers</Name>
