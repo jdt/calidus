@@ -47,6 +47,10 @@
             this.lstBlockDetails = new System.Windows.Forms.ListBox();
             this.lstBlockList = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabLines = new System.Windows.Forms.TabPage();
+            this.lstLineDetails = new System.Windows.Forms.ListBox();
+            this.lstLineList = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.windowContainer.Panel1.SuspendLayout();
             this.windowContainer.Panel2.SuspendLayout();
@@ -55,6 +59,7 @@
             this.tabTokens.SuspendLayout();
             this.tabStatements.SuspendLayout();
             this.tabBlocks.SuspendLayout();
+            this.tabLines.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -98,7 +103,7 @@
             this.windowContainer.Panel2.Controls.Add(this.tabDisplay);
             this.windowContainer.Panel2.Controls.Add(this.cmdParse);
             this.windowContainer.Size = new System.Drawing.Size(1091, 531);
-            this.windowContainer.SplitterDistance = 886;
+            this.windowContainer.SplitterDistance = 856;
             this.windowContainer.TabIndex = 11;
             // 
             // rtSource
@@ -106,7 +111,7 @@
             this.rtSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtSource.Location = new System.Drawing.Point(0, 0);
             this.rtSource.Name = "rtSource";
-            this.rtSource.Size = new System.Drawing.Size(886, 531);
+            this.rtSource.Size = new System.Drawing.Size(856, 531);
             this.rtSource.TabIndex = 9;
             this.rtSource.Text = resources.GetString("rtSource.Text");
             this.rtSource.SelectionChanged += new System.EventHandler(this.rtSource_SelectionChanged);
@@ -116,10 +121,11 @@
             this.tabDisplay.Controls.Add(this.tabTokens);
             this.tabDisplay.Controls.Add(this.tabStatements);
             this.tabDisplay.Controls.Add(this.tabBlocks);
+            this.tabDisplay.Controls.Add(this.tabLines);
             this.tabDisplay.Location = new System.Drawing.Point(8, 36);
             this.tabDisplay.Name = "tabDisplay";
             this.tabDisplay.SelectedIndex = 0;
-            this.tabDisplay.Size = new System.Drawing.Size(190, 492);
+            this.tabDisplay.Size = new System.Drawing.Size(220, 492);
             this.tabDisplay.TabIndex = 10;
             this.tabDisplay.SelectedIndexChanged += new System.EventHandler(this.tabDisplay_SelectedIndexChanged);
             // 
@@ -131,7 +137,7 @@
             this.tabTokens.Location = new System.Drawing.Point(4, 22);
             this.tabTokens.Name = "tabTokens";
             this.tabTokens.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTokens.Size = new System.Drawing.Size(182, 466);
+            this.tabTokens.Size = new System.Drawing.Size(212, 466);
             this.tabTokens.TabIndex = 0;
             this.tabTokens.Text = "Tokens";
             this.tabTokens.UseVisualStyleBackColor = true;
@@ -141,7 +147,7 @@
             this.lstTokenDetails.FormattingEnabled = true;
             this.lstTokenDetails.Location = new System.Drawing.Point(6, 365);
             this.lstTokenDetails.Name = "lstTokenDetails";
-            this.lstTokenDetails.Size = new System.Drawing.Size(173, 95);
+            this.lstTokenDetails.Size = new System.Drawing.Size(200, 95);
             this.lstTokenDetails.TabIndex = 18;
             // 
             // lstTokenList
@@ -150,7 +156,7 @@
             this.lstTokenList.FormattingEnabled = true;
             this.lstTokenList.Location = new System.Drawing.Point(6, 6);
             this.lstTokenList.Name = "lstTokenList";
-            this.lstTokenList.Size = new System.Drawing.Size(173, 342);
+            this.lstTokenList.Size = new System.Drawing.Size(200, 342);
             this.lstTokenList.TabIndex = 16;
             this.lstTokenList.SelectedIndexChanged += new System.EventHandler(this.lstTokens_SelectedIndexChanged);
             // 
@@ -171,7 +177,7 @@
             this.tabStatements.Location = new System.Drawing.Point(4, 22);
             this.tabStatements.Name = "tabStatements";
             this.tabStatements.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStatements.Size = new System.Drawing.Size(182, 466);
+            this.tabStatements.Size = new System.Drawing.Size(212, 466);
             this.tabStatements.TabIndex = 1;
             this.tabStatements.Text = "Statements";
             this.tabStatements.UseVisualStyleBackColor = true;
@@ -181,7 +187,7 @@
             this.lstStatementDetails.FormattingEnabled = true;
             this.lstStatementDetails.Location = new System.Drawing.Point(6, 365);
             this.lstStatementDetails.Name = "lstStatementDetails";
-            this.lstStatementDetails.Size = new System.Drawing.Size(173, 95);
+            this.lstStatementDetails.Size = new System.Drawing.Size(200, 95);
             this.lstStatementDetails.TabIndex = 21;
             // 
             // lstStatementList
@@ -190,7 +196,7 @@
             this.lstStatementList.FormattingEnabled = true;
             this.lstStatementList.Location = new System.Drawing.Point(6, 6);
             this.lstStatementList.Name = "lstStatementList";
-            this.lstStatementList.Size = new System.Drawing.Size(173, 342);
+            this.lstStatementList.Size = new System.Drawing.Size(200, 342);
             this.lstStatementList.TabIndex = 19;
             this.lstStatementList.SelectedIndexChanged += new System.EventHandler(this.lstStatementList_SelectedIndexChanged);
             // 
@@ -210,7 +216,7 @@
             this.tabBlocks.Controls.Add(this.label3);
             this.tabBlocks.Location = new System.Drawing.Point(4, 22);
             this.tabBlocks.Name = "tabBlocks";
-            this.tabBlocks.Size = new System.Drawing.Size(182, 466);
+            this.tabBlocks.Size = new System.Drawing.Size(212, 466);
             this.tabBlocks.TabIndex = 2;
             this.tabBlocks.Text = "Blocks";
             this.tabBlocks.UseVisualStyleBackColor = true;
@@ -220,7 +226,7 @@
             this.lstBlockDetails.FormattingEnabled = true;
             this.lstBlockDetails.Location = new System.Drawing.Point(5, 365);
             this.lstBlockDetails.Name = "lstBlockDetails";
-            this.lstBlockDetails.Size = new System.Drawing.Size(173, 95);
+            this.lstBlockDetails.Size = new System.Drawing.Size(202, 95);
             this.lstBlockDetails.TabIndex = 24;
             // 
             // lstBlockList
@@ -229,7 +235,7 @@
             this.lstBlockList.FormattingEnabled = true;
             this.lstBlockList.Location = new System.Drawing.Point(5, 6);
             this.lstBlockList.Name = "lstBlockList";
-            this.lstBlockList.Size = new System.Drawing.Size(173, 342);
+            this.lstBlockList.Size = new System.Drawing.Size(202, 342);
             this.lstBlockList.TabIndex = 22;
             this.lstBlockList.SelectedIndexChanged += new System.EventHandler(this.lstBlockList_SelectedIndexChanged);
             // 
@@ -241,6 +247,45 @@
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 23;
             this.label3.Text = "Block details:";
+            // 
+            // tabLines
+            // 
+            this.tabLines.Controls.Add(this.lstLineDetails);
+            this.tabLines.Controls.Add(this.lstLineList);
+            this.tabLines.Controls.Add(this.label4);
+            this.tabLines.Location = new System.Drawing.Point(4, 22);
+            this.tabLines.Name = "tabLines";
+            this.tabLines.Size = new System.Drawing.Size(212, 466);
+            this.tabLines.TabIndex = 3;
+            this.tabLines.Text = "Lines";
+            this.tabLines.UseVisualStyleBackColor = true;
+            // 
+            // lstLineDetails
+            // 
+            this.lstLineDetails.FormattingEnabled = true;
+            this.lstLineDetails.Location = new System.Drawing.Point(6, 365);
+            this.lstLineDetails.Name = "lstLineDetails";
+            this.lstLineDetails.Size = new System.Drawing.Size(202, 95);
+            this.lstLineDetails.TabIndex = 27;
+            // 
+            // lstLineList
+            // 
+            this.lstLineList.DisplayMember = "Type";
+            this.lstLineList.FormattingEnabled = true;
+            this.lstLineList.Location = new System.Drawing.Point(6, 6);
+            this.lstLineList.Name = "lstLineList";
+            this.lstLineList.Size = new System.Drawing.Size(202, 342);
+            this.lstLineList.TabIndex = 25;
+            this.lstLineList.SelectedIndexChanged += new System.EventHandler(this.lstLineList_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(5, 349);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Line details:";
             // 
             // Visualiser
             // 
@@ -263,6 +308,8 @@
             this.tabStatements.PerformLayout();
             this.tabBlocks.ResumeLayout(false);
             this.tabBlocks.PerformLayout();
+            this.tabLines.ResumeLayout(false);
+            this.tabLines.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,5 +335,9 @@
         private System.Windows.Forms.ListBox lstBlockDetails;
         private System.Windows.Forms.ListBox lstBlockList;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage tabLines;
+        private System.Windows.Forms.ListBox lstLineDetails;
+        private System.Windows.Forms.ListBox lstLineList;
+        private System.Windows.Forms.Label label4;
     }
 }
