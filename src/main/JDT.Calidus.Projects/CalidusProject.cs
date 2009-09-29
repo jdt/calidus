@@ -20,6 +20,9 @@ namespace JDT.Calidus.Projects
         {
             SourceLocation = sourceLocation;
             ProjectLocation = projectLocation;
+            IgnoreAssemblyFiles = true;
+            IgnoreDesignerFiles = true;
+            IgnoreProgramFiles = true;
         }
 
         /// <summary>
@@ -40,6 +43,18 @@ namespace JDT.Calidus.Projects
                 return Path.GetFileName(ProjectLocation);
             }
         }
+        /// <summary>
+        /// Get or Set if assembly files should be ignored
+        /// </summary>
+        public bool IgnoreAssemblyFiles { get; set; }
+        /// <summary>
+        /// Get or Set if the designer files should be ignored
+        /// </summary>
+        public bool IgnoreDesignerFiles { get; set; }
+        /// <summary>
+        /// Get or Set if the Program.cs file should be ignored
+        /// </summary>
+        public bool IgnoreProgramFiles { get; set; }
 
         /// <summary>
         /// Gets the list of source files in the project that should be validated
@@ -47,7 +62,21 @@ namespace JDT.Calidus.Projects
         /// <returns></returns>
         public IEnumerable<String> GetSourceFilesToValidate()
         {
-            return GetAllSourceFiles();
+            IList<String> res = new List<String>();
+
+            IList<String> files = new List<String>(GetAllSourceFiles());
+            foreach(String aFile in files)
+            {
+                if(!(IgnoreAssemblyFiles && aFile.EndsWith("\\AssemblyInfo.cs"))
+                    && !(IgnoreDesignerFiles && aFile.EndsWith(".Designer.cs"))
+                    && !(IgnoreProgramFiles && aFile.EndsWith("\\Program.cs"))
+                    )
+                {
+                    res.Add(aFile);
+                }
+            }
+
+            return res;
         }
 
         /// <summary>

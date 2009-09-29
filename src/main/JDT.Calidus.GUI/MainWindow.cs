@@ -27,7 +27,7 @@ namespace JDT.Calidus.GUI
         {
             InitializeComponent();
 
-            CurrentProject = new CalidusProject(null, null);
+            Current.Project = new CalidusProject(null, null);
 
             DisplayProjectDetails();
             DisplayProjectRules();
@@ -38,6 +38,8 @@ namespace JDT.Calidus.GUI
             _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
             _runner.FileCompleted += new RuleRunner.RuleRunnerFileCompleted(_runner_FileCompleted);
             _runner.Completed += new RuleRunner.RuleRunnerCompletedHandler(_runner_Completed);
+
+            DisplayViolationCount();
         }
 
         #region Runner events
@@ -46,27 +48,25 @@ namespace JDT.Calidus.GUI
             {
                 Cursor = Cursors.WaitCursor;
                 _violations.Clear();
-
                 DisplayViolations(_violations);
             }
 
             private void _runner_FileCompleted(object source, FileCompletedEventArgs e)
             {
                 int i = (int) Math.Truncate((double)e.CurrentFileNumber/(double)e.TotalFileNumbers*100.0);
-                prgProgress.Value = i;
-                //update violation list
-                if (e.Violations.Count() != 0)
-                {
-                    foreach (RuleViolation aViolation in e.Violations)
-                        _violations.Add(aViolation);
-
-                    DisplayViolations(new List<RuleViolation>(_violations));
-                    lvViolations.Refresh();
-                }
+                prgProgress.Value = i; 
+                
+                foreach (RuleViolation aViolation in e.Violations)
+                    _violations.Add(aViolation);
+                
+                DisplayViolationCount();
             }
 
             private void _runner_Completed(object source, RuleRunnerEventArgs e)
             {
+                DisplayViolations(new List<RuleViolation>(_violations));
+                lvViolations.Refresh();
+                DisplayViolationCount();
                 Cursor = Cursors.Default;
             }
 
@@ -83,7 +83,7 @@ namespace JDT.Calidus.GUI
                 String selectedDir = browseDirectory.SelectedPath;
                 if (selectedDir.Equals(String.Empty) == false)
                 {
-                    CurrentProject = new CalidusProject(selectedDir, null);
+                    Current.Project = new CalidusProject(selectedDir, null);
                     DisplayProjectDetails();
                 }
             }
@@ -105,7 +105,7 @@ namespace JDT.Calidus.GUI
 
             private void cmdRun_Click(object sender, EventArgs e)
             {
-                _runner.Run(CurrentProject);
+                _runner.Run(Current.Project);
             }
 
         #endregion
@@ -118,6 +118,12 @@ namespace JDT.Calidus.GUI
                 config.ShowDialog();
             }
 
+            private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                ProjectConfigurationWindow config = new ProjectConfigurationWindow();
+                config.ShowDialog();
+            }
+
             private void exitToolStripMenuItem_Click(object sender, EventArgs e)
             {
                 Application.Exit();
@@ -127,24 +133,30 @@ namespace JDT.Calidus.GUI
 
         #region Methods
 
+            private void DisplayViolationCount()
+            {
+                lblViolations.Text = String.Format("Found {0} violations", _violations.Count);
+                stripStatus.Refresh();
+            }
+
             private void DisplayProjectDetails()
             {
                 String projectName = UNSAVED_PROJECT;
-                if (CurrentProject.ProjectLocation != null)
-                    projectName = CurrentProject.Name;
+                if (Current.Project.ProjectLocation != null)
+                    projectName = Current.Project.Name;
 
                 Text = String.Format(TITLE, projectName);
 
                 String projectLocation = NOT_SET;
-                if (CurrentProject.SourceLocation != null)
-                    projectLocation = CurrentProject.SourceLocation;
+                if (Current.Project.SourceLocation != null)
+                    projectLocation = Current.Project.SourceLocation;
 
                 lnkSourceDirectory.Text = projectLocation;
 
-                if (CurrentProject.SourceLocation != null)
+                if (Current.Project.SourceLocation != null)
                 {
                     FileTree tree = new FileTree();
-                    foreach (String aFile in CurrentProject.GetAllSourceFiles())
+                    foreach (String aFile in Current.Project.GetAllSourceFiles())
                     {
                         tree.Add(aFile);
                     }
@@ -154,7 +166,7 @@ namespace JDT.Calidus.GUI
                     tvFiles.Nodes.Add(root);
                 }
 
-                if (CurrentProject.SourceLocation != null)
+                if (Current.Project.SourceLocation != null)
                     cmdRun.Enabled = true;
                 else
                     cmdRun.Enabled = false;
@@ -204,12 +216,6 @@ namespace JDT.Calidus.GUI
                     lvViolations.Items.Add(new ListViewItem(entry));
                 }
             }
-
-        #endregion
-
-        #region Properties
-
-        private CalidusProject CurrentProject { get; set; }
 
         #endregion
     }
