@@ -24,6 +24,15 @@ namespace JDT.Calidus.Rules.LinesTest.Indentation
         }
 
         [Test]
+        public void IndentationCharacterValidationShouldValidateEmptyLine()
+        {
+            IndentationCharacterValidationRule rule = new IndentationCharacterValidationRule(true, true);
+
+            Line aLine = new Line(new TokenBase[] {});
+            Assert.IsTrue(rule.IsValidFor(aLine));
+        }
+
+        [Test]
         public void IndentationCharacterValidationShouldCorrectlyValidateSpacesOnly()
         {
             IndentationCharacterValidationRule rule = new IndentationCharacterValidationRule(true, false);

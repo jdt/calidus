@@ -49,9 +49,9 @@ namespace JDT.Calidus.Rules.Lines.Identation
             IList<WhiteSpaceToken> whitespace = new List<WhiteSpaceToken>();
             
             int i = 0;
-            while(i < line.Tokens.Count() && 
-                    line.Tokens.ElementAt(i) is SpaceToken ||
-                    line.Tokens.ElementAt(i) is TabToken)
+            while(i < (line.Tokens.Count() - 1) && 
+                    (line.Tokens.ElementAt(i) is SpaceToken ||
+                    line.Tokens.ElementAt(i) is TabToken))
             {
                 whitespace.Add((WhiteSpaceToken) line.Tokens.ElementAt(i));
                 i++;
