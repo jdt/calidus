@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CD370255-1D5D-4A39-834F-BED8868019D2}</ProjectGuid>
+    <ProjectGuid>{DC8047B1-2608-4806-A673-6045699260F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Lines.Factories</RootNamespace>
-    <AssemblyName>JDT.Calidus.Lines.Factories</AssemblyName>
+    <RootNamespace>JDT.Calidus.Lines</RootNamespace>
+    <AssemblyName>JDT.Calidus.Lines</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,17 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LineFactory.cs" />
+    <Compile Include="Line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JDT.Calidus.Lines\JDT.Calidus.Lines.csproj">
-      <Project>{DC8047B1-2608-4806-A673-6045699260F9}</Project>
-      <Name>JDT.Calidus.Lines</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

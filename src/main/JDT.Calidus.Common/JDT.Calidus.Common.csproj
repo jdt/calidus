@@ -67,7 +67,6 @@
     <Compile Include="CalidusException.cs" />
     <Compile Include="Lines\ILineFactory.cs" />
     <Compile Include="Lines\ILineRuleFactory.cs" />
-    <Compile Include="Lines\Line.cs" />
     <Compile Include="Lines\LineBase.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

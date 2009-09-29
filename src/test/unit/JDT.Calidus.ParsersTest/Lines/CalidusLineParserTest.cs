@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Lines;
 using JDT.Calidus.Parsers.Lines;
 using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens.Common;
