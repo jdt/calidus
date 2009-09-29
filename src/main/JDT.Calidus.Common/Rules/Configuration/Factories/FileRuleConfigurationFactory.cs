@@ -71,12 +71,12 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                                  Description = e.Element("description").Value,
                                  Rule = Type.GetType(e.Attribute("type").Value, true),
                                  Parameters = (
-                                                  from f in e.Elements("params")
+                                                  from f in e.Element("params").Elements("param")
                                                   select new DefaultRuleConfigurationParameter
                                                   {
-                                                      Name = f.Element("param").Attribute("name").Value,
-                                                      Value = f.Element("param").Value,
-                                                      ParameterType = (ParameterType)Enum.Parse(typeof(ParameterType), f.Element("param").Attribute("type").Value)
+                                                      Name = f.Attribute("name").Value,
+                                                      Value = GetValueAsType((ParameterType)Enum.Parse(typeof(ParameterType), f.Attribute("type").Value), f.Value),
+                                                      ParameterType = (ParameterType)Enum.Parse(typeof(ParameterType), f.Attribute("type").Value)
                                                   }
                                               ).ToArray()
 
@@ -126,6 +126,14 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                 XmlWriter writer = GetWriter();
                 _doc.Save(writer);
                 writer.Flush();
+            }
+        
+            private object GetValueAsType(ParameterType parameterType, String value)
+            {
+                if (parameterType == ParameterType.Boolean)
+                    return Boolean.Parse(value);
+                else
+                    return value;
             }
 
         #endregion

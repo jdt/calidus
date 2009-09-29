@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99A681C8-FDB5-4C74-A9D4-BD907414C8F3}</ProjectGuid>
+    <ProjectGuid>{A0D5872F-9B63-40EA-A657-275C8972AFC2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JDT.Calidus.Rules.BlocksTest</RootNamespace>
-    <AssemblyName>JDT.Calidus.Rules.BlocksTest</AssemblyName>
+    <RootNamespace>JDT.Calidus.Rules.LinesTest</RootNamespace>
+    <AssemblyName>JDT.Calidus.Rules.LinesTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,25 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\FileBlockStartsWithHeaderRuleTest.cs" />
+    <Compile Include="Indentation\IndentationCharacterValidationRuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\main\JDT.Calidus.Blocks\JDT.Calidus.Blocks.csproj">
-      <Project>{C773EB06-B309-4D36-B322-224DA915025F}</Project>
-      <Name>JDT.Calidus.Blocks</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\main\JDT.Calidus.Rules.Blocks\JDT.Calidus.Rules.Blocks.csproj">
-      <Project>{77CE4AD4-34C7-4782-83BC-45D2A726EB74}</Project>
-      <Name>JDT.Calidus.Rules.Blocks</Name>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Lines\JDT.Calidus.Lines.csproj">
+      <Project>{DC8047B1-2608-4806-A673-6045699260F9}</Project>
+      <Name>JDT.Calidus.Lines</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
-      <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
-      <Name>JDT.Calidus.Statements</Name>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Rules.Lines\JDT.Calidus.Rules.Lines.csproj">
+      <Project>{65015497-C8D0-470D-8353-CCA30B5C1934}</Project>
+      <Name>JDT.Calidus.Rules.Lines</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
       <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>

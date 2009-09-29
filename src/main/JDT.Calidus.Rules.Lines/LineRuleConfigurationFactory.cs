@@ -6,18 +6,18 @@ using System.Text;
 using System.Xml;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 
-namespace JDT.Calidus.Rules.Statements
+namespace JDT.Calidus.Rules.Lines
 {
     /// <summary>
-    /// This class provides the Calidus statement rule configuration
+    /// This class provides the building line rule configuration
     /// </summary>
-    public class StatementRuleConfigurationFactory : FileRuleConfigurationFactory
+    public class LineRuleConfigurationFactory : FileRuleConfigurationFactory
     {
         private static String _file;
 
-        static StatementRuleConfigurationFactory()
+        static LineRuleConfigurationFactory()
         {
-                String loc = Path.Combine( Path.GetDirectoryName(typeof(StatementRuleConfigurationFactory).Assembly.Location), "JDT.Calidus.Rules.Statements.config.xml");
+                String loc = Path.Combine( Path.GetDirectoryName(typeof(LineRuleConfigurationFactory).Assembly.Location), "JDT.Calidus.Rules.Lines.config.xml");
                 _file = Path.GetFullPath(loc);
         }
 
