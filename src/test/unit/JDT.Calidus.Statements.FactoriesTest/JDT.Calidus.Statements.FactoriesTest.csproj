@@ -55,6 +55,8 @@
     <Compile Include="Declaration\AttributeStatementFactoryTest.cs" />
     <Compile Include="Declaration\MemberStatementFactoryTest.cs" />
     <Compile Include="Namespace\UsingStatementFactoryTest.cs" />
+    <Compile Include="PreProcessor\RegionEndStatementFactoryTest.cs" />
+    <Compile Include="PreProcessor\RegionStartStatementFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

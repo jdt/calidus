@@ -8,6 +8,7 @@ using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Common;
 using JDT.Calidus.Tokens.Common.Brackets;
+using JDT.Calidus.Tokens.PreProcessor;
 
 namespace JDT.Calidus.Parsers.Statements
 {
@@ -56,7 +57,8 @@ namespace JDT.Calidus.Parsers.Statements
                     aToken is OpenCurlyBracketToken || 
                     aToken is CloseCurlyBracketToken ||
                     aToken is LineCommentToken ||
-                    aToken is CloseSquareBracketToken
+                    aToken is CloseSquareBracketToken ||
+                    aToken is PreProcessorToken
                     )
                 {
                     //check all statement factories

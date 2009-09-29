@@ -52,6 +52,8 @@
     <Compile Include="Declaration\AttributeStatementFactory.cs" />
     <Compile Include="Declaration\MemberStatementResolver.cs" />
     <Compile Include="Namespace\UsingStatementFactory.cs" />
+    <Compile Include="PreProcessor\RegionEndStatementFactory.cs" />
+    <Compile Include="PreProcessor\RegionStartStatementFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

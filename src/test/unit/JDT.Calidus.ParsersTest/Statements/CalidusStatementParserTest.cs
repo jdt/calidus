@@ -5,6 +5,7 @@ using System.Text;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.PreProcessor;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Parsers;
@@ -113,6 +114,17 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             IEnumerable<StatementBase> actual = _parser.Parse(input);
             CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, input);
+        }
+
+        [Test]
+        public void ParsePreProcessorTokensShouldParseAsStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<RegionStartToken>("#region Test"));
+            input.Add(TokenCreator.Create<IdentifierToken>("test"));
+
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, new [] {input[0]});
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Tokens.Namespace;
+using JDT.Calidus.Tokens.PreProcessor;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Coco;
 using JDT.Calidus.Tokens.Common;
@@ -225,6 +226,18 @@ namespace JDT.Calidus.Parsers.CocoTest
         public void UsingConstShouldReturnUsingToken()
         {
             Assert.IsInstanceOf(typeof(UsingToken), CocoTokenConverter.Convert(GetCocoToken(Parser._usingKW)));
+        }
+
+        [Test]
+        public void RegionStartConstShouldReturnRegionStartToken()
+        {
+            Assert.IsInstanceOf(typeof(RegionStartToken), CocoTokenConverter.Convert(GetCocoToken(Parser._ppRegion)));
+        }
+
+        [Test]
+        public void RegionEndConstShouldReturnRegionEndToken()
+        {
+            Assert.IsInstanceOf(typeof(RegionEndToken), CocoTokenConverter.Convert(GetCocoToken(Parser._ppEndReg)));
         }
     }
 }
