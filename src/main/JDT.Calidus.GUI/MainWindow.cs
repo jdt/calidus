@@ -29,8 +29,6 @@ namespace JDT.Calidus.GUI
 
             CurrentProject = new CalidusProject(null, null);
 
-            lstViolations.DisplayMember = "File";
-
             DisplayProjectDetails();
             DisplayProjectRules();
 
@@ -44,144 +42,168 @@ namespace JDT.Calidus.GUI
 
         #region Runner events
 
-        private void _runner_Started(object source, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            _violations.Clear();
-
-            lstViolations.DataSource = _violations;
-        }
-
-        private void _runner_FileCompleted(object source, FileCompletedEventArgs e)
-        {
-            int i = (int) Math.Truncate((double)e.CurrentFileNumber/(double)e.TotalFileNumbers*100.0);
-            prgProgress.Value = i;
-            //update violation list
-            if (e.Violations.Count() != 0)
+            private void _runner_Started(object source, EventArgs e)
             {
-                foreach (RuleViolation aViolation in e.Violations)
-                    _violations.Add(aViolation);
-                
-                lstViolations.DataSource = new List<RuleViolation>(_violations);
-                lstViolations.Refresh();
-            }
-        }
+                Cursor = Cursors.WaitCursor;
+                _violations.Clear();
 
-        private void _runner_Completed(object source, RuleRunnerEventArgs e)
-        {
-            Cursor = Cursors.Default;
-        }
+                DisplayViolations(_violations);
+            }
+
+            private void _runner_FileCompleted(object source, FileCompletedEventArgs e)
+            {
+                int i = (int) Math.Truncate((double)e.CurrentFileNumber/(double)e.TotalFileNumbers*100.0);
+                prgProgress.Value = i;
+                //update violation list
+                if (e.Violations.Count() != 0)
+                {
+                    foreach (RuleViolation aViolation in e.Violations)
+                        _violations.Add(aViolation);
+
+                    DisplayViolations(new List<RuleViolation>(_violations));
+                    lvViolations.Refresh();
+                }
+            }
+
+            private void _runner_Completed(object source, RuleRunnerEventArgs e)
+            {
+                Cursor = Cursors.Default;
+            }
 
         #endregion
 
         #region Events
 
-        private void lnkSourceDirectory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            FolderBrowserDialog browseDirectory = new FolderBrowserDialog();
-            browseDirectory.ShowNewFolderButton = false;
-            browseDirectory.ShowDialog(this);
-
-            String selectedDir = browseDirectory.SelectedPath;
-            if (selectedDir.Equals(String.Empty) == false)
+            private void lnkSourceDirectory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
             {
-                CurrentProject = new CalidusProject(selectedDir, null);
-                DisplayProjectDetails();
-            }
-        }
+                FolderBrowserDialog browseDirectory = new FolderBrowserDialog();
+                browseDirectory.ShowNewFolderButton = false;
+                browseDirectory.ShowDialog(this);
 
-        private void tvRules_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            foreach (TreeNode aNode in e.Node.Nodes)
-                aNode.Checked = e.Node.Checked;
-        }
-        
-        private void lstViolations_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            int index = lstViolations.IndexFromPoint(e.Location);
-            if (ListBox.NoMatches != index)
+                String selectedDir = browseDirectory.SelectedPath;
+                if (selectedDir.Equals(String.Empty) == false)
+                {
+                    CurrentProject = new CalidusProject(selectedDir, null);
+                    DisplayProjectDetails();
+                }
+            }
+
+            private void tvRules_AfterCheck(object sender, TreeViewEventArgs e)
             {
-                RuleViolation currentViolation = _violations[index];
-                IDEFileOpener.OpenWithVisualStudio(currentViolation.File, currentViolation.FirstToken.Line);
+                foreach (TreeNode aNode in e.Node.Nodes)
+                    aNode.Checked = e.Node.Checked;
             }
-        }
 
-        private void cmdRun_Click(object sender, EventArgs e)
-        {
-            _runner.Run(CurrentProject);
-        }
+            private void lvViolations_DoubleClick(object sender, EventArgs e)
+            {
+                if (lvViolations.SelectedItems.Count != 0)
+                {
+                    ListViewItem item = lvViolations.SelectedItems[0];
+                    IDEFileOpener.OpenWithVisualStudio(item.SubItems[1].Text, Int32.Parse(item.SubItems[2].Text));
+                }
+            }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+            private void cmdRun_Click(object sender, EventArgs e)
+            {
+                _runner.Run(CurrentProject);
+            }
+
+        #endregion
+
+        #region Menu events
+
+            private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                RuleConfigurationWindow config = new RuleConfigurationWindow();
+                config.ShowDialog();
+            }
+
+            private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                Application.Exit();
+            }
 
         #endregion
 
         #region Methods
 
-        private void DisplayProjectDetails()
-        {
-            String projectName = UNSAVED_PROJECT;
-            if (CurrentProject.ProjectLocation != null)
-                projectName = CurrentProject.Name;
-
-            Text = String.Format(TITLE, projectName);
-
-            String projectLocation = NOT_SET;
-            if (CurrentProject.SourceLocation != null)
-                projectLocation = CurrentProject.SourceLocation;
-
-            lnkSourceDirectory.Text = projectLocation;
-
-            if (CurrentProject.SourceLocation != null)
+            private void DisplayProjectDetails()
             {
-                FileTree tree = new FileTree();
-                foreach (String aFile in CurrentProject.GetAllSourceFiles())
+                String projectName = UNSAVED_PROJECT;
+                if (CurrentProject.ProjectLocation != null)
+                    projectName = CurrentProject.Name;
+
+                Text = String.Format(TITLE, projectName);
+
+                String projectLocation = NOT_SET;
+                if (CurrentProject.SourceLocation != null)
+                    projectLocation = CurrentProject.SourceLocation;
+
+                lnkSourceDirectory.Text = projectLocation;
+
+                if (CurrentProject.SourceLocation != null)
                 {
-                    tree.Add(aFile);
+                    FileTree tree = new FileTree();
+                    foreach (String aFile in CurrentProject.GetAllSourceFiles())
+                    {
+                        tree.Add(aFile);
+                    }
+
+                    TreeNode root = new TreeNode(tree.Root.GetItemName());
+                    FillNode(tree, tree.Root, root);
+                    tvFiles.Nodes.Add(root);
                 }
 
-                TreeNode root = new TreeNode(tree.Root.GetItemName());
-                FillNode(tree, tree.Root, root);
-                tvFiles.Nodes.Add(root);
+                if (CurrentProject.SourceLocation != null)
+                    cmdRun.Enabled = true;
+                else
+                    cmdRun.Enabled = false;
             }
 
-            if (CurrentProject.SourceLocation != null)
-                cmdRun.Enabled = true;
-            else
-                cmdRun.Enabled = false;
-        }
-
-        private void DisplayProjectRules()
-        {
-            CalidusRuleProvider ruleProvider = new CalidusRuleProvider();
-            IEnumerable<IRule> rules = ruleProvider.GetRules();
-
-            foreach (String aCategory in rules.Select<IRule, String>(p => p.Category).Distinct())
+            private void DisplayProjectRules()
             {
-                TreeNode category = new TreeNode(aCategory);
-                foreach (IRule aRule in rules.Where<IRule>(p => p.Category.Equals(aCategory)))
+                CalidusRuleProvider ruleProvider = new CalidusRuleProvider();
+                IEnumerable<IRule> rules = ruleProvider.GetRules();
+
+                foreach (String aCategory in rules.Select<IRule, String>(p => p.Category).Distinct())
                 {
-                    TreeNode ruleNode = new TreeNode(aRule.Name);
-                    ruleNode.Checked = true;
-                    category.Nodes.Add(ruleNode);
+                    TreeNode category = new TreeNode(aCategory);
+                    foreach (IRule aRule in rules.Where<IRule>(p => p.Category.Equals(aCategory)))
+                    {
+                        TreeNode ruleNode = new TreeNode(aRule.Name);
+                        ruleNode.Checked = true;
+                        category.Nodes.Add(ruleNode);
+                    }
+                    category.Checked = true;
+                    tvRules.Nodes.Add(category);
                 }
-                category.Checked = true;
-                tvRules.Nodes.Add(category);
             }
-        }
 
-        private void FillNode(FileTree treeToAddFrom, FileTreeItem parent, TreeNode nodeToAddTo)
-        {
-            foreach (FileTreeItem aChild in treeToAddFrom.GetChildrenOf(parent))
+            private void FillNode(FileTree treeToAddFrom, FileTreeItem parent, TreeNode nodeToAddTo)
             {
-                TreeNode childNode = new TreeNode(aChild.GetItemName());
-                if (treeToAddFrom.GetChildrenOf(aChild).Count() != 0)
-                    FillNode(treeToAddFrom, aChild, childNode);
-                nodeToAddTo.Nodes.Add(childNode);
+                foreach (FileTreeItem aChild in treeToAddFrom.GetChildrenOf(parent))
+                {
+                    TreeNode childNode = new TreeNode(aChild.GetItemName());
+                    if (treeToAddFrom.GetChildrenOf(aChild).Count() != 0)
+                        FillNode(treeToAddFrom, aChild, childNode);
+                    nodeToAddTo.Nodes.Add(childNode);
+                }
             }
-        }
+
+            private void DisplayViolations(IEnumerable<RuleViolation> violations)
+            {
+                lvViolations.Items.Clear();
+                foreach(RuleViolation aViolation in violations)
+                {
+                    String[] entry = new String[4];
+                    entry[0] = aViolation.ViolatedRule.Name;
+                    entry[1] = aViolation.File;
+                    entry[2] = aViolation.FirstToken.Line.ToString();
+                    entry[3] = aViolation.FirstToken.Column.ToString();
+
+                    lvViolations.Items.Add(new ListViewItem(entry));
+                }
+            }
 
         #endregion
 
@@ -190,11 +212,5 @@ namespace JDT.Calidus.GUI
         private CalidusProject CurrentProject { get; set; }
 
         #endregion
-
-        private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            RuleConfigurationWindow config = new RuleConfigurationWindow();
-            config.ShowDialog();
-        }
     }
 }
