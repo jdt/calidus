@@ -21,7 +21,7 @@ namespace JDT.Calidus.Common.Rules.Configuration
         /// <summary>
         /// Gets or sets the parameter value
         /// </summary>
-        public String Value { get; set; }
+        public Object Value { get; set; }
 
         // override object.Equals
         public override bool Equals(object obj)

@@ -52,7 +52,53 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append("</description>");
             bldr.Append("<params>");
             bldr.Append(@"<param name=""param1"" type=""String"">");
-            bldr.Append("theValue");
+            bldr.Append("theValue1");
+            bldr.Append(@"</param>");
+            bldr.Append(@"<param name=""param2"" type=""String"">");
+            bldr.Append("theValue2");
+            bldr.Append(@"</param>");
+            bldr.Append("</params>");
+            bldr.Append("</rule>");
+            bldr.Append("</rules>");
+
+            Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
+            XmlReader reader = new XmlTextReader(stream);
+
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
+            IRuleConfiguration actual = builder.Get(typeof(UnCreatableRule));
+
+            IList<IRuleConfigurationParameter> paramList = new List<IRuleConfigurationParameter>();
+            DefaultRuleConfigurationParameter param1 = new DefaultRuleConfigurationParameter();
+            param1.ParameterType = ParameterType.String;
+            param1.Name = "param1";
+            param1.Value = "theValue1";
+            paramList.Add(param1);
+
+            DefaultRuleConfigurationParameter param2 = new DefaultRuleConfigurationParameter();
+            param2.ParameterType = ParameterType.String;
+            param2.Name = "param2";
+            param2.Value = "theValue2";
+            paramList.Add(param2);
+
+            Assert.AreEqual("Description text", actual.Description);
+            Assert.AreEqual(Type.GetType("JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"), actual.Rule);
+            CollectionAssert.AreEquivalent(paramList, actual.Parameters);
+        }
+
+
+        [Test]
+        public void BooleanTypeParameterShouldParseAsBoolean()
+        {
+            StringBuilder bldr = new StringBuilder();
+            bldr.Append(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
+            bldr.Append("<rules>");
+            bldr.Append(@"<rule type=""JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"">");
+            bldr.Append("<description>");
+            bldr.Append("Description text");
+            bldr.Append("</description>");
+            bldr.Append("<params>");
+            bldr.Append(@"<param name=""param1"" type=""Boolean"">");
+            bldr.Append("false");
             bldr.Append(@"</param>");
             bldr.Append("</params>");
             bldr.Append("</rule>");
@@ -66,9 +112,9 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 
             IList<IRuleConfigurationParameter> paramList = new List<IRuleConfigurationParameter>();
             DefaultRuleConfigurationParameter param = new DefaultRuleConfigurationParameter();
-            param.ParameterType = ParameterType.String;
+            param.ParameterType = ParameterType.Boolean;
             param.Name = "param1";
-            param.Value = "theValue";
+            param.Value = false;
             paramList.Add(param);
 
             Assert.AreEqual("Description text", actual.Description);

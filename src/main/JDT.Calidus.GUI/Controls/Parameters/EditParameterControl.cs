@@ -24,7 +24,7 @@ namespace JDT.Calidus.GUI.Controls.Parameters
                 ValueChanged(this, new EventArgs());
         }
 
-        public abstract void SetValue(String value);
-        public abstract String GetValue();
+        public abstract void SetValue(Object value);
+        public abstract Object GetValue();
     }
 }

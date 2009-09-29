@@ -21,12 +21,12 @@ namespace JDT.Calidus.GUI.Controls.Parameters
             OnValueChanged();
         }
 
-        public override void SetValue(String value)
+        public override void SetValue(Object value)
         {
-            txtParameterValue.Text = value;
+            txtParameterValue.Text = value.ToString();
         }
 
-        public override string GetValue()
+        public override Object GetValue()
         {
             return txtParameterValue.Text;
         }

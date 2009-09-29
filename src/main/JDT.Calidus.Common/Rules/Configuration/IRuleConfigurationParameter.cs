@@ -21,6 +21,6 @@ namespace JDT.Calidus.Common.Rules.Configuration
         /// <summary>
         /// Gets or sets the parameter value
         /// </summary>
-        String Value { get; set; }
+        Object Value { get; set; }
     }
 }

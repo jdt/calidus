@@ -31,5 +31,16 @@ namespace JDT.Calidus.Common.Rules
                 return "Documentation";
             }
         }
+
+        /// <summary>
+        /// Gets the spacing category
+        /// </summary>
+        public static String Spacing
+        {
+            get
+            {
+                return "Spacing";
+            }
+        }
     }
 }

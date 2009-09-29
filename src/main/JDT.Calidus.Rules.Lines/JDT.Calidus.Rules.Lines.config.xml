@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rules>
+  <rule type="JDT.Calidus.Rules.Lines.Identation.IndentationCharacterValidationRule, JDT.Calidus.Rules.Lines">
+    <description>
+      This rule validates that member statement declarations match a given pattern
+    </description>
+    <params>
+      <param name="allowSpace" type="Boolean">true</param>
+      <param name="allowTab" type="Boolean">false</param>
+    </params>
+  </rule>
+</rules>

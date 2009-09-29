@@ -5,7 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using JDT.Calidus.Common.Rules.Blocks;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Rules
@@ -49,9 +51,9 @@ namespace JDT.Calidus.Common.Rules
         }
 
         /// <summary>
-        /// Gets the list of rules
+        /// Gets the list of statement rules
         /// </summary>
-        /// <returns>The rules</returns>
+        /// <returns>The statement rules</returns>
         public IEnumerable<StatementRuleBase> GetStatementRules()
         {
             List<StatementRuleBase> result = new List<StatementRuleBase>();
@@ -116,6 +118,49 @@ namespace JDT.Calidus.Common.Rules
                     {
                         if (ruleInstance == null)
                             throw new CalidusException(String.Format(exMsg, aType.Name), ex);    
+                    }
+
+                    if (ruleInstance == null)
+                        throw new CalidusException(String.Format(exMsg, aType.Name));
+
+                    result.Add(ruleInstance);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the list of line rules
+        /// </summary>
+        /// <returns>The list of line rules</returns>
+        public IEnumerable<LineRuleBase> GetLineRules()
+        {
+            List<LineRuleBase> result = new List<LineRuleBase>();
+
+            foreach (Type aType in _toParse.GetTypes())
+            {
+                LineRuleBase ruleInstance = null;
+
+                //make sure to ignore the interface itself
+                if (typeof(TRuleType).IsAssignableFrom(aType))
+                {
+                    try
+                    {
+                        //not in default, try for a no-args constructor
+                        if (aType.GetConstructor(new Type[] { }) != null)
+                            ruleInstance = (LineRuleBase)Activator.CreateInstance(aType);
+                        //try the factory
+                        else
+                        {
+                            IRuleConfiguration config = GetConfigurationFactory().Get(aType);
+                            ruleInstance = (LineRuleBase) Activator.CreateInstance(aType, config.ArgumentArray);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ruleInstance == null)
+                            throw new CalidusException(String.Format(exMsg, aType.Name), ex);
                     }
 
                     if (ruleInstance == null)

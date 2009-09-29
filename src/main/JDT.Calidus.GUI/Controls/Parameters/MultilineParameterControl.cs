@@ -16,12 +16,12 @@ namespace JDT.Calidus.GUI.Controls.Parameters
             InitializeComponent();
         }
 
-        public override void SetValue(String value)
+        public override void SetValue(Object value)
         {
-            txtValue.Text = value.Replace("\n", "\r\n");
+            txtValue.Text = value.ToString().Replace("\n", "\r\n");
         }
 
-        public override string GetValue()
+        public override Object GetValue()
         {
             return txtValue.Text;
         }

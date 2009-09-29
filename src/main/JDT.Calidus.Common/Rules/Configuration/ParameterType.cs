@@ -17,6 +17,10 @@ namespace JDT.Calidus.Common.Rules.Configuration
         /// <summary>
         /// A string consisting of multiple lines
         /// </summary>
-        MultilineString
+        MultilineString,
+        /// <summary>
+        /// A boolean value
+        /// </summary>
+        Boolean
     }
 }
