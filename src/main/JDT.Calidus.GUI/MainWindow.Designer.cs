@@ -37,13 +37,17 @@
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
             this.tvRules = new System.Windows.Forms.TreeView();
-            this.lstViolations = new System.Windows.Forms.ListBox();
             this.pnlControl = new System.Windows.Forms.Panel();
             this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
             this.lblSourceDir = new System.Windows.Forms.Label();
             this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.cmdRun = new System.Windows.Forms.Button();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
+            this.lvViolations = new System.Windows.Forms.ListView();
+            this.headerRule = new System.Windows.Forms.ColumnHeader();
+            this.headerFile = new System.Windows.Forms.ColumnHeader();
+            this.headerLine = new System.Windows.Forms.ColumnHeader();
+            this.headerColumn = new System.Windows.Forms.ColumnHeader();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -140,7 +144,7 @@
             // 
             // splitRulesViolations.Panel2
             // 
-            this.splitRulesViolations.Panel2.Controls.Add(this.lstViolations);
+            this.splitRulesViolations.Panel2.Controls.Add(this.lvViolations);
             this.splitRulesViolations.Size = new System.Drawing.Size(486, 303);
             this.splitRulesViolations.SplitterDistance = 151;
             this.splitRulesViolations.TabIndex = 1;
@@ -154,16 +158,6 @@
             this.tvRules.Size = new System.Drawing.Size(486, 151);
             this.tvRules.TabIndex = 0;
             this.tvRules.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvRules_AfterCheck);
-            // 
-            // lstViolations
-            // 
-            this.lstViolations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstViolations.FormattingEnabled = true;
-            this.lstViolations.Location = new System.Drawing.Point(0, 0);
-            this.lstViolations.Name = "lstViolations";
-            this.lstViolations.Size = new System.Drawing.Size(486, 147);
-            this.lstViolations.TabIndex = 0;
-            this.lstViolations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstViolations_MouseDoubleClick);
             // 
             // pnlControl
             // 
@@ -227,6 +221,43 @@
             this.stripStatus.TabIndex = 2;
             this.stripStatus.Text = "statusStrip1";
             // 
+            // lvViolations
+            // 
+            this.lvViolations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.headerRule,
+            this.headerFile,
+            this.headerLine,
+            this.headerColumn});
+            this.lvViolations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvViolations.Location = new System.Drawing.Point(0, 0);
+            this.lvViolations.MultiSelect = false;
+            this.lvViolations.Name = "lvViolations";
+            this.lvViolations.Size = new System.Drawing.Size(486, 148);
+            this.lvViolations.TabIndex = 0;
+            this.lvViolations.UseCompatibleStateImageBehavior = false;
+            this.lvViolations.View = System.Windows.Forms.View.Details;
+            this.lvViolations.DoubleClick += new System.EventHandler(this.lvViolations_DoubleClick);
+            // 
+            // headerRule
+            // 
+            this.headerRule.Text = "Rule";
+            this.headerRule.Width = 150;
+            // 
+            // headerFile
+            // 
+            this.headerFile.Text = "File";
+            this.headerFile.Width = 253;
+            // 
+            // headerLine
+            // 
+            this.headerLine.Text = "Line";
+            this.headerLine.Width = 32;
+            // 
+            // headerColumn
+            // 
+            this.headerColumn.Text = "Column";
+            this.headerColumn.Width = 47;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,11 +296,15 @@
         private System.Windows.Forms.SplitContainer splitRulesViolations;
         private System.Windows.Forms.ProgressBar prgProgress;
         private System.Windows.Forms.Button cmdRun;
-        private System.Windows.Forms.ListBox lstViolations;
         private System.Windows.Forms.Label lblSourceDir;
         private System.Windows.Forms.LinkLabel lnkSourceDirectory;
         private System.Windows.Forms.TreeView tvRules;
         private System.Windows.Forms.ToolStripMenuItem rulesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
+        private System.Windows.Forms.ListView lvViolations;
+        private System.Windows.Forms.ColumnHeader headerRule;
+        private System.Windows.Forms.ColumnHeader headerFile;
+        private System.Windows.Forms.ColumnHeader headerLine;
+        private System.Windows.Forms.ColumnHeader headerColumn;
     }
 }
