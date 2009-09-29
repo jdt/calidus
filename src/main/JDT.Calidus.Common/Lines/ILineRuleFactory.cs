@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules.Lines;
 
-namespace JDT.Calidus.Common.Blocks
+namespace JDT.Calidus.Common.Lines
 {
     /// <summary>
-    /// This interface is implemented by block rule factories
+    /// This interface is implemented by line rule factories
     /// </summary>
-    public interface IBlockRuleFactory
+    public interface ILineRuleFactory
     {
         /// <summary>
-        /// Gets the list of block rules
+        /// Gets the list of line rules
         /// </summary>
         /// <returns>The rules</returns>
-        IEnumerable<BlockRuleBase> GetBlockRules();
+        IEnumerable<LineRuleBase> GetLineRules();
         /// <summary>
-        /// Gets the configuration factory that provides configuration information for the block rules in this factory
+        /// Gets the configuration factory that provides configuration information for the line rules in this factory
         /// </summary>
         /// <returns></returns>
         IRuleConfigurationFactory GetConfigurationFactory();

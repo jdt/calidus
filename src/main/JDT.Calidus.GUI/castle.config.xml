@@ -3,6 +3,7 @@
   <components>
     <component id="IStatementFactoryProvider" type="JDT.Calidus.Providers.StatementFactoryProviders.AssemblyBasedStatementFactoryProvider, JDT.Calidus.Providers" />
     <component id="IBlockFactoryProvider" type="JDT.Calidus.Providers.BlockFactoryProviders.AssemblyBasedBlockFactoryProvider, JDT.Calidus.Providers" />
+    <component id="ILineFactoryProvider" type="JDT.Calidus.Providers.LineFactoryProviders.AssemblyBasedLineFactoryProvider, JDT.Calidus.Providers" />
     
     <component id="IWhiteSpaceTokenParser" type="JDT.Calidus.Parsers.Tokens.WhiteSpaceTokenParser, JDT.Calidus.Parsers" />
     <component id="IGenericsTokenParser" type="JDT.Calidus.Parsers.Tokens.GenericsTokenParser, JDT.Calidus.Parsers" />
@@ -12,5 +13,6 @@
 
     <component id="IStatementRuleFactoryProvider" type="JDT.Calidus.Providers.StatementRuleFactoryProviders.AssemblyBasedStatementRuleFactoryProvider, JDT.Calidus.Providers" />
     <component id="IBlockRuleFactoryProvider" type="JDT.Calidus.Providers.BlockRuleFactoryProviders.AssemblyBasedBlockRuleFactoryProvider, JDT.Calidus.Providers" />
+    <component id="ILineRuleFactoryProvider" type="JDT.Calidus.Providers.LineRuleFactoryProviders.AssemblyBasedLineRuleFactoryProvider, JDT.Calidus.Providers" />
   </components>
 </castle>

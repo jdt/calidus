@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
+using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 
@@ -20,26 +22,32 @@ namespace JDT.Calidus.Rules
     {
         private IStatementRuleFactoryProvider _statementRuleProvider;
         private IBlockRuleFactoryProvider _blockRuleProvider;
+        private ILineRuleFactoryProvider _lineRuleProvider;
 
         private IDictionary<StatementRuleBase, IRuleConfigurationFactory> _statementRules;
         private IDictionary<BlockRuleBase, IRuleConfigurationFactory> _blockRules;
+        private IDictionary<LineRuleBase, IRuleConfigurationFactory> _lineRules;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="statementRuleProvider">The statement rule provider to use</param>
         /// <param name="blockRuleProvider">The block rule provider to use</param>
-        public CalidusRuleProvider(IStatementRuleFactoryProvider statementRuleProvider, IBlockRuleFactoryProvider blockRuleProvider)
+        public CalidusRuleProvider(IStatementRuleFactoryProvider statementRuleProvider, 
+            IBlockRuleFactoryProvider blockRuleProvider,
+            ILineRuleFactoryProvider lineRuleProvider
+            )
         {
             _statementRuleProvider = statementRuleProvider;
             _blockRuleProvider = blockRuleProvider;
+            _lineRuleProvider = lineRuleProvider;
         }
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         public CalidusRuleProvider()
-            : this(ObjectFactory.Get<IStatementRuleFactoryProvider>(), ObjectFactory.Get<IBlockRuleFactoryProvider>())
+            : this(ObjectFactory.Get<IStatementRuleFactoryProvider>(), ObjectFactory.Get<IBlockRuleFactoryProvider>(), ObjectFactory.Get<ILineRuleFactoryProvider>())
         {
         }
 
@@ -55,6 +63,9 @@ namespace JDT.Calidus.Rules
                 rules.Add(aRule);
 
             foreach (BlockRuleBase aRule in GetBlockRules())
+                rules.Add(aRule);
+
+            foreach (LineRuleBase aRule in GetLineRules())
                 rules.Add(aRule);
 
             return rules;
@@ -107,6 +118,29 @@ namespace JDT.Calidus.Rules
         }
 
         /// <summary>
+        /// Gets a list of all line rules
+        /// </summary>
+        /// <returns>The rules</returns>
+        public IEnumerable<LineRuleBase> GetLineRules()
+        {
+            if (_lineRules == null)
+            {
+                _lineRules = new Dictionary<LineRuleBase, IRuleConfigurationFactory>();
+
+                foreach (ILineRuleFactory aFactory in _lineRuleProvider.GetLineRuleFactories())
+                {
+                    IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
+                    foreach (LineRuleBase aLineRule in aFactory.GetLineRules())
+                    {
+                        _lineRules.Add(aLineRule, configFactory);
+                    }
+                }
+            }
+
+            return _lineRules.Keys.ToList();
+        }
+
+        /// <summary>
         /// Gets the configuration factory for the specified rule
         /// </summary>
         /// <param name="type">The rule</param>
@@ -123,6 +157,12 @@ namespace JDT.Calidus.Rules
             {
                 if (aRule.GetType().Equals(type))
                     return _blockRules[aRule];
+            }
+
+            foreach(LineRuleBase aRule in _lineRules.Keys)
+            {
+                if (aRule.GetType().Equals(type))
+                    return _lineRules[aRule];
             }
 
             throw new CalidusException("Cannot find an appropriate IRuleConfigurationFactory for the supplied rule type");
