@@ -8,6 +8,7 @@ using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Statements.Common;
+using JDT.Calidus.Statements.PreProcessor;
 
 namespace JDT.Calidus.Rules.Blocks.Common
 {
@@ -26,11 +27,6 @@ namespace JDT.Calidus.Rules.Blocks.Common
             : base(RuleCategories.Documentation)
         {
             _content = headerContent;
-            //comments are always parsed with newline,
-            //make sure that rule appends a newline because it is not
-            //explicitly required
-            if (_content.EndsWith("\n") == false)
-                _content += "\n";
         }
 
         /// <summary>
@@ -51,39 +47,63 @@ namespace JDT.Calidus.Rules.Blocks.Common
         public override bool IsValidFor(BlockBase block)
         {
             IList<LineCommentStatement> comments = new List<LineCommentStatement>();
+
+            String before = "";
+            String after = "";
+
+            int i = 0;
             
-            foreach(StatementBase aStatement in block.Statements)
+            //if the first token is a region start, include it
+            if(i < block.Statements.Count()
+                && block.Statements.ElementAt(i) is RegionStartStatement
+                )
             {
-                if (aStatement is LineCommentStatement)
-                    comments.Add((LineCommentStatement)aStatement);
-                else
-                    break;
+                before = block.Statements.ElementAt(i).Source;
+                i++;
             }
 
-            String content = "";
+            while(i < block.Statements.Count()
+                && block.Statements.ElementAt(i) is LineCommentStatement)
+            {
+                comments.Add((LineCommentStatement)block.Statements.ElementAt(i));
+                i++;
+            }
+
+            //if the first token was a region start, add everything
+            //until a region end occurs
+            while(before.Equals(String.Empty) == false
+                && i < block.Statements.Count()
+                && !(block.Statements.ElementAt(i) is RegionEndStatement))
+            {
+                after += block.Statements.ElementAt(i).Source;
+                i++;
+            }
+
+            //region end: add this as well
+            if (i < block.Statements.Count() && block.Statements.ElementAt(i) is RegionEndStatement)
+                after += block.Statements.ElementAt(i).Source;
+
+            String content = before;
             foreach (LineCommentStatement aStatement in comments)
             {
-                content += aStatement.CommentText;
+                content += aStatement.Source;
             }
+            content += after;
 
-            bool isEqual = content.Equals(_content);
-            //flexible check: if no match, trim first leading space
-            //from the line comment and check again
-            if(!isEqual)
+
+            //comments are always parsed with newline attached,
+            //make sure that rule appends a newline because it is not
+            //explicitly required in the configuration setting
+            //
+            //ignore this if the comment is embedded in a region, a separate
+            //newline is used after the region and not included
+            if(after.Equals(String.Empty))
             {
-                String trimmedContent = "";
-                foreach (LineCommentStatement aStatement in comments)
-                {
-                    if (aStatement.CommentText.StartsWith(" "))
-                        trimmedContent += aStatement.CommentText.Substring(1);
-                    else
-                        trimmedContent += aStatement.CommentText;
-                }
-
-                isEqual = trimmedContent.Equals(_content);
+                if (_content.EndsWith("\n") == false)
+                    _content += "\n";    
             }
 
-            return isEqual;
+            return  content.Equals(_content);
         }
     }
 }

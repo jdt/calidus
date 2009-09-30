@@ -17,14 +17,14 @@ namespace JDT.Calidus.Rules.BlocksTest.Common
         public void ValidatesShouldReturnTrueForFileBlock()
         {
             StringBuilder header = new StringBuilder();
-            header.Append("A file header\n");
-            header.Append("Containing information\n");
-            header.Append("And copyrights");
-
+            header.Append("// A file header\n");
+            header.Append("// Containing information\n");
+            header.Append("// And copyrights");
+            
             IList<StatementBase> statements = new List<StatementBase>();
-            statements.Add(StatementCreator.CreateLineCommentStatement("A file header\n"));
-            statements.Add(StatementCreator.CreateLineCommentStatement("Containing information\n"));
-            statements.Add(StatementCreator.CreateLineCommentStatement("And copyrights\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("// A file header\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("// Containing information\n"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("// And copyrights\n"));
 
             FileBlock block = new FileBlock(statements);
 
@@ -33,17 +33,17 @@ namespace JDT.Calidus.Rules.BlocksTest.Common
         }
 
         [Test]
-        public void RuleShouldIgnoreOneLeadingSpaceFromTheCommentIfNoMatch()
+        public void RuleShouldAllowHeaderToBeEncasedInRegion()
         {
             StringBuilder header = new StringBuilder();
-            header.Append("A file header\n");
-            header.Append("Containing information\n");
-            header.Append("And copyrights");
+            header.Append("#region Header");
+            header.Append("\n// Content\n");
+            header.Append("#endregion");
 
             IList<StatementBase> statements = new List<StatementBase>();
-            statements.Add(StatementCreator.CreateLineCommentStatement(" A file header\n"));
-            statements.Add(StatementCreator.CreateLineCommentStatement(" Containing information\n"));
-            statements.Add(StatementCreator.CreateLineCommentStatement(" And copyrights\n"));
+            statements.Add(StatementCreator.CreateRegionStartStatement("#region Header"));
+            statements.Add(StatementCreator.CreateLineCommentStatement("\n// Content\n"));
+            statements.Add(StatementCreator.CreateRegionEndStatement("#endregion"));
 
             FileBlock block = new FileBlock(statements);
 

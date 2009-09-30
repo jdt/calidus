@@ -16,9 +16,9 @@ namespace JDT.Calidus.StatementsTest.Common
         {
             String commentText = "a comment";
 
-            LineCommentStatement comment = StatementCreator.CreateLineCommentStatement(commentText);
+            LineCommentStatement comment = StatementCreator.CreateLineCommentStatement("// " + commentText);
             
-            Assert.AreEqual("a comment", comment.CommentText);
+            Assert.AreEqual(" a comment", comment.CommentText);
         }
     }
 }
