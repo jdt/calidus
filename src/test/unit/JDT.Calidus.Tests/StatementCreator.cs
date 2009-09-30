@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Statements.Declaration;
+using JDT.Calidus.Statements.PreProcessor;
 using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
+using JDT.Calidus.Tokens.PreProcessor;
 
 namespace JDT.Calidus.Tests
 {
@@ -56,8 +59,22 @@ namespace JDT.Calidus.Tests
         public LineCommentStatement CreateLineCommentStatement(String commentText)
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<LineCommentToken>("//" + commentText));
+            input.Add(TokenCreator.Create<LineCommentToken>(commentText));
             return new LineCommentStatement(input);
+        }
+
+        public StatementBase CreateRegionStartStatement(String content)
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<RegionStartToken>(content));
+            return new RegionStartStatement(input);
+        }
+
+        public StatementBase CreateRegionEndStatement(String content)
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<RegionEndToken>(content));
+            return new RegionEndStatement(input);
         }
     }
 }
