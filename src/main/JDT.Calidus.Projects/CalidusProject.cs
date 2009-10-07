@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Projects.Providers;
 
 namespace JDT.Calidus.Projects
 {
@@ -28,37 +29,59 @@ namespace JDT.Calidus.Projects
     /// </summary>
     public class CalidusProject
     {
+        private ISourceFileProvider _provider;
+
+        #region Static methods
+        
+            /// <summary>
+            /// Creates a new calidus project
+            /// </summary>
+            /// <param name="targetDir">The directory to use</param>
+            /// <returns>A Calidus project for the directory</returns>
+            public static CalidusProject Create(String targetDir)
+            {
+                return new CalidusProject(Path.GetFullPath(targetDir).Substring(Path.GetDirectoryName(targetDir).Length + 1),
+                                          new FolderBasedSourceFileProvider(Path.GetFullPath(targetDir))
+                                          );
+            }
+
+        #endregion
+
         /// <summary>
-        /// Create a new instance of this class
+        /// Creates a new instance of this class
         /// </summary>
-        /// <param name="sourceLocation"></param>
-        /// <param name="projectLocation"></param>
-        public CalidusProject(String sourceLocation, String projectLocation)
+        /// <param name="name">The project name</param>
+        /// <param name="provider">The source file provider</param>
+        public CalidusProject(String name, ISourceFileProvider provider)
         {
-            SourceLocation = sourceLocation;
-            ProjectLocation = projectLocation;
+            _provider = provider;
+
+            Name = name;
+
             IgnoreAssemblyFiles = true;
             IgnoreDesignerFiles = true;
             IgnoreProgramFiles = true;
+
+            IgnoredFiles = new List<String>();
         }
 
         /// <summary>
         /// Get the source location
         /// </summary>
-        public String SourceLocation { get; private set; }
-        /// <summary>
-        /// Get the project file location
-        /// </summary>
-        public String ProjectLocation { get; private set; }
+        public String SourceLocation
+        {
+            get
+            {
+                return _provider.GetLocation();
+            }
+        }
         /// <summary>
         /// Get the project file name
         /// </summary>
         public String Name
         {
-            get
-            {
-                return Path.GetFileName(ProjectLocation);
-            }
+            get;
+            private set;
         }
         /// <summary>
         /// Get or Set if assembly files should be ignored
@@ -72,7 +95,10 @@ namespace JDT.Calidus.Projects
         /// Get or Set if the Program.cs file should be ignored
         /// </summary>
         public bool IgnoreProgramFiles { get; set; }
-
+        /// <summary>
+        /// Get the ignored source files
+        /// </summary>
+        public IList<String> IgnoredFiles { get; private set; }
         /// <summary>
         /// Gets the list of source files in the project that should be validated
         /// </summary>
@@ -84,9 +110,10 @@ namespace JDT.Calidus.Projects
             IList<String> files = new List<String>(GetAllSourceFiles());
             foreach(String aFile in files)
             {
-                if(!(IgnoreAssemblyFiles && aFile.EndsWith("\\AssemblyInfo.cs"))
+                if(!(IgnoreAssemblyFiles && (aFile.EndsWith("\\AssemblyInfo.cs") || aFile.Equals("AssemblyInfo.cs")))
                     && !(IgnoreDesignerFiles && aFile.EndsWith(".Designer.cs"))
-                    && !(IgnoreProgramFiles && aFile.EndsWith("\\Program.cs"))
+                    && !(IgnoreProgramFiles && (aFile.EndsWith("\\Program.cs") || aFile.Equals("Program.cs")))
+                    && !(IgnoredFiles.Contains(aFile) || IgnoredFiles.Count(p => aFile.EndsWith(p)) > 0)
                     )
                 {
                     res.Add(aFile);
@@ -102,7 +129,7 @@ namespace JDT.Calidus.Projects
         /// <returns></returns>
         public IEnumerable<String> GetAllSourceFiles()
         {
-            return Directory.GetFiles(SourceLocation, "*.cs", SearchOption.AllDirectories);
+            return _provider.GetFiles();
         }
     }
 }
