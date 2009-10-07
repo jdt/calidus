@@ -44,8 +44,6 @@ namespace JDT.Calidus.GUI
         {
             InitializeComponent();
 
-            Current.Project = new CalidusProject(null, null);
-
             DisplayProjectDetails();
             DisplayProjectRules();
 
@@ -100,7 +98,7 @@ namespace JDT.Calidus.GUI
                 String selectedDir = browseDirectory.SelectedPath;
                 if (selectedDir.Equals(String.Empty) == false)
                 {
-                    Current.Project = new CalidusProject(selectedDir, null);
+                    Current.Project = CalidusProject.Create(selectedDir);
                     DisplayProjectDetails();
                 }
             }
@@ -159,19 +157,13 @@ namespace JDT.Calidus.GUI
             private void DisplayProjectDetails()
             {
                 String projectName = UNSAVED_PROJECT;
-                if (Current.Project.ProjectLocation != null)
-                    projectName = Current.Project.Name;
+                String projectTitle = NOT_SET;
 
-                Text = String.Format(TITLE, projectName);
-
-                String projectLocation = NOT_SET;
-                if (Current.Project.SourceLocation != null)
-                    projectLocation = Current.Project.SourceLocation;
-
-                lnkSourceDirectory.Text = projectLocation;
-
-                if (Current.Project.SourceLocation != null)
+                if (Current.Project != null)
                 {
+                    projectName = Current.Project.Name;
+                    projectTitle = Current.Project.SourceLocation;
+
                     FileTree tree = new FileTree();
                     foreach (String aFile in Current.Project.GetAllSourceFiles())
                     {
@@ -181,12 +173,16 @@ namespace JDT.Calidus.GUI
                     TreeNode root = new TreeNode(tree.Root.GetItemName());
                     FillNode(tree, tree.Root, root);
                     tvFiles.Nodes.Add(root);
+
+                    cmdRun.Enabled = true;
+                }
+                else
+                {
+                    cmdRun.Enabled = false;
                 }
 
-                if (Current.Project.SourceLocation != null)
-                    cmdRun.Enabled = true;
-                else
-                    cmdRun.Enabled = false;
+                lnkSourceDirectory.Text = projectTitle;
+                Text = String.Format(TITLE, projectName);
             }
 
             private void DisplayProjectRules()
