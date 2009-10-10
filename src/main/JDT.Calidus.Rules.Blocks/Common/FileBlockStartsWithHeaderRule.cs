@@ -34,7 +34,7 @@ namespace JDT.Calidus.Rules.Blocks.Common
     /// </summary>
     public class FileBlockStartsWithHeaderRule : BlockRuleBase
     {
-        private String _content;
+        private String _desiredHeaderContent;
 
         /// <summary>
         /// Create a new instance of this class
@@ -43,7 +43,7 @@ namespace JDT.Calidus.Rules.Blocks.Common
         public FileBlockStartsWithHeaderRule(String headerContent)
             : base(RuleCategories.Documentation)
         {
-            _content = headerContent;
+            _desiredHeaderContent = headerContent;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace JDT.Calidus.Rules.Blocks.Common
             }
             content += after;
 
-
+            String compareWith = _desiredHeaderContent;
             //comments are always parsed with newline attached,
             //make sure that rule appends a newline because it is not
             //explicitly required in the configuration setting
@@ -116,11 +116,11 @@ namespace JDT.Calidus.Rules.Blocks.Common
             //newline is used after the region and not included
             if(after.Equals(String.Empty))
             {
-                if (_content.EndsWith("\n") == false)
-                    _content += "\n";    
+                if (compareWith.EndsWith("\n") == false)
+                    compareWith += "\n";    
             }
 
-            bool res = content.Equals(_content);
+            bool res = content.Equals(compareWith);
             return res;
         }
     }
