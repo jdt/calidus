@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Projects.Providers;
 
 namespace JDT.Calidus.Projects
@@ -27,7 +28,7 @@ namespace JDT.Calidus.Projects
     /// <summary>
     /// This class represents a Calidus project
     /// </summary>
-    public class CalidusProject
+    public class CalidusProject : ICalidusProject
     {
         private ISourceFileProvider _provider;
 
@@ -81,7 +82,7 @@ namespace JDT.Calidus.Projects
         public String Name
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// Get or Set if assembly files should be ignored
