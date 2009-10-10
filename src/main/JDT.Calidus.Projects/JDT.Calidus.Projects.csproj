@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalidusProject.cs" />
+    <Compile Include="CalidusProjectManager.cs" />
     <Compile Include="Events\FileCompletedEventArgs.cs" />
     <Compile Include="Events\RuleRunnerEventArgs.cs" />
     <Compile Include="Files\FileTree.cs" />
