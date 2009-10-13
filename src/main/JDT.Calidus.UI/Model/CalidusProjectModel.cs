@@ -116,7 +116,10 @@ namespace JDT.Calidus.UI.Model
             /// </summary>
             public IList<String> IgnoredFiles
             {
-                get { throw new NotImplementedException(); }
+                get
+                {
+                    return _project.IgnoredFiles;
+                }
             }
 
             /// <summary>
