@@ -32,19 +32,19 @@ namespace JDT.Calidus.Common.Projects
         /// <summary>
         /// Get the source location
         /// </summary>
-        String SourceLocation { get; }
+        String SourceLocation { get; set; }
         /// <summary>
         /// Get or Set if assembly files should be ignored
         /// </summary>
-        bool IgnoreAssemblyFiles { get; }
+        bool IgnoreAssemblyFiles { get; set; }
         /// <summary>
         /// Get or Set if the designer files should be ignored
         /// </summary>
-        bool IgnoreDesignerFiles { get; }
+        bool IgnoreDesignerFiles { get; set; }
         /// <summary>
         /// Get or Set if the Program.cs file should be ignored
         /// </summary>
-        bool IgnoreProgramFiles { get; }
+        bool IgnoreProgramFiles { get; set; }
         /// <summary>
         /// Get the ignored source files
         /// </summary>

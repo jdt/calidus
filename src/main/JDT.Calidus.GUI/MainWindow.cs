@@ -33,23 +33,33 @@ namespace JDT.Calidus.GUI
 {
     public partial class MainWindow : Form
     {
+        private static String WINDOW_TITLE = "Calidus GUI Runner - {0}";
+        private static String HAS_CHANGES = "*";
+
+        private CalidusProjectManager _projectManager;
+
         private RuleRunner _runner;
-
         private CalidusProjectModel _project;
-
         private RuleViolationList _violationList;
+
+        private bool _hasChanges;
 
         public MainWindow()
         {
             InitializeComponent();
-            
+
+            _projectManager = new CalidusProjectManager();
+
             _runner = new RuleRunner();
             _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
             _runner.Completed += new RuleRunner.RuleRunnerCompletedHandler(_runner_Completed);
 
             _project = new CalidusProjectModel(CalidusProject.Create(Application.StartupPath));
+            _project.Changed += new EventHandler<EventArgs>(_project_Changed);
 
             _violationList = new RuleViolationList();
+
+            HasChanges = true;
 
             ViolationListController violationListController = new ViolationListController(violationListView, _project, _violationList);
             CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(checkableRuleTreeView, new CalidusRuleProvider());
@@ -58,6 +68,49 @@ namespace JDT.Calidus.GUI
             RuleRunnerController ruleRunnerController = new RuleRunnerController(ruleRunnerView, _runner, _project);
             StatusController statusController = new StatusController(statusView, _violationList);
         }
+
+        private void _project_Changed(object sender, EventArgs e)
+        {
+            HasChanges = true;
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (HasChanges)
+            {
+                DialogResult res = MessageBox.Show(this, "The project has unsaved changes. Save before close?", "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (res == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (res == DialogResult.Yes)
+                    SaveProject();
+            }
+        }
+
+        #region Properties
+
+            private bool HasChanges
+            {
+                get
+                {
+                    return _hasChanges;
+                }
+                set
+                {
+                    _hasChanges = value;
+                    
+                    String name;
+                    if(HasChanges)
+                        name = String.Format(_project.Name + "{0}", HAS_CHANGES);
+                    else
+                        name = String.Format(_project.Name + "{0}", String.Empty);
+
+                    Text = String.Format(WINDOW_TITLE, name);
+                }
+            }
+            
+            private String ProjectLocation { get; set; }
+
+        #endregion
 
         #region Runner events
 
@@ -90,9 +143,31 @@ namespace JDT.Calidus.GUI
                 config.ShowDialog();
             }
 
+            private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                SaveProject();               
+                //re-initialize project
+                _project.SetProject(_projectManager.ReadFrom(ProjectLocation));
+                
+                HasChanges = false;
+            }
+
             private void exitToolStripMenuItem_Click(object sender, EventArgs e)
             {
                 Application.Exit();
+            }
+
+        #endregion
+
+        #region Methods
+
+            private void SaveProject()
+            {
+                if (ProjectLocation == null && saveFileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    ProjectLocation = saveFileDialog.FileName;
+                }
+                _projectManager.WriteTo(_project, ProjectLocation);
             }
 
         #endregion
