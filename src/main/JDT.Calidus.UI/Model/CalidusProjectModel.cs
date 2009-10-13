@@ -203,7 +203,17 @@ namespace JDT.Calidus.UI.Model
 
         public void SetProject(ICalidusProject project)
         {
+            ICalidusProject originalProject = _project;
             _project = project;
+
+            if (originalProject.IgnoreAssemblyFiles != project.IgnoreAssemblyFiles)
+                OnIgnoreAssemblyFilesChanged(new CheckedEventArgs(project.IgnoreAssemblyFiles));
+            if (originalProject.IgnoreDesignerFiles != project.IgnoreDesignerFiles)
+                OnIgnoreDesignerFilesChanged(new CheckedEventArgs(project.IgnoreDesignerFiles));
+            if (originalProject.IgnoreProgramFiles != project.IgnoreProgramFiles)
+                OnIgnoreProgramFilesChanged(new CheckedEventArgs(project.IgnoreProgramFiles));
+            if (originalProject.SourceLocation.Equals(project.SourceLocation) == false)
+                OnSourceLocationChanged(new SourceLocationEventArgs(project.SourceLocation));
         }
     }
 }
