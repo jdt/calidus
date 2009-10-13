@@ -20,37 +20,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules;
-using JDT.Calidus.UI.Commands;
-using JDT.Calidus.UI.Events;
 
-namespace JDT.Calidus.UI.Views
+namespace JDT.Calidus.UI.Commands
 {
     /// <summary>
-    /// This interface is implemented by views of violation lists
+    /// This class represents a violation ignore command
     /// </summary>
-    public interface IViolationListView
+    public class RuleViolationIgnoreCommandEventArgs : EventArgs
     {
         /// <summary>
-        /// Notifies that the view requested rule violation details
+        /// Create a new instance of this class
         /// </summary>
-        event EventHandler<RuleViolationEventArgs> RuleViolationDetails;
+        /// <param name="violation">The violation</param>
+        /// <param name="ignoreType">The ignore type</param>
+        public RuleViolationIgnoreCommandEventArgs(RuleViolation violation, RuleViolationIgnoreType ignoreType)
+        {
+            Violation = violation;
+            IgnoreType = ignoreType;
+        }
+
         /// <summary>
-        /// Notifies that the view requested that a violation be ignored
+        /// Get the violation
         /// </summary>
-        event EventHandler<RuleViolationIgnoreCommandEventArgs> IgnoreViolation;
+        public RuleViolation Violation { get; private set; }
         /// <summary>
-        /// Adds a violation to the view
+        /// Get the rule violation ignore type
         /// </summary>
-        /// <param name="aViolation">The violation to add</param>
-        void AddViolation(RuleViolation aViolation);
-        /// <summary>
-        /// Removes a violation from the view
-        /// </summary>
-        /// <param name="aViolation">The violation to remove</param>
-        void RemoveViolation(RuleViolation aViolation);
-        /// <summary>
-        /// Clears all violations from the view
-        /// </summary>
-        void ClearViolations();
+        public RuleViolationIgnoreType IgnoreType { get; private set; }
     }
 }

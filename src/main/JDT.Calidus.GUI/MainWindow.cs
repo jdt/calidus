@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Projects;
 using JDT.Calidus.Projects.Events;
 using JDT.Calidus.Rules;
@@ -36,6 +37,8 @@ namespace JDT.Calidus.GUI
 
         private CalidusProjectModel _project;
 
+        private RuleViolationList _violationList;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,12 +49,14 @@ namespace JDT.Calidus.GUI
 
             _project = new CalidusProjectModel(CalidusProject.Create(Application.StartupPath));
 
-            ViolationListController violationListController = new ViolationListController(violationListView, _runner);
+            _violationList = new RuleViolationList();
+
+            ViolationListController violationListController = new ViolationListController(violationListView, _project, _violationList);
             CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(checkableRuleTreeView, new CalidusRuleProvider());
             FileTreeController fileListController = new FileTreeController(fileListView, _project);
             SourceLocationController sourceLocationController = new SourceLocationController(sourceLocationView,_project);
             RuleRunnerController ruleRunnerController = new RuleRunnerController(ruleRunnerView, _runner, _project);
-            StatusController statusController = new StatusController(statusView, _runner);
+            StatusController statusController = new StatusController(statusView, _violationList);
         }
 
         #region Runner events
@@ -59,11 +64,14 @@ namespace JDT.Calidus.GUI
             private void _runner_Started(object source, EventArgs e)
             {
                 Cursor = Cursors.WaitCursor;
+                _violationList.Clear();
             }
 
             private void _runner_Completed(object source, RuleRunnerEventArgs e)
             {
                 Cursor = Cursors.Default;
+                foreach (RuleViolation aViolation in e.Violations)
+                    _violationList.Add(aViolation);
             }
 
         #endregion

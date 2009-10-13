@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lvViolations = new System.Windows.Forms.ListView();
             this.headerRule = new System.Windows.Forms.ColumnHeader();
             this.headerFile = new System.Windows.Forms.ColumnHeader();
             this.headerLine = new System.Windows.Forms.ColumnHeader();
             this.headerColumn = new System.Windows.Forms.ColumnHeader();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ignoreFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvViolations
@@ -51,6 +55,7 @@
             this.lvViolations.UseCompatibleStateImageBehavior = false;
             this.lvViolations.View = System.Windows.Forms.View.Details;
             this.lvViolations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvViolations_MouseDoubleClick);
+            this.lvViolations.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvViolations_MouseClick);
             // 
             // headerRule
             // 
@@ -72,6 +77,20 @@
             this.headerColumn.Text = "Column";
             this.headerColumn.Width = 47;
             // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ignoreFileToolStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(153, 48);
+            // 
+            // ignoreFileToolStripMenuItem
+            // 
+            this.ignoreFileToolStripMenuItem.Name = "ignoreFileToolStripMenuItem";
+            this.ignoreFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ignoreFileToolStripMenuItem.Text = "Ignore File";
+            this.ignoreFileToolStripMenuItem.Click += new System.EventHandler(this.ignoreFileToolStripMenuItem_Click);
+            // 
             // ViolationListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,6 +98,7 @@
             this.Controls.Add(this.lvViolations);
             this.Name = "ViolationListView";
             this.Size = new System.Drawing.Size(493, 150);
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -90,5 +110,7 @@
         private System.Windows.Forms.ColumnHeader headerFile;
         private System.Windows.Forms.ColumnHeader headerLine;
         private System.Windows.Forms.ColumnHeader headerColumn;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ignoreFileToolStripMenuItem;
     }
 }

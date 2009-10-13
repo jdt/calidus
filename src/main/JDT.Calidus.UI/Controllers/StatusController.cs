@@ -21,6 +21,8 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Projects;
 using JDT.Calidus.Projects.Events;
+using JDT.Calidus.UI.Events;
+using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
 
 namespace JDT.Calidus.UI.Controllers
@@ -31,37 +33,32 @@ namespace JDT.Calidus.UI.Controllers
     public class StatusController
     {
         private IStatusView _view;
-        private RuleRunner _runner;
-
-        private int _violationCount;
+        private RuleViolationList _list;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
-        /// <param name="runner">The runner to use</param>
-        public StatusController(IStatusView view, RuleRunner runner)
+        /// <param name="list">The violation list</param>
+        public StatusController(IStatusView view, RuleViolationList list)
         {
             _view = view;
 
-            _runner = runner;
-            _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
-            _runner.FileCompleted += new RuleRunner.RuleRunnerFileCompleted(_runner_FileCompleted);
-
-            _violationCount = 0;
-            _view.DisplayViolationCount(_violationCount);
+            _list = list;
+            _list.ViolationAdded += new EventHandler<RuleViolationEventArgs>(_list_ViolationAdded);
+            _list.ViolationRemoved += new EventHandler<RuleViolationEventArgs>(_list_ViolationRemoved);
+            
+            _view.DisplayViolationCount(_list.Count);
         }
 
-        private void _runner_Started(object source, EventArgs e)
+        private void _list_ViolationRemoved(object sender, RuleViolationEventArgs e)
         {
-            _violationCount = 0;
-            _view.DisplayViolationCount(_violationCount);
+            _view.DisplayViolationCount(_list.Count);
         }
 
-        private void _runner_FileCompleted(object source, FileCompletedEventArgs e)
+        private void _list_ViolationAdded(object sender, RuleViolationEventArgs e)
         {
-            _violationCount += e.Violations.Count();
-            _view.DisplayViolationCount(_violationCount);
+            _view.DisplayViolationCount(_list.Count);
         }
     }
 }

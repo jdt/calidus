@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.UI.Commands;
 using JDT.Calidus.UI.Events;
 using JDT.Calidus.UI.Views;
 
@@ -62,6 +63,18 @@ namespace JDT.Calidus.GUI.Views
 
             lvViolations.Items.Add(theItem);
             _violationMap.Add(theItem, aViolation);
+        }        
+        
+        /// <summary>
+        /// Removes a violation from the view
+        /// </summary>
+        /// <param name="aViolation">The violation to remove</param>
+        public void RemoveViolation(RuleViolation aViolation)
+        {
+            ListViewItem item = _violationMap.First(p => p.Value.Equals(aViolation)).Key;
+
+            lvViolations.Items.Remove(item);
+            _violationMap.Remove(item);
         }
 
         /// <summary>
@@ -83,12 +96,37 @@ namespace JDT.Calidus.GUI.Views
                 RuleViolationDetails(this, e);
         }
 
+        /// <summary>
+        /// Notifies that the view requested that a violation be ignored
+        /// </summary>
+        public event EventHandler<RuleViolationIgnoreCommandEventArgs> IgnoreViolation;
+        private void OnIgnoreViolation(RuleViolationIgnoreCommandEventArgs e)
+        {
+            if (IgnoreViolation != null)
+                IgnoreViolation(this, e);
+        }
+
         #region Events
 
             private void lvViolations_MouseDoubleClick(object sender, MouseEventArgs e)
             {
                 ListViewItem selectedItem = lvViolations.SelectedItems[0];
                 OnRuleViolationDetails(new RuleViolationEventArgs(_violationMap[selectedItem]));
+            }
+
+            private void lvViolations_MouseClick(object sender, MouseEventArgs e)
+            {
+                if(e.Button == MouseButtons.Right)
+                {
+                    contextMenuStrip.Show(lvViolations, e.X, e.Y);
+                }
+            }
+
+            private void ignoreFileToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                ListViewItem selectedItem = lvViolations.SelectedItems[0];
+                OnIgnoreViolation(new RuleViolationIgnoreCommandEventArgs(_violationMap[selectedItem],
+                                                                          RuleViolationIgnoreType.File));
             }
 
         #endregion
