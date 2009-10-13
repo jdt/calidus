@@ -17,28 +17,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.Common.Rules;
+using JDT.Calidus.UI.Events;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This interface is implemented by views that represent a rule tree
+    /// </summary>
+    public interface IRuleTreeView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
-        {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
-        }
+        /// <summary>
+        /// Displays the list of rules in a tree
+        /// </summary>
+        /// <param name="rules">The list of rules</param>
+        void DisplayRules(IEnumerable<IRule> rules);
+        /// <summary>
+        /// Notifies that a rule selection has changed
+        /// </summary>
+        event EventHandler<RuleEventArgs> RuleSelectionChanged;
+        /// <summary>
+        /// Notifies that a rule selection change was requested
+        /// </summary>
+        event EventHandler<RuleChangeCancelEventArgs> BeforeRuleSelectionChanged;
     }
 }

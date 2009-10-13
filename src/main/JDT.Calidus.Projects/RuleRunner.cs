@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Lines;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Lines;
@@ -46,7 +47,7 @@ namespace JDT.Calidus.Projects
         /// Starts the runner
         /// </summary>
         /// <param name="project">The project to run against</param>
-        public void Run(CalidusProject project)
+        public void Run(ICalidusProject project)
         {
             //raise started
             if (Started != null)

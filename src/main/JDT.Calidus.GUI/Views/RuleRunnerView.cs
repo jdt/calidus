@@ -17,53 +17,55 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.Projects.Providers
+namespace JDT.Calidus.GUI.Views
 {
     /// <summary>
-    /// This class is a folder-based source file provider
+    /// This class is a forms-based rule runner view
     /// </summary>
-    public class FolderBasedSourceFileProvider : ISourceFileProvider
+    public partial class RuleRunnerView : UserControl, IRuleRunnerView
     {
-        private String _location;
-
         /// <summary>
-        /// Create a new instance of this class
+        /// Creates a new instance of this class
         /// </summary>
-        /// <param name="location">The source file base location</param>
-        public FolderBasedSourceFileProvider(String location)
+        public RuleRunnerView()
         {
-            _location = location;
+            InitializeComponent();
         }
 
         /// <summary>
-        /// Gets the list of source files
+        /// Notifies that the rule runner was requested to start
         /// </summary>
-        /// <returns>The files</returns>
-        public IEnumerable<String> GetFiles()
+        public event EventHandler<EventArgs> RuleRunnerStart;
+        private void OnRuleRunnerStart()
         {
-            return Directory.GetFiles(_location, "*.cs", SearchOption.AllDirectories);
-        }
-        
-        /// <summary>
-        /// Gets the location of the source files
-        /// </summary>
-        /// <returns>The location</returns>
-        public String GetLocation()
-        {
-            return _location;
+            if (RuleRunnerStart != null)
+                RuleRunnerStart(this, new EventArgs());
         }
 
         /// <summary>
-        /// Sets the location of the source files
+        /// Displays a progress percentage of the current execution
         /// </summary>
-        /// <param name="location">The location</param>
-        public void SetLocation(String location)
+        /// <param name="percentage">The percentage to display</param>
+        public void DisplayProgressPercentage(int percentage)
         {
-            _location = location;
+            prgProgress.Value = percentage;
         }
+
+        #region Events
+
+            private void cmdRun_Click(object sender, EventArgs e)
+            {
+                OnRuleRunnerStart();
+            }
+
+        #endregion
     }
 }

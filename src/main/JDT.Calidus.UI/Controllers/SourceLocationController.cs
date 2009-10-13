@@ -18,30 +18,41 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.UI.Controllers;
 using JDT.Calidus.UI.Events;
 using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Controllers
 {
-    public partial class ProjectConfigurationWindow : Form
+    /// <summary>
+    /// This class is a controller for a source location view
+    /// </summary>
+    public class SourceLocationController
     {
-        public ProjectConfigurationWindow()
+        private ISourceLocationView _view;
+        private CalidusProjectModel _model;
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="view">The view to use</param>
+        /// <param name="model">The model to use</param>
+        public SourceLocationController(ISourceLocationView view, CalidusProjectModel model)
         {
-            InitializeComponent();
+            _view = view;
+            _view.SourceLocationChanged += new EventHandler<SourceLocationEventArgs>(_view_SourceLocationChanged);
+
+            _model = model;
+
+            _view.DisplaySourceLocation(_model.SourceLocation);
         }
 
-        public ProjectConfigurationWindow(CalidusProjectModel model)
+        private void _view_SourceLocationChanged(object sender, SourceLocationEventArgs e)
         {
-            InitializeComponent();
-
-            ProjectConfigurationController controller = new ProjectConfigurationController(projectConfigurationView, model);
+            _model.SourceLocation = e.SourceLocation;
+            _view.DisplaySourceLocation(e.SourceLocation);
         }
     }
 }

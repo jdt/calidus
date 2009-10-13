@@ -18,27 +18,42 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.GUI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class is a forms-based status view
+    /// </summary>
+    public partial class StatusView : StatusStrip, IStatusView
     {
-        private CalidusRuleProvider _provider;
+        private ToolStripStatusLabel _label;
 
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        public StatusView()
         {
             InitializeComponent();
 
-            _provider = new CalidusRuleProvider();
+            _label = new ToolStripStatusLabel();
 
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            Items.Add(_label);
+        }
+
+        /// <summary>
+        /// Displays a count for a number of violations
+        /// </summary>
+        /// <param name="count">The violation count</param>
+        public void DisplayViolationCount(int count)
+        {
+            _label.Text = String.Format("Found {0} violations", count);
+            Refresh();
         }
     }
 }

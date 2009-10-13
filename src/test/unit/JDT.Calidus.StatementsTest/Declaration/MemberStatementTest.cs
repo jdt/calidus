@@ -37,7 +37,7 @@ namespace JDT.Calidus.StatementsTest.Declaration
         [SetUp]
         public override void SetUp()
         {
- 	         base.SetUp();
+            base.SetUp();
             _statement = StatementCreator.CreateMemberStatement("member");
         }
 

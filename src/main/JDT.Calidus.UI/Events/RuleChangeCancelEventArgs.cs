@@ -17,28 +17,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Events
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class represents a rule change cancel event
+    /// </summary>
+    public class RuleChangeCancelEventArgs : EventArgs
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        public RuleChangeCancelEventArgs()
         {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            Cancel = false;
         }
+
+        /// <summary>
+        /// Get or Set if the change should be cancelled
+        /// </summary>
+        public bool Cancel { get; set; }
     }
 }

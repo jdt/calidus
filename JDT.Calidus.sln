@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.Rules.Lines", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.Rules.LinesTest", "src\test\unit\JDT.Calidus.Rules.LinesTest\JDT.Calidus.Rules.LinesTest.csproj", "{A0D5872F-9B63-40EA-A657-275C8972AFC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDT.Calidus.UI", "src\main\JDT.Calidus.UI\JDT.Calidus.UI.csproj", "{7A920350-F908-44B0-89EA-182492C43E25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,10 @@ Global
 		{A0D5872F-9B63-40EA-A657-275C8972AFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D5872F-9B63-40EA-A657-275C8972AFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D5872F-9B63-40EA-A657-275C8972AFC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A920350-F908-44B0-89EA-182492C43E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A920350-F908-44B0-89EA-182492C43E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A920350-F908-44B0-89EA-182492C43E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A920350-F908-44B0-89EA-182492C43E25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -284,5 +290,6 @@ Global
 		{A0D5872F-9B63-40EA-A657-275C8972AFC2} = {BE3703A1-863C-4CD1-A7DB-42CC7D20EAFC}
 		{704B23CB-C721-4188-8520-9588A051ADA6} = {9166C65F-2AD9-4432-89F8-489D52270E6A}
 		{7554BE5A-F473-4C27-AFAC-95D5897F7AB4} = {9A337EE1-5B78-4F48-B60D-EA5275427BCF}
+		{7A920350-F908-44B0-89EA-182492C43E25} = {9A337EE1-5B78-4F48-B60D-EA5275427BCF}
 	EndGlobalSection
 EndGlobal

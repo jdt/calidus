@@ -17,28 +17,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.Common.Rules.Configuration;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Events
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class represents rule configuration parameter events
+    /// </summary>
+    public class RuleConfigurationParameterEventArgs : EventArgs
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="param">The parameter in the event</param>
+        public RuleConfigurationParameterEventArgs(IRuleConfigurationParameter param)
         {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            Parameter = param;
         }
+
+        /// <summary>
+        /// Get or Set the parameter in the event
+        /// </summary>
+        public IRuleConfigurationParameter Parameter { get; private set; }
     }
 }

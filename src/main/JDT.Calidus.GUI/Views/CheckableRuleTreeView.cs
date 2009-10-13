@@ -18,27 +18,39 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.GUI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class is a forms-based checkable rule tree view
+    /// </summary>
+    public partial class CheckableRuleTreeView : RuleTreeView, ICheckableRuleTreeView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        public CheckableRuleTreeView()
         {
             InitializeComponent();
 
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            TreeView.CheckBoxes = true;
+            TreeView.AfterCheck += new TreeViewEventHandler(TreeView_AfterCheck);
         }
+
+        #region Events
+
+            private void TreeView_AfterCheck(object sender, TreeViewEventArgs e)
+            {
+                foreach (TreeNode aNode in e.Node.Nodes)
+                    aNode.Checked = e.Node.Checked;
+            }
+
+        #endregion
     }
 }

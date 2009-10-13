@@ -17,28 +17,26 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Controllers
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class acts as a controller for a checkable rule tree
+    /// </summary>
+    public class CheckableRuleTreeController : RuleTreeController
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="view">The view to use</param>
+        /// <param name="ruleProvider">The rule provider to use</param>
+        public CheckableRuleTreeController(ICheckableRuleTreeView view, CalidusRuleProvider ruleProvider)
+            : base(view, ruleProvider)
         {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
         }
     }
 }

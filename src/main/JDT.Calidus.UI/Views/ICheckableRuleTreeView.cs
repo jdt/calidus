@@ -17,28 +17,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This interface is implemented by rule tree views that allow enable/disabling of rules
+    /// </summary>
+    public interface ICheckableRuleTreeView : IRuleTreeView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
-        {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
-        }
     }
 }

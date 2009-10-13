@@ -19,18 +19,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Projects;
+using JDT.Calidus.Common.Rules;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Events
 {
     /// <summary>
-    /// This class contains application-wide shared objects
+    /// This class represents event arguments for rules
     /// </summary>
-    public static class Current
+    public class RuleEventArgs : EventArgs
     {
         /// <summary>
-        /// Get or Set the current project
+        /// Create a new instance of this class
         /// </summary>
-        public static CalidusProject Project {get;set;}
+        /// <param name="rule">The rule</param>
+        public RuleEventArgs(IRule rule)
+        {
+            SelectedRule = rule;
+        }
+
+        /// <summary>
+        /// Gets the rule of the event
+        /// </summary>
+        public IRule SelectedRule { get; private set; }
     }
 }
