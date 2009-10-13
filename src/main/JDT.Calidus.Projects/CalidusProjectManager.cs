@@ -132,6 +132,7 @@ namespace JDT.Calidus.Projects
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Encoding = Encoding.UTF8;
+            settings.Indent = true;
             XmlWriter writer = XmlTextWriter.Create(file, settings);
             WriteTo(project, writer);
             writer.Flush();

@@ -30,9 +30,9 @@ namespace JDT.Calidus.UI.Model
     /// </summary>
     public class CalidusProjectModel : ICalidusProject
     {
-        private CalidusProject _project;
+        private ICalidusProject _project;
 
-        public CalidusProjectModel(CalidusProject project)
+        public CalidusProjectModel(ICalidusProject project)
         {
             _project = project;
         }
@@ -44,7 +44,7 @@ namespace JDT.Calidus.UI.Model
             /// </summary>
             public string Name
             {
-                get { throw new NotImplementedException(); }
+                get { return _project.Name; }
             }
 
             /// <summary>
@@ -160,31 +160,50 @@ namespace JDT.Calidus.UI.Model
             /// Notifies that the program files ignore property changed
             /// </summary>
             public event EventHandler<CheckedEventArgs> IgnoreProgramFilesChanged;
+            /// <summary>
+            /// Notifies that something in the project changed
+            /// </summary>
+            public event EventHandler<EventArgs> Changed;
 
             private void OnSourceLocationChanged(SourceLocationEventArgs e)
             {
                 if (SourceLocationChanged != null)
                     SourceLocationChanged(this, e);
+                OnChanged();
             }
 
             private void OnIgnoreDesignerFilesChanged(CheckedEventArgs e)
             {
                 if (IgnoreDesignerFilesChanged != null)
                     IgnoreDesignerFilesChanged(this, e);
+                OnChanged();
             }
 
             private void OnIgnoreAssemblyFilesChanged(CheckedEventArgs e)
             {
                 if (IgnoreAssemblyFilesChanged != null)
                     IgnoreAssemblyFilesChanged(this, e);
+                OnChanged();
             }
 
             private void OnIgnoreProgramFilesChanged(CheckedEventArgs e)
             {
                 if (IgnoreProgramFilesChanged != null)
                     IgnoreProgramFilesChanged(this, e);
+                OnChanged();
+            }
+
+            private void OnChanged()
+            {
+                if (Changed != null)
+                    Changed(this, new EventArgs());
             }
 
         #endregion
+
+        public void SetProject(ICalidusProject project)
+        {
+            _project = project;
+        }
     }
 }

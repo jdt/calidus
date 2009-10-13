@@ -43,13 +43,13 @@ namespace JDT.Calidus.UI.Controllers
             _model = model;
             _view = view;
 
-            _view.IgnoreAssemblyFilesChanged += new EventHandler<CheckedEventArgs>(_view_IgnoreAssemblyFilesChanged);
-            _view.IgnoreDesignerFilesChanged += new EventHandler<CheckedEventArgs>(_view_IgnoreDesignerFilesChanged);
-            _view.IgnoreProgramFilesChanged += new EventHandler<CheckedEventArgs>(_view_IgnoreProgramFilesChanged);
-
             _view.IgnoreAssemblyFiles = _model.IgnoreAssemblyFiles;
             _view.IgnoreDesignerFiles = _model.IgnoreDesignerFiles;
             _view.IgnoreProgramFiles = _model.IgnoreProgramFiles;
+
+            _view.IgnoreAssemblyFilesChanged += new EventHandler<CheckedEventArgs>(_view_IgnoreAssemblyFilesChanged);
+            _view.IgnoreDesignerFilesChanged += new EventHandler<CheckedEventArgs>(_view_IgnoreDesignerFilesChanged);
+            _view.IgnoreProgramFilesChanged += new EventHandler<CheckedEventArgs>(_view_IgnoreProgramFilesChanged);
         }
 
         private void _view_IgnoreProgramFilesChanged(object sender, CheckedEventArgs e)

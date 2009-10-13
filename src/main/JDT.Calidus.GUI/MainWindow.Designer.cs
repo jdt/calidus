@@ -38,12 +38,14 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.statusView = new JDT.Calidus.GUI.Views.StatusView();
             this.fileListView = new JDT.Calidus.GUI.Views.FileTreeView();
             this.sourceLocationView = new JDT.Calidus.GUI.Views.SourceLocationView();
             this.ruleRunnerView = new JDT.Calidus.GUI.Views.RuleRunnerView();
-            this.violationListView = new JDT.Calidus.GUI.Views.ViolationListView();
             this.checkableRuleTreeView = new JDT.Calidus.GUI.Views.CheckableRuleTreeView();
+            this.violationListView = new JDT.Calidus.GUI.Views.ViolationListView();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -69,6 +71,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -77,7 +80,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -163,6 +166,17 @@
             this.splitRulesViolations.SplitterDistance = 136;
             this.splitRulesViolations.TabIndex = 1;
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "calidus";
+            // 
             // statusView
             // 
             this.statusView.Location = new System.Drawing.Point(0, 416);
@@ -194,14 +208,6 @@
             this.ruleRunnerView.Size = new System.Drawing.Size(612, 101);
             this.ruleRunnerView.TabIndex = 2;
             // 
-            // violationListView
-            // 
-            this.violationListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.violationListView.Location = new System.Drawing.Point(0, 0);
-            this.violationListView.Name = "violationListView";
-            this.violationListView.Size = new System.Drawing.Size(614, 134);
-            this.violationListView.TabIndex = 0;
-            // 
             // checkableRuleTreeView
             // 
             this.checkableRuleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -209,6 +215,14 @@
             this.checkableRuleTreeView.Name = "checkableRuleTreeView";
             this.checkableRuleTreeView.Size = new System.Drawing.Size(614, 136);
             this.checkableRuleTreeView.TabIndex = 0;
+            // 
+            // violationListView
+            // 
+            this.violationListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.violationListView.Location = new System.Drawing.Point(0, 0);
+            this.violationListView.Name = "violationListView";
+            this.violationListView.Size = new System.Drawing.Size(614, 134);
+            this.violationListView.TabIndex = 0;
             // 
             // MainWindow
             // 
@@ -221,6 +235,7 @@
             this.MainMenuStrip = this.menuMain;
             this.Name = "MainWindow";
             this.Text = "Calidus GUI Runner";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.splitMain.Panel1.ResumeLayout(false);
@@ -253,5 +268,7 @@
         private JDT.Calidus.GUI.Views.RuleRunnerView ruleRunnerView;
         private JDT.Calidus.GUI.Views.StatusView statusView;
         private JDT.Calidus.GUI.Views.CheckableRuleTreeView checkableRuleTreeView;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
