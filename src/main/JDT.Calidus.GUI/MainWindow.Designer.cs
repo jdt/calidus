@@ -30,22 +30,24 @@
         {
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitMain = new System.Windows.Forms.SplitContainer();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.statusView = new JDT.Calidus.GUI.Views.StatusView();
             this.fileListView = new JDT.Calidus.GUI.Views.FileTreeView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.sourceLocationView = new JDT.Calidus.GUI.Views.SourceLocationView();
             this.ruleRunnerView = new JDT.Calidus.GUI.Views.RuleRunnerView();
+            this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
             this.checkableRuleTreeView = new JDT.Calidus.GUI.Views.CheckableRuleTreeView();
             this.violationListView = new JDT.Calidus.GUI.Views.ViolationListView();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.statusView = new JDT.Calidus.GUI.Views.StatusView();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -71,16 +73,24 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -134,6 +144,14 @@
             this.splitMain.SplitterDistance = 209;
             this.splitMain.TabIndex = 1;
             // 
+            // fileListView
+            // 
+            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileListView.Location = new System.Drawing.Point(0, 0);
+            this.fileListView.Name = "fileListView";
+            this.fileListView.Size = new System.Drawing.Size(209, 386);
+            this.fileListView.TabIndex = 0;
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -145,6 +163,21 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(614, 103);
             this.panel1.TabIndex = 2;
+            // 
+            // sourceLocationView
+            // 
+            this.sourceLocationView.Location = new System.Drawing.Point(79, 8);
+            this.sourceLocationView.Name = "sourceLocationView";
+            this.sourceLocationView.Size = new System.Drawing.Size(298, 20);
+            this.sourceLocationView.TabIndex = 1;
+            // 
+            // ruleRunnerView
+            // 
+            this.ruleRunnerView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ruleRunnerView.Location = new System.Drawing.Point(0, 0);
+            this.ruleRunnerView.Name = "ruleRunnerView";
+            this.ruleRunnerView.Size = new System.Drawing.Size(612, 101);
+            this.ruleRunnerView.TabIndex = 2;
             // 
             // splitRulesViolations
             // 
@@ -166,48 +199,6 @@
             this.splitRulesViolations.SplitterDistance = 136;
             this.splitRulesViolations.TabIndex = 1;
             // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.DefaultExt = "calidus";
-            // 
-            // statusView
-            // 
-            this.statusView.Location = new System.Drawing.Point(0, 416);
-            this.statusView.Name = "statusView";
-            this.statusView.Size = new System.Drawing.Size(833, 22);
-            this.statusView.TabIndex = 2;
-            this.statusView.Text = "statusView1";
-            // 
-            // fileListView
-            // 
-            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileListView.Location = new System.Drawing.Point(0, 0);
-            this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(209, 386);
-            this.fileListView.TabIndex = 0;
-            // 
-            // sourceLocationView
-            // 
-            this.sourceLocationView.Location = new System.Drawing.Point(79, 8);
-            this.sourceLocationView.Name = "sourceLocationView";
-            this.sourceLocationView.Size = new System.Drawing.Size(298, 20);
-            this.sourceLocationView.TabIndex = 1;
-            // 
-            // ruleRunnerView
-            // 
-            this.ruleRunnerView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ruleRunnerView.Location = new System.Drawing.Point(0, 0);
-            this.ruleRunnerView.Name = "ruleRunnerView";
-            this.ruleRunnerView.Size = new System.Drawing.Size(612, 101);
-            this.ruleRunnerView.TabIndex = 2;
-            // 
             // checkableRuleTreeView
             // 
             this.checkableRuleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -223,6 +214,31 @@
             this.violationListView.Name = "violationListView";
             this.violationListView.Size = new System.Drawing.Size(614, 134);
             this.violationListView.TabIndex = 0;
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "calidus";
+            // 
+            // statusView
+            // 
+            this.statusView.Location = new System.Drawing.Point(0, 416);
+            this.statusView.Name = "statusView";
+            this.statusView.Size = new System.Drawing.Size(833, 22);
+            this.statusView.TabIndex = 2;
+            this.statusView.Text = "statusView1";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "calidus";
+            this.openFileDialog.FileName = "openFileDialog1";
+            this.openFileDialog.Filter = "Calidus Projects|*.calidus";
             // 
             // MainWindow
             // 
@@ -270,5 +286,7 @@
         private JDT.Calidus.GUI.Views.CheckableRuleTreeView checkableRuleTreeView;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

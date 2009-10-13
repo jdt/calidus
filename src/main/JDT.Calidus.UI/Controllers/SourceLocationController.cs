@@ -45,8 +45,14 @@ namespace JDT.Calidus.UI.Controllers
             _view.SourceLocationChanged += new EventHandler<SourceLocationEventArgs>(_view_SourceLocationChanged);
 
             _model = model;
+            _model.SourceLocationChanged += new EventHandler<SourceLocationEventArgs>(_model_SourceLocationChanged);
 
             _view.DisplaySourceLocation(_model.SourceLocation);
+        }
+
+        private void _model_SourceLocationChanged(object sender, SourceLocationEventArgs e)
+        {
+            _view.DisplaySourceLocation(e.SourceLocation);
         }
 
         private void _view_SourceLocationChanged(object sender, SourceLocationEventArgs e)

@@ -143,6 +143,37 @@ namespace JDT.Calidus.GUI
                 config.ShowDialog();
             }
 
+            private void openToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                bool canceledSaveRequest = false;
+
+                DialogResult res = MessageBox.Show(this, "The project has unsaved changes. Save before opening another project?","Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (res == DialogResult.Yes)
+                {
+                    if (ProjectLocation == null && saveFileDialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        ProjectLocation = saveFileDialog.FileName;
+                    }
+
+                    if (ProjectLocation != null)
+                        _projectManager.WriteTo(_project, ProjectLocation);
+                    else
+                        canceledSaveRequest = true;
+                }
+                
+                if (res != DialogResult.Cancel && !canceledSaveRequest)
+                {
+                    if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        ProjectLocation = openFileDialog.FileName;
+                        //re-initialize project
+                        _project.SetProject(_projectManager.ReadFrom(ProjectLocation));
+
+                        HasChanges = false;
+                    }
+                }
+            }
+
             private void saveToolStripMenuItem_Click(object sender, EventArgs e)
             {
                 SaveProject();               
