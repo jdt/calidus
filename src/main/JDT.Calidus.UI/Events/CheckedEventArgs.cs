@@ -17,28 +17,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Events
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class represents a checked event
+    /// </summary>
+    public class CheckedEventArgs : EventArgs
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Creates a new instance of this class
+        /// </summary>
+        /// <param name="isChecked">True if checked</param>
+        public CheckedEventArgs(bool isChecked)
         {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            IsChecked = isChecked;
         }
+
+        /// <summary>
+        /// Gets if checked
+        /// </summary>
+        public bool IsChecked { get; private set; }
     }
 }

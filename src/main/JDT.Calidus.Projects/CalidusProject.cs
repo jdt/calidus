@@ -47,7 +47,7 @@ namespace JDT.Calidus.Projects
             }
 
         #endregion
-
+            
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
@@ -74,6 +74,10 @@ namespace JDT.Calidus.Projects
             get
             {
                 return _provider.GetLocation();
+            }
+            set
+            {
+                _provider.SetLocation(value);
             }
         }
         /// <summary>

@@ -17,28 +17,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.Common.Rules;
+using JDT.Calidus.UI.Events;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This interface is implemented by views of violation lists
+    /// </summary>
+    public interface IViolationListView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
-        {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
-        }
+        /// <summary>
+        /// Notifies that the view requested rule violation details
+        /// </summary>
+        event EventHandler<RuleViolationEventArgs> RuleViolationDetails;
+        /// <summary>
+        /// Adds a violation to the view
+        /// </summary>
+        /// <param name="aViolation">The violation to add</param>
+        void AddViolation(RuleViolation aViolation);
+        /// <summary>
+        /// Clears all violations from the view
+        /// </summary>
+        void ClearViolations();
     }
 }

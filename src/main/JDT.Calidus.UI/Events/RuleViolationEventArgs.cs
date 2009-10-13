@@ -17,28 +17,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.Common.Rules;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Events
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class represents event arguments for rule violations
+    /// </summary>
+    public class RuleViolationEventArgs : EventArgs
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Creates a new instance of this class
+        /// </summary>
+        /// <param name="violation">The violation of the event</param>
+        public RuleViolationEventArgs(RuleViolation violation)
         {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            Violation = violation;
         }
+
+        /// <summary>
+        /// Get the violation in the event
+        /// </summary>
+        public RuleViolation Violation { get; private set; }
     }
 }

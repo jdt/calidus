@@ -17,28 +17,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This interface is implemented by status views
+    /// </summary>
+    public interface IStatusView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
-        {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
-        }
+        /// <summary>
+        /// Displays a count for a number of violations
+        /// </summary>
+        /// <param name="count">The violation count</param>
+        void DisplayViolationCount(int count);
     }
 }

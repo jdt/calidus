@@ -17,28 +17,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Events;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This interface is implemented by a source location view
+    /// </summary>
+    public interface ISourceLocationView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
-        {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
-        }
+        /// <summary>
+        /// Raises an event to notify that the source location has changed
+        /// </summary>
+        event EventHandler<SourceLocationEventArgs> SourceLocationChanged;
+        /// <summary>
+        /// Display the source location in the view
+        /// </summary>
+        /// <param name="location">The location</param>
+        void DisplaySourceLocation(String location);
     }
 }

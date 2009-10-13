@@ -19,28 +19,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Rules.Configuration;
 
-namespace JDT.Calidus.Projects.Providers
+namespace JDT.Calidus.UI.Commands
 {
     /// <summary>
-    /// This interface is implemented by providers of source files
+    /// This class represents a command event for rule configuration changes
     /// </summary>
-    public interface ISourceFileProvider
+    public class RuleConfigurationChangeCommandEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets the list of source files
+        /// Creates a new instance of this class
         /// </summary>
-        /// <returns>The files</returns>
-        IEnumerable<String> GetFiles();
+        /// <param name="description">The description</param>
+        /// <param name="valueMap">The value map</param>
+        public RuleConfigurationChangeCommandEventArgs(String description, IDictionary<IRuleConfigurationParameter, Object> valueMap)
+        {
+            Description = description;
+            ValueMap = valueMap;
+        }
+        
         /// <summary>
-        /// Gets the location of the source files
+        /// Get the description
         /// </summary>
-        /// <returns>The location</returns>
-        String GetLocation();
+        public String Description { get; private set; }
         /// <summary>
-        /// Sets the location of the source files
+        /// Get the configuration parameter object value map
         /// </summary>
-        /// <param name="location">The location</param>
-        void SetLocation(String location);
+        public IDictionary<IRuleConfigurationParameter, Object> ValueMap { get; private set; }
     }
 }

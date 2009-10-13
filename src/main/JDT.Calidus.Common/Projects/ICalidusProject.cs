@@ -52,12 +52,12 @@ namespace JDT.Calidus.Common.Projects
         /// <summary>
         /// Gets the list of source files in the project that should be validated
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The files to validate</returns>
         IEnumerable<String> GetSourceFilesToValidate();
         /// <summary>
         /// Gets a list of all source files
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All files</returns>
         IEnumerable<String> GetAllSourceFiles();
     }
 }

@@ -17,28 +17,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Events
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This class represents a source location event
+    /// </summary>
+    public class SourceLocationEventArgs : EventArgs
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="location">The location</param>
+        public SourceLocationEventArgs(String location)
         {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            SourceLocation = location;
         }
+
+        /// <summary>
+        /// Get the source location of the event
+        /// </summary>
+        public String SourceLocation { get; private set; }
     }
 }

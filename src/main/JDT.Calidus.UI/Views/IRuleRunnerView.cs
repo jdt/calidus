@@ -17,28 +17,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.Rules;
-using JDT.Calidus.UI.Controllers;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Views
 {
-    public partial class RuleConfigurationWindow : Form
+    /// <summary>
+    /// This interface is implemented by views that run rules
+    /// </summary>
+    public interface IRuleRunnerView
     {
-        private CalidusRuleProvider _provider;
-
-        public RuleConfigurationWindow()
-        {
-            InitializeComponent();
-
-            _provider = new CalidusRuleProvider();
-
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
-        }
+        /// <summary>
+        /// Displays a progress percentage of the current execution
+        /// </summary>
+        /// <param name="percentage">The percentage to display</param>
+        void DisplayProgressPercentage(int percentage);
+        /// <summary>
+        /// Notifies that the rule runner was requested to start
+        /// </summary>
+        event EventHandler<EventArgs> RuleRunnerStart;
     }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7554BE5A-F473-4C27-AFAC-95D5897F7AB4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -72,7 +72,6 @@
     <Compile Include="Controls\Parameters\MultilineParameterControl.Designer.cs">
       <DependentUpon>MultilineParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Current.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +119,37 @@
       <DependentUpon>RuleConfigurationWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CheckableRuleTreeView.resx">
+      <DependentUpon>CheckableRuleTreeView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FileTreeView.resx">
+      <DependentUpon>FileTreeView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProjectConfigurationView.resx">
+      <DependentUpon>ProjectConfigurationView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RuleConfigurationView.resx">
+      <DependentUpon>RuleConfigurationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RuleTreeView.resx">
+      <DependentUpon>RuleTreeView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RuleRunnerView.resx">
+      <DependentUpon>RuleRunnerView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SourceLocationView.resx">
+      <DependentUpon>SourceLocationView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ViolationListView.resx">
+      <DependentUpon>ViolationListView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -140,6 +170,60 @@
     <Compile Include="RuleConfigurationWindow.Designer.cs">
       <DependentUpon>RuleConfigurationWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\CheckableRuleTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CheckableRuleTreeView.Designer.cs">
+      <DependentUpon>CheckableRuleTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FileTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\FileTreeView.Designer.cs">
+      <DependentUpon>FileTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectConfigurationView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ProjectConfigurationView.Designer.cs">
+      <DependentUpon>ProjectConfigurationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleConfigurationView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\RuleConfigurationView.Designer.cs">
+      <DependentUpon>RuleConfigurationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\RuleTreeView.Designer.cs">
+      <DependentUpon>RuleTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleRunnerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\RuleRunnerView.Designer.cs">
+      <DependentUpon>RuleRunnerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SourceLocationView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\SourceLocationView.Designer.cs">
+      <DependentUpon>SourceLocationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\StatusView.Designer.cs">
+      <DependentUpon>StatusView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViolationListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ViolationListView.Designer.cs">
+      <DependentUpon>ViolationListView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
@@ -153,6 +237,10 @@
     <ProjectReference Include="..\JDT.Calidus.Rules\JDT.Calidus.Rules.csproj">
       <Project>{E5FCEF48-73FC-4316-AB4A-413F541A353D}</Project>
       <Name>JDT.Calidus.Rules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JDT.Calidus.UI\JDT.Calidus.UI.csproj">
+      <Project>{7A920350-F908-44B0-89EA-182492C43E25}</Project>
+      <Name>JDT.Calidus.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
