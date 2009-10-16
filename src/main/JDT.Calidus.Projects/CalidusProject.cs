@@ -31,62 +31,43 @@ namespace JDT.Calidus.Projects
     public class CalidusProject : ICalidusProject
     {
         private ISourceFileProvider _provider;
-
-        #region Static methods
-        
-            /// <summary>
-            /// Creates a new calidus project
-            /// </summary>
-            /// <param name="targetDir">The directory to use</param>
-            /// <returns>A Calidus project for the directory</returns>
-            public static CalidusProject Create(String targetDir)
-            {
-                return new CalidusProject(Path.GetFullPath(targetDir).Substring(Path.GetDirectoryName(targetDir).Length + 1),
-                                          new FolderBasedSourceFileProvider(Path.GetFullPath(targetDir))
-                                          );
-            }
-
-        #endregion
+        private IList<String> _ignoredFiles;
             
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
-        /// <param name="name">The project name</param>
+        /// <param name="projectFile">The project file</param>
         /// <param name="provider">The source file provider</param>
-        public CalidusProject(String name, ISourceFileProvider provider)
+        public CalidusProject(String projectFile, ISourceFileProvider provider)
         {
             _provider = provider;
 
-            Name = name;
+            ProjectFile = projectFile;
 
             IgnoreAssemblyFiles = true;
             IgnoreDesignerFiles = true;
             IgnoreProgramFiles = true;
 
-            IgnoredFiles = new List<String>();
+            _ignoredFiles = new List<String>();
         }
 
         /// <summary>
-        /// Get the source location
+        /// Creates a new instance of this class
         /// </summary>
-        public String SourceLocation
+        /// <param name="projectFile">The project file</param>
+        public CalidusProject(String projectFile)
+            : this(projectFile, new FolderBasedSourceFileProvider(Path.GetDirectoryName(projectFile)))
         {
-            get
-            {
-                return _provider.GetLocation();
-            }
-            set
-            {
-                _provider.SetLocation(value);
-            }
         }
+
+
         /// <summary>
-        /// Get the project file name
+        /// Get the project file
         /// </summary>
-        public String Name
+        public String ProjectFile
         {
             get;
-            set;
+            private set;
         }
         /// <summary>
         /// Get or Set if assembly files should be ignored
@@ -103,7 +84,13 @@ namespace JDT.Calidus.Projects
         /// <summary>
         /// Get the ignored source files
         /// </summary>
-        public IList<String> IgnoredFiles { get; private set; }
+        public IEnumerable<String> IgnoredFiles 
+        {
+            get
+            {
+                return _ignoredFiles;
+            }
+        }
         /// <summary>
         /// Gets the list of source files in the project that should be validated
         /// </summary>
@@ -135,6 +122,43 @@ namespace JDT.Calidus.Projects
         public IEnumerable<String> GetAllSourceFiles()
         {
             return _provider.GetFiles();
+        }
+        
+        /// <summary>
+        /// Ignores the specified file
+        /// </summary>
+        /// <param name="file">The file to ignore</param>
+        public void IgnoredFile(String file)
+        {
+            String projectPath = Path.GetFullPath(ProjectFile);
+            String filePath = Path.GetFullPath(file);
+            
+            //split the file according to the path separator \
+            String[] projectPathParts = projectPath.Split(Path.DirectorySeparatorChar);
+            String[] filePathParts = filePath.Split(Path.DirectorySeparatorChar);
+
+            //check each part
+            int i = 0;
+            while( i < projectPathParts.Count() && i < filePathParts.Count() && projectPathParts[i].Equals(filePathParts[i]))
+            {
+                i++;
+            }
+
+            StringBuilder relative = new StringBuilder();
+            for (int j = i; j < filePathParts.Count(); j++)
+            {
+                relative.Append(Path.DirectorySeparatorChar + filePathParts[j]);    
+            }
+
+            _ignoredFiles.Add(relative.ToString());
+        }
+
+        /// <summary>
+        /// Gets the list of ignored files
+        /// </summary>
+        public IList<String> IgnoredFileList
+        {
+            get { return _ignoredFiles; }
         }
     }
 }

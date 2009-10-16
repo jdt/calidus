@@ -44,13 +44,7 @@ namespace JDT.Calidus.UI.Controllers
             _view = view;
 
             _project = project;
-            _project.SourceLocationChanged += new EventHandler<SourceLocationEventArgs>(_project_SourceLocationChanged);
 
-            _view.DisplaySourceFiles(_project.GetAllSourceFiles());
-        }
-
-        private void _project_SourceLocationChanged(object sender, SourceLocationEventArgs e)
-        {
             _view.DisplaySourceFiles(_project.GetAllSourceFiles());
         }
     }

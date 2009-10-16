@@ -37,42 +37,16 @@ namespace JDT.Calidus.GUI.Views
         public SourceLocationView()
         {
             InitializeComponent();
+            lblSourceDirectory.Text = "";
         }
 
         /// <summary>
-        /// Raises an event to notify that the source location has changed
-        /// </summary>
-        public event EventHandler<SourceLocationEventArgs> SourceLocationChanged;
-        private void OnSouceLocationChanged(SourceLocationEventArgs e)
-        {
-            if (SourceLocationChanged != null)
-                SourceLocationChanged(this, e);
-        }
-
-        /// <summary>
-        /// Display the source location in the view
+        /// Display the project file location in the view
         /// </summary>
         /// <param name="location">The location</param>
-        public void DisplaySourceLocation(String location)
+        public void DisplayProjectFileLocation(String location)
         {
-            lnkSourceDirectory.Text = location;
+            lblSourceDirectory.Text = location;
         }
-
-        #region Events
-
-            private void lnkSourceDirectory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-            {
-                FolderBrowserDialog browseDirectory = new FolderBrowserDialog();
-                browseDirectory.ShowNewFolderButton = false;
-                browseDirectory.ShowDialog(this);
-
-                String selectedDir = browseDirectory.SelectedPath;
-                if (selectedDir.Equals(String.Empty) == false)
-                {
-                    OnSouceLocationChanged(new SourceLocationEventArgs(selectedDir));
-                }
-            }
-
-        #endregion
     }
 }

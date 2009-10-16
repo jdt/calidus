@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.UI.Events;
 
 namespace JDT.Calidus.UI.Views
 {
@@ -29,13 +28,9 @@ namespace JDT.Calidus.UI.Views
     public interface ISourceLocationView
     {
         /// <summary>
-        /// Raises an event to notify that the source location has changed
-        /// </summary>
-        event EventHandler<SourceLocationEventArgs> SourceLocationChanged;
-        /// <summary>
-        /// Display the source location in the view
+        /// Display the project file location in the view
         /// </summary>
         /// <param name="location">The location</param>
-        void DisplaySourceLocation(String location);
+        void DisplayProjectFileLocation(String location);
     }
 }

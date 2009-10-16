@@ -79,7 +79,7 @@ namespace JDT.Calidus.ProjectsTest
         {
             StringBuilder bldr = new StringBuilder();
             bldr.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
-            bldr.Append(@"<calidusproject sourcelocation=""path\to\src\"">");
+            bldr.Append(@"<calidusproject>");
             bldr.Append("<settings>");
             bldr.Append(@"<IgnoreAssemblyFiles>true</IgnoreAssemblyFiles>");
             bldr.Append(@"<IgnoreDesignerFiles>false</IgnoreDesignerFiles>");
@@ -97,7 +97,6 @@ namespace JDT.Calidus.ProjectsTest
 
             MockRepository mocker = new MockRepository();
             ICalidusProject project = mocker.StrictMock<ICalidusProject>();
-            Expect.Call(project.SourceLocation).Return(@"path\to\src\").Repeat.Once();
             Expect.Call(project.IgnoreAssemblyFiles).Return(true).Repeat.Once();
             Expect.Call(project.IgnoreDesignerFiles).Return(false).Repeat.Once();
             Expect.Call(project.IgnoreProgramFiles).Return(true).Repeat.Once();
@@ -125,7 +124,7 @@ namespace JDT.Calidus.ProjectsTest
         {
             StringBuilder bldr = new StringBuilder();
             bldr.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
-            bldr.Append(@"<calidusproject sourcelocation=""path\to\src\"">");
+            bldr.Append(@"<calidusproject>");
             bldr.Append("<settings>");
             bldr.Append(@"<IgnoreAssemblyFiles>true</IgnoreAssemblyFiles>");
             bldr.Append(@"<IgnoreDesignerFiles>false</IgnoreDesignerFiles>");
@@ -143,7 +142,6 @@ namespace JDT.Calidus.ProjectsTest
             
             MockRepository mocker = new MockRepository();
             ICalidusProject expected = mocker.StrictMock<ICalidusProject>();
-            Expect.Call(expected.SourceLocation).Return(@"path\to\src\").Repeat.Once();
             Expect.Call(expected.IgnoreAssemblyFiles).Return(true).Repeat.Once();
             Expect.Call(expected.IgnoreDesignerFiles).Return(false).Repeat.Once();
             Expect.Call(expected.IgnoreProgramFiles).Return(true).Repeat.Once();
@@ -158,9 +156,7 @@ namespace JDT.Calidus.ProjectsTest
             writer.Flush();
             source.Position = 0;
 
-            ICalidusProject actual = _manager.ReadFrom(new XmlTextReader(source));
-            Assert.AreEqual(null, actual.Name);
-            Assert.AreEqual(expected.SourceLocation, actual.SourceLocation);
+            ICalidusProject actual = _manager.ReadFrom("test", new XmlTextReader(source));
             Assert.AreEqual(expected.IgnoreAssemblyFiles, actual.IgnoreAssemblyFiles);
             Assert.AreEqual(expected.IgnoreDesignerFiles, actual.IgnoreDesignerFiles);
             Assert.AreEqual(expected.IgnoreProgramFiles, actual.IgnoreProgramFiles);

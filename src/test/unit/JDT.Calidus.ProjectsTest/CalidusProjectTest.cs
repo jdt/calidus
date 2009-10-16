@@ -39,59 +39,65 @@ namespace JDT.Calidus.ProjectsTest
             _mocker = new MockRepository();
 
             IList<String> files = new List<String>();
-            files.Add(@"c:\src\main\Alpha.cs");
-            files.Add(@"c:\src\main\Bravo.cs");
-            files.Add(@"c:\src\main\Program.cs");
-            files.Add(@"c:\src\main\AssemblyInfo.cs");
-            files.Add(@"c:\src\test\Test.Designer.cs");
+            files.Add(@"C:\src\main\Alpha.cs");
+            files.Add(@"C:\src\main\Bravo.cs");
+            files.Add(@"C:\src\main\Program.cs");
+            files.Add(@"C:\src\main\AssemblyInfo.cs");
+            files.Add(@"C:\src\test\Test.Designer.cs");
 
             ISourceFileProvider provider = _mocker.StrictMock<ISourceFileProvider>();
             Expect.Call(provider.GetFiles()).Return(files).Repeat.Once();
 
-            _project = new CalidusProject("TestProject", provider);
+            _project = new CalidusProject(@"C:\src\test.project", provider);
 
             _mocker.ReplayAll();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _mocker.VerifyAll();
         }
 
         [Test]
         public void ProjectIgnoringAssemblyFilesShouldNotReturnAssemblyFilesInSourcesToValidate()
         {
             _project.IgnoreAssemblyFiles = true;
-            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"c:\src\main\AssemblyInfo.cs");
+            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\main\AssemblyInfo.cs");
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void ProjectIgnoringDesigerFilesShouldNotReturnDesignerFilesinSourcesToValidate()
         {
             _project.IgnoreDesignerFiles = true;
-            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"c:\src\test\Test.Designer.cs");
+            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\test\Test.Designer.cs");
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void ProjectIgnoringProgramFilesShouldNotReturnProgramFilesInSourcesToValidate()
         {
             _project.IgnoreProgramFiles = true;
-            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"c:\src\main\Program.cs");
+            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\main\Program.cs");
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void ProjectGetAllSourceFilesShouldReturnIgnoredCsFiles()
         {
-            _project.IgnoredFiles.Add(@"\src\main\Bravo.cs");
-            CollectionAssert.Contains(_project.GetAllSourceFiles(), @"c:\src\main\Bravo.cs");
+            _project.IgnoredFileList.Add(@"\src\main\Bravo.cs");
+            CollectionAssert.Contains(_project.GetAllSourceFiles(), @"C:\src\main\Bravo.cs");
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void ProjectGetSourcesToValidateShouldNotReturnIgnoredCsFiles()
         {
-            _project.IgnoredFiles.Add(@"\src\main\Bravo.cs");
-            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"c:\src\main\Bravo.cs");
+            _project.IgnoredFileList.Add(@"\src\main\Bravo.cs");
+            CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\main\Bravo.cs");
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void ProjectAddIgnoreFileShouldMakeFileRelative()
+        {
+            _project.IgnoredFile(@"\src\main\Bravo.cs");
+            CollectionAssert.Contains(_project.IgnoredFileList, @"\main\Bravo.cs");
         }
     }
 }

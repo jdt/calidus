@@ -17,35 +17,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.UI.Events;
-using JDT.Calidus.UI.Model;
-using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.UI.Controllers
+namespace JDT.Calidus.UI.Events
 {
     /// <summary>
-    /// This class is a controller for a source location view
+    /// This class represents quit event args
     /// </summary>
-    public class SourceLocationController
+    public class QuitEventArgs : EventArgs
     {
-        private ISourceLocationView _view;
-        private CalidusProjectModel _model;
-
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
-        /// <param name="view">The view to use</param>
-        /// <param name="model">The model to use</param>
-        public SourceLocationController(ISourceLocationView view, CalidusProjectModel model)
+        public QuitEventArgs()
         {
-            _view = view;
-
-            _model = model;
-
-            _view.DisplayProjectFileLocation(_model.ProjectFile);
+            Cancel = true;
         }
+
+        /// <summary>
+        /// True to cancel quit, otherwise false
+        /// </summary>
+        public bool Cancel { get; set; }
     }
 }

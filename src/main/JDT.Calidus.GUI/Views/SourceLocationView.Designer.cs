@@ -28,20 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lnkSourceDirectory = new System.Windows.Forms.LinkLabel();
             this.lblSourceDir = new System.Windows.Forms.Label();
+            this.lblSourceDirectory = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // lnkSourceDirectory
-            // 
-            this.lnkSourceDirectory.AutoSize = true;
-            this.lnkSourceDirectory.Location = new System.Drawing.Point(71, 0);
-            this.lnkSourceDirectory.Name = "lnkSourceDirectory";
-            this.lnkSourceDirectory.Size = new System.Drawing.Size(55, 13);
-            this.lnkSourceDirectory.TabIndex = 5;
-            this.lnkSourceDirectory.TabStop = true;
-            this.lnkSourceDirectory.Text = "<Not Set>";
-            this.lnkSourceDirectory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSourceDirectory_LinkClicked);
             // 
             // lblSourceDir
             // 
@@ -52,11 +41,21 @@
             this.lblSourceDir.TabIndex = 4;
             this.lblSourceDir.Text = "Source:";
             // 
+            // lblSourceDirectory
+            // 
+            this.lblSourceDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSourceDirectory.Location = new System.Drawing.Point(54, 0);
+            this.lblSourceDirectory.Name = "lblSourceDirectory";
+            this.lblSourceDirectory.Size = new System.Drawing.Size(241, 20);
+            this.lblSourceDirectory.TabIndex = 5;
+            this.lblSourceDirectory.Text = "label1";
+            // 
             // SourceLocationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lnkSourceDirectory);
+            this.Controls.Add(this.lblSourceDirectory);
             this.Controls.Add(this.lblSourceDir);
             this.Name = "SourceLocationView";
             this.Size = new System.Drawing.Size(298, 20);
@@ -67,7 +66,7 @@
 
         #endregion
 
-        private System.Windows.Forms.LinkLabel lnkSourceDirectory;
         private System.Windows.Forms.Label lblSourceDir;
+        private System.Windows.Forms.Label lblSourceDirectory;
     }
 }

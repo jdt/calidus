@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Projects;
@@ -37,32 +38,24 @@ namespace JDT.Calidus.UI.Model
             _project = project;
         }
 
+        public String FileName
+        {
+            get
+            {
+                return Path.GetFileName(_project.ProjectFile);
+            }
+        }
+
         #region ICalidusProject members
-
+        
             /// <summary>
-            /// Get the project file name
+            /// Get the project file
             /// </summary>
-            public string Name
+            public String ProjectFile
             {
-                get { return _project.Name; }
+                get { return _project.ProjectFile; }
             }
-
-            /// <summary>
-            /// Get the source location
-            /// </summary>
-            public string SourceLocation
-            {
-                get
-                {
-                    return _project.SourceLocation;
-                }
-                set 
-                { 
-                    _project.SourceLocation = value;
-                    OnSourceLocationChanged(new SourceLocationEventArgs(value)); 
-                }
-            }
-
+            
             /// <summary>
             /// Get or Set if assembly files should be ignored
             /// </summary>
@@ -114,7 +107,7 @@ namespace JDT.Calidus.UI.Model
             /// <summary>
             /// Get the ignored source files
             /// </summary>
-            public IList<String> IgnoredFiles
+            public IEnumerable<String> IgnoredFiles
             {
                 get
                 {
@@ -139,15 +132,21 @@ namespace JDT.Calidus.UI.Model
             {
                 return _project.GetAllSourceFiles();
             }
+        
+            /// <summary>
+            /// Ignores the specified file
+            /// </summary>
+            /// <param name="file">The file to ignore</param>
+            public void IgnoredFile(String file)
+            {
+                _project.IgnoredFile(file);
+                OnChanged();
+            }
 
         #endregion
 
         #region Notification events
 
-            /// <summary>
-            /// Notifies that the source location changed
-            /// </summary>
-            public event EventHandler<SourceLocationEventArgs> SourceLocationChanged;
             /// <summary>
             /// Notifies that the designer files ignore property changed
             /// </summary>
@@ -164,13 +163,6 @@ namespace JDT.Calidus.UI.Model
             /// Notifies that something in the project changed
             /// </summary>
             public event EventHandler<EventArgs> Changed;
-
-            private void OnSourceLocationChanged(SourceLocationEventArgs e)
-            {
-                if (SourceLocationChanged != null)
-                    SourceLocationChanged(this, e);
-                OnChanged();
-            }
 
             private void OnIgnoreDesignerFilesChanged(CheckedEventArgs e)
             {
@@ -212,8 +204,6 @@ namespace JDT.Calidus.UI.Model
                 OnIgnoreDesignerFilesChanged(new CheckedEventArgs(project.IgnoreDesignerFiles));
             if (originalProject.IgnoreProgramFiles != project.IgnoreProgramFiles)
                 OnIgnoreProgramFilesChanged(new CheckedEventArgs(project.IgnoreProgramFiles));
-            if (originalProject.SourceLocation.Equals(project.SourceLocation) == false)
-                OnSourceLocationChanged(new SourceLocationEventArgs(project.SourceLocation));
         }
     }
 }

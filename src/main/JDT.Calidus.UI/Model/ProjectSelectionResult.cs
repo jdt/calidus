@@ -17,35 +17,34 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.UI.Events;
-using JDT.Calidus.UI.Model;
-using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.UI.Controllers
+namespace JDT.Calidus.UI.Model
 {
     /// <summary>
-    /// This class is a controller for a source location view
+    /// This class represents selection results of project selections
     /// </summary>
-    public class SourceLocationController
+    public class ProjectSelectionResult
     {
-        private ISourceLocationView _view;
-        private CalidusProjectModel _model;
-
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
-        /// <param name="view">The view to use</param>
-        /// <param name="model">The model to use</param>
-        public SourceLocationController(ISourceLocationView view, CalidusProjectModel model)
+        /// <param name="projectFile">The project file selected</param>
+        /// <param name="isNewProject">If the project is new</param>
+        public ProjectSelectionResult(String projectFile, bool isNewProject)
         {
-            _view = view;
-
-            _model = model;
-
-            _view.DisplayProjectFileLocation(_model.ProjectFile);
+            ProjectFile = projectFile;
+            IsNewProject = isNewProject;
         }
+
+        /// <summary>
+        /// Get if the project is a new project
+        /// </summary>
+        public bool IsNewProject { get; private set; }
+        /// <summary>
+        /// Get the project file selected
+        /// </summary>
+        public String ProjectFile { get; private set; }
     }
 }

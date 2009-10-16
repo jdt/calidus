@@ -17,35 +17,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.UI.Events;
-using JDT.Calidus.UI.Model;
-using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.UI.Controllers
+namespace JDT.Calidus.UI.Views
 {
     /// <summary>
-    /// This class is a controller for a source location view
+    /// This enum contains confirmation results
     /// </summary>
-    public class SourceLocationController
+    public enum Confirm
     {
-        private ISourceLocationView _view;
-        private CalidusProjectModel _model;
-
         /// <summary>
-        /// Create a new instance of this class
+        /// Confirmed
         /// </summary>
-        /// <param name="view">The view to use</param>
-        /// <param name="model">The model to use</param>
-        public SourceLocationController(ISourceLocationView view, CalidusProjectModel model)
-        {
-            _view = view;
-
-            _model = model;
-
-            _view.DisplayProjectFileLocation(_model.ProjectFile);
-        }
+        Yes, 
+        /// <summary>
+        /// Not confirmed
+        /// </summary>
+        No, 
+        /// <summary>
+        /// Aborted
+        /// </summary>
+        Cancel
     }
 }

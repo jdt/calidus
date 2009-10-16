@@ -17,35 +17,34 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.UI.Events;
-using JDT.Calidus.UI.Model;
-using JDT.Calidus.UI.Views;
 
-namespace JDT.Calidus.UI.Controllers
+namespace JDT.Calidus.UI.Views
 {
     /// <summary>
-    /// This class is a controller for a source location view
+    /// This class contains the result of a file select
     /// </summary>
-    public class SourceLocationController
+    public class FileBrowseResult
     {
-        private ISourceLocationView _view;
-        private CalidusProjectModel _model;
-
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
-        /// <param name="view">The view to use</param>
-        /// <param name="model">The model to use</param>
-        public SourceLocationController(ISourceLocationView view, CalidusProjectModel model)
+        /// <param name="isOk">The result</param>
+        /// <param name="file">The selected file</param>
+        public FileBrowseResult(bool isOk, String file)
         {
-            _view = view;
-
-            _model = model;
-
-            _view.DisplayProjectFileLocation(_model.ProjectFile);
+            IsOk = isOk;
+            SelectedFile = file;
         }
+
+        /// <summary>
+        /// Get the dialog result
+        /// </summary>
+        public bool IsOk { get; private set; }
+        /// <summary>
+        /// Get the selected file or null if not set
+        /// </summary>
+        public String SelectedFile { get; private set; }
     }
 }
