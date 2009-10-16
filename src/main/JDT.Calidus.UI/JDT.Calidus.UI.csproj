@@ -49,6 +49,7 @@
     <Compile Include="Commands\RuleViolationIgnoreCommandEventArgs.cs" />
     <Compile Include="Commands\RuleViolationIgnoreType.cs" />
     <Compile Include="Controllers\CheckableRuleTreeController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\FileTreeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\ProjectConfigurationController.cs" />

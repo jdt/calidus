@@ -34,21 +34,30 @@ namespace JDT.Calidus.UI.Controllers
     /// </summary>
     public class MainController
     {
-        private IMainView _view;
-
         private CalidusProjectManager _projectManager;
 
         private RuleRunner _runner;
         private CalidusProjectModel _project;
         private RuleViolationList _violationList;
 
+        private IMainView _view;
         private bool _hasChanges;
         
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
-        public MainController(IMainView view)
+        /// <param name="project">The project</param>
+        /// <param name="isNewProject">Indicates if the project was newly created</param>
+        /// <param name="projectManager">The project manager to use</param>
+        /// <param name="runner">The rule runner to use</param>
+        /// <param name="violationList">The violation list to sue</param>
+        public MainController(IMainView view, 
+                                CalidusProjectModel project, 
+                                bool isNewProject, 
+                                CalidusProjectManager projectManager, 
+                                RuleRunner runner, 
+                                RuleViolationList violationList)
         {
             _view = view;
 
@@ -59,35 +68,20 @@ namespace JDT.Calidus.UI.Controllers
             _view.ProjectConfiguration += new EventHandler<EventArgs>(_view_ProjectConfiguration);
             _view.RuleConfiguration += new EventHandler<EventArgs>(_view_RuleConfiguration);
 
-            ProjectSelectionResult res = _view.SelectProject();
-            if (res != null)
-            {
-                _view.SelectedProject = res.ProjectFile;
-                _projectManager = new CalidusProjectManager();
+            _projectManager = projectManager;
 
-                _runner = new RuleRunner();
-                _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
-                _runner.Completed += new RuleRunner.RuleRunnerCompletedHandler(_runner_Completed);
+            _runner = runner;
+            _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
+            _runner.Completed += new RuleRunner.RuleRunnerCompletedHandler(_runner_Completed);
 
-                _project = new CalidusProjectModel(_projectManager.ReadFrom(res.ProjectFile));
-                _project.Changed += new EventHandler<EventArgs>(_project_Changed);
+            _violationList = violationList;
 
-                _violationList = new RuleViolationList();
+            _project = project;
+            _project.Changed += new EventHandler<EventArgs>(_project_Changed);
 
-                HasChanges = res.IsNewProject;
-
-                ViolationListController violationListController = new ViolationListController(_view.ViolationListView, _project, _violationList);
-                CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(_view.CheckableRuleTreeView, new CalidusRuleProvider());
-                FileTreeController fileListController = new FileTreeController(_view.FileListView, _project);
-                SourceLocationController sourceLocationController = new SourceLocationController(_view.SourceLocationView, _project);
-                RuleRunnerController ruleRunnerController = new RuleRunnerController(_view.RuleRunnerView, _runner, _project);
-                StatusController statusController = new StatusController(_view.StatusView, _violationList);
-            
-            }
-            else
-            {
-                _view.Exit();
-            }
+            //set project details
+            _view.SelectedProject = _project.ProjectFile;
+            HasChanges = isNewProject;
         }
 
         void _view_Open(object sender, EventArgs e)

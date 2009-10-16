@@ -56,7 +56,7 @@ namespace JDT.Calidus.GUI
             {
                 base.OnLoad(e);
 
-                MainController controller = new MainController(this);
+                //MainController controller = new MainController(this);
             }
 
             private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -96,18 +96,6 @@ namespace JDT.Calidus.GUI
             }
 
         #endregion
-
-        public ProjectSelectionResult SelectProject()
-        {
-            using (StartUpWindow window = new StartUpWindow())
-            {
-                DialogResult res = window.ShowDialog(this);
-                if (res != DialogResult.Cancel)
-                    return new ProjectSelectionResult(window.SelectedProjectFile, window.IsNewProject);
-                else
-                    return null;
-            }
-        }
 
         /// <summary>
         /// Exits the application

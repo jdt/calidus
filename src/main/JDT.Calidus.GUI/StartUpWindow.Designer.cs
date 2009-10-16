@@ -44,7 +44,6 @@
             // 
             // cmdNew
             // 
-            this.cmdNew.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdNew.Location = new System.Drawing.Point(12, 29);
             this.cmdNew.Name = "cmdNew";
             this.cmdNew.Size = new System.Drawing.Size(75, 75);
@@ -55,7 +54,6 @@
             // 
             // cmdExisting
             // 
-            this.cmdExisting.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdExisting.Location = new System.Drawing.Point(93, 29);
             this.cmdExisting.Name = "cmdExisting";
             this.cmdExisting.Size = new System.Drawing.Size(75, 75);

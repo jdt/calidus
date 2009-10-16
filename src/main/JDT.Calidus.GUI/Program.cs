@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Model;
+using JDT.Calidus.Projects;
+using JDT.Calidus.Rules;
 
 namespace JDT.Calidus.GUI
 {
@@ -15,7 +19,36 @@ namespace JDT.Calidus.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+
+            //get the project file
+            StartUpWindow win = new StartUpWindow();
+            win.ShowDialog();
+
+            //if a file selected
+            if (win.DialogResult == DialogResult.OK)
+            {
+                //build main objects
+                CalidusProjectManager projectManager = new CalidusProjectManager();
+                CalidusProjectModel project = new CalidusProjectModel(projectManager.ReadFrom(win.SelectedProjectFile));
+                RuleRunner runner = new RuleRunner();
+                RuleViolationList violationList = new RuleViolationList();
+                
+                //prepare main view
+                MainWindow mainView = new MainWindow();
+
+                //assign controllers
+                MainController c = new MainController(mainView, project, win.IsNewProject, projectManager, runner, violationList);
+
+                ViolationListController violationListController = new ViolationListController(mainView.ViolationListView, project, violationList);
+                CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(mainView.CheckableRuleTreeView, new CalidusRuleProvider());
+                FileTreeController fileListController = new FileTreeController(mainView.FileListView, project);
+                SourceLocationController sourceLocationController = new SourceLocationController(mainView.SourceLocationView, project);
+                RuleRunnerController ruleRunnerController = new RuleRunnerController(mainView.RuleRunnerView, runner, project);
+                StatusController statusController = new StatusController(mainView.StatusView, violationList);
+
+                //run application
+                Application.Run(mainView);
+            }
         }
     }
 }

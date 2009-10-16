@@ -30,11 +30,6 @@ namespace JDT.Calidus.UI.Views
     public interface IMainView
     {
         /// <summary>
-        /// Selects initial project file
-        /// </summary>
-        /// <returns>The selection result</returns>
-        ProjectSelectionResult SelectProject();
-        /// <summary>
         /// Exits the application
         /// </summary>
         void Exit();
@@ -49,8 +44,8 @@ namespace JDT.Calidus.UI.Views
         /// <summary>
         /// Marks changes to the project
         /// </summary>
-        /// <param name="_hasChanges">True if changed, otherwise false</param>
-        void ProjectHasChanges(bool _hasChanges);
+        /// <param name="hasChanges">True if changed, otherwise false</param>
+        void ProjectHasChanges(bool hasChanges);
         /// <summary>
         /// Prompts the UI to confirm saving changes
         /// </summary>
