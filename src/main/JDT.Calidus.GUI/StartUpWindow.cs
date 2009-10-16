@@ -68,7 +68,7 @@ namespace JDT.Calidus.GUI
         {
             SelectedProjectFile = file;
             IsNewProject = isNew;
-            
+            DialogResult = DialogResult.OK;
             Close();
         }
 
