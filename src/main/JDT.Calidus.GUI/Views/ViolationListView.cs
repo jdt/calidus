@@ -27,6 +27,7 @@ using JDT.Calidus.Common.Rules;
 using JDT.Calidus.UI.Commands;
 using JDT.Calidus.UI.Events;
 using JDT.Calidus.UI.Views;
+using System.IO;
 
 namespace JDT.Calidus.GUI.Views
 {
@@ -35,6 +36,8 @@ namespace JDT.Calidus.GUI.Views
     /// </summary>
     public partial class ViolationListView : UserControl, IViolationListView
     {
+        private static String IGNORE_FILE = "Ignore {1} in {0}";
+
         private IDictionary<ListViewItem, RuleViolation> _violationMap;
 
         /// <summary>
@@ -118,6 +121,9 @@ namespace JDT.Calidus.GUI.Views
             {
                 if(e.Button == MouseButtons.Right)
                 {
+                    ListViewItem selectedItem = lvViolations.SelectedItems[0];
+                    Object[] data = { Path.GetFileName(_violationMap[selectedItem].File), _violationMap[selectedItem].ViolatedRule.Name};
+                    ignoreFileToolStripMenuItem.Text = String.Format(IGNORE_FILE, data);
                     contextMenuStrip.Show(lvViolations, e.X, e.Y);
                 }
             }
