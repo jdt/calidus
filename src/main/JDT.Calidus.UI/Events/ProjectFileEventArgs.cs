@@ -25,13 +25,13 @@ namespace JDT.Calidus.UI.Events
     /// <summary>
     /// This class represents a source location event
     /// </summary>
-    public class SourceLocationEventArgs : EventArgs
+    public class ProjectFileEventArgs : EventArgs
     {
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="location">The location</param>
-        public SourceLocationEventArgs(String location)
+        public ProjectFileEventArgs(String location)
         {
             SourceLocation = location;
         }

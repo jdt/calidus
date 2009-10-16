@@ -74,7 +74,7 @@ namespace JDT.Calidus.UI.Controllers
             switch(e.IgnoreType)
             {
                 case RuleViolationIgnoreType.File:
-                    _project.IgnoredFiles.Add(e.Violation.File);
+                    _project.IgnoredFile(e.Violation.File);
                     foreach(RuleViolation aViolation in new List<RuleViolation>(_violationList))
                     {
                         if (aViolation.File.Equals(e.Violation.File))

@@ -46,7 +46,7 @@ namespace JDT.Calidus.Projects
             XDocument doc = new XDocument();
 
             //write root element
-            XElement root = new XElement("calidusproject", new XAttribute("sourcelocation", project.SourceLocation));
+            XElement root = new XElement("calidusproject");
 
             //write settings
             XElement ignoreAssemblyFiles = new XElement("IgnoreAssemblyFiles", project.IgnoreAssemblyFiles);
@@ -79,15 +79,16 @@ namespace JDT.Calidus.Projects
         /// <summary>
         /// Reads an ICalidusProject from an XmlReader
         /// </summary>
+        /// <param name="fileName">The filename for the project</param>
         /// <param name="reader">The reader to read from</param>
         /// <returns>The calidus project</returns>
-        public ICalidusProject ReadFrom(XmlReader reader)
+        public ICalidusProject ReadFrom(String fileName, XmlReader reader)
         {
             XDocument _doc = XDocument.Load(reader);
             XElement calidusProject = _doc.Root;
             XAttribute sourceLocation = calidusProject.Attribute("sourcelocation");
-            
-            CalidusProject res = new CalidusProject(null, new FolderBasedSourceFileProvider(sourceLocation.Value));
+
+            CalidusProject res = new CalidusProject(fileName);
             
             XElement settings = calidusProject.Element("settings");
             XElement ignoreAssembly = settings.Element("IgnoreAssemblyFiles");
@@ -101,7 +102,7 @@ namespace JDT.Calidus.Projects
             XElement ignored = calidusProject.Element("ignore");
             foreach(XElement ignoredFile in ignored.Elements())
             {
-                res.IgnoredFiles.Add(ignoredFile.Attribute("path").Value);
+                res.IgnoredFileList.Add(ignoredFile.Attribute("path").Value);
             }
 
             reader.Close();
@@ -117,8 +118,7 @@ namespace JDT.Calidus.Projects
         public ICalidusProject ReadFrom(String file)
         {
             XmlReader reader = XmlTextReader.Create(file);
-            CalidusProject project = (CalidusProject)ReadFrom(reader);
-            project.Name = Path.GetFileName(file);
+            CalidusProject project = (CalidusProject)ReadFrom(file, reader);
 
             return project;
         }
@@ -127,13 +127,12 @@ namespace JDT.Calidus.Projects
         /// Writes the calidus project to the specified xml writer
         /// </summary>
         /// <param name="project">The project to write</param>
-        /// <param name="file">The file to write to</param>
-        public void WriteTo(ICalidusProject project, String file)
+        public void Write(ICalidusProject project)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Encoding = Encoding.UTF8;
             settings.Indent = true;
-            XmlWriter writer = XmlTextWriter.Create(file, settings);
+            XmlWriter writer = XmlTextWriter.Create(project.ProjectFile, settings);
             WriteTo(project, writer);
             writer.Flush();
             writer.Close();

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Dialogs.cs" />
     <Compile Include="Controls\Parameters\BasicParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -85,6 +86,12 @@
     <Compile Include="ProjectConfigurationWindow.Designer.cs">
       <DependentUpon>ProjectConfigurationWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="StartUpWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartUpWindow.Designer.cs">
+      <DependentUpon>StartUpWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\Parameters\BasicParameterControl.resx">
       <DependentUpon>BasicParameterControl.cs</DependentUpon>
@@ -108,6 +115,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectConfigurationWindow.resx">
       <DependentUpon>ProjectConfigurationWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartUpWindow.resx">
+      <DependentUpon>StartUpWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

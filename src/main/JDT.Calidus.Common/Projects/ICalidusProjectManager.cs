@@ -15,6 +15,7 @@
     // </copyright>
 #endregion
 
+using System;
 using System.Xml;
 
 namespace JDT.Calidus.Common.Projects
@@ -31,8 +32,9 @@ namespace JDT.Calidus.Common.Projects
         /// <summary>
         /// Reads an ICalidusProject from an XmlReader
         /// </summary>
+        /// <param name="projectName">The project name</param>
         /// <param name="reader">The reader to read from</param>
         /// <returns>The calidus project</returns>
-        ICalidusProject ReadFrom(XmlReader reader);
+        ICalidusProject ReadFrom(String projectName, XmlReader reader);
     }
 }

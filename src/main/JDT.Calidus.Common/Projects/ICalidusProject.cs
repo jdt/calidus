@@ -26,13 +26,9 @@ namespace JDT.Calidus.Common.Projects
     public interface ICalidusProject
     {
         /// <summary>
-        /// Get the project file name
+        /// Get the project file
         /// </summary>
-        String Name { get; }        
-        /// <summary>
-        /// Get the source location
-        /// </summary>
-        String SourceLocation { get; set; }
+        String ProjectFile { get; }
         /// <summary>
         /// Get or Set if assembly files should be ignored
         /// </summary>
@@ -48,7 +44,7 @@ namespace JDT.Calidus.Common.Projects
         /// <summary>
         /// Get the ignored source files
         /// </summary>
-        IList<String> IgnoredFiles { get; }
+        IEnumerable<String> IgnoredFiles { get; }
         /// <summary>
         /// Gets the list of source files in the project that should be validated
         /// </summary>
@@ -59,5 +55,10 @@ namespace JDT.Calidus.Common.Projects
         /// </summary>
         /// <returns>All files</returns>
         IEnumerable<String> GetAllSourceFiles();
+        /// <summary>
+        /// Ignores the specified file
+        /// </summary>
+        /// <param name="file">The file to ignore</param>
+        void IgnoredFile(String file);
     }
 }
