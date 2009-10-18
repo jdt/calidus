@@ -26,7 +26,6 @@ using System.Windows.Forms;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.GUI.Controls;
 using JDT.Calidus.Projects;
-using JDT.Calidus.Projects.Events;
 using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Controllers;
 using JDT.Calidus.UI.Model;
@@ -172,7 +171,7 @@ namespace JDT.Calidus.GUI
         /// Displays the project configuration for the model
         /// </summary>
         /// <param name="model">The model to display for</param>
-        public void ShowProjectConfiguration(CalidusProjectModel model)
+        public void ShowProjectConfiguration(ICalidusProjectModel model)
         {
             ProjectConfigurationWindow win = new ProjectConfigurationWindow(model);
             win.ShowDialog(this);

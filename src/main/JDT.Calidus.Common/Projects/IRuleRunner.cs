@@ -16,30 +16,27 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Projects.Events;
 
-namespace JDT.Calidus.Projects.Events
+namespace JDT.Calidus.Common.Projects
 {
     /// <summary>
-    /// This class represents the result of a rule runner complete run
+    /// This interface is implemented by rule runners
     /// </summary>
-    public class RuleRunnerEventArgs : EventArgs
+    public interface IRuleRunner
     {
+        void Run(ICalidusProject project);
         /// <summary>
-        /// Create a new instance of this class
+        /// This event is raised upon completion of the runner
         /// </summary>
-        /// <param name="violations">The list of violations</param>
-        public RuleRunnerEventArgs(IEnumerable<RuleViolation> violations)
-        {
-            Violations = violations;
-        }
-
+        event EventHandler<RuleRunnerEventArgs> Completed;
         /// <summary>
-        /// Gets a list of violations for the run
+        /// This event is raised on the start of the runner
         /// </summary>
-        public IEnumerable<RuleViolation> Violations { get; private set; }
+        event EventHandler<EventArgs> Started;
+        /// <summary>
+        /// This event is raised when a single file is parsed
+        /// </summary>
+        event EventHandler<FileCompletedEventArgs> FileCompleted;
     }
 }

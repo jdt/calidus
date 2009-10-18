@@ -16,32 +16,24 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using JDT.Calidus.UI.Controllers;
 using JDT.Calidus.UI.Events;
-using JDT.Calidus.UI.Model;
-using JDT.Calidus.UI.Views;
+using System.Collections.Generic;
+using JDT.Calidus.Common.Rules;
 
-namespace JDT.Calidus.GUI
+namespace JDT.Calidus.UI.Model
 {
-    public partial class ProjectConfigurationWindow : Form
-    {
-        public ProjectConfigurationWindow()
-        {
-            InitializeComponent();
-        }
-
-        public ProjectConfigurationWindow(ICalidusProjectModel model)
-        {
-            InitializeComponent();
-
-            ProjectConfigurationController controller = new ProjectConfigurationController(projectConfigurationView, model);
-        }
+    /// <summary>
+    /// This interface is implemented by a rule violation list
+    /// </summary>
+    public interface IRuleViolationList : IList<RuleViolation>
+    {        
+        /// <summary>
+        /// Notifies that a violation was added to the list
+        /// </summary>
+        event EventHandler<RuleViolationEventArgs> ViolationAdded;
+        /// <summary>
+        /// Notifies that a violation was removed from the list
+        /// </summary>
+        event EventHandler<RuleViolationEventArgs> ViolationRemoved;
     }
 }

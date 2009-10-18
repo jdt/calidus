@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -69,8 +69,11 @@
     <Compile Include="Lines\ILineRuleFactory.cs" />
     <Compile Include="Lines\LineBase.cs" />
     <Compile Include="ObjectFactory.cs" />
+    <Compile Include="Projects\Events\FileCompletedEventArgs.cs" />
+    <Compile Include="Projects\Events\RuleRunnerEventArgs.cs" />
     <Compile Include="Projects\ICalidusProject.cs" />
     <Compile Include="Projects\ICalidusProjectManager.cs" />
+    <Compile Include="Projects\IRuleRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IBlockFactoryProvider.cs" />
     <Compile Include="Providers\IBlockRuleFactoryProvider.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Rules\Configuration\Factories\FileRuleConfigurationFactory.cs" />
     <Compile Include="Rules\Configuration\IRuleConfigurationParameter.cs" />
     <Compile Include="Rules\Configuration\ParameterType.cs" />
+    <Compile Include="Rules\ICalidusRuleProvider.cs" />
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\Configuration\IRuleConfiguration.cs" />
     <Compile Include="Rules\Configuration\Factories\IRuleConfigurationFactory.cs" />

@@ -28,7 +28,7 @@ namespace JDT.Calidus.Common.Projects
         /// <summary>
         /// Get the project file
         /// </summary>
-        String ProjectFile { get; }
+        String GetProjectFile();
         /// <summary>
         /// Get or Set if assembly files should be ignored
         /// </summary>

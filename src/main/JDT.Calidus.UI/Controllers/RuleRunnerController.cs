@@ -20,9 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Projects;
-using JDT.Calidus.Projects.Events;
 using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
+using JDT.Calidus.Common.Projects.Events;
+using JDT.Calidus.Common.Projects;
 
 namespace JDT.Calidus.UI.Controllers
 {
@@ -32,8 +33,8 @@ namespace JDT.Calidus.UI.Controllers
     public class RuleRunnerController
     {
         private IRuleRunnerView _view;
-        private RuleRunner _runner;
-        private CalidusProjectModel _project;
+        private IRuleRunner _runner;
+        private ICalidusProjectModel _project;
 
         /// <summary>
         /// Create a new instance of this class
@@ -41,13 +42,13 @@ namespace JDT.Calidus.UI.Controllers
         /// <param name="view">The view to use</param>
         /// <param name="runner">The runner to use</param>
         /// <param name="project">The projectmodel to use</param>
-        public RuleRunnerController(IRuleRunnerView view, RuleRunner runner, CalidusProjectModel project)
+        public RuleRunnerController(IRuleRunnerView view, IRuleRunner runner, ICalidusProjectModel project)
         {
             _view = view;
             _view.RuleRunnerStart += new EventHandler<EventArgs>(_view_RuleRunnerStart);
 
             _runner = runner;
-            _runner.FileCompleted += new RuleRunner.RuleRunnerFileCompleted(_runner_FileCompleted);
+            _runner.FileCompleted +=new EventHandler<FileCompletedEventArgs>(_runner_FileCompleted);
 
             _project = project;
         }

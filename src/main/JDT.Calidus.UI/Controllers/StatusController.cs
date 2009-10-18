@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Projects;
-using JDT.Calidus.Projects.Events;
 using JDT.Calidus.UI.Events;
 using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
@@ -33,14 +32,14 @@ namespace JDT.Calidus.UI.Controllers
     public class StatusController
     {
         private IStatusView _view;
-        private RuleViolationList _list;
+        private IRuleViolationList _list;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="list">The violation list</param>
-        public StatusController(IStatusView view, RuleViolationList list)
+        public StatusController(IStatusView view, IRuleViolationList list)
         {
             _view = view;
 

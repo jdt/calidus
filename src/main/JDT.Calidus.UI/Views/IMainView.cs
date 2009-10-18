@@ -60,7 +60,7 @@ namespace JDT.Calidus.UI.Views
         /// Displays the project configuration for the model
         /// </summary>
         /// <param name="model">The model to display for</param>
-        void ShowProjectConfiguration(CalidusProjectModel model);
+        void ShowProjectConfiguration(ICalidusProjectModel model);
         /// <summary>
         /// Displays the rule configuration
         /// </summary>

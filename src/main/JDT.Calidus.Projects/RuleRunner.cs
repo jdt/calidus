@@ -33,15 +33,15 @@ using JDT.Calidus.Parsers.Blocks;
 using JDT.Calidus.Parsers.Lines;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Parsers.Tokens;
-using JDT.Calidus.Projects.Events;
 using JDT.Calidus.Rules;
+using JDT.Calidus.Common.Projects.Events;
 
 namespace JDT.Calidus.Projects
 {
     /// <summary>
     /// This class is the main runner that validates rules by parsing files
     /// </summary>
-    public class RuleRunner
+    public class RuleRunner : IRuleRunner
     {
         /// <summary>
         /// Starts the runner
@@ -128,36 +128,16 @@ namespace JDT.Calidus.Projects
         }
 
         /// <summary>
-        /// Event handler for the completion of the runner
-        /// </summary>
-        /// <param name="source">The event source</param>
-        /// <param name="e">The event arguments</param>
-        public delegate void RuleRunnerCompletedHandler(object source, RuleRunnerEventArgs e);
-        /// <summary>
         /// This event is raised upon completion of the runner
         /// </summary>
-        public event RuleRunnerCompletedHandler Completed;
-
-        /// <summary>
-        /// Event handler for the start of the runner
-        /// </summary>
-        /// <param name="source">The event source</param>
-        /// <param name="e">The event arguments</param>
-        public delegate void RuleRunnerStartedHandler(object source, EventArgs e);
+        public event EventHandler<RuleRunnerEventArgs> Completed;
         /// <summary>
         /// This event is raised on the start of the runner
         /// </summary>
-        public event RuleRunnerStartedHandler Started;
-
-        /// <summary>
-        /// Event handler for the completion of operations on a file
-        /// </summary>
-        /// <param name="source">The event source</param>
-        /// <param name="e">The event arguments</param>
-        public delegate void RuleRunnerFileCompleted(object source, FileCompletedEventArgs e);
+        public event EventHandler<EventArgs> Started;
         /// <summary>
         /// This event is raised when a single file is parsed
         /// </summary>
-        public event RuleRunnerFileCompleted FileCompleted;
+        public event EventHandler<FileCompletedEventArgs> FileCompleted;
     }
 }

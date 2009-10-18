@@ -21,7 +21,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Projects;
-using JDT.Calidus.Projects;
 using JDT.Calidus.UI.Events;
 
 namespace JDT.Calidus.UI.Model
@@ -29,7 +28,7 @@ namespace JDT.Calidus.UI.Model
     /// <summary>
     /// This class is a UI-optimized model used to display calidus projects
     /// </summary>
-    public class CalidusProjectModel : ICalidusProject
+    public class CalidusProjectModel : ICalidusProjectModel
     {
         private ICalidusProject _project;
 
@@ -42,7 +41,7 @@ namespace JDT.Calidus.UI.Model
         {
             get
             {
-                return Path.GetFileName(_project.ProjectFile);
+                return Path.GetFileName(_project.GetProjectFile());
             }
         }
 
@@ -51,9 +50,9 @@ namespace JDT.Calidus.UI.Model
             /// <summary>
             /// Get the project file
             /// </summary>
-            public String ProjectFile
+            public String GetProjectFile()
             {
-                get { return _project.ProjectFile; }
+                return _project.GetProjectFile();
             }
             
             /// <summary>
@@ -163,6 +162,10 @@ namespace JDT.Calidus.UI.Model
             /// Notifies that something in the project changed
             /// </summary>
             public event EventHandler<EventArgs> Changed;
+            /// <summary>
+            /// Notifies that the project was set
+            /// </summary>
+            public event EventHandler<EventArgs> ProjectSet;
 
             private void OnIgnoreDesignerFilesChanged(CheckedEventArgs e)
             {
@@ -191,12 +194,24 @@ namespace JDT.Calidus.UI.Model
                     Changed(this, new EventArgs());
             }
 
+            private void OnProjectSet()
+            {
+                if (ProjectSet != null)
+                    ProjectSet(this, new EventArgs());
+            }
+
         #endregion
 
+        /// <summary>
+        /// Sets the project in the model
+        /// </summary>
+        /// <param name="project">The project</param>
         public void SetProject(ICalidusProject project)
         {
             ICalidusProject originalProject = _project;
             _project = project;
+
+            OnProjectSet();
 
             if (originalProject.IgnoreAssemblyFiles != project.IgnoreAssemblyFiles)
                 OnIgnoreAssemblyFilesChanged(new CheckedEventArgs(project.IgnoreAssemblyFiles));

@@ -28,7 +28,11 @@ namespace JDT.Calidus.Common.Projects
         /// <param name="project">The project to write</param>
         /// <param name="writer">The writer to write to</param>
         void WriteTo(ICalidusProject project, XmlWriter writer);
-
+        /// <summary>
+        /// Writes the calidus project to its own location
+        /// </summary>
+        /// <param name="project">The project</param>
+        void Write(ICalidusProject project);
         /// <summary>
         /// Reads an ICalidusProject from an XmlReader
         /// </summary>
@@ -36,5 +40,11 @@ namespace JDT.Calidus.Common.Projects
         /// <param name="reader">The reader to read from</param>
         /// <returns>The calidus project</returns>
         ICalidusProject ReadFrom(String projectName, XmlReader reader);
+        /// <summary>
+        /// Reads an ICalidusProject from a file
+        /// </summary>
+        /// <param name="file">The file to read from</param>
+        /// <returns>The calidus project</returns>
+        ICalidusProject ReadFrom(String file);
     }
 }

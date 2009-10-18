@@ -32,14 +32,14 @@ namespace JDT.Calidus.UI.Controllers
     public class FileTreeController
     {
         private IFileTreeView _view;
-        private CalidusProjectModel _project;
+        private ICalidusProjectModel _project;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="project">The project to use</param>
-        public FileTreeController(IFileTreeView view, CalidusProjectModel project)
+        public FileTreeController(IFileTreeView view, ICalidusProjectModel project)
         {
             _view = view;
 
