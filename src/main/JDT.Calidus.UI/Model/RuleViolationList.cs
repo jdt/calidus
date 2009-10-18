@@ -28,7 +28,7 @@ namespace JDT.Calidus.UI.Model
     /// <summary>
     /// This class is an observable rule violation list
     /// </summary>
-    public class RuleViolationList : IList<RuleViolation>
+    public class RuleViolationList : IRuleViolationList
     {
         private IList<RuleViolation> _list;
 

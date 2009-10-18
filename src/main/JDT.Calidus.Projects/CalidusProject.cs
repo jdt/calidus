@@ -32,7 +32,9 @@ namespace JDT.Calidus.Projects
     {
         private ISourceFileProvider _provider;
         private IList<String> _ignoredFiles;
-            
+
+        private String _file;
+
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
@@ -42,7 +44,7 @@ namespace JDT.Calidus.Projects
         {
             _provider = provider;
 
-            ProjectFile = projectFile;
+            _file = projectFile;
 
             IgnoreAssemblyFiles = true;
             IgnoreDesignerFiles = true;
@@ -64,10 +66,9 @@ namespace JDT.Calidus.Projects
         /// <summary>
         /// Get the project file
         /// </summary>
-        public String ProjectFile
+        public String GetProjectFile()
         {
-            get;
-            private set;
+            return _file;
         }
         /// <summary>
         /// Get or Set if assembly files should be ignored
@@ -130,7 +131,7 @@ namespace JDT.Calidus.Projects
         /// <param name="file">The file to ignore</param>
         public void IgnoredFile(String file)
         {
-            String projectPath = Path.GetFullPath(ProjectFile);
+            String projectPath = Path.GetFullPath(GetProjectFile());
             String filePath = Path.GetFullPath(file);
             
             //split the file according to the path separator \

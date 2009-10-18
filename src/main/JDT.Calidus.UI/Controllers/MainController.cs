@@ -21,11 +21,12 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Projects;
-using JDT.Calidus.Projects.Events;
 using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
 using JDT.Calidus.UI.Events;
+using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Projects.Events;
 
 namespace JDT.Calidus.UI.Controllers
 {
@@ -34,11 +35,11 @@ namespace JDT.Calidus.UI.Controllers
     /// </summary>
     public class MainController
     {
-        private CalidusProjectManager _projectManager;
+        private ICalidusProjectManager _projectManager;
 
-        private RuleRunner _runner;
-        private CalidusProjectModel _project;
-        private RuleViolationList _violationList;
+        private IRuleRunner _runner;
+        private ICalidusProjectModel _project;
+        private IRuleViolationList _violationList;
 
         private IMainView _view;
         private bool _hasChanges;
@@ -53,11 +54,11 @@ namespace JDT.Calidus.UI.Controllers
         /// <param name="runner">The rule runner to use</param>
         /// <param name="violationList">The violation list to sue</param>
         public MainController(IMainView view, 
-                                CalidusProjectModel project, 
+                                ICalidusProjectModel project, 
                                 bool isNewProject, 
-                                CalidusProjectManager projectManager, 
-                                RuleRunner runner, 
-                                RuleViolationList violationList)
+                                ICalidusProjectManager projectManager, 
+                                IRuleRunner runner, 
+                                IRuleViolationList violationList)
         {
             _view = view;
 
@@ -71,20 +72,21 @@ namespace JDT.Calidus.UI.Controllers
             _projectManager = projectManager;
 
             _runner = runner;
-            _runner.Started += new RuleRunner.RuleRunnerStartedHandler(_runner_Started);
-            _runner.Completed += new RuleRunner.RuleRunnerCompletedHandler(_runner_Completed);
+            _runner.Started += new EventHandler<EventArgs>(_runner_Started);
+            _runner.Completed += new EventHandler<RuleRunnerEventArgs>(_runner_Completed);
 
             _violationList = violationList;
 
             _project = project;
             _project.Changed += new EventHandler<EventArgs>(_project_Changed);
+            _project.ProjectSet += new EventHandler<EventArgs>(_project_ProjectSet);
 
             //set project details
-            _view.SelectedProject = _project.ProjectFile;
+            _view.SelectedProject = _project.GetProjectFile();
             HasChanges = isNewProject;
         }
 
-        void _view_Open(object sender, EventArgs e)
+        private void _view_Open(object sender, EventArgs e)
         {
             if (HasChanges)
             {
@@ -100,17 +102,16 @@ namespace JDT.Calidus.UI.Controllers
             if (openResult.IsOk && !String.IsNullOrEmpty(openResult.SelectedFile))
             {
                 _project.SetProject(_projectManager.ReadFrom(openResult.SelectedFile));
-                _view.SelectedProject = _project.ProjectFile;
                 HasChanges = false;
             }
         }
 
-        void _view_Save(object sender, EventArgs e)
+        private void _view_Save(object sender, EventArgs e)
         {
             SaveProject();
         }
 
-        void _view_Quit(object sender, QuitEventArgs e)
+        private void _view_Quit(object sender, QuitEventArgs e)
         {
             Confirm confirm = Confirm.No;
             if(HasChanges)
@@ -126,12 +127,12 @@ namespace JDT.Calidus.UI.Controllers
                 e.Cancel = true;
         }
 
-        void _view_RuleConfiguration(object sender, EventArgs e)
+        private void _view_RuleConfiguration(object sender, EventArgs e)
         {
             _view.ShowRuleConfiguration();
         }
 
-        void _view_ProjectConfiguration(object sender, EventArgs e)
+        private void _view_ProjectConfiguration(object sender, EventArgs e)
         {
             _view.ShowProjectConfiguration(_project);
         }
@@ -152,6 +153,11 @@ namespace JDT.Calidus.UI.Controllers
         private void _project_Changed(object sender, EventArgs e)
         {
             HasChanges = true;
+        }
+        
+        private void _project_ProjectSet(object sender, EventArgs e)
+        {
+            _view.SelectedProject = _project.GetProjectFile();
         }
 
         private bool HasChanges

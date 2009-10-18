@@ -22,7 +22,6 @@ using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Projects;
-using JDT.Calidus.Projects.Events;
 using JDT.Calidus.Projects.Util;
 using JDT.Calidus.UI.Commands;
 using JDT.Calidus.UI.Events;
@@ -37,8 +36,8 @@ namespace JDT.Calidus.UI.Controllers
     public class ViolationListController
     {
         private IViolationListView _view;
-        private CalidusProjectModel _project;
-        private RuleViolationList _violationList;
+        private ICalidusProjectModel _project;
+        private IRuleViolationList _violationList;
 
         /// <summary>
         /// Create a new instance of this class
@@ -46,7 +45,7 @@ namespace JDT.Calidus.UI.Controllers
         /// <param name="view">The view to use</param>
         /// <param name="project">The project</param>
         /// <param name="violationList">The violation list to display</param>
-        public ViolationListController(IViolationListView view, CalidusProjectModel project, RuleViolationList violationList)
+        public ViolationListController(IViolationListView view, ICalidusProjectModel project, IRuleViolationList violationList)
         {
             _view = view;
             _project = project;

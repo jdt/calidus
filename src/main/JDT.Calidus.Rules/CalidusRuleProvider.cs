@@ -35,7 +35,7 @@ namespace JDT.Calidus.Rules
     /// <summary>
     /// This class is the main rule provider for Calidus
     /// </summary>
-    public class CalidusRuleProvider
+    public class CalidusRuleProvider : ICalidusRuleProvider
     {
         private IStatementRuleFactoryProvider _statementRuleProvider;
         private IBlockRuleFactoryProvider _blockRuleProvider;

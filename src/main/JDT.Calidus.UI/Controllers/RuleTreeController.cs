@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Views;
+using JDT.Calidus.Common.Rules;
 
 namespace JDT.Calidus.UI.Controllers
 {
@@ -30,14 +31,14 @@ namespace JDT.Calidus.UI.Controllers
     public class RuleTreeController
     {
         private IRuleTreeView _view;
-        private CalidusRuleProvider _ruleProvider;
+        private ICalidusRuleProvider _ruleProvider;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="ruleProvider">The rule provider to use</param>
-        public RuleTreeController(IRuleTreeView view, CalidusRuleProvider ruleProvider)
+        public RuleTreeController(IRuleTreeView view, ICalidusRuleProvider ruleProvider)
         {
             _view = view;
             _ruleProvider = ruleProvider;

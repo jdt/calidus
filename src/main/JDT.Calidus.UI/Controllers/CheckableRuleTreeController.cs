@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Views;
+using JDT.Calidus.Common.Rules;
 
 namespace JDT.Calidus.UI.Controllers
 {
@@ -34,7 +35,7 @@ namespace JDT.Calidus.UI.Controllers
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="ruleProvider">The rule provider to use</param>
-        public CheckableRuleTreeController(ICheckableRuleTreeView view, CalidusRuleProvider ruleProvider)
+        public CheckableRuleTreeController(ICheckableRuleTreeView view, ICalidusRuleProvider ruleProvider)
             : base(view, ruleProvider)
         {
         }

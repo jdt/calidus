@@ -124,15 +124,15 @@ namespace JDT.Calidus.Projects
         }
 
         /// <summary>
-        /// Writes the calidus project to the specified xml writer
+        /// Writes the calidus project to its own location
         /// </summary>
-        /// <param name="project">The project to write</param>
+        /// <param name="project">The project</param>
         public void Write(ICalidusProject project)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Encoding = Encoding.UTF8;
             settings.Indent = true;
-            XmlWriter writer = XmlTextWriter.Create(project.ProjectFile, settings);
+            XmlWriter writer = XmlTextWriter.Create(project.GetProjectFile(), settings);
             WriteTo(project, writer);
             writer.Flush();
             writer.Close();

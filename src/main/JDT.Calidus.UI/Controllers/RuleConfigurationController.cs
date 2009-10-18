@@ -24,6 +24,7 @@ using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Commands;
 using JDT.Calidus.UI.Events;
 using JDT.Calidus.UI.Views;
+using JDT.Calidus.Common.Rules;
 
 namespace JDT.Calidus.UI.Controllers
 {
@@ -33,14 +34,14 @@ namespace JDT.Calidus.UI.Controllers
     public class RuleConfigurationController
     {
         private IRuleConfigurationView _view;
-        private CalidusRuleProvider _provider;
+        private ICalidusRuleProvider _provider;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="provider">The rule provider to use</param>
-        public RuleConfigurationController(IRuleConfigurationView view, CalidusRuleProvider provider)
+        public RuleConfigurationController(IRuleConfigurationView view, ICalidusRuleProvider provider)
         {
             HasChanges = false;
 

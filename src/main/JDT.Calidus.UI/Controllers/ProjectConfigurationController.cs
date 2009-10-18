@@ -31,14 +31,14 @@ namespace JDT.Calidus.UI.Controllers
     public class ProjectConfigurationController
     {
         private IProjectConfigurationView _view;
-        private CalidusProjectModel _model;
+        private ICalidusProjectModel _model;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="model">The model to use</param>
-        public ProjectConfigurationController(IProjectConfigurationView view, CalidusProjectModel model)
+        public ProjectConfigurationController(IProjectConfigurationView view, ICalidusProjectModel model)
         {
             _model = model;
             _view = view;

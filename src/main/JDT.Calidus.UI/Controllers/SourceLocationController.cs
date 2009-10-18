@@ -32,20 +32,20 @@ namespace JDT.Calidus.UI.Controllers
     public class SourceLocationController
     {
         private ISourceLocationView _view;
-        private CalidusProjectModel _model;
+        private ICalidusProjectModel _model;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="model">The model to use</param>
-        public SourceLocationController(ISourceLocationView view, CalidusProjectModel model)
+        public SourceLocationController(ISourceLocationView view, ICalidusProjectModel model)
         {
             _view = view;
 
             _model = model;
 
-            _view.DisplayProjectFileLocation(_model.ProjectFile);
+            _view.DisplayProjectFileLocation(_model.GetProjectFile());
         }
     }
 }

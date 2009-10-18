@@ -15,6 +15,7 @@
     <assembly path="bin\test\unit\JDT.Calidus.Blocks.FactoriesTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Rules.BlocksTest.dll" />
     <assembly path="bin\test\unit\JDT.Calidus.Rules.LinesTest.dll" />
+    <assembly path="bin\test\unit\JDT.Calidus.UITest.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>
