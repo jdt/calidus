@@ -122,7 +122,7 @@ namespace JDT.Calidus.GUI.Views
                 if(e.Button == MouseButtons.Right)
                 {
                     ListViewItem selectedItem = lvViolations.SelectedItems[0];
-                    Object[] data = { Path.GetFileName(_violationMap[selectedItem].File), _violationMap[selectedItem].ViolatedRule.Name};
+                    Object[] data = { Path.GetFileName(_violationMap[selectedItem].File), "all violations"};
                     ignoreFileToolStripMenuItem.Text = String.Format(IGNORE_FILE, data);
                     contextMenuStrip.Show(lvViolations, e.X, e.Y);
                 }
