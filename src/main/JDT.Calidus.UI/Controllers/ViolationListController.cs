@@ -52,7 +52,7 @@ namespace JDT.Calidus.UI.Controllers
             _violationList = violationList;
 
             _view.RuleViolationDetails += new EventHandler<RuleViolationEventArgs>(_view_RuleViolationDetails);
-            _view.IgnoreViolation += new EventHandler<JDT.Calidus.UI.Commands.RuleViolationIgnoreCommandEventArgs>(_view_IgnoreViolation);
+            _view.IgnoreViolation += new EventHandler<RuleViolationIgnoreCommandEventArgs>(_view_IgnoreViolation);
 
             _violationList.ViolationAdded += new EventHandler<RuleViolationEventArgs>(_violationList_ViolationAdded);
             _violationList.ViolationRemoved += new EventHandler<RuleViolationEventArgs>(_violationList_ViolationRemoved);
