@@ -58,7 +58,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
         /// <returns>True if matches, otherwise false</returns>
         protected override bool Validate(Queue<TokenBase> tokens)
         {
-            if (tokens.Peek() == null)
+            if (tokens.Count == 0)
                 return false;
 
             //check: if not of requested type element, return false

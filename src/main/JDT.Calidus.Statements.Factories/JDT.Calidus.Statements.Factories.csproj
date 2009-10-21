@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{315B5FB4-8442-4013-8E7F-6283EB5A885E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -50,6 +50,7 @@
     <Compile Include="Common\LineCommentStatementFactory.cs" />
     <Compile Include="Common\OpenBlockStatementFactory.cs" />
     <Compile Include="Declaration\AttributeStatementFactory.cs" />
+    <Compile Include="Declaration\ClassStatementFactory.cs" />
     <Compile Include="Declaration\MemberStatementResolver.cs" />
     <Compile Include="Namespace\UsingStatementFactory.cs" />
     <Compile Include="PreProcessor\RegionEndStatementFactory.cs" />

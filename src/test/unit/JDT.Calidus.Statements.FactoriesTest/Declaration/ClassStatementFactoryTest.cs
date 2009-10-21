@@ -14,52 +14,41 @@
     //   limitations under the License. 
     // </copyright>
 #endregion
-
+    
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Factories.Common;
+using JDT.Calidus.Statements.Factories.Declaration;
 using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens.Common;
-using JDT.Calidus.Tokens.Common.Brackets;
+using JDT.Calidus.Tokens.Types;
 using NUnit.Framework;
 
-namespace JDT.Calidus.Statements.FactoriesTest.Common
+namespace JDT.Calidus.Statements.FactoriesTest.Declaration
 {
     [TestFixture]
-    public class OpenBlockStatementFactoryTest : CalidusTestBase
+    public class ClassStatementFactoryTest : CalidusTestBase
     {
-        private OpenBlockStatementFactory _factory;
+        private ClassStatementFactory _factory;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _factory = new OpenBlockStatementFactory();
+            _factory = new ClassStatementFactory();
         }
 
         [Test]
-        public void OpenCurlyBracketTokenShouldBeOpenBlockStatement()
+        public void ClassIdentifierFollowedByIdentifierShouldBeClassStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<ClassToken>("class"));
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
-            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
             Assert.IsTrue(_factory.CanCreateStatementFrom(input));
-        }
-
-        [Test]
-        public void OnlyOpenCurlyBracketTokenShouldBeOpenBlockStatement()
-        {
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
-            input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
-            input.Add(TokenCreator.Create<TabToken>());
-
-            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
         }
     }
 }
