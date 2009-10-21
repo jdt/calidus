@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0582D5E2-D6C0-49F2-89AF-F10BCD564D2D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -54,6 +54,7 @@
     <Compile Include="StatementExpressionTest.cs" />
     <Compile Include="TokenOccurences\ContainsTokenOccurenceTest.cs" />
     <Compile Include="TokenOccurences\EndingTokenOccurenceTest.cs" />
+    <Compile Include="TokenOccurences\IsTokenOccurenceTest.cs" />
     <Compile Include="TokenOccurences\LooseTokenOccurenceTest.cs" />
     <Compile Include="TokenOccurences\NextTokenOccurenceTest.cs" />
     <Compile Include="TokenOccurences\StartingTokenOccurenceTest.cs" />
