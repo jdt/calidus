@@ -83,6 +83,11 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             throw new NotImplementedException();
         }
+
+        public IEndingStatementExpression Is<TTokenType>() where TTokenType : TokenBase
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]

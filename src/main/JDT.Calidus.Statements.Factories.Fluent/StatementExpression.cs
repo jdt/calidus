@@ -168,5 +168,16 @@ namespace JDT.Calidus.Statements.Factories.Fluent
             _occurencesList.Add(new ContainsTokenOccurence(typeof(TTokenType)));
             return this;
         }
+
+        /// <summary>
+        /// Verify that the statement is of a single token type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type</typeparam>
+        /// <returns>An expression of the specified token type</returns>
+        public IEndingStatementExpression Is<TTokenType>() where TTokenType : TokenBase
+        {
+            _occurencesList.Add(new IsTokenOccurence(typeof(TTokenType)));
+            return this;
+        }
     }
 }

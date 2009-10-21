@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<calidusproject>
+  <settings>
+    <IgnoreAssemblyFiles>true</IgnoreAssemblyFiles>
+    <IgnoreDesignerFiles>true</IgnoreDesignerFiles>
+    <IgnoreProgramFiles>true</IgnoreProgramFiles>
+  </settings>
+  <ignore>
+    <file path="\src\main\JDT.Calidus.Parsers.Coco\Parser.cs" />
+    <file path="\src\main\JDT.Calidus.Parsers.Coco\Scanner.cs" />
+  </ignore>
+</calidusproject>

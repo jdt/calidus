@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Tests;
+using JDT.Calidus.Tokens.Types;
 using NUnit.Framework;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
@@ -235,6 +236,50 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
                            .FollowedBy<SemiColonToken>();
 
             Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionIsShouldMatchSingleTokenTypeWithWhiteSpace()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.Is<ClassToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionIsShouldNotMatchMultipleInstancesOfSingleTokenType()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.Is<ClassToken>();
+
+            Assert.IsFalse(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionIsShouldNotMatchDifferentTokenTypes()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<IdentifierToken>("test"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.Is<ClassToken>();
+
+            Assert.IsFalse(toMatch.Matches(input));
         }
     }
 }
