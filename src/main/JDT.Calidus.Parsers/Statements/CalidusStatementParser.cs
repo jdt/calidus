@@ -65,8 +65,10 @@ namespace JDT.Calidus.Parsers.Statements
 
             IList<TokenBase> currentStatementTokens = new List<TokenBase>();
 
-            foreach (TokenBase aToken in tokens)
+
+            for(int i = 0; i < tokens.Count(); i++)
             {
+                TokenBase aToken = tokens.ElementAt(i);
                 currentStatementTokens.Add(aToken);
 
                 //when the token is a valid statement ender, add a statement and reset the list
@@ -76,6 +78,7 @@ namespace JDT.Calidus.Parsers.Statements
                     aToken is LineCommentToken ||
                     aToken is CloseSquareBracketToken ||
                     aToken is PreProcessorToken
+                    || NextIsOfType(i, tokens, typeof(OpenCurlyBracketToken))
                     )
                 {
                     //check all statement factories
@@ -107,6 +110,18 @@ namespace JDT.Calidus.Parsers.Statements
             }
 
             return res;
+        }
+
+        private bool NextIsOfType(int i, IEnumerable<TokenBase> tokens, Type type)
+        {
+            if(i + 1 < tokens.Count())
+            {
+                return tokens.ElementAt(i + 1).GetType().IsAssignableFrom(type);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

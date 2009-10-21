@@ -19,32 +19,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Common;
-using JDT.Calidus.Statements.Factories.Fluent;
-using JDT.Calidus.Tokens.Common.Brackets;
 
-namespace JDT.Calidus.Statements.Factories.Common
+namespace JDT.Calidus.Statements.Declaration
 {
     /// <summary>
-    /// This class creates an open block statements
+    /// This class represents an class declaration statement
     /// </summary>
-    public class OpenBlockStatementFactory : FluentStatementFactory<OpenBlockStatement>
+    public class ClassStatement : StatementBase
     {
-        protected override OpenBlockStatement BuildStatement(IList<TokenBase> input)
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="tokens">The list of tokens in the statement</param>
+        public ClassStatement(IEnumerable<TokenBase> tokens)
+            : base(tokens)
         {
-            return new OpenBlockStatement(input);
-        }
-
-        protected override IStatementExpression Expression
-        {
-            get
-            {
-                StatementExpression expression = new StatementExpression();
-                expression.Is<OpenCurlyBracketToken>();
-    
-                return expression;
-            }
         }
     }
 }

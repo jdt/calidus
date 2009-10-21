@@ -20,20 +20,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Common;
+using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Statements.Factories.Fluent;
-using JDT.Calidus.Tokens.Common.Brackets;
+using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Types;
 
-namespace JDT.Calidus.Statements.Factories.Common
+namespace JDT.Calidus.Statements.Factories.Declaration
 {
     /// <summary>
-    /// This class creates an open block statements
+    /// This class creates class statements
     /// </summary>
-    public class OpenBlockStatementFactory : FluentStatementFactory<OpenBlockStatement>
+    public class ClassStatementFactory : FluentStatementFactory<ClassStatement>
     {
-        protected override OpenBlockStatement BuildStatement(IList<TokenBase> input)
+        protected override ClassStatement BuildStatement(IList<TokenBase> input)
         {
-            return new OpenBlockStatement(input);
+            return new ClassStatement(input);
         }
 
         protected override IStatementExpression Expression
@@ -41,8 +42,9 @@ namespace JDT.Calidus.Statements.Factories.Common
             get
             {
                 StatementExpression expression = new StatementExpression();
-                expression.Is<OpenCurlyBracketToken>();
-    
+                expression.Contains<ClassToken>()
+                    .FollowedBy<IdentifierToken>();
+
                 return expression;
             }
         }
