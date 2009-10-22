@@ -59,7 +59,6 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._long, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._sbyte, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._short, typeof(ValueTypeToken));
-            _simpleTokenTypeMap.Add(Parser._struct, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._uint, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
@@ -70,6 +69,7 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._ppRegion, typeof(RegionStartToken));
             _simpleTokenTypeMap.Add(Parser._ppEndReg, typeof(RegionEndToken));
             _simpleTokenTypeMap.Add(Parser._interface, typeof(InterfaceToken));
+            _simpleTokenTypeMap.Add(Parser._struct, typeof(StructToken));
 
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));

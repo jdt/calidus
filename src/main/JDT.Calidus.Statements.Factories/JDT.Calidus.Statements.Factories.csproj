@@ -51,6 +51,7 @@
     <Compile Include="Common\OpenBlockStatementFactory.cs" />
     <Compile Include="Declaration\AttributeStatementFactory.cs" />
     <Compile Include="Declaration\ClassStatementFactory.cs" />
+    <Compile Include="Declaration\StructStatementFactory.cs" />
     <Compile Include="Declaration\InterfaceStatementFactory.cs" />
     <Compile Include="Declaration\MemberStatementResolver.cs" />
     <Compile Include="Namespace\UsingStatementFactory.cs" />

@@ -50,6 +50,7 @@
     <Compile Include="Common\OpenBlockStatement.cs" />
     <Compile Include="Declaration\AttributeStatement.cs" />
     <Compile Include="Declaration\ClassStatement.cs" />
+    <Compile Include="Declaration\StructStatement.cs" />
     <Compile Include="Declaration\InterfaceStatement.cs" />
     <Compile Include="Declaration\MemberStatement.cs" />
     <Compile Include="Namespace\UsingStatement.cs" />
