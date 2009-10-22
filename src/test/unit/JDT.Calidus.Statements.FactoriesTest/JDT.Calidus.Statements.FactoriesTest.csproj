@@ -54,6 +54,7 @@
     <Compile Include="Common\OpenBlockStatementFactoryTest.cs" />
     <Compile Include="Declaration\AttributeStatementFactoryTest.cs" />
     <Compile Include="Declaration\ClassStatementFactoryTest.cs" />
+    <Compile Include="Declaration\StructStatementFactoryTest.cs" />
     <Compile Include="Declaration\InterfaceStatementFactoryTest.cs" />
     <Compile Include="Declaration\MemberStatementFactoryTest.cs" />
     <Compile Include="Namespace\UsingStatementFactoryTest.cs" />

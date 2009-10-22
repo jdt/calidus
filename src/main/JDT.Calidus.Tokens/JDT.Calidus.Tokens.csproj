@@ -76,6 +76,7 @@
     <Compile Include="PreProcessor\RegionStartToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ClassToken.cs" />
+    <Compile Include="Types\StructToken.cs" />
     <Compile Include="Types\InterfaceToken.cs" />
     <Compile Include="Types\ValueTypeToken.cs" />
   </ItemGroup>
