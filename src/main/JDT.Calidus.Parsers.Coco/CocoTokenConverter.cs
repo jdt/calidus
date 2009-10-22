@@ -69,6 +69,7 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._usingKW, typeof(UsingToken));
             _simpleTokenTypeMap.Add(Parser._ppRegion, typeof(RegionStartToken));
             _simpleTokenTypeMap.Add(Parser._ppEndReg, typeof(RegionEndToken));
+            _simpleTokenTypeMap.Add(Parser._interface, typeof(InterfaceToken));
 
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));
