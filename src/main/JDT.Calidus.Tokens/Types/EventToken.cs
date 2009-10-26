@@ -19,21 +19,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tests
+namespace JDT.Calidus.Tokens.Types
 {
-    public class StubStatementFactory : IStatementFactory
+    /// <summary>
+    /// This class represents an event token
+    /// </summary>
+    public class EventToken : TokenBase
     {
-        public StatementBase Create(IEnumerable<TokenBase> tokenList, IStatementContext context)
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="line">The line</param>
+        /// <param name="column">The column</param>
+        /// <param name="position">The position</param>
+        /// <param name="content">The content</param>
+        public EventToken(int line, int column, int position, String content)
+            : base(line, column, position, content)
         {
-            return new GenericStatement(tokenList);
-        }
-
-        public bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context)
-        {
-            return true;
         }
     }
 }

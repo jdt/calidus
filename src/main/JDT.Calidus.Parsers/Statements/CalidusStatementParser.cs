@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Common;
 using JDT.Calidus.Tokens.Common.Brackets;
@@ -36,12 +37,13 @@ namespace JDT.Calidus.Parsers.Statements
     public class CalidusStatementParser
     {
         private IStatementFactoryProvider _statementFactoryProvider;
+        private IStatementContextManager _contextManager;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         public CalidusStatementParser()
-            : this(ObjectFactory.Get<IStatementFactoryProvider>())
+            : this(ObjectFactory.Get<IStatementFactoryProvider>(), ObjectFactory.Get<IStatementContextManager>())
         {
         }
 
@@ -49,9 +51,11 @@ namespace JDT.Calidus.Parsers.Statements
         /// Create a new instance of this class
         /// </summary>
         /// <param name="statementFactoryProvider">The statement factory provider to use</param>
-        public CalidusStatementParser(IStatementFactoryProvider statementFactoryProvider)
+        /// <param name="contextManager">The context manager</param>
+        public CalidusStatementParser(IStatementFactoryProvider statementFactoryProvider, IStatementContextManager contextManager)
         {
             _statementFactoryProvider = statementFactoryProvider;
+            _contextManager = contextManager;
         }
 
         /// <summary>
@@ -81,23 +85,29 @@ namespace JDT.Calidus.Parsers.Statements
                     || NextIsOfType(i, tokens, typeof(OpenCurlyBracketToken))
                     )
                 {
+                    IList<StatementBase> createdStatements = new List<StatementBase>();
+                    bool wasStatement = false;
                     //check all statement factories
                     foreach (IStatementFactory statementFactory in _statementFactoryProvider.GetFactories())
                     {
-                        if (statementFactory.CanCreateStatementFrom(currentStatementTokens))
+                        if (statementFactory.CanCreateStatementFrom(currentStatementTokens, _contextManager.GetContext()))
                         {
-                            res.Add(statementFactory.Create(new List<TokenBase>(currentStatementTokens)));
-                            currentStatementTokens.Clear();
+                            createdStatements.Add(statementFactory.Create(new List<TokenBase>(currentStatementTokens), _contextManager.GetContext()));
+                            wasStatement = true;
                         }
                     }
 
                     //check: if the current statements were not successfully parsed
                     //the list is not cleared, add as a generic statement
-                    if(currentStatementTokens.Count != 0)
-                    {
-                        res.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
-                        currentStatementTokens.Clear();
-                    }
+                    if(!wasStatement)
+                        createdStatements.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
+                    
+                    currentStatementTokens.Clear();
+                    //notify context manager
+                    _contextManager.Encountered(createdStatements);
+                    //add results
+                    foreach (StatementBase aStatement in createdStatements)
+                        res.Add(aStatement);
                 }
             }
 

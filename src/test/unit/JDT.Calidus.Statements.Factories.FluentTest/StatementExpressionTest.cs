@@ -281,5 +281,29 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
 
             Assert.IsFalse(toMatch.Matches(input));
         }
+
+        [Test]
+        public void ExpressionContainsNoShouldMatchAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+
+            IStatementExpression toMatch = _expression.ContainsNo<SemiColonToken>();
+
+            Assert.IsTrue(toMatch.Matches(input));
+        }
+
+        [Test]
+        public void ExpressionContainsNoShouldNotMatchInAppropriateTokenList()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            IStatementExpression toMatch =
+                _expression.ContainsNo<SpaceToken>();
+
+            Assert.IsFalse(toMatch.Matches(input));
+        }
     }
 }

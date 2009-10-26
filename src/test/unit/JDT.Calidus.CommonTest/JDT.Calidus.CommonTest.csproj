@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BDACBA7E-5D23-4730-AE7F-B3B38FA44C54}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -61,6 +61,7 @@
     <Compile Include="Rules\RuleFactoryTest.cs" />
     <Compile Include="Rules\UnCreateableRule.cs" />
     <Compile Include="Statements\StatementBaseTest.cs" />
+    <Compile Include="Statements\StatementParentTest.cs" />
     <Compile Include="Tokens\TokenBaseTest.cs" />
     <Compile Include="Util\AssemblyBasedAssignableClassCreatorTest.cs" />
   </ItemGroup>
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Common\JDT.Calidus.Common.csproj">
       <Project>{10FB15F4-F46E-4D03-9D4B-7F35E0C7B8F3}</Project>
       <Name>JDT.Calidus.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
+      <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
+      <Name>JDT.Calidus.Statements</Name>
     </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Tests\JDT.Calidus.Tests.csproj">
       <Project>{8C956493-60B9-4099-9685-8BB8C451AAD3}</Project>

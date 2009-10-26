@@ -19,11 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Statements.Declaration;
-using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Types;
 
 namespace JDT.Calidus.Statements.Factories.Declaration
 {
@@ -32,9 +33,14 @@ namespace JDT.Calidus.Statements.Factories.Declaration
     /// </summary>
     public class MemberStatementFactory : FluentStatementFactory<MemberStatement>
     {
-        protected override MemberStatement BuildStatement(IList<TokenBase> input)
+        protected override MemberStatement BuildStatement(IEnumerable<TokenBase> input)
         {
             return new MemberStatement(input);
+        }
+
+        protected override bool IsValidContext(IStatementContext context)
+        {
+            return context.Parents.FirstParentIsOfType<ClassStatement>();
         }
 
         protected override IStatementExpression Expression
@@ -42,8 +48,9 @@ namespace JDT.Calidus.Statements.Factories.Declaration
             get 
             {
                 StatementExpression expression = new StatementExpression();
-                expression.StartsWith<AccessModifierToken>()
-                    .FollowedBy<IdentifierToken>()
+                expression
+                    .ContainsNo<EventToken>()
+                    .Contains<IdentifierToken>()
                     .FollowedBy<IdentifierToken>()
                     .FollowedBy<SemiColonToken>();
 

@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Blocks\CalidusBlockParser.cs" />
     <Compile Include="Lines\CalidusLineParser.cs" />
+    <Compile Include="Statements\StatementContext.cs" />
+    <Compile Include="Statements\StatementContextManager.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParser.cs" />
     <Compile Include="Statements\CalidusStatementParser.cs" />
     <Compile Include="Tokens\GenericsTokenParser.cs" />

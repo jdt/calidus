@@ -36,10 +36,11 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// Resolves the token list as a statement and returns the statement
         /// </summary>
         /// <param name="input">The tokens to parse</param>
+        /// <param name="context">The context for the stamement</param>
         /// <returns>The statement</returns>
-        public StatementBase Create(IList<TokenBase> input)
+        public StatementBase Create(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            if (CanCreateStatementFrom(input))
+            if (CanCreateStatementFrom(input, context))
                 return BuildStatement(input);
             else
                 throw new CalidusException("The factory cannot parse the token list into a statement");
@@ -49,11 +50,11 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// Checks to see if the current factory is able to create a statement from the token list
         /// </summary>
         /// <param name="tokenList">The tokens to try to parse as a statement</param>
+        /// <param name="context">The statement context</param>
         /// <returns>True if able to parse, otherwise false</returns>
-        public bool CanCreateStatementFrom(IList<TokenBase> tokenList)
+        public bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context)
         {
-            bool res = Expression.Matches(tokenList);
-            return res;
+            return IsValidContext(context) && Expression.Matches(tokenList);
         }
 
         /// <summary>
@@ -61,7 +62,12 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         /// <param name="input">The token list</param>
         /// <returns>The statement</returns>
-        protected abstract TStatementType BuildStatement(IList<TokenBase> input);
+        protected abstract TStatementType BuildStatement(IEnumerable<TokenBase> input);
+        /// <summary>
+        /// Checks if the statement context is valid for the expression
+        /// </summary>
+        /// <param name="context">The context</param>
+        protected abstract bool IsValidContext(IStatementContext context);
         /// <summary>
         /// Gets the expression used to validate token lists
         /// </summary>

@@ -49,7 +49,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             input.Add(TokenCreator.Create<CloseSquareBracketToken>());
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             input.Add(TokenCreator.Create<CloseSquareBracketToken>());
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<CloseSquareBracketToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, null));
         }
     }
 }

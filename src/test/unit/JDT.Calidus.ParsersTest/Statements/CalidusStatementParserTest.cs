@@ -25,9 +25,7 @@ using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.PreProcessor;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Statements;
-using JDT.Calidus.Parsers;
 using Rhino.Mocks;
-using JDT.Calidus.Common;
 using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens.Common.Brackets;
 
@@ -42,11 +40,16 @@ namespace JDT.Calidus.ParsersTest.Statements
         public override void SetUp()
         {
             base.SetUp();
-            _parser = new CalidusStatementParser(new StubStatementFactoryProvider());
+
+            MockRepository mocker = new MockRepository();
+
+            IStatementContextManager contextManager = mocker.DynamicMock<IStatementContextManager>();
+            _parser = new CalidusStatementParser(new StubStatementFactoryProvider(), contextManager);
+            mocker.ReplayAll();
         }
 
         [Test]
-        public void ParserShouldCallStatementFactoryWhenParsingTokens()
+        public void ParserShouldCallStatementFactoryAndContextManagerWhenParsingTokens()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<GenericToken>("source", null));
@@ -55,14 +58,18 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             MockRepository mocker = new MockRepository();
             IStatementFactory factory = mocker.StrictMock<IStatementFactory>();
-            Expect.Call(factory.CanCreateStatementFrom(new List<TokenBase>())).IgnoreArguments().Return(true).Repeat.Once();
-            Expect.Call(factory.Create(input)).Return(new GenericStatement(input)).Repeat.Once();
+            IStatementContextManager contextManager = mocker.StrictMock<IStatementContextManager>();
+
+            Expect.Call(factory.CanCreateStatementFrom(new List<TokenBase>(), null)).IgnoreArguments().Return(true).Repeat.Once();
+            Expect.Call(factory.Create(input, null)).Return(new GenericStatement(input)).Repeat.Once();
+            Expect.Call(() => contextManager.Encountered(new[] { new GenericStatement(input) })).Repeat.Once();
+            Expect.Call(contextManager.GetContext()).Return(null).Repeat.Twice();
 
             StubStatementFactoryProvider provider = new StubStatementFactoryProvider(factory);
-            CalidusStatementParser parser = new CalidusStatementParser(provider);
+            CalidusStatementParser parser = new CalidusStatementParser(provider, contextManager);
             mocker.ReplayAll();
 
-            IEnumerable<StatementBase> actual = parser.Parse(input);
+            parser.Parse(input);
 
             mocker.VerifyAll();
         }

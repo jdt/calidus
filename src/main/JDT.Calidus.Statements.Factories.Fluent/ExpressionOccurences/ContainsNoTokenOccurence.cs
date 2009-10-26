@@ -19,21 +19,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tests
+namespace JDT.Calidus.Statements.Factories.Fluent.ExpressionOccurences
 {
-    public class StubStatementFactory : IStatementFactory
+    /// <summary>
+    /// This class checks that a token does not occure anywhere
+    /// </summary>
+    public class ContainsNoTokenOccurence : ExpressionOccurenceBase
     {
-        public StatementBase Create(IEnumerable<TokenBase> tokenList, IStatementContext context)
+        /// <summary>
+        /// Create a new instance of this object
+        /// </summary>
+        /// <param name="tokenType">The token type</param>
+        public ContainsNoTokenOccurence(Type tokenType)
+            : base(tokenType)
         {
-            return new GenericStatement(tokenList);
         }
 
-        public bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context)
+        /// <summary>
+        /// Checks if the list of tokens is valid for the occurence
+        /// </summary>
+        /// <param name="tokens">The tokens</param>
+        /// <returns>True if valid, otherwise false</returns>
+        public override bool IsValidFor(IEnumerable<TokenBase> tokens)
         {
-            return true;
+            return tokens.Count(p => p.GetType().Equals(TokenType)) == 0;
         }
     }
 }

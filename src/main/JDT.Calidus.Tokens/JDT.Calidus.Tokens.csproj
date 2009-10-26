@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -76,6 +76,7 @@
     <Compile Include="PreProcessor\RegionStartToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ClassToken.cs" />
+    <Compile Include="Types\EventToken.cs" />
     <Compile Include="Types\StructToken.cs" />
     <Compile Include="Types\InterfaceToken.cs" />
     <Compile Include="Types\ValueTypeToken.cs" />

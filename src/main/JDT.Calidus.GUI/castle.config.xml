@@ -14,5 +14,7 @@
     <component id="IStatementRuleFactoryProvider" type="JDT.Calidus.Providers.StatementRuleFactoryProviders.AssemblyBasedStatementRuleFactoryProvider, JDT.Calidus.Providers" />
     <component id="IBlockRuleFactoryProvider" type="JDT.Calidus.Providers.BlockRuleFactoryProviders.AssemblyBasedBlockRuleFactoryProvider, JDT.Calidus.Providers" />
     <component id="ILineRuleFactoryProvider" type="JDT.Calidus.Providers.LineRuleFactoryProviders.AssemblyBasedLineRuleFactoryProvider, JDT.Calidus.Providers" />
+    
+    <component id="IStatementContextManager" type="JDT.Calidus.Parsers.Statements.StatementContextManager, JDT.Calidus.Parsers" />
   </components>
 </castle>

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Statements.Namespace;
@@ -32,9 +33,14 @@ namespace JDT.Calidus.Statements.Factories.Namespace
     /// </summary>
     public class UsingStatementFactory : FluentStatementFactory<UsingStatement>
     {
-        protected override UsingStatement BuildStatement(IList<TokenBase> input)
+        protected override UsingStatement BuildStatement(IEnumerable<TokenBase> input)
         {
             return new UsingStatement(input);
+        }
+
+        protected override bool IsValidContext(IStatementContext context)
+        {
+            return true;
         }
 
         protected override IStatementExpression Expression

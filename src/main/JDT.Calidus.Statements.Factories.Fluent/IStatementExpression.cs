@@ -53,6 +53,12 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// <returns>An expression containing the specified token type</returns>
         IMiddleStatementExpression Contains<TTokenType>() where TTokenType : TokenBase;
         /// <summary>
+        /// Verify that the statement does not contain a token of the supplied type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type</typeparam>
+        /// <returns>An expression not containing the specified token type</returns>
+        IMiddleStatementExpression ContainsNo<TTokenType>() where TTokenType : TokenBase;
+        /// <summary>
         /// Verify that the statement is of a single token type
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>

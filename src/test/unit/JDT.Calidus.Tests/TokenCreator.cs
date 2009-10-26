@@ -39,9 +39,7 @@ namespace JDT.Calidus.Tests
         /// </summary>
         public TokenCreator()
         {
-            _currentLine = 1;
-            _currentColumn = 1;
-            _currentPosition = 0;
+            Reset();
         }
 
         /// <summary>
@@ -129,6 +127,16 @@ namespace JDT.Calidus.Tests
             _currentPosition += number;
             _currentLine += number;
             _currentColumn = 1;
+        }
+
+        /// <summary>
+        /// Reset the creator state
+        /// </summary>
+        public void Reset()
+        {
+            _currentLine = 1;
+            _currentColumn = 1;
+            _currentPosition = 0;
         }
 
         private void UpdateInformation(TokenBase token)

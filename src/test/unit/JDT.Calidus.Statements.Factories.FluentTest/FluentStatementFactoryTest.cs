@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Fluent;
 using NUnit.Framework;
@@ -37,9 +38,14 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
             ExpressionResult = expressionResult;
         }
 
-        protected override StubStatement BuildStatement(IList<TokenBase> input)
+        protected override StubStatement BuildStatement(IEnumerable<TokenBase> input)
         {
             throw new NotImplementedException();
+        }
+
+        protected override bool IsValidContext(IStatementContext context)
+        {
+            return true;
         }
 
         protected override IStatementExpression Expression
@@ -88,6 +94,11 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             throw new NotImplementedException();
         }
+
+        public IMiddleStatementExpression ContainsNo<TTokenType>() where TTokenType : TokenBase
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]
@@ -103,10 +114,10 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
 
             FluentStatementFactoryImpl factory = new FluentStatementFactoryImpl(false);
 
-            Assert.AreEqual(false, factory.CanCreateStatementFrom(input));
+            Assert.AreEqual(false, factory.CanCreateStatementFrom(input, null));
             Assert.Throws<CalidusException>(delegate
                                                 {
-                                                    factory.Create(input);
+                                                    factory.Create(input, null);
                                                 }, "The factory cannot parse the token list into a statement");
         }
 
@@ -120,7 +131,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
 
             FluentStatementFactoryImpl factory = new FluentStatementFactoryImpl(true);
 
-            factory.CanCreateStatementFrom(input);
+            factory.CanCreateStatementFrom(input, null);
 
             Assert.True(factory.MatchExpressionWasCalled);
         }

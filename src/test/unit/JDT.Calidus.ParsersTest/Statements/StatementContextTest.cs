@@ -20,20 +20,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
-using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Parsers.Statements;
+using JDT.Calidus.Tests;
+using NUnit.Framework;
 
-namespace JDT.Calidus.Tests
+namespace JDT.Calidus.ParsersTest.Statements
 {
-    public class StubStatementFactory : IStatementFactory
+    [TestFixture]
+    public class StatementContextTest : CalidusTestBase
     {
-        public StatementBase Create(IEnumerable<TokenBase> tokenList, IStatementContext context)
+        [SetUp]
+        public override void SetUp()
         {
-            return new GenericStatement(tokenList);
+            base.SetUp();
         }
 
-        public bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context)
+        [Test]
+        public void StatementContextsShouldBeEqual()
         {
-            return true;
+            IList<StatementParent> alphaList = new[] { new StatementParent(new[] {StatementCreator.CreateLineCommentStatement("test")}, null) };
+            TokenCreator.Reset();
+            IList<StatementParent> bravoList = new[] { new StatementParent(new[] {StatementCreator.CreateLineCommentStatement("test")}, null) };
+            
+            StatementContext alpha = new StatementContext(alphaList);
+            StatementContext bravo = new StatementContext(bravoList);
+
+            Assert.AreEqual(alpha, bravo);
         }
     }
 }

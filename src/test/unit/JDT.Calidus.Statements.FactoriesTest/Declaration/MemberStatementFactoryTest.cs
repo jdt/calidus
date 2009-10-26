@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Declaration;
 using JDT.Calidus.Tests;
@@ -27,6 +28,7 @@ using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Types;
 using JDT.Calidus.Tokens.Common.Brackets;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.Statements.FactoriesTest.Declaration
 {
@@ -34,17 +36,24 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
     public class MemberStatementFactoryTest : CalidusTestBase
     {
         private MemberStatementFactory _factory;
+        private IStatementContext _context;
+        private MockRepository _mocker;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
+
             _factory = new MemberStatementFactory();
+            _mocker = new MockRepository();
+            _context = _mocker.DynamicMock<IStatementContext>();
         }
 
         [Test]
         public void MemberStatementFactoryShouldCheckCreateMemberCorrectly()
         {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) } ).Repeat.Once();
+
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -53,12 +62,16 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            _mocker.ReplayAll();
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void MemberStatementFactoryShouldNotCreateClass()
         {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
+
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -66,12 +79,16 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
 
-            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
+            _mocker.ReplayAll();
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void MemberStatementFactoryShouldNotCreateFromMethod()
         {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
+
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -81,7 +98,43 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
+            _mocker.ReplayAll();
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void MemberStatementShouldNotRequireAccessModifier()
+        {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("t"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            _mocker.ReplayAll();
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void EventShouldNotParseAsMember()
+        {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<EventToken>("event")); 
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("EventHandler"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("t"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            _mocker.ReplayAll();
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
         }
     }
 }

@@ -19,36 +19,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Factories.Common;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Tests;
-using JDT.Calidus.Tokens.Common;
-using JDT.Calidus.Tokens.Common.Brackets;
 using NUnit.Framework;
 
-namespace JDT.Calidus.Statements.FactoriesTest.Common
+namespace JDT.Calidus.CommonTest.Statements
 {
     [TestFixture]
-    public class CloseBlockStatementFactoryTest : CalidusTestBase
+    public class StatementParentTest : CalidusTestBase
     {
-        private CloseBlockStatementFactory _factory;
-
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _factory = new CloseBlockStatementFactory();
         }
 
         [Test]
-        public void CloseCurlyBracketTokenShouldBeCloseBlockStatement()
+        public void StatementParentsShouldBeEqual()
         {
-            IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<CloseCurlyBracketToken>());
-            input.Add(TokenCreator.Create<TabToken>());
+            StatementBase alphaStatement = StatementCreator.CreateMemberStatement("test");
+            StatementBase alphaDelimiter = StatementCreator.CreateOpenBlockStatement();
+            TokenCreator.Reset();
+            StatementBase bravoStatement = StatementCreator.CreateMemberStatement("test");
+            StatementBase bravoDelimiter = StatementCreator.CreateOpenBlockStatement();
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
+            StatementParent alpha = new StatementParent(new[] {alphaStatement}, alphaDelimiter);
+            StatementParent bravo = new StatementParent(new[] {bravoStatement}, bravoDelimiter);
+
+            Assert.AreEqual(alpha, bravo);
         }
     }
 }

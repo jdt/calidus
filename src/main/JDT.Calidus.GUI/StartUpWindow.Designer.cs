@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartUpWindow));
             this.label1 = new System.Windows.Forms.Label();
             this.cmdNew = new System.Windows.Forms.Button();
             this.cmdExisting = new System.Windows.Forms.Button();
@@ -70,6 +71,7 @@
             this.Controls.Add(this.cmdExisting);
             this.Controls.Add(this.cmdNew);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartUpWindow";
             this.Text = "Select a project";
             this.ResumeLayout(false);

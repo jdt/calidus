@@ -48,7 +48,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Common
             input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
             input.Add(TokenCreator.Create<TabToken>());
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Common
             input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
             input.Add(TokenCreator.Create<TabToken>());
 
-            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, null));
         }
     }
 }
