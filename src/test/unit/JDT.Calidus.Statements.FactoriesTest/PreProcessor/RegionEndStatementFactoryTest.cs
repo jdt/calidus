@@ -45,7 +45,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.PreProcessor
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<RegionEndToken>("#endregion"));
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
     }
 }

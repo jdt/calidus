@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Blocks\CalidusBlockParserTest.cs" />
     <Compile Include="Lines\CalidusLineParserTest.cs" />
+    <Compile Include="Statements\StatementContextManagerTest.cs" />
+    <Compile Include="Statements\StatementContextTest.cs" />
     <Compile Include="Tokens\WhiteSpaceTokenParserTest.cs" />
     <Compile Include="Statements\CalidusStatementParserTest.cs" />
     <Compile Include="Tokens\GenericsTokenParserTest.cs" />

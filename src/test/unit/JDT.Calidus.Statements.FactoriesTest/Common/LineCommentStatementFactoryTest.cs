@@ -45,7 +45,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Common
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<LineCommentToken>("Test"));
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Common
             input.Add(TokenCreator.Create<ForwardSlashToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
-            Assert.IsFalse(_factory.CanCreateStatementFrom(input));
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, null));
         }
     }
 }

@@ -20,35 +20,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Statements.Factories.Common;
+using JDT.Calidus.Statements.Factories.Fluent.ExpressionOccurences;
 using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens.Common;
-using JDT.Calidus.Tokens.Common.Brackets;
 using NUnit.Framework;
 
-namespace JDT.Calidus.Statements.FactoriesTest.Common
+namespace JDT.Calidus.Statements.Factories.FluentTest.ExpressionOccurences
 {
     [TestFixture]
-    public class CloseBlockStatementFactoryTest : CalidusTestBase
+    public class ContainsNoTokenOccurenceTest : CalidusTestBase
     {
-        private CloseBlockStatementFactory _factory;
+        private ContainsNoTokenOccurence _occurence;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _factory = new CloseBlockStatementFactory();
+            _occurence = new ContainsNoTokenOccurence(typeof(SemiColonToken));
         }
 
         [Test]
-        public void CloseCurlyBracketTokenShouldBeCloseBlockStatement()
+        public void ContainsNoTokenOccurenceShouldBeValidForListNotContainingToken()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<CloseCurlyBracketToken>());
-            input.Add(TokenCreator.Create<TabToken>());
+            input.Add(TokenCreator.Create<ForwardSlashToken>());
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
+            Assert.IsTrue(_occurence.IsValidFor(input));
+        }
+
+        [Test]
+        public void ContainsNoTokenOccurenceShouldBeInValidForListContainingToken()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<ForwardSlashToken>());
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            Assert.IsFalse(_occurence.IsValidFor(input));
         }
     }
 }

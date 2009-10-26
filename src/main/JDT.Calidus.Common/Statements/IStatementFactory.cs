@@ -33,13 +33,15 @@ namespace JDT.Calidus.Common.Statements
         /// Resolves the token list as a statement and returns the statement
         /// </summary>
         /// <param name="input">The tokens to parse</param>
+        /// <param name="context">The context for the stamement</param>
         /// <returns>The statement</returns>
-        StatementBase Create(IList<TokenBase> input);
+        StatementBase Create(IEnumerable<TokenBase> input, IStatementContext context);
         /// <summary>
         /// Checks to see if the current factory is able to create a statement from the token list
         /// </summary>
         /// <param name="tokenList">The tokens to try to parse as a statement</param>
+        /// <param name="context">The statement context</param>
         /// <returns>True if able to parse, otherwise false</returns>
-        bool CanCreateStatementFrom(IList<TokenBase> tokenList);
+        bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context);
     }
 }

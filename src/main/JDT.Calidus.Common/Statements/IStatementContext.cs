@@ -19,21 +19,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Statements;
-using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tests
+namespace JDT.Calidus.Common.Statements
 {
-    public class StubStatementFactory : IStatementFactory
+    /// <summary>
+    /// This interface is implemented by statement contexts
+    /// </summary>
+    public interface IStatementContext
     {
-        public StatementBase Create(IEnumerable<TokenBase> tokenList, IStatementContext context)
-        {
-            return new GenericStatement(tokenList);
-        }
-
-        public bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context)
-        {
-            return true;
-        }
+        /// <summary>
+        /// Gets the statements that are parents of the current statement
+        /// </summary>
+        /// <example>
+        /// When parsing for member statements, the context should provide the class and namespace statement as parent
+        /// </example>
+        IEnumerable<StatementParent> Parents { get; }
     }
 }

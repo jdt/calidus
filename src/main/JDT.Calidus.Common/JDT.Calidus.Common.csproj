@@ -97,9 +97,13 @@
     <Compile Include="Rules\Statements\StatementRuleBase.cs" />
     <Compile Include="Rules\RuleFactory.cs" />
     <Compile Include="Statements\GenericStatement.cs" />
+    <Compile Include="Statements\IStatementContextManager.cs" />
     <Compile Include="Statements\IStatementFactory.cs" />
     <Compile Include="Statements\IStatementRuleFactory.cs" />
     <Compile Include="Statements\StatementBase.cs" />
+    <Compile Include="Statements\IStatementContext.cs" />
+    <Compile Include="Statements\StatementParent.cs" />
+    <Compile Include="Statements\StatementParentUtils.cs" />
     <Compile Include="Tokens\GenericToken.cs" />
     <Compile Include="Tokens\IGenericsTokenParser.cs" />
     <Compile Include="Tokens\ITokenParser.cs" />

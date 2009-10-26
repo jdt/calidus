@@ -268,5 +268,11 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(StructToken), CocoTokenConverter.Convert(GetCocoToken(Parser._struct)));
         }
+
+        [Test]
+        public void EventConstShouldReturnEventToken()
+        {
+            Assert.IsInstanceOf(typeof(EventToken), CocoTokenConverter.Convert(GetCocoToken(Parser._event)));
+        }
     }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{639B0281-0B1B-4E8A-A610-E5E055B72DDA}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionOccurences\ExpressionOccurenceBase.cs" />
     <Compile Include="FluentStatementFactory.cs" />
     <Compile Include="IEndingStatementExpression.cs" />
     <Compile Include="IMiddleStatementExpression.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatementExpression.cs" />
     <Compile Include="TokenOccurences\ContainsTokenOccurence.cs" />
+    <Compile Include="ExpressionOccurences\ContainsNoTokenOccurence.cs" />
     <Compile Include="TokenOccurences\IsTokenOccurence.cs" />
     <Compile Include="TokenOccurences\TokenOccurence.cs" />
     <Compile Include="TokenOccurences\NextTokenOccurenceBase.cs" />

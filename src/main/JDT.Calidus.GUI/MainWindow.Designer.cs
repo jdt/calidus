@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,14 +39,14 @@
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitMain = new System.Windows.Forms.SplitContainer();
-            this.fileListView = new JDT.Calidus.GUI.Views.FileTreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
+            this.statusView = new JDT.Calidus.GUI.Views.StatusView();
+            this.fileListView = new JDT.Calidus.GUI.Views.FileTreeView();
             this.sourceLocationView = new JDT.Calidus.GUI.Views.SourceLocationView();
             this.ruleRunnerView = new JDT.Calidus.GUI.Views.RuleRunnerView();
-            this.splitRulesViolations = new System.Windows.Forms.SplitContainer();
             this.checkableRuleTreeView = new JDT.Calidus.GUI.Views.CheckableRuleTreeView();
             this.violationListView = new JDT.Calidus.GUI.Views.ViolationListView();
-            this.statusView = new JDT.Calidus.GUI.Views.StatusView();
             this.menuMain.SuspendLayout();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -149,14 +150,6 @@
             this.splitMain.SplitterDistance = 209;
             this.splitMain.TabIndex = 1;
             // 
-            // fileListView
-            // 
-            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileListView.Location = new System.Drawing.Point(0, 0);
-            this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(209, 386);
-            this.fileListView.TabIndex = 0;
-            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -168,23 +161,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(614, 103);
             this.panel1.TabIndex = 2;
-            // 
-            // sourceLocationView
-            // 
-            this.sourceLocationView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.sourceLocationView.Location = new System.Drawing.Point(79, 8);
-            this.sourceLocationView.Name = "sourceLocationView";
-            this.sourceLocationView.Size = new System.Drawing.Size(525, 20);
-            this.sourceLocationView.TabIndex = 1;
-            // 
-            // ruleRunnerView
-            // 
-            this.ruleRunnerView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ruleRunnerView.Location = new System.Drawing.Point(0, 0);
-            this.ruleRunnerView.Name = "ruleRunnerView";
-            this.ruleRunnerView.Size = new System.Drawing.Size(612, 101);
-            this.ruleRunnerView.TabIndex = 2;
             // 
             // splitRulesViolations
             // 
@@ -206,6 +182,39 @@
             this.splitRulesViolations.SplitterDistance = 136;
             this.splitRulesViolations.TabIndex = 1;
             // 
+            // statusView
+            // 
+            this.statusView.Location = new System.Drawing.Point(0, 416);
+            this.statusView.Name = "statusView";
+            this.statusView.Size = new System.Drawing.Size(833, 22);
+            this.statusView.TabIndex = 2;
+            this.statusView.Text = "statusView1";
+            // 
+            // fileListView
+            // 
+            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileListView.Location = new System.Drawing.Point(0, 0);
+            this.fileListView.Name = "fileListView";
+            this.fileListView.Size = new System.Drawing.Size(209, 386);
+            this.fileListView.TabIndex = 0;
+            // 
+            // sourceLocationView
+            // 
+            this.sourceLocationView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.sourceLocationView.Location = new System.Drawing.Point(79, 8);
+            this.sourceLocationView.Name = "sourceLocationView";
+            this.sourceLocationView.Size = new System.Drawing.Size(525, 20);
+            this.sourceLocationView.TabIndex = 1;
+            // 
+            // ruleRunnerView
+            // 
+            this.ruleRunnerView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ruleRunnerView.Location = new System.Drawing.Point(0, 0);
+            this.ruleRunnerView.Name = "ruleRunnerView";
+            this.ruleRunnerView.Size = new System.Drawing.Size(612, 101);
+            this.ruleRunnerView.TabIndex = 2;
+            // 
             // checkableRuleTreeView
             // 
             this.checkableRuleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -222,14 +231,6 @@
             this.violationListView.Size = new System.Drawing.Size(614, 134);
             this.violationListView.TabIndex = 0;
             // 
-            // statusView
-            // 
-            this.statusView.Location = new System.Drawing.Point(0, 416);
-            this.statusView.Name = "statusView";
-            this.statusView.Size = new System.Drawing.Size(833, 22);
-            this.statusView.TabIndex = 2;
-            this.statusView.Text = "statusView1";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,6 +239,7 @@
             this.Controls.Add(this.statusView);
             this.Controls.Add(this.splitMain);
             this.Controls.Add(this.menuMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuMain;
             this.Name = "MainWindow";
             this.Text = "Calidus GUI Runner";

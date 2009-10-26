@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Statements.Factories.Fluent.ExpressionOccurences;
 using JDT.Calidus.Statements.Factories.Fluent.TokenOccurences;
 
 namespace JDT.Calidus.Statements.Factories.Fluent
@@ -36,6 +37,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
           IEndingStatementExpression
     {
         private IList<TokenOccurenceBase> _occurencesList;
+        private IList<ExpressionOccurenceBase> _expressionOccurencesList;
 
         /// <summary>
         /// Create a new instance of this class
@@ -43,6 +45,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         public StatementExpression()
         {
             _occurencesList = new List<TokenOccurenceBase>();
+            _expressionOccurencesList = new List<ExpressionOccurenceBase>();
         }
 
         /// <summary>
@@ -55,8 +58,18 @@ namespace JDT.Calidus.Statements.Factories.Fluent
             Queue<TokenBase> tokens = new Queue<TokenBase>(checkList);
             Queue<TokenOccurenceBase> occurences = new Queue<TokenOccurenceBase>(_occurencesList);
 
-            if (occurences.Count == 0)
+            //check for all statement-wide occurences
+            foreach (ExpressionOccurenceBase anOccurence in _expressionOccurencesList)
+                if (anOccurence.IsValidFor(tokens) == false)
+                    return false;
+
+            //if both empty, invalid
+            if (occurences.Count == 0 && _expressionOccurencesList.Count() == 0)
                 return false;
+            //if no occurences and reached this point with expression occurences, valid
+            if (occurences.Count == 0 && _expressionOccurencesList.Count() != 0)
+                return true;
+
             bool isMatch = IsMatch(tokens, occurences);
             return isMatch;
         }
@@ -177,6 +190,17 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         public IEndingStatementExpression Is<TTokenType>() where TTokenType : TokenBase
         {
             _occurencesList.Add(new IsTokenOccurence(typeof(TTokenType)));
+            return this;
+        }
+
+        /// <summary>
+        /// Verify that the statement does not contain a token of the supplied type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type</typeparam>
+        /// <returns>An expression not containing the specified token type</returns>
+        public IMiddleStatementExpression ContainsNo<TTokenType>() where TTokenType : TokenBase
+        {
+            _expressionOccurencesList.Add(new ContainsNoTokenOccurence(typeof(TTokenType)));
             return this;
         }
     }

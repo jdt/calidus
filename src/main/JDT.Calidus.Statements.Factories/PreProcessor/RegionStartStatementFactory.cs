@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Statements.PreProcessor;
@@ -31,9 +32,14 @@ namespace JDT.Calidus.Statements.Factories.PreProcessor
     /// </summary>
     public class RegionStartStatementFactory : FluentStatementFactory<RegionStartStatement>
     {
-        protected override RegionStartStatement BuildStatement(IList<TokenBase> input)
+        protected override RegionStartStatement BuildStatement(IEnumerable<TokenBase> input)
         {
             return new RegionStartStatement(input);
+        }
+        
+        protected override bool IsValidContext(IStatementContext context)
+        {
+            return true;
         }
 
         protected override IStatementExpression Expression

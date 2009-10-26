@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Statements.Factories.Fluent;
@@ -31,9 +32,14 @@ namespace JDT.Calidus.Statements.Factories.Common
     /// </summary>
     public class CloseBlockStatementFactory : FluentStatementFactory<CloseBlockStatement>
     {
-        protected override CloseBlockStatement BuildStatement(IList<TokenBase> input)
+        protected override CloseBlockStatement BuildStatement(IEnumerable<TokenBase> input)
         {
             return new CloseBlockStatement(input);
+        }
+
+        protected override bool IsValidContext(IStatementContext context)
+        {
+            return true;
         }
 
         protected override IStatementExpression Expression

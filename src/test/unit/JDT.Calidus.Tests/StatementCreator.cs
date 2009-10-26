@@ -24,10 +24,11 @@ using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Statements.PreProcessor;
-using JDT.Calidus.Tokens;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Common.Brackets;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.PreProcessor;
+using JDT.Calidus.Tokens.Types;
 
 namespace JDT.Calidus.Tests
 {
@@ -92,6 +93,31 @@ namespace JDT.Calidus.Tests
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<RegionEndToken>(content));
             return new RegionEndStatement(input);
+        }
+
+        public OpenBlockStatement CreateOpenBlockStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
+            return new OpenBlockStatement(input);
+        }
+
+        public ClassStatement CreateClassStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>("public"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<ClassToken>("class"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+            return new ClassStatement(input);
+        }
+
+        public CloseBlockStatement CreateCloseBlockStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<CloseCurlyBracketToken>());
+            return new CloseBlockStatement(input);
         }
     }
 }

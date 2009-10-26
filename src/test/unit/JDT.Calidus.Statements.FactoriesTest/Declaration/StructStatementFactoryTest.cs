@@ -48,7 +48,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
-            Assert.IsTrue(_factory.CanCreateStatementFrom(input));
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
     }
 }

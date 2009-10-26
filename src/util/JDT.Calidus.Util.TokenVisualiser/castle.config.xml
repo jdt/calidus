@@ -7,6 +7,8 @@
 
     <component id="IStatementFactoryProvider" type="JDT.Calidus.Providers.StatementFactoryProviders.AssemblyBasedStatementFactoryProvider, JDT.Calidus.Providers" />
     <component id="IBlockFactoryProvider" type="JDT.Calidus.Providers.BlockFactoryProviders.AssemblyBasedBlockFactoryProvider, JDT.Calidus.Providers" />
-    <component id="ILineFactoryProvider" type="JDT.Calidus.Providers.LineFactoryProviders.AssemblyBasedLineFactoryProvider, JDT.Calidus.Providers" />   
+    <component id="ILineFactoryProvider" type="JDT.Calidus.Providers.LineFactoryProviders.AssemblyBasedLineFactoryProvider, JDT.Calidus.Providers" />
+
+    <component id="IStatementContextManager" type="JDT.Calidus.Parsers.Statements.StatementContextManager, JDT.Calidus.Parsers" />
   </components>
 </castle>
