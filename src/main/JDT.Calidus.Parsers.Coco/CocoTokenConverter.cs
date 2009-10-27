@@ -71,6 +71,8 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._interface, typeof(InterfaceToken));
             _simpleTokenTypeMap.Add(Parser._struct, typeof(StructToken));
             _simpleTokenTypeMap.Add(Parser._event, typeof(EventToken));
+            _simpleTokenTypeMap.Add(Parser._abstract, typeof(AbstractToken));
+            _simpleTokenTypeMap.Add(Parser._static, typeof(StaticToken));
 
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));

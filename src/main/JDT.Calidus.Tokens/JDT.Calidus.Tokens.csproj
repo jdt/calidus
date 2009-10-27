@@ -66,6 +66,8 @@
     <Compile Include="Common\WhiteSpaceToken.cs" />
     <Compile Include="Constants\IntegerConstantToken.cs" />
     <Compile Include="Modifiers\AccessModifierToken.cs" />
+    <Compile Include="Modifiers\StaticToken.cs" />
+    <Compile Include="Modifiers\AbstractToken.cs" />
     <Compile Include="Modifiers\InternalModifierToken.cs" />
     <Compile Include="Modifiers\PrivateModifierToken.cs" />
     <Compile Include="Modifiers\ProtectedModifierToken.cs" />
