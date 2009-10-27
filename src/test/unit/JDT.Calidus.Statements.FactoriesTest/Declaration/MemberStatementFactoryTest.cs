@@ -136,5 +136,25 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
             _mocker.VerifyAll();
         }
+
+        [Test]
+        public void MemberStatementFactoryShouldAllowStaticMember()
+        {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<StaticToken>("static"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("t"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            _mocker.ReplayAll();
+            Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
+        }
     }
 }
