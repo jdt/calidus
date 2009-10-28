@@ -21,21 +21,40 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Tokens.Modifiers;
 
 namespace JDT.Calidus.Statements.Declaration
 {
     /// <summary>
-    /// This class represents a method statement
+    /// This class represents a statement with an access modifier
     /// </summary>
-    public class MethodStatement : AccessModifierStatement
+    public abstract class AccessModifierStatement : StatementBase
     {
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="tokens">The list of tokens in the statement</param>
-        public MethodStatement(IEnumerable<TokenBase> tokens)
+        protected AccessModifierStatement(IEnumerable<TokenBase> tokens)
             : base(tokens)
         {
+        }
+
+        /// <summary>
+        /// Gets the token that contains the access modifier in the statement
+        /// or null if none found
+        /// </summary>
+        public AccessModifierToken AccessModifierToken
+        {
+            get
+            {
+                for(int i = 0; i < Tokens.Count(); i++)
+                {
+                    if(Tokens.ElementAt(i) is AccessModifierToken)
+                        return (AccessModifierToken)Tokens.ElementAt(i);
+                }
+
+                return null;
+            }
         }
     }
 }

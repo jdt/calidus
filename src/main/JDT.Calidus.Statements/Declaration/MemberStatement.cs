@@ -29,7 +29,7 @@ namespace JDT.Calidus.Statements.Declaration
     /// <summary>
     /// This class represents a member statement
     /// </summary>
-    public class MemberStatement : StatementBase
+    public class MemberStatement : AccessModifierStatement
     {
         /// <summary>
         /// Create a new instance of this class
