@@ -121,43 +121,301 @@
     <value>17, 17</value>
   </metadata>
   <data name="rtSource.Text" xml:space="preserve">
-    <value>using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+    <value>#region License
+    // &lt;copyright&gt;
+    //   Copyright 2009 Jesper De Temmerman 
+    //   Licensed under the Apache License, Version 2.0 (the "License"); 
+    //   you may not use this file except in compliance with the License. 
+    //   You may obtain a copy of the License at
+    //
+    //   http://www.apache.org/licenses/LICENSE-2.0 
+    //
+    //   Unless required by applicable law or agreed to in writing, software 
+    //   distributed under the License is distributed on an "AS IS" BASIS, 
+    //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+    //   See the License for the specific language governing permissions and 
+    //   limitations under the License. 
+    // &lt;/copyright&gt;
+#endregion
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("JDT.Calidus.Util.TokenVisualiser")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JDT.Calidus.Util.TokenVisualiser")]
-[assembly: AssemblyCopyright("Copyright ©  2009")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using JDT.Calidus.Common.Rules;
+using JDT.Calidus.GUI.Controls;
+using JDT.Calidus.Projects;
+using JDT.Calidus.Rules;
+using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Model;
+using JDT.Calidus.UI.Views;
+using JDT.Calidus.UI.Events;
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
+namespace JDT.Calidus.GUI
+{
+    /// &lt;summary&gt;
+    /// This class is the forms-based implementation of the IMainView interface
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Form, IMainView
+    {
+        private static String WINDOW_TITLE = "Calidus GUI Runner - {0}";
+        private static String HAS_CHANGES = "*";
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c850b214-e853-4a38-af7a-75ef24d3bf2f")]
+        private String _projectName;
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-</value>
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        #region Form events
+
+            protected override void OnLoad(EventArgs e)
+            {
+                base.OnLoad(e);
+
+                //MainController controller = new MainController(this);
+            }
+
+            private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+            {
+                QuitEventArgs quit = new QuitEventArgs();
+                OnQuit(quit);
+                e.Cancel = quit.Cancel;
+            }
+
+        #endregion
+
+        #region Menu events
+
+            private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                OnRuleConfiguration();                
+            }
+
+            private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                OnProjectConfiguration();
+            }
+
+            private void openToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                OnOpen();
+            }
+
+            private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                OnSave();
+            }
+
+            private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                Close();
+            }
+
+        #endregion
+
+        /// &lt;summary&gt;
+        /// Exits the application
+        /// &lt;/summary&gt;
+        public void Exit()
+        {
+            Close();
+        }
+
+        /// &lt;summary&gt;
+        /// Signals the beginning of a long-running operation
+        /// &lt;/summary&gt;
+        public void BeginWait()
+        {
+            Cursor = Cursors.WaitCursor;
+        }
+
+        /// &lt;summary&gt;
+        /// Signals the end of a long-running operation
+        /// &lt;/summary&gt;
+        public void EndWait()
+        {
+            Cursor = Cursors.Default;
+        }
+
+        /// &lt;summary&gt;
+        /// Marks changes to the project
+        /// &lt;/summary&gt;
+        /// &lt;param name="_hasChanges"&gt;True if changed, otherwise false&lt;/param&gt;
+        public void ProjectHasChanges(bool hasChanges)
+        {
+            String name = "";
+            if (hasChanges)
+                name = String.Format(_projectName + "{0}", HAS_CHANGES);
+            else
+                name = String.Format(_projectName + "{0}", String.Empty);
+
+            Text = String.Format(WINDOW_TITLE, name);
+        }
+
+        /// &lt;summary&gt;
+        /// Sets the current rpoject
+        /// &lt;/summary&gt;
+        public String SelectedProject
+        {
+            set { _projectName = value; }
+        }
+
+        /// &lt;summary&gt;
+        /// Prompts the UI to confirm saving changes
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;The confirmation result&lt;/returns&gt;
+        public Confirm ConfirmSaveChanges()
+        {
+            DialogResult res = MessageBox.Show(this, "The project has unsaved changes. Do you want to save changes?", "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.Yes)
+                return Confirm.Yes;
+            if (res == DialogResult.No)
+                return Confirm.No;
+
+            return Confirm.Cancel;
+        }
+
+        /// &lt;summary&gt;
+        /// Browses for a project file
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;The result&lt;/returns&gt;
+        public FileBrowseResult OpenProjectFile()
+        {
+            return Dialogs.ShowOpenCalidusProjectFileDialog(this);
+        }
+
+        /// &lt;summary&gt;
+        /// Displays the project configuration for the model
+        /// &lt;/summary&gt;
+        /// &lt;param name="model"&gt;The model to display for&lt;/param&gt;
+        public void ShowProjectConfiguration(ICalidusProjectModel model)
+        {
+            ProjectConfigurationWindow win = new ProjectConfigurationWindow(model);
+            win.ShowDialog(this);
+        }
+
+        /// &lt;summary&gt;
+        /// Displays the rule configuration
+        /// &lt;/summary&gt;
+        public void ShowRuleConfiguration()
+        {
+            RuleConfigurationWindow win = new RuleConfigurationWindow();
+            win.ShowDialog(this);
+        }
+
+        #region Views
+
+            /// &lt;summary&gt;
+            /// Gets the status view
+            /// &lt;/summary&gt;
+            public IStatusView StatusView
+            {
+                get { return statusView; }
+            }
+
+            /// &lt;summary&gt;
+            /// Gets the rule runner view
+            /// &lt;/summary&gt;
+            public IRuleRunnerView RuleRunnerView
+            {
+                get { return ruleRunnerView; }
+            }
+
+            /// &lt;summary&gt;
+            /// Gets the source location view
+            /// &lt;/summary&gt;
+            public ISourceLocationView SourceLocationView
+            {
+                get { return sourceLocationView; }
+            }
+
+            /// &lt;summary&gt;
+            /// Gets the checkabel rule tree view
+            /// &lt;/summary&gt;
+            public ICheckableRuleTreeView CheckableRuleTreeView
+            {
+                get { return checkableRuleTreeView; }
+            }
+
+            /// &lt;summary&gt;
+            /// Gets the file list view
+            /// &lt;/summary&gt;
+            public IFileTreeView FileListView
+            {
+                get { return fileListView; }
+            }
+
+            /// &lt;summary&gt;
+            /// Gets the violation list view
+            /// &lt;/summary&gt;
+            public IViolationListView ViolationListView
+            {
+                get { return violationListView; }
+            }
+
+        #endregion
+
+        #region View Events
+
+            /// &lt;summary&gt;
+            /// Notifies that the quit was called
+            /// &lt;/summary&gt;
+            public event EventHandler&lt;QuitEventArgs&gt; Quit;
+            private void OnQuit(QuitEventArgs e)
+            {
+                if (Quit != null)
+                    Quit(this, e);
+            }
+
+            /// &lt;summary&gt;
+            /// Notifies that open was called
+            /// &lt;/summary&gt;
+            public event EventHandler&lt;EventArgs&gt; Open;
+            private void OnOpen()
+            {
+                if (Open != null)
+                    Open(this, new EventArgs());
+            }
+
+            /// &lt;summary&gt;
+            /// Notifies that save was called
+            /// &lt;/summary&gt;
+            public event EventHandler&lt;EventArgs&gt; Save;
+            private void OnSave()
+            {
+                if (Save != null)
+                    Save(this, new EventArgs());
+            }
+
+            /// &lt;summary&gt;
+            /// Notifies that project configuration was called
+            /// &lt;/summary&gt;
+            public event EventHandler&lt;EventArgs&gt; ProjectConfiguration;
+            private void OnProjectConfiguration()
+            {
+                if (ProjectConfiguration != null)
+                    ProjectConfiguration(this, new EventArgs());
+            }
+
+            /// &lt;summary&gt;
+            /// Notifies that rule configuration was called
+            /// &lt;/summary&gt;
+            public event EventHandler&lt;EventArgs&gt; RuleConfiguration;
+            private void OnRuleConfiguration()
+            {
+                if (RuleConfiguration != null)
+                    RuleConfiguration(this, new EventArgs());
+            }
+
+        #endregion
+    }
+}</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>79</value>
