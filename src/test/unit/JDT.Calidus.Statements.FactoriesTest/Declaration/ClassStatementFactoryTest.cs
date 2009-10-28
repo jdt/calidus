@@ -44,7 +44,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
         public void ClassIdentifierFollowedByIdentifierShouldBeClassStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<ClassToken>("class"));
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 

@@ -44,7 +44,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
         public void StructIdentifierFollowedByIdentifierShouldBeStructStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<StructToken>("struct"));
+            input.Add(TokenCreator.Create<StructToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 

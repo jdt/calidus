@@ -33,9 +33,8 @@ namespace JDT.Calidus.Tokens.Modifiers
         /// <param name="line">The line</param>
         /// <param name="col">The column</param>
         /// <param name="pos">The position</param>
-        /// <param name="content">The content</param>
-        public InternalModifierToken(int line, int col, int pos, String content)
-            : base(line, col, pos, content)
+        public InternalModifierToken(int line, int col, int pos)
+            : base(line, col, pos, KeyWords.INTERNAL)
         {
         }
     }

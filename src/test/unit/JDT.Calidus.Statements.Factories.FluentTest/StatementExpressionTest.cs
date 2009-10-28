@@ -90,7 +90,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionStartWithAndFollowedByShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
 
             IStatementExpression toMatch =
@@ -104,7 +104,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionStartWithAndFollowedByShouldMatchAppropriateTokenListIgnoringWhiteSpaceTokens()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<NewLineToken>());
             input.Add(TokenCreator.Create<TabToken>());
@@ -121,7 +121,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionEndsWithShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -137,7 +137,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionEndsWithShouldMatchAppropriateTokenListIgnoringWhitespace()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<NewLineToken>());
             input.Add(TokenCreator.Create<TabToken>());
@@ -151,7 +151,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionStartWithAndFollowedByStrictShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
@@ -166,7 +166,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionStartWithAndFollowedByStrictShouldNotMatchInAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
@@ -181,7 +181,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionContainsShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
@@ -195,7 +195,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionContainsShouldNotMatchInAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
             IStatementExpression toMatch =
@@ -208,7 +208,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionStartWithAndFollowedByStrictShouldNotIgnoreWhiteSpace()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
 
@@ -223,11 +223,11 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionShouldCheckEntireTokenListEvenIfFirstMatchWasInvalid()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("notvalid"));
             input.Add(TokenCreator.Create<SemiColonToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("identifier"));
-            input.Add(TokenCreator.Create<PrivateModifierToken>("isvalid"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("ending"));
 
@@ -243,7 +243,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<TabToken>());
-            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
             IStatementExpression toMatch =
@@ -257,8 +257,8 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<TabToken>());
-            input.Add(TokenCreator.Create<ClassToken>("test"));
-            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<ClassToken>());
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
             IStatementExpression toMatch =
@@ -272,7 +272,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<TabToken>());
-            input.Add(TokenCreator.Create<ClassToken>("test"));
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("test"));
             input.Add(TokenCreator.Create<SpaceToken>());
 
@@ -286,7 +286,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionContainsNoShouldMatchAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
 
             IStatementExpression toMatch = _expression.ContainsNo<SemiColonToken>();
 
@@ -297,7 +297,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         public void ExpressionContainsNoShouldNotMatchInAppropriateTokenList()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
 
             IStatementExpression toMatch =

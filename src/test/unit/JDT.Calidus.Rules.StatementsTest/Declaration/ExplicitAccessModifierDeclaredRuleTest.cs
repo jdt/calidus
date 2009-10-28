@@ -84,7 +84,7 @@ namespace JDT.Calidus.Rules.StatementsTest.Declaration
         public void RuleShouldNotBeValidForElementsWIthoutAccessModifier()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<ClassToken>("struct"));
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             Assert.IsFalse(_rule.IsValidFor(new ClassStatement(input)));
