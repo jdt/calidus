@@ -44,10 +44,6 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap = new Dictionary<int, Type>();
 
             _simpleTokenTypeMap.Add(Parser._ident, typeof(IdentifierToken));
-            _simpleTokenTypeMap.Add(Parser._private, typeof(PrivateModifierToken));
-            _simpleTokenTypeMap.Add(Parser._protected, typeof(ProtectedModifierToken));
-            _simpleTokenTypeMap.Add(Parser._internal, typeof(InternalModifierToken));
-            _simpleTokenTypeMap.Add(Parser._public, typeof(PublicModifierToken));
             _simpleTokenTypeMap.Add(Parser._bool, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._byte, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._char, typeof(ValueTypeToken));
@@ -62,18 +58,11 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._uint, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ulong, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._ushort, typeof(ValueTypeToken));
-            _simpleTokenTypeMap.Add(Parser._class, typeof(ClassToken));
             _simpleTokenTypeMap.Add(Parser._cBlockCom, typeof(BlockCommentToken));
             _simpleTokenTypeMap.Add(Parser._cLineCom, typeof(LineCommentToken));
-            _simpleTokenTypeMap.Add(Parser._usingKW, typeof(UsingToken));
             _simpleTokenTypeMap.Add(Parser._ppRegion, typeof(RegionStartToken));
             _simpleTokenTypeMap.Add(Parser._ppEndReg, typeof(RegionEndToken));
-            _simpleTokenTypeMap.Add(Parser._interface, typeof(InterfaceToken));
-            _simpleTokenTypeMap.Add(Parser._struct, typeof(StructToken));
-            _simpleTokenTypeMap.Add(Parser._event, typeof(EventToken));
-            _simpleTokenTypeMap.Add(Parser._abstract, typeof(AbstractToken));
-            _simpleTokenTypeMap.Add(Parser._static, typeof(StaticToken));
-
+            
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));
             _contentTokenTypeMap.Add(Parser._rbrace, typeof(CloseCurlyBracketToken));
@@ -83,6 +72,17 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._gt, typeof(CloseAngleBracketToken));
             _contentTokenTypeMap.Add(Parser._lbrack, typeof(OpenSquareBracketToken));
             _contentTokenTypeMap.Add(Parser._rbrack, typeof(CloseSquareBracketToken));
+            _contentTokenTypeMap.Add(Parser._private, typeof(PrivateModifierToken));
+            _contentTokenTypeMap.Add(Parser._protected, typeof(ProtectedModifierToken));
+            _contentTokenTypeMap.Add(Parser._internal, typeof(InternalModifierToken));
+            _contentTokenTypeMap.Add(Parser._public, typeof(PublicModifierToken));
+            _contentTokenTypeMap.Add(Parser._interface, typeof(InterfaceToken));
+            _contentTokenTypeMap.Add(Parser._struct, typeof(StructToken));
+            _contentTokenTypeMap.Add(Parser._event, typeof(EventToken));
+            _contentTokenTypeMap.Add(Parser._abstract, typeof(AbstractToken));
+            _contentTokenTypeMap.Add(Parser._static, typeof(StaticToken));
+            _contentTokenTypeMap.Add(Parser._class, typeof(ClassToken));
+            _contentTokenTypeMap.Add(Parser._usingKW, typeof(UsingToken));
         }
 
         /// <summary>

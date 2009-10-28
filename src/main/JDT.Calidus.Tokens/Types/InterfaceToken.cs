@@ -34,9 +34,8 @@ namespace JDT.Calidus.Tokens.Types
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        /// <param name="content">The content</param>
-        public InterfaceToken(int line, int column, int position, String content)
-            : base(line, column, position, content)
+        public InterfaceToken(int line, int column, int position)
+            : base(line, column, position, KeyWords.INTERFACE)
         {
         }
     }

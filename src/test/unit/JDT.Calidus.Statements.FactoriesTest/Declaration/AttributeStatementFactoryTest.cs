@@ -76,7 +76,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<EqualsToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<NewToken>("new"));
+            input.Add(TokenCreator.Create<NewToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<OpenSquareBracketToken>());

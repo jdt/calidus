@@ -54,7 +54,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -73,9 +73,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<StaticToken>("static"));
+            input.Add(TokenCreator.Create<StaticToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -94,9 +94,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<AbstractToken>("abstract"));
+            input.Add(TokenCreator.Create<AbstractToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());

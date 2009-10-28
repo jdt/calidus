@@ -65,6 +65,7 @@
     <Compile Include="Common\TabToken.cs" />
     <Compile Include="Common\WhiteSpaceToken.cs" />
     <Compile Include="Constants\IntegerConstantToken.cs" />
+    <Compile Include="KeyWords.cs" />
     <Compile Include="Modifiers\AccessModifierToken.cs" />
     <Compile Include="Modifiers\StaticToken.cs" />
     <Compile Include="Modifiers\AbstractToken.cs" />

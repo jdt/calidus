@@ -55,7 +55,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) } ).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -73,9 +73,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<ClassToken>("class"));
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
 
@@ -90,7 +90,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -125,7 +125,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<EventToken>("event")); 
+            input.Add(TokenCreator.Create<EventToken>()); 
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("EventHandler"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -143,9 +143,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<StaticToken>("static"));
+            input.Add(TokenCreator.Create<StaticToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -163,7 +163,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
 
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("MyType"));
             input.Add(TokenCreator.Create<SpaceToken>());

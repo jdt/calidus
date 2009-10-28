@@ -30,28 +30,28 @@ namespace JDT.Calidus.TokensTest.Modifiers
         [Test]
         public void PrivateModifierTokenShouldBeAccessModifierToken()
         {
-            PrivateModifierToken token = new PrivateModifierToken(1, 1, 1, "private");
+            PrivateModifierToken token = new PrivateModifierToken(1, 1, 1);
             Assert.IsInstanceOf<AccessModifierToken>(token);
         }
 
         [Test]
         public void ProtectedModifierTokenShouldBeAccessModifierToken()
         {
-            ProtectedModifierToken token = new ProtectedModifierToken(1, 1, 1, "protected");
+            ProtectedModifierToken token = new ProtectedModifierToken(1, 1, 1);
             Assert.IsInstanceOf<AccessModifierToken>(token);
         }
 
         [Test]
         public void PublicModifierTokenShouldBeAccessModifierToken()
         {
-            PublicModifierToken token = new PublicModifierToken(1, 1, 1, "public");
+            PublicModifierToken token = new PublicModifierToken(1, 1, 1);
             Assert.IsInstanceOf<AccessModifierToken>(token);
         }
 
         [Test]
         public void InternalModifierTokenShouldBeAccessModifierToken()
         {
-            InternalModifierToken token = new InternalModifierToken(1, 1, 1, "internal");
+            InternalModifierToken token = new InternalModifierToken(1, 1, 1);
             Assert.IsInstanceOf<AccessModifierToken>(token);
         }
     }

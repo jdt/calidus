@@ -59,7 +59,7 @@ namespace JDT.Calidus.Tests
         public MemberStatement CreateMemberStatement(String identifier)
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("String"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -105,9 +105,9 @@ namespace JDT.Calidus.Tests
         public ClassStatement CreateClassStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PublicModifierToken>("public"));
+            input.Add(TokenCreator.Create<PublicModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<ClassToken>("class"));
+            input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             return new ClassStatement(input);
@@ -123,7 +123,7 @@ namespace JDT.Calidus.Tests
         public MethodStatement CreateMethodStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("test"));
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -136,9 +136,9 @@ namespace JDT.Calidus.Tests
         public StructStatement CreateStructStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PublicModifierToken>("public"));
+            input.Add(TokenCreator.Create<PublicModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<StructToken>("struct"));
+            input.Add(TokenCreator.Create<StructToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             return new StructStatement(input);
@@ -147,9 +147,9 @@ namespace JDT.Calidus.Tests
         public InterfaceStatement CreateInterfaceStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
-            input.Add(TokenCreator.Create<PublicModifierToken>("public"));
+            input.Add(TokenCreator.Create<PublicModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
-            input.Add(TokenCreator.Create<InterfaceToken>("interface"));
+            input.Add(TokenCreator.Create<InterfaceToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             return new InterfaceStatement(input);
