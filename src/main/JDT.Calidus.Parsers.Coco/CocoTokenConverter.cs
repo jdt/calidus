@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Constants;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Namespace;
 using JDT.Calidus.Tokens.PreProcessor;
@@ -62,7 +63,8 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._cLineCom, typeof(LineCommentToken));
             _simpleTokenTypeMap.Add(Parser._ppRegion, typeof(RegionStartToken));
             _simpleTokenTypeMap.Add(Parser._ppEndReg, typeof(RegionEndToken));
-            
+            _simpleTokenTypeMap.Add(Parser._stringCon, typeof(StringConstantToken));
+
             _contentTokenTypeMap.Add(Parser._scolon, typeof(SemiColonToken));
             _contentTokenTypeMap.Add(Parser._lbrace, typeof(OpenCurlyBracketToken));
             _contentTokenTypeMap.Add(Parser._rbrace, typeof(CloseCurlyBracketToken));
@@ -87,6 +89,10 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._dot, typeof(DotToken));
             _contentTokenTypeMap.Add(Parser._assgn, typeof(AssignmentToken));
             _contentTokenTypeMap.Add(Parser._colon, typeof(ColonToken));
+            _contentTokenTypeMap.Add(Parser._comma, typeof(CommaToken));
+            _contentTokenTypeMap.Add(Parser._override, typeof(OverrideToken));
+            _contentTokenTypeMap.Add(Parser._void, typeof(VoidToken));
+            _contentTokenTypeMap.Add(Parser._object, typeof(ObjectToken));
         }
 
         /// <summary>

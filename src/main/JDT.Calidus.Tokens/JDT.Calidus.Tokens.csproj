@@ -53,6 +53,7 @@
     <Compile Include="Common\Brackets\OpenSquareBracketToken.cs" />
     <Compile Include="Common\AssignmentToken.cs" />
     <Compile Include="Common\ColonToken.cs" />
+    <Compile Include="Common\CommaToken.cs" />
     <Compile Include="Common\DotToken.cs" />
     <Compile Include="Common\EqualsToken.cs" />
     <Compile Include="Common\NewToken.cs" />
@@ -67,9 +68,11 @@
     <Compile Include="Common\SpaceToken.cs" />
     <Compile Include="Common\TabToken.cs" />
     <Compile Include="Common\WhiteSpaceToken.cs" />
+    <Compile Include="Constants\StringConstantToken.cs" />
     <Compile Include="Constants\IntegerConstantToken.cs" />
     <Compile Include="KeyWords.cs" />
     <Compile Include="Modifiers\AccessModifierToken.cs" />
+    <Compile Include="Modifiers\OverrideToken.cs" />
     <Compile Include="Modifiers\StaticToken.cs" />
     <Compile Include="Modifiers\AbstractToken.cs" />
     <Compile Include="Modifiers\InternalModifierToken.cs" />
@@ -83,6 +86,8 @@
     <Compile Include="PreProcessor\RegionStartToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ClassToken.cs" />
+    <Compile Include="Types\ObjectToken.cs" />
+    <Compile Include="Types\VoidToken.cs" />
     <Compile Include="Types\EventToken.cs" />
     <Compile Include="Types\StructToken.cs" />
     <Compile Include="Types\InterfaceToken.cs" />
