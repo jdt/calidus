@@ -27,7 +27,7 @@ namespace JDT.Calidus.Statements.Declaration
     /// <summary>
     /// This class represents an class declaration statement
     /// </summary>
-    public class ClassStatement : StatementBase
+    public class ClassStatement : AccessModifierStatement
     {
         /// <summary>
         /// Create a new instance of this class

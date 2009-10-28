@@ -27,7 +27,7 @@ namespace JDT.Calidus.Statements.Declaration
     /// <summary>
     /// This class represents a struct declaration statement
     /// </summary>
-    public class StructStatement : StatementBase
+    public class StructStatement : AccessModifierStatement
     {
         /// <summary>
         /// Create a new instance of this class
