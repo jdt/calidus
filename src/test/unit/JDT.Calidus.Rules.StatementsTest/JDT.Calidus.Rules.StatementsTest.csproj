@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A911141B-D3D5-47CA-96EB-0E6237280F7F}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Declaration\ExplicitAccessModifierDeclaredRuleTest.cs" />
     <Compile Include="Declaration\MemberNameMatchesPatternRuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,6 +65,10 @@
     <ProjectReference Include="..\..\..\main\JDT.Calidus.Statements\JDT.Calidus.Statements.csproj">
       <Project>{35751532-ECF6-4358-B071-EF16C0CF48D2}</Project>
       <Name>JDT.Calidus.Statements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\main\JDT.Calidus.Tokens\JDT.Calidus.Tokens.csproj">
+      <Project>{2C8F77AD-7DF4-4F05-B7F6-BED1DA0F50BA}</Project>
+      <Name>JDT.Calidus.Tokens</Name>
     </ProjectReference>
     <ProjectReference Include="..\JDT.Calidus.Tests\JDT.Calidus.Tests.csproj">
       <Project>{8C956493-60B9-4099-9685-8BB8C451AAD3}</Project>
