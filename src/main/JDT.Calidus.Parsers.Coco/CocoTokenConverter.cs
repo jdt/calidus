@@ -85,6 +85,7 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._usingKW, typeof(UsingToken));
             _contentTokenTypeMap.Add(Parser._namespace, typeof(NameSpaceToken));
             _contentTokenTypeMap.Add(Parser._dot, typeof(DotToken));
+            _contentTokenTypeMap.Add(Parser._assgn, typeof(AssignmentToken));
         }
 
         /// <summary>
