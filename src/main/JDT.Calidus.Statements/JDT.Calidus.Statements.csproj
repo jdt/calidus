@@ -55,6 +55,7 @@
     <Compile Include="Declaration\StructStatement.cs" />
     <Compile Include="Declaration\InterfaceStatement.cs" />
     <Compile Include="Declaration\MemberStatement.cs" />
+    <Compile Include="Namespace\NameSpaceStatement.cs" />
     <Compile Include="Namespace\UsingStatement.cs" />
     <Compile Include="PreProcessor\RegionEndStatement.cs" />
     <Compile Include="PreProcessor\RegionStartStatement.cs" />

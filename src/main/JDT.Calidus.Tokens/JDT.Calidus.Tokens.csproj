@@ -73,6 +73,7 @@
     <Compile Include="Modifiers\PrivateModifierToken.cs" />
     <Compile Include="Modifiers\ProtectedModifierToken.cs" />
     <Compile Include="Modifiers\PublicModifierToken.cs" />
+    <Compile Include="Namespace\NameSpaceToken.cs" />
     <Compile Include="Namespace\UsingToken.cs" />
     <Compile Include="PreProcessor\PreProcessorToken.cs" />
     <Compile Include="PreProcessor\RegionEndToken.cs" />

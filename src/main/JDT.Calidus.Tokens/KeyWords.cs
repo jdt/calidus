@@ -66,6 +66,10 @@ namespace JDT.Calidus.Tokens
         /// The using keyword
         /// </summary>
         public static String USING = "using";
+        /// <summary>
+        /// The namespace keyword
+        /// </summary>
+        public static String NAMESPACE = "namespace";
         
         /// <summary>
         /// The class keyword
