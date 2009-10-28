@@ -51,6 +51,7 @@
     <Compile Include="Common\Brackets\CloseRoundBracketToken.cs" />
     <Compile Include="Common\Brackets\CloseSquareBracketToken.cs" />
     <Compile Include="Common\Brackets\OpenSquareBracketToken.cs" />
+    <Compile Include="Common\DotToken.cs" />
     <Compile Include="Common\EqualsToken.cs" />
     <Compile Include="Common\NewToken.cs" />
     <Compile Include="Common\ForwardSlashToken.cs" />
