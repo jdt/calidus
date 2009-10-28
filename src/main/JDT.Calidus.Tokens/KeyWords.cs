@@ -48,6 +48,10 @@ namespace JDT.Calidus.Tokens
         /// The new keyword
         /// </summary>
         public static String NEW = "new";
+        /// <summary>
+        /// The object keyword
+        /// </summary>
+        public static String OBJECT = "object";
 
         /// <summary>
         /// The event keyword
@@ -61,6 +65,10 @@ namespace JDT.Calidus.Tokens
         /// The abstract keyword
         /// </summary>
         public static String ABSTRACT = "abstract";
+        /// <summary>
+        /// The override keyword
+        /// </summary>
+        public static String OVERRIDE = "override";
         
         /// <summary>
         /// The using keyword
@@ -83,5 +91,9 @@ namespace JDT.Calidus.Tokens
         /// The interface keyword
         /// </summary>
         public static String INTERFACE = "interface";
+        /// <summary>
+        /// The void keyword
+        /// </summary>
+        public static String VOID = "void";
     }
 }

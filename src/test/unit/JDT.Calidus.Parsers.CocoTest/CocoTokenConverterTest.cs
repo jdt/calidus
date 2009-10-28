@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tokens.Constants;
 using JDT.Calidus.Tokens.Namespace;
 using JDT.Calidus.Tokens.PreProcessor;
 using NUnit.Framework;
@@ -309,6 +310,36 @@ namespace JDT.Calidus.Parsers.CocoTest
         public void ColonConstShouldReturnColonToken()
         {
             Assert.IsInstanceOf(typeof(ColonToken), CocoTokenConverter.Convert(GetCocoToken(Parser._colon)));
+        }
+
+        [Test]
+        public void CommaConstShouldReturnCommaToken()
+        {
+            Assert.IsInstanceOf(typeof(CommaToken), CocoTokenConverter.Convert(GetCocoToken(Parser._comma)));
+        }
+
+        [Test]
+        public void StringConstConstShouldReturnStringConstantToken()
+        {
+            Assert.IsInstanceOf(typeof(StringConstantToken), CocoTokenConverter.Convert(GetCocoToken(Parser._stringCon)));
+        }
+
+        [Test]
+        public void OverrideConstShouldReturnOverrideToken()
+        {
+            Assert.IsInstanceOf(typeof(OverrideToken), CocoTokenConverter.Convert(GetCocoToken(Parser._override)));
+        }
+
+        [Test]
+        public void VoidConstShouldReturnVoidToken()
+        {
+            Assert.IsInstanceOf(typeof(VoidToken), CocoTokenConverter.Convert(GetCocoToken(Parser._void)));
+        }
+
+        [Test]
+        public void ObjectConstShouldReturnObjectToken()
+        {
+            Assert.IsInstanceOf(typeof(ObjectToken), CocoTokenConverter.Convert(GetCocoToken(Parser._object)));
         }
     }
 }
