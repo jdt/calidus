@@ -304,5 +304,11 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(AssignmentToken), CocoTokenConverter.Convert(GetCocoToken(Parser._assgn)));
         }
+
+        [Test]
+        public void ColonConstShouldReturnColonToken()
+        {
+            Assert.IsInstanceOf(typeof(ColonToken), CocoTokenConverter.Convert(GetCocoToken(Parser._colon)));
+        }
     }
 }
