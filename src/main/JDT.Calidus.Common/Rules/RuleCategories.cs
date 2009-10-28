@@ -59,5 +59,16 @@ namespace JDT.Calidus.Common.Rules
                 return "Spacing";
             }
         }
+
+        /// <summary>
+        /// Gets the maintainability category
+        /// </summary>
+        public static String Maintainability
+        {
+            get
+            {
+                return "Maintainability";
+            }
+        }
     }
 }

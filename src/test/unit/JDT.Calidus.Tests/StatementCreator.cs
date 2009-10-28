@@ -119,5 +119,40 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<CloseCurlyBracketToken>());
             return new CloseBlockStatement(input);
         }
+
+        public MethodStatement CreateMethodStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>("private"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("test"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("MyMethod"));
+            input.Add(TokenCreator.Create<OpenRoundBracketToken>());
+            input.Add(TokenCreator.Create<CloseRoundBracketToken>());
+            return new MethodStatement(input);
+        }
+
+        public StructStatement CreateStructStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>("public"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<StructToken>("struct"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+            return new StructStatement(input);
+        }
+
+        public InterfaceStatement CreateInterfaceStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>("public"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<InterfaceToken>("interface"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+            return new InterfaceStatement(input);
+        }
     }
 }
