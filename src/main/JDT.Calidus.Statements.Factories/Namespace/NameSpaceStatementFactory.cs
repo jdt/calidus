@@ -48,8 +48,7 @@ namespace JDT.Calidus.Statements.Factories.Namespace
             get
             {
                 StatementExpression expression = new StatementExpression();
-                expression.StartsWith<NameSpaceToken>()
-                    .EndsWith<SemiColonToken>();
+                expression.StartsWith<NameSpaceToken>();
 
                 return expression;
             }

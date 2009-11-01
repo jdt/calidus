@@ -47,7 +47,6 @@ namespace JDT.Calidus.Statements.FactoriesTest.Namespace
             input.Add(TokenCreator.Create<NameSpaceToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("JDT"));
-            input.Add(TokenCreator.Create<SemiColonToken>());
 
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, null));
         }
