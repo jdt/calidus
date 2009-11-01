@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Constants;
 using JDT.Calidus.Tokens.PreProcessor;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Statements;
@@ -149,6 +150,20 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             IEnumerable<StatementBase> actual = _parser.Parse(input);
             CollectionAssert.AreEquivalent(actual.ElementAt(0).Tokens, new [] {input[0]});
+        }
+
+        [Test]
+        public void ParseAssignmentTokensShouldParseAsStatement()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<GenericToken>("source", null));
+            input.Add(TokenCreator.Create<GenericToken>("code", null));
+            input.Add(TokenCreator.Create<AssignmentToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("testValue"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            IEnumerable<StatementBase> actual = _parser.Parse(input);
+            Assert.AreEqual(2, actual.Count());
         }
     }
 }

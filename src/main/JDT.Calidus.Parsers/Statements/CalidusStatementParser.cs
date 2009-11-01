@@ -83,6 +83,7 @@ namespace JDT.Calidus.Parsers.Statements
                     aToken is CloseSquareBracketToken ||
                     aToken is PreProcessorToken
                     || NextIsOfType(i, tokens, typeof(OpenCurlyBracketToken))
+                    || NextIsOfType(i, tokens, typeof(AssignmentToken))
                     )
                 {
                     IList<StatementBase> createdStatements = new List<StatementBase>();
