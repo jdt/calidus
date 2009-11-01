@@ -375,5 +375,35 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(NewToken), CocoTokenConverter.Convert(GetCocoToken(Parser._new)));
         }
+
+        [Test]
+        public void NotEqualsConstShouldReturnNotEqualsToken()
+        {
+            Assert.IsInstanceOf(typeof(NotEqualsToken), CocoTokenConverter.Convert(GetCocoToken(Parser._neq)));
+        }
+
+        [Test]
+        public void BaseConstShouldReturnBaseToken()
+        {
+            Assert.IsInstanceOf(typeof(BaseToken), CocoTokenConverter.Convert(GetCocoToken(Parser._base)));
+        }
+
+        [Test]
+        public void PlusConstShouldReturnPlusToken()
+        {
+            Assert.IsInstanceOf(typeof(PlusToken), CocoTokenConverter.Convert(GetCocoToken(Parser._plus)));
+        }
+
+        [Test]
+        public void EqualsConstShouldReturnEqualityToken()
+        {
+            Assert.IsInstanceOf(typeof(EqualityToken), CocoTokenConverter.Convert(GetCocoToken(Parser._eq)));
+        }
+
+        [Test]
+        public void ElseConstShouldReturnElseToken()
+        {
+            Assert.IsInstanceOf(typeof(ElseToken), CocoTokenConverter.Convert(GetCocoToken(Parser._else)));
+        }
     }
 }

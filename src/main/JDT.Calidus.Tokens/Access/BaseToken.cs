@@ -21,21 +21,21 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tokens.Common
+namespace JDT.Calidus.Tokens.Access
 {
     /// <summary>
-    /// This class represents an equals sign
+    /// This class is represents a base
     /// </summary>
-    public class EqualsToken : TokenBase
-    {        
+    public class BaseToken : TokenBase
+    {
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        public EqualsToken(int line, int column, int position)
-            : base(line, column, position, "=")
+        public BaseToken(int line, int column, int position)
+            : base(line, column, position, KeyWords.BASE)
         {
         }
     }

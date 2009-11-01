@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Access\BaseToken.cs" />
     <Compile Include="Access\ThisToken.cs" />
     <Compile Include="Common\BlockCommentToken.cs" />
     <Compile Include="Common\Brackets\CloseAngleBracketToken.cs" />
@@ -55,6 +56,9 @@
     <Compile Include="Common\AssignmentToken.cs" />
     <Compile Include="Common\ColonToken.cs" />
     <Compile Include="Common\CommaToken.cs" />
+    <Compile Include="Common\EqualityToken.cs" />
+    <Compile Include="Common\PlusToken.cs" />
+    <Compile Include="Common\NotEqualsToken.cs" />
     <Compile Include="Common\ReturnToken.cs" />
     <Compile Include="Common\DotToken.cs" />
     <Compile Include="Common\EqualsToken.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="PreProcessor\RegionEndToken.cs" />
     <Compile Include="PreProcessor\RegionStartToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Statement\ElseToken.cs" />
     <Compile Include="Statement\IfToken.cs" />
     <Compile Include="Types\ClassToken.cs" />
     <Compile Include="Types\ObjectToken.cs" />
