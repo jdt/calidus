@@ -102,6 +102,11 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._this, typeof(ThisToken));
             _contentTokenTypeMap.Add(Parser._if, typeof(IfToken));
             _contentTokenTypeMap.Add(Parser._new, typeof(NewToken));
+            _contentTokenTypeMap.Add(Parser._neq, typeof(NotEqualsToken));
+            _contentTokenTypeMap.Add(Parser._base, typeof(BaseToken));
+            _contentTokenTypeMap.Add(Parser._plus, typeof(PlusToken));
+            _contentTokenTypeMap.Add(Parser._eq, typeof(EqualityToken));
+            _contentTokenTypeMap.Add(Parser._else, typeof(ElseToken));
         }
 
         /// <summary>

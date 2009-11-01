@@ -24,18 +24,18 @@ using JDT.Calidus.Common.Tokens;
 namespace JDT.Calidus.Tokens.Common
 {
     /// <summary>
-    /// This class represents an equals sign
+    /// This class represents a plus +
     /// </summary>
-    public class EqualsToken : TokenBase
-    {        
+    public class PlusToken : TokenBase
+    {
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        public EqualsToken(int line, int column, int position)
-            : base(line, column, position, "=")
+        public PlusToken(int line, int column, int position)
+            : base(line, column, position, "+")
         {
         }
     }

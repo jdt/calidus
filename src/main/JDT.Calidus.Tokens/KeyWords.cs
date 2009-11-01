@@ -104,6 +104,10 @@ namespace JDT.Calidus.Tokens
         /// The this keyword
         /// </summary>
         public static String THIS = "this";
+        /// <summary>
+        /// The base keyword
+        /// </summary>
+        public static String BASE = "base";
 
         /// <summary>
         /// The null keyword
@@ -114,5 +118,9 @@ namespace JDT.Calidus.Tokens
         /// The if keyword
         /// </summary>
         public static String IF = "if";
+        /// <summary>
+        /// The else keyword
+        /// </summary>
+        public static String ELSE = "else";
     }
 }

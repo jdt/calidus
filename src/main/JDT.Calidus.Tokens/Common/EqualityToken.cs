@@ -24,9 +24,9 @@ using JDT.Calidus.Common.Tokens;
 namespace JDT.Calidus.Tokens.Common
 {
     /// <summary>
-    /// This class represents an equals sign
+    /// This class represents an equality sign ==
     /// </summary>
-    public class EqualsToken : TokenBase
+    public class EqualityToken : TokenBase
     {        
         /// <summary>
         /// Create a new instance of this class
@@ -34,8 +34,8 @@ namespace JDT.Calidus.Tokens.Common
         /// <param name="line">The line</param>
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
-        public EqualsToken(int line, int column, int position)
-            : base(line, column, position, "=")
+        public EqualityToken(int line, int column, int position)
+            : base(line, column, position, "==")
         {
         }
     }
