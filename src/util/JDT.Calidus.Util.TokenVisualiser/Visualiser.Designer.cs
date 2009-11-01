@@ -51,6 +51,8 @@
             this.lstLineDetails = new System.Windows.Forms.ListBox();
             this.lstLineList = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblGenericToken = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblGenericStatement = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip.SuspendLayout();
             this.windowContainer.Panel1.SuspendLayout();
             this.windowContainer.Panel2.SuspendLayout();
@@ -65,7 +67,9 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
+            this.toolStripStatusLabel,
+            this.lblGenericToken,
+            this.lblGenericStatement});
             this.statusStrip.Location = new System.Drawing.Point(0, 531);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1091, 22);
@@ -287,6 +291,16 @@
             this.label4.TabIndex = 26;
             this.label4.Text = "Line details:";
             // 
+            // lblGenericToken
+            // 
+            this.lblGenericToken.Name = "lblGenericToken";
+            this.lblGenericToken.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblGenericStatement
+            // 
+            this.lblGenericStatement.Name = "lblGenericStatement";
+            this.lblGenericStatement.Size = new System.Drawing.Size(0, 17);
+            // 
             // Visualiser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,5 +353,7 @@
         private System.Windows.Forms.ListBox lstLineDetails;
         private System.Windows.Forms.ListBox lstLineList;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolStripStatusLabel lblGenericToken;
+        private System.Windows.Forms.ToolStripStatusLabel lblGenericStatement;
     }
 }

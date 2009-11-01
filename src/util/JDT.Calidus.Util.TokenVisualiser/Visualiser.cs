@@ -37,6 +37,9 @@ namespace JDT.Calidus.Util.TokenVisualiser
 {
     public partial class Visualiser : Form
     {
+        private static String GENERIC_TOKEN_COUNT = "Generic tokens: {0}";
+        private static String GENERIC_STATEMENT_COUNT = "Generic statements: {0}";
+
         private IList<VisualiserToken> _currentTokens;
         private IList<VisualiserStatement> _currentStatements;
         private IList<VisualiserBlock> _currentBlocks;
@@ -80,13 +83,20 @@ namespace JDT.Calidus.Util.TokenVisualiser
             CalidusBlockParser blockParser = new CalidusBlockParser();
             CalidusLineParser lineParser = new CalidusLineParser();
 
+            int genericToken = 0;
+            int genericStatement = 0;
+
             IEnumerable<TokenBase> parsedTokens = null;
             try
             {
                 parsedTokens = tokenParser.Parse(rtSource.Text);
                 _currentTokens.Clear();
                 foreach (TokenBase aToken in parsedTokens)
+                {
+                    if (aToken is GenericToken)
+                        genericToken++;
                     _currentTokens.Add(new VisualiserToken(aToken));
+                }
             }
             catch(CalidusException ex)
             {
@@ -105,7 +115,11 @@ namespace JDT.Calidus.Util.TokenVisualiser
                     parsedStatements = statementParser.Parse(parsedTokens);
                     _currentStatements.Clear();
                     foreach (StatementBase aStatement in parsedStatements)
+                    {
+                        if (aStatement is GenericStatement)
+                            genericStatement++;
                         _currentStatements.Add(new VisualiserStatement(aStatement));
+                    }
                 }
             }
             catch (CalidusException ex)
@@ -168,6 +182,9 @@ namespace JDT.Calidus.Util.TokenVisualiser
             lstBlockList.Enabled = true;
             lstLineList.DataSource = _currentLines;
             lstLineList.Enabled = true;
+
+            lblGenericToken.Text = String.Format(GENERIC_TOKEN_COUNT, genericToken);
+            lblGenericStatement.Text = String.Format(GENERIC_STATEMENT_COUNT, genericStatement);
 
             tabDisplay.SelectedIndex = 0;
             DisplayCurrentToken();
