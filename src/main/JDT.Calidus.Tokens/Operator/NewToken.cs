@@ -19,13 +19,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 
-namespace JDT.Calidus.Tokens.Common
+namespace JDT.Calidus.Tokens.Operator
 {
     /// <summary>
     /// This class represents a new keyword token
     /// </summary>
-    public class NewToken : WhiteSpaceToken
+    public class NewToken : TokenBase
     {        
         /// <summary>
         /// Create a new instance of this class

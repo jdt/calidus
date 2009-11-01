@@ -25,6 +25,7 @@ using JDT.Calidus.Tests;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Common.Brackets;
 using JDT.Calidus.Tokens.Constants;
+using JDT.Calidus.Tokens.Operator;
 using NUnit.Framework;
 
 namespace JDT.Calidus.Statements.FactoriesTest.Declaration
