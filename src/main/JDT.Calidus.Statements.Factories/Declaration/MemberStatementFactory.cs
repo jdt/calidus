@@ -24,6 +24,7 @@ using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Common.Brackets;
 using JDT.Calidus.Tokens.Types;
 
 namespace JDT.Calidus.Statements.Factories.Declaration
@@ -47,12 +48,14 @@ namespace JDT.Calidus.Statements.Factories.Declaration
         {
             get 
             {
+                //ignore events, and ignore methods by not allowing brackets
                 StatementExpression expression = new StatementExpression();
                 expression
                     .ContainsNo<EventToken>()
+                    .ContainsNo<OpenRoundBracketToken>()
+                    .ContainsNo<CloseRoundBracketToken>()
                     .Contains<IdentifierToken>()
-                    .FollowedBy<IdentifierToken>()
-                    .FollowedBy<SemiColonToken>();
+                    .FollowedBy<IdentifierToken>();
 
                 return expression;
             }
