@@ -35,7 +35,7 @@ namespace JDT.Calidus.Tokens.Literal
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         public NullToken(int line, int column, int position)
-            : base(line, column, position, "null")
+            : base(line, column, position, KeyWords.NULL)
         {
         }
     }

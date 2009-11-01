@@ -35,7 +35,7 @@ namespace JDT.Calidus.Tokens.Access
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         public ThisToken(int line, int column, int position)
-            : base(line, column, position, "this")
+            : base(line, column, position, KeyWords.THIS)
         {
         }
     }

@@ -78,6 +78,10 @@ namespace JDT.Calidus.Tokens
         /// The namespace keyword
         /// </summary>
         public static String NAMESPACE = "namespace";
+        /// <summary>
+        /// The return keyword
+        /// </summary>
+        public static String RETURN = "return";
         
         /// <summary>
         /// The class keyword
@@ -95,5 +99,20 @@ namespace JDT.Calidus.Tokens
         /// The void keyword
         /// </summary>
         public static String VOID = "void";
+
+        /// <summary>
+        /// The this keyword
+        /// </summary>
+        public static String THIS = "this";
+
+        /// <summary>
+        /// The null keyword
+        /// </summary>
+        public static String NULL = "null";
+
+        /// <summary>
+        /// The if keyword
+        /// </summary>
+        public static String IF = "if";
     }
 }
