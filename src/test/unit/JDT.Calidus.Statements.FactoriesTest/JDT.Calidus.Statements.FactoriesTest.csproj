@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AssignmentStatementFactoryTest.cs" />
     <Compile Include="Common\CloseBlockStatementFactoryTest.cs" />
     <Compile Include="Common\LineCommentStatementFactoryTest.cs" />
     <Compile Include="Common\OpenBlockStatementFactoryTest.cs" />
