@@ -35,7 +35,7 @@ namespace JDT.Calidus.Tokens.Common
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         public ReturnToken(int line, int column, int position)
-            : base(line, column, position, "return")
+            : base(line, column, position, KeyWords.RETURN)
         {
         }
     }

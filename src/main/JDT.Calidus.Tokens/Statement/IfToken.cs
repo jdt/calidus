@@ -35,7 +35,7 @@ namespace JDT.Calidus.Tokens.Statement
         /// <param name="column">The column</param>
         /// <param name="position">The position</param>
         public IfToken(int line, int column, int position)
-            : base(line, column, position, "if")
+            : base(line, column, position, KeyWords.IF)
         {
         }
     }
