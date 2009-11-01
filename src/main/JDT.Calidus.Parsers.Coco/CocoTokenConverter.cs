@@ -20,11 +20,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Tokens.Access;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Constants;
+using JDT.Calidus.Tokens.Literal;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Namespace;
 using JDT.Calidus.Tokens.PreProcessor;
+using JDT.Calidus.Tokens.Statement;
 using JDT.Calidus.Tokens.Types;
 using JDT.Calidus.Tokens.Common.Brackets;
 
@@ -93,6 +96,10 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._override, typeof(OverrideToken));
             _contentTokenTypeMap.Add(Parser._void, typeof(VoidToken));
             _contentTokenTypeMap.Add(Parser._object, typeof(ObjectToken));
+            _contentTokenTypeMap.Add(Parser._return, typeof(ReturnToken));
+            _contentTokenTypeMap.Add(Parser._null, typeof(NullToken));
+            _contentTokenTypeMap.Add(Parser._this, typeof(ThisToken));
+            _contentTokenTypeMap.Add(Parser._if, typeof(IfToken));
         }
 
         /// <summary>
