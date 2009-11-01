@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Statements.Common;
+using JDT.Calidus.Tokens.PreProcessor;
 
 namespace JDT.Calidus.Parsers.Statements
 {

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CloseBlockStatementFactory.cs" />
+    <Compile Include="Common\AssignmentStatementFactory.cs" />
     <Compile Include="Common\LineCommentStatementFactory.cs" />
     <Compile Include="Common\OpenBlockStatementFactory.cs" />
     <Compile Include="Declaration\AttributeStatementFactory.cs" />
