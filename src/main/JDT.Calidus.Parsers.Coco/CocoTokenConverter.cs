@@ -26,6 +26,7 @@ using JDT.Calidus.Tokens.Constants;
 using JDT.Calidus.Tokens.Literal;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Namespace;
+using JDT.Calidus.Tokens.Operator;
 using JDT.Calidus.Tokens.PreProcessor;
 using JDT.Calidus.Tokens.Statement;
 using JDT.Calidus.Tokens.Types;
@@ -100,6 +101,7 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._null, typeof(NullToken));
             _contentTokenTypeMap.Add(Parser._this, typeof(ThisToken));
             _contentTokenTypeMap.Add(Parser._if, typeof(IfToken));
+            _contentTokenTypeMap.Add(Parser._new, typeof(NewToken));
         }
 
         /// <summary>

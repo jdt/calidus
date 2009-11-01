@@ -58,7 +58,7 @@
     <Compile Include="Common\ReturnToken.cs" />
     <Compile Include="Common\DotToken.cs" />
     <Compile Include="Common\EqualsToken.cs" />
-    <Compile Include="Common\NewToken.cs" />
+    <Compile Include="Operator\NewToken.cs" />
     <Compile Include="Common\ForwardSlashToken.cs" />
     <Compile Include="Common\LineCommentToken.cs" />
     <Compile Include="Common\NewLineToken.cs" />

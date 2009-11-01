@@ -23,6 +23,7 @@ using JDT.Calidus.Tokens.Access;
 using JDT.Calidus.Tokens.Constants;
 using JDT.Calidus.Tokens.Literal;
 using JDT.Calidus.Tokens.Namespace;
+using JDT.Calidus.Tokens.Operator;
 using JDT.Calidus.Tokens.PreProcessor;
 using JDT.Calidus.Tokens.Statement;
 using NUnit.Framework;
@@ -367,6 +368,12 @@ namespace JDT.Calidus.Parsers.CocoTest
         public void ThisConstShouldReturnThisToken()
         {
             Assert.IsInstanceOf(typeof(ThisToken), CocoTokenConverter.Convert(GetCocoToken(Parser._this)));
+        }
+
+        [Test]
+        public void NewConstShouldReturnNewToken()
+        {
+            Assert.IsInstanceOf(typeof(NewToken), CocoTokenConverter.Convert(GetCocoToken(Parser._new)));
         }
     }
 }
