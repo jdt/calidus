@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 
 namespace JDT.Calidus.Common.Statements
 {
@@ -33,6 +34,16 @@ namespace JDT.Calidus.Common.Statements
         /// <example>
         /// When parsing for member statements, the context should provide the class and namespace statement as parent
         /// </example>
-        IEnumerable<StatementParent> Parents { get; }
+        IEnumerable<StatementParent> Parents { get; }        
+        /// <summary>
+        /// Gets the next non-whitespace token after the current statement
+        /// </summary>
+        TokenBase NextTokenFromCurrentStatement { get; }
+        /// <summary>
+        /// Checks if the next token from previous statement is of the specified type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type to check</typeparam>
+        /// <returns>True if of that type, false if not</returns>
+        bool IsNextToken<TTokenType>() where TTokenType : TokenBase;
     }
 }

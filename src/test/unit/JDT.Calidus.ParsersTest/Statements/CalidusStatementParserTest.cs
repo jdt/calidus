@@ -55,7 +55,6 @@ namespace JDT.Calidus.ParsersTest.Statements
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<GenericToken>("source", null));
             input.Add(TokenCreator.Create<GenericToken>("code", null));
-            input.Add(TokenCreator.Create<SemiColonToken>());
 
             MockRepository mocker = new MockRepository();
             IStatementFactory factory = mocker.StrictMock<IStatementFactory>();
@@ -63,8 +62,10 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             Expect.Call(factory.CanCreateStatementFrom(new List<TokenBase>(), null)).IgnoreArguments().Return(true).Repeat.Once();
             Expect.Call(factory.Create(input, null)).Return(new GenericStatement(input)).Repeat.Once();
-            Expect.Call(() => contextManager.Encountered(new[] { new GenericStatement(input) })).Repeat.Once();
-            Expect.Call(contextManager.GetContext()).Return(null).Repeat.Twice();
+            Expect.Call(() => contextManager.Encountered(new[] { new GenericStatement(input) }, input.Count, input)).Repeat.Once();
+            Expect.Call(contextManager.GetContext(input)).Return(null).Repeat.Once();
+
+            input.Add(TokenCreator.Create<SemiColonToken>());
 
             StubStatementFactoryProvider provider = new StubStatementFactoryProvider(factory);
             CalidusStatementParser parser = new CalidusStatementParser(provider, contextManager);

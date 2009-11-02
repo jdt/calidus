@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
 
 namespace JDT.Calidus.Common.Statements
 {
@@ -31,11 +32,14 @@ namespace JDT.Calidus.Common.Statements
         /// Notifies the manager that a list of tokens was parsed into a number of statements
         /// </summary>
         /// <param name="statements">The list of statements</param>
-        void Encountered(IEnumerable<StatementBase> statements);
+        /// <param name="lastIndex">The last index of a token in the whole list that was parsed into a statement</param>
+        /// <param name="tokens">The whole token list</param>
+        void Encountered(IEnumerable<StatementBase> statements, int lastIndex, IEnumerable<TokenBase> tokens);
         /// <summary>
         /// Gets the current context
         /// </summary>
+        /// <param name="currentStatementTokens">The current statement tokens the context is used for</param>
         /// <returns>The context</returns>
-        IStatementContext GetContext();
+        IStatementContext GetContext(IEnumerable<TokenBase> currentStatementTokens);
     }
 }

@@ -20,51 +20,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Common;
 
 namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
 {
     /// <summary>
-    /// This class is the base class for token occurences
+    /// This class checks for a token occurence of either type at some point in a token list
     /// </summary>
-    public abstract class TokenOccurenceBase : ITokenOccurence
+    public class ContainsEitherTokenOccurence : ITokenOccurence
     {
         /// <summary>
-        /// Create a new instance of this class
+        /// Create a new instance of this object
         /// </summary>
-        /// <param name="tokenType">The type of tokens to match</param>
-        protected TokenOccurenceBase(Type tokenType)
+        /// <param name="tokenTypeOne">The first token type</param>
+        /// <param name="tokenTypeTwo">The second token type</param>
+        public ContainsEitherTokenOccurence(Type tokenTypeOne, Type tokenTypeTwo)
         {
-            if (tokenType.IsSubclassOf(typeof(TokenBase)) == false
-                && tokenType.Equals(typeof(TokenBase)) == false)
-                throw new CalidusException("The type passed to the token occurence must be a subclass of " + typeof(TokenBase).Name);
-
-            TokenType = tokenType;
+            TokenTypeOne = tokenTypeOne;
+            TokenTypeTwo = tokenTypeTwo;
         }
 
         /// <summary>
-        /// Get the type of tokens
+        /// The first token type
         /// </summary>
-        public Type TokenType { get; private set; }
+        public Type TokenTypeOne { get; private set; }
+        /// <summary>
+        /// The second token type
+        /// </summary>
+        public Type TokenTypeTwo { get; private set; }
 
         /// <summary>
         /// Pops a set of tokens from the token queue until the occurence
         /// is satisfied
         /// </summary>
         /// <param name="tokens">The token list to pop from</param>
-        public abstract void PopFrom(Queue<TokenBase> tokens);
-        /// <summary>
-        /// Validates if the tokens match the occurence
-        /// </summary>
-        /// <param name="tokens">The tokens</param>
-        /// <returns>True if matches, otherwise false</returns>
-        protected abstract bool Validate(Queue<TokenBase> tokens);
-        /// <summary>
-        /// Removes the validated tokens from the list
-        /// </summary>
-        /// <param name="tokens">The list to remove from</param>
-        protected abstract void PopValidated(Queue<TokenBase> tokens);
-
+        public void PopFrom(Queue<TokenBase> tokens)
+        {
+            while (tokens.Count != 0 
+                    && 
+                        !(
+                            TokenTypeOne.IsAssignableFrom(tokens.Peek().GetType())
+                            ||
+                            TokenTypeTwo.IsAssignableFrom(tokens.Peek().GetType())
+                        )
+                    )
+            {
+                tokens.Dequeue();
+            }
+        }
+        
         /// <summary>
         /// Checks if the list of tokens is valid for the occurence
         /// </summary>
@@ -72,12 +75,18 @@ namespace JDT.Calidus.Statements.Factories.Fluent.TokenOccurences
         /// <returns>True if valid, otherwise false</returns>
         public bool IsValidFor(Queue<TokenBase> tokens)
         {
-            bool isValid = Validate(tokens);
-            if (isValid)
-                PopValidated(tokens);
+            bool valid = tokens.Count != 0
+                   &&
+                   (
+                       TokenTypeOne.IsAssignableFrom(tokens.Peek().GetType())
+                       ||
+                       TokenTypeTwo.IsAssignableFrom(tokens.Peek().GetType())
+                   );
 
-            return isValid;
+            if (valid)
+                tokens.Dequeue();
+
+            return valid;
         }
-
     }
 }

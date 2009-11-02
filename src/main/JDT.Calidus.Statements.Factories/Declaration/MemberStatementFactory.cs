@@ -41,7 +41,10 @@ namespace JDT.Calidus.Statements.Factories.Declaration
 
         protected override bool IsValidContext(IStatementContext context)
         {
-            return context.Parents.FirstParentIsOfType<ClassStatement>();
+            bool isType = context.Parents.FirstParentIsOfType<ClassStatement>(); 
+            bool isNext = context.IsNextToken<OpenCurlyBracketToken>() == false;
+
+            return isType && isNext;
         }
 
         protected override IStatementExpression Expression

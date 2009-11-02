@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Visualiser));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblGenericToken = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblGenericStatement = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmdParse = new System.Windows.Forms.Button();
             this.windowContainer = new System.Windows.Forms.SplitContainer();
             this.rtSource = new System.Windows.Forms.RichTextBox();
@@ -51,8 +53,6 @@
             this.lstLineDetails = new System.Windows.Forms.ListBox();
             this.lstLineList = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.lblGenericToken = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblGenericStatement = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip.SuspendLayout();
             this.windowContainer.Panel1.SuspendLayout();
             this.windowContainer.Panel2.SuspendLayout();
@@ -80,6 +80,16 @@
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblGenericToken
+            // 
+            this.lblGenericToken.Name = "lblGenericToken";
+            this.lblGenericToken.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblGenericStatement
+            // 
+            this.lblGenericStatement.Name = "lblGenericStatement";
+            this.lblGenericStatement.Size = new System.Drawing.Size(0, 17);
             // 
             // cmdParse
             // 
@@ -290,16 +300,6 @@
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 26;
             this.label4.Text = "Line details:";
-            // 
-            // lblGenericToken
-            // 
-            this.lblGenericToken.Name = "lblGenericToken";
-            this.lblGenericToken.Size = new System.Drawing.Size(0, 17);
-            // 
-            // lblGenericStatement
-            // 
-            this.lblGenericStatement.Name = "lblGenericStatement";
-            this.lblGenericStatement.Size = new System.Drawing.Size(0, 17);
             // 
             // Visualiser
             // 

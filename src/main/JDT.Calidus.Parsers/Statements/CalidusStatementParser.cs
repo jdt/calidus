@@ -66,10 +66,8 @@ namespace JDT.Calidus.Parsers.Statements
         public IEnumerable<StatementBase> Parse(IEnumerable<TokenBase> tokens)
         {
             IList<StatementBase> res = new List<StatementBase>();
-
             IList<TokenBase> currentStatementTokens = new List<TokenBase>();
-
-
+            
             for(int i = 0; i < tokens.Count(); i++)
             {
                 TokenBase aToken = tokens.ElementAt(i);
@@ -89,11 +87,12 @@ namespace JDT.Calidus.Parsers.Statements
                     IList<StatementBase> createdStatements = new List<StatementBase>();
                     bool wasStatement = false;
                     //check all statement factories
+                    IStatementContext context = _contextManager.GetContext(currentStatementTokens);  
                     foreach (IStatementFactory statementFactory in _statementFactoryProvider.GetFactories())
                     {
-                        if (statementFactory.CanCreateStatementFrom(currentStatementTokens, _contextManager.GetContext()))
+                        if (statementFactory.CanCreateStatementFrom(currentStatementTokens, context))
                         {
-                            createdStatements.Add(statementFactory.Create(new List<TokenBase>(currentStatementTokens), _contextManager.GetContext()));
+                            createdStatements.Add(statementFactory.Create(new List<TokenBase>(currentStatementTokens), context));
                             wasStatement = true;
                         }
                     }
@@ -102,10 +101,11 @@ namespace JDT.Calidus.Parsers.Statements
                     //the list is not cleared, add as a generic statement
                     if(!wasStatement)
                         createdStatements.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
-                    
+
                     currentStatementTokens.Clear();
                     //notify context manager
-                    _contextManager.Encountered(createdStatements);
+                    _contextManager.Encountered(createdStatements, i, tokens);
+
                     //add results
                     foreach (StatementBase aStatement in createdStatements)
                         res.Add(aStatement);

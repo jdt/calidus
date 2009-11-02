@@ -20,8 +20,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Statements.Common;
-using JDT.Calidus.Tokens.PreProcessor;
+using JDT.Calidus.Tokens.Common;
 
 namespace JDT.Calidus.Parsers.Statements
 {
@@ -33,6 +34,8 @@ namespace JDT.Calidus.Parsers.Statements
         private IList<StatementParent> _parentList;
 
         private IEnumerable<StatementBase> _previousEncounters;
+        private IEnumerable<TokenBase> _tokenList;
+        private int _lastIndex;
 
         /// <summary>
         /// Create a new instance of this class
@@ -46,7 +49,9 @@ namespace JDT.Calidus.Parsers.Statements
         /// Notifies the manager that a list of tokens was parsed into a number of statements
         /// </summary>
         /// <param name="statements">The list of statements</param>
-        public void Encountered(IEnumerable<StatementBase> statements)
+        /// <param name="lastIndex">The last index of a token in the whole list that was parsed into a statement</param>
+        /// <param name="tokens">The whole token list</param>
+        public void Encountered(IEnumerable<StatementBase> statements, int lastIndex, IEnumerable<TokenBase> tokens)
         {
             StatementBase openBlock = statements.SingleOrDefault(p => p.GetType().Equals(typeof(OpenBlockStatement)));
             StatementBase closeBlock = statements.SingleOrDefault(p => p.GetType().Equals(typeof(CloseBlockStatement)));
@@ -57,15 +62,40 @@ namespace JDT.Calidus.Parsers.Statements
                 _parentList.RemoveAt(_parentList.Count - 1);
 
             _previousEncounters = statements;
+            _tokenList = tokens;
+            _lastIndex = lastIndex;
         }
 
         /// <summary>
         /// Gets the current context
         /// </summary>
+        /// <param name="currentStatementTokens">The current statement tokens the context is used for</param>
         /// <returns>The context</returns>
-        public IStatementContext GetContext()
+        public IStatementContext GetContext(IEnumerable<TokenBase> currentStatementTokens)
         {
-            return new StatementContext(_parentList);
+            return new StatementContext(_parentList, GetNextTokenFromCurrentStatement(currentStatementTokens.Count()));
+        }
+
+        private TokenBase GetNextTokenFromCurrentStatement(int offset)
+        {
+            int index = _lastIndex + offset;
+
+            if (_tokenList == null || _tokenList.Count() == 0)
+                return null;
+            if (index > _tokenList.Count())
+                return null;
+
+            while (index < _tokenList.Count())
+            {
+                if (!(_tokenList.ElementAt(index) is WhiteSpaceToken))
+                {
+                    TokenBase token = _tokenList.ElementAt(index);
+                    return token;
+                }
+                index++;
+            }
+
+            return null;
         }
     }
 }

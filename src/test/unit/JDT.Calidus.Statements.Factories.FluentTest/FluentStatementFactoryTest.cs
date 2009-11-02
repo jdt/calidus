@@ -99,6 +99,13 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
         {
             throw new NotImplementedException();
         }
+
+        public IMiddleStatementExpression ContainsEither<TTokenTypeOne, TTokenTypeTwo>()
+            where TTokenTypeOne : TokenBase
+            where TTokenTypeTwo : TokenBase
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]
