@@ -46,5 +46,13 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression followed by whitespace if applicable and the specified token</returns>
         IMiddleStatementExpression FollowedBy<TTokenType>() where TTokenType : TokenBase;
+        /// <summary>
+        /// Verify that the previous token is followed by one of either token types
+        /// </summary>
+        /// <typeparam name="TTokenTypeOne">The first type</typeparam>
+        /// <typeparam name="TTokenTypeTwo">The second type</typeparam>
+        /// <returns>An expression followed by either specified token</returns>
+        IMiddleStatementExpression FollowedByEither<TTokenTypeOne, TTokenTypeTwo>() where TTokenTypeOne : TokenBase  
+                                                                                    where TTokenTypeTwo : TokenBase;
     }
 }

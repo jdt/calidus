@@ -192,5 +192,23 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
             _mocker.VerifyAll();
         }
+
+        [Test]
+        public void MemberStatementFactoryShouldNotCreateProperty()
+        {
+            Expect.Call(_context.Parents).Return(new[] { new StatementParent(StatementCreator.CreateClassStatement(), StatementCreator.CreateOpenBlockStatement()) }).Repeat.Once();
+            Expect.Call(_context.IsNextToken<OpenCurlyBracketToken>()).Return(true).Repeat.Once();
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("t"));
+
+            _mocker.ReplayAll();
+            Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
+            _mocker.VerifyAll();
+        }
     }
 }

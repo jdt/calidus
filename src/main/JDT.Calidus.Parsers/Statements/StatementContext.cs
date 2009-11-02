@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 
 namespace JDT.Calidus.Parsers.Statements
 {
@@ -32,9 +33,11 @@ namespace JDT.Calidus.Parsers.Statements
         /// Create a new instance of this class
         /// </summary>
         /// <param name="parents">The statement parents</param>
-        public StatementContext(IEnumerable<StatementParent> parents)
+        /// <param name="nextTokenFromPreviousStatement">The next token based on the previously parsed statement</param>
+        public StatementContext(IEnumerable<StatementParent> parents, TokenBase nextTokenFromPreviousStatement)
         {
             Parents = parents;
+            NextTokenFromCurrentStatement = nextTokenFromPreviousStatement;
         }
 
         /// <summary>
@@ -44,6 +47,23 @@ namespace JDT.Calidus.Parsers.Statements
         /// When parsing for member statements, the context should provide the class and namespace statement as parent
         /// </example>
         public IEnumerable<StatementParent> Parents { get; private set; }
+        /// <summary>
+        /// Gets the next non-whitespace token after the current statement
+        /// </summary>
+        public TokenBase NextTokenFromCurrentStatement { get; private set; }
+
+        /// <summary>
+        /// Checks if the next token from previous statement is of the specified type
+        /// </summary>
+        /// <typeparam name="TTokenType">The type to check</typeparam>
+        /// <returns>True if of that type, false if not</returns>
+        public bool IsNextToken<TTokenType>() where TTokenType : TokenBase
+        {
+            if (NextTokenFromCurrentStatement == null)
+                return false;
+            else
+                return NextTokenFromCurrentStatement.GetType().IsAssignableFrom(typeof(TTokenType));
+        }
 
         // override object.Equals
         public override bool Equals(object obj)
@@ -62,6 +82,7 @@ namespace JDT.Calidus.Parsers.Statements
 
             StatementContext context = (StatementContext)obj;
             if (Parents.SequenceEqual(context.Parents) == false) return false;
+            if (NextTokenFromCurrentStatement.Equals(context.NextTokenFromCurrentStatement) == false) return false;
             return true;
         }
 
@@ -70,6 +91,7 @@ namespace JDT.Calidus.Parsers.Statements
         {
             int hash = 3;
             hash ^= Parents.GetHashCode();
+            hash ^= NextTokenFromCurrentStatement.GetHashCode();
             return hash;
         }
     }

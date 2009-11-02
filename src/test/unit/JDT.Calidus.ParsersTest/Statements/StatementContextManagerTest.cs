@@ -20,10 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Statements.Common;
 using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Tests;
+using JDT.Calidus.Tokens.Common;
 using NUnit.Framework;
 
 namespace JDT.Calidus.ParsersTest.Statements
@@ -45,46 +47,82 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void OpenBlockStatementForClassShouldSetParentContextToClass()
         {
             ClassStatement classStatement = StatementCreator.CreateClassStatement();
-            OpenBlockStatement openBlock = StatementCreator.CreateOpenBlockStatement();
+            _manager.Encountered(new[] { classStatement}, TokenCreator.Created().Count(), TokenCreator.Created());
+            Assert.AreEqual(0, _manager.GetContext(classStatement.Tokens).Parents.Count());
 
-            _manager.Encountered(new[] { classStatement });
-            Assert.AreEqual(0, _manager.GetContext().Parents.Count());
-            _manager.Encountered(new[] { openBlock });
-            Assert.AreEqual(new [] { new StatementParent(new[] {classStatement}, openBlock) }, _manager.GetContext().Parents);
+            OpenBlockStatement openBlock = StatementCreator.CreateOpenBlockStatement();
+            _manager.Encountered(new[] { openBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
+            Assert.AreEqual(new [] { new StatementParent(new[] {classStatement}, openBlock) }, _manager.GetContext(openBlock.Tokens).Parents);
         }
  
         [Test]
         public void CloseBlockStatementShouldEndParentContext()
         {
             ClassStatement classStatement = StatementCreator.CreateClassStatement();
+            _manager.Encountered(new[] { classStatement }, TokenCreator.Created().Count(), TokenCreator.Created());
+            Assert.AreEqual(0, _manager.GetContext(classStatement.Tokens).Parents.Count());
+            
             OpenBlockStatement openBlock = StatementCreator.CreateOpenBlockStatement();
-            CloseBlockStatement closeBlock = StatementCreator.CreateCloseBlockStatement();
+            _manager.Encountered(new[] { openBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
+            Assert.AreEqual(new[] { new StatementParent(new[] { classStatement }, openBlock) }, _manager.GetContext(openBlock.Tokens).Parents);
 
-            _manager.Encountered(new[] { classStatement });
-            Assert.AreEqual(0, _manager.GetContext().Parents.Count());
-            _manager.Encountered(new[] { openBlock });
-            Assert.AreEqual(new[] { new StatementParent(new[] { classStatement }, openBlock) }, _manager.GetContext().Parents);
-            _manager.Encountered(new[] { closeBlock });
-            Assert.AreEqual(0, _manager.GetContext().Parents.Count());
+            CloseBlockStatement closeBlock = StatementCreator.CreateCloseBlockStatement();
+            _manager.Encountered(new[] { closeBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
+            Assert.AreEqual(0, _manager.GetContext(closeBlock.Tokens).Parents.Count());
         }
 
         [Test]
         public void CloseBlockStatementShouldSetParentToTopParent()
         {
             ClassStatement classStatement = StatementCreator.CreateClassStatement();
+            _manager.Encountered(new[] { classStatement }, TokenCreator.Created().Count(), TokenCreator.Created());
+            
             OpenBlockStatement openBlock = StatementCreator.CreateOpenBlockStatement();
-            CloseBlockStatement closeBlock = StatementCreator.CreateCloseBlockStatement();
-            ClassStatement internalClassStatement = StatementCreator.CreateClassStatement();
+            _manager.Encountered(new[] { openBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
 
-            _manager.Encountered(new[] { classStatement });
-            _manager.Encountered(new[] { openBlock }); 
-            Assert.AreEqual(new[] { new StatementParent(new[] { classStatement }, openBlock) }, _manager.GetContext().Parents);
-            _manager.Encountered(new[] { internalClassStatement });
-            _manager.Encountered(new[] { openBlock });
-            Assert.AreEqual(new[] { new StatementParent(new[] { classStatement }, openBlock), new StatementParent(new[] { internalClassStatement }, openBlock) }, _manager.GetContext().Parents);
-            _manager.Encountered(new[] { closeBlock });
-            Assert.AreEqual(new[] { new StatementParent(new[] { classStatement }, openBlock) }, _manager.GetContext().Parents);
-            _manager.Encountered(new[] { closeBlock });
+            ClassStatement internalClassStatement = StatementCreator.CreateClassStatement();
+            _manager.Encountered(new[] { internalClassStatement }, TokenCreator.Created().Count(), TokenCreator.Created());
+
+            OpenBlockStatement secondOpenBlock = StatementCreator.CreateOpenBlockStatement();
+            _manager.Encountered(new[] { secondOpenBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
+
+            CloseBlockStatement closeBlock = StatementCreator.CreateCloseBlockStatement();
+            CollectionAssert.AreEquivalent(new[] { new StatementParent(new[] { classStatement }, openBlock), new StatementParent(new[] { internalClassStatement }, secondOpenBlock) }, _manager.GetContext(closeBlock.Tokens).Parents);
+            _manager.Encountered(new[] { closeBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
+
+            CollectionAssert.AreEquivalent(new[] { new StatementParent(new[] { classStatement }, openBlock) }, _manager.GetContext(openBlock.Tokens).Parents);
+            _manager.Encountered(new[] { closeBlock }, TokenCreator.Created().Count(), TokenCreator.Created());
+        }
+
+        [Test]
+        public void NextTokenShouldNotReturnWhiteSpaceToken()
+        {
+            TokenBase identifier = TokenCreator.Create<IdentifierToken>("test");
+            TokenBase space = TokenCreator.Create<SpaceToken>();
+
+            StatementBase classStatement = StatementCreator.CreateClassStatement();
+            StatementBase memberStatement = StatementCreator.CreateMemberStatement("test");
+
+            IList<TokenBase> totalList = new List<TokenBase>();
+            foreach (TokenBase aToken in classStatement.Tokens)
+                totalList.Add(aToken);
+            foreach (TokenBase aToken in memberStatement.Tokens)
+                totalList.Add(aToken);
+            totalList.Add(space);
+            totalList.Add(identifier);
+
+            IList<TokenBase> identifierList = new List<TokenBase>();
+            identifierList.Add(space);
+            identifierList.Add(identifier);
+
+            _manager.Encountered(new[] { classStatement }, classStatement.Tokens.Count(), totalList);
+            Assert.AreEqual(identifier, _manager.GetContext(memberStatement.Tokens).NextTokenFromCurrentStatement);
+        }
+
+        [Test]
+        public void ManagerWithNoEncounteredCalledShouldReturnNextNull()
+        {
+            Assert.IsNull(_manager.GetContext(new TokenBase[] { }).NextTokenFromCurrentStatement);
         }
     }
 }

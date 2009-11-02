@@ -34,6 +34,8 @@ namespace JDT.Calidus.Tests
         private int _currentColumn;
         private int _currentPosition;
 
+        private IList<TokenBase> _createdTokens;
+
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
@@ -137,6 +139,17 @@ namespace JDT.Calidus.Tests
             _currentLine = 1;
             _currentColumn = 1;
             _currentPosition = 0;
+
+            _createdTokens = new List<TokenBase>();
+        }
+
+        /// <summary>
+        /// Returns the list of tokens created up to now
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<TokenBase> Created()
+        {
+            return _createdTokens;
         }
 
         private void UpdateInformation(TokenBase token)
@@ -149,6 +162,8 @@ namespace JDT.Calidus.Tests
                 _currentColumn = 1;
                 _currentLine++;
             }
+
+            _createdTokens.Add(token);
         }
     }
 }

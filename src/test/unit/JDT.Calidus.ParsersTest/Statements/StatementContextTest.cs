@@ -20,8 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Parsers.Statements;
 using JDT.Calidus.Tests;
+using JDT.Calidus.Tokens.Common;
 using NUnit.Framework;
 
 namespace JDT.Calidus.ParsersTest.Statements
@@ -39,11 +41,14 @@ namespace JDT.Calidus.ParsersTest.Statements
         public void StatementContextsShouldBeEqual()
         {
             IList<StatementParent> alphaList = new[] { new StatementParent(new[] {StatementCreator.CreateLineCommentStatement("test")}, null) };
+            TokenBase alphaNext = TokenCreator.Create<SemiColonToken>();
             TokenCreator.Reset();
-            IList<StatementParent> bravoList = new[] { new StatementParent(new[] {StatementCreator.CreateLineCommentStatement("test")}, null) };
             
-            StatementContext alpha = new StatementContext(alphaList);
-            StatementContext bravo = new StatementContext(bravoList);
+            IList<StatementParent> bravoList = new[] { new StatementParent(new[] {StatementCreator.CreateLineCommentStatement("test")}, null) };
+            TokenBase bravoNext = TokenCreator.Create<SemiColonToken>();
+
+            StatementContext alpha = new StatementContext(alphaList, alphaNext);
+            StatementContext bravo = new StatementContext(bravoList, bravoNext);
 
             Assert.AreEqual(alpha, bravo);
         }

@@ -36,7 +36,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
           IMiddleStatementExpression, 
           IEndingStatementExpression
     {
-        private IList<TokenOccurenceBase> _occurencesList;
+        private IList<ITokenOccurence> _occurencesList;
         private IList<ExpressionOccurenceBase> _expressionOccurencesList;
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         public StatementExpression()
         {
-            _occurencesList = new List<TokenOccurenceBase>();
+            _occurencesList = new List<ITokenOccurence>();
             _expressionOccurencesList = new List<ExpressionOccurenceBase>();
         }
 
@@ -56,7 +56,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         public bool Matches(IEnumerable<TokenBase> checkList)
         {
             Queue<TokenBase> tokens = new Queue<TokenBase>(checkList);
-            Queue<TokenOccurenceBase> occurences = new Queue<TokenOccurenceBase>(_occurencesList);
+            Queue<ITokenOccurence> occurences = new Queue<ITokenOccurence>(_occurencesList);
 
             //check for all statement-wide occurences
             foreach (ExpressionOccurenceBase anOccurence in _expressionOccurencesList)
@@ -74,16 +74,16 @@ namespace JDT.Calidus.Statements.Factories.Fluent
             return isMatch;
         }
 
-        private bool IsMatch(Queue<TokenBase> checkList, Queue<TokenOccurenceBase> occurencesList)
+        private bool IsMatch(Queue<TokenBase> checkList, Queue<ITokenOccurence> occurencesList)
         {
             //if no more occurences to match, valid
             if (occurencesList.Count() == 0)
                 return true;
 
             Queue<TokenBase> tokens = new Queue<TokenBase>(checkList);
-            Queue<TokenOccurenceBase> occurences = new Queue<TokenOccurenceBase>(occurencesList);
+            Queue<ITokenOccurence> occurences = new Queue<ITokenOccurence>(occurencesList);
 
-            TokenOccurenceBase currentOccurence = occurences.Dequeue();
+            ITokenOccurence currentOccurence = occurences.Dequeue();
 
             //for each occurence
             while (currentOccurence != null)
@@ -152,7 +152,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression followed by whitespace if applicable and the specified token</returns>
-        public IMiddleStatementExpression FollowedBy<TTokenType>() 
+        public IMiddleStatementExpression FollowedBy<TTokenType>()
             where TTokenType : TokenBase
         {
             _occurencesList.Add(new TokenOccurence(typeof(TTokenType)));
@@ -164,7 +164,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression ending with the specified token type</returns>
-        public IEndingStatementExpression EndsWith<TTokenType>() 
+        public IEndingStatementExpression EndsWith<TTokenType>()
             where TTokenType : TokenBase
         {
             _occurencesList.Add(new EndingTokenOccurence(typeof(TTokenType)));
@@ -176,7 +176,8 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression containing the specified token type</returns>
-        public IMiddleStatementExpression Contains<TTokenType>() where TTokenType : TokenBase
+        public IMiddleStatementExpression Contains<TTokenType>() 
+            where TTokenType : TokenBase
         {
             _occurencesList.Add(new ContainsTokenOccurence(typeof(TTokenType)));
             return this;
@@ -187,7 +188,8 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression of the specified token type</returns>
-        public IEndingStatementExpression Is<TTokenType>() where TTokenType : TokenBase
+        public IEndingStatementExpression Is<TTokenType>()
+            where TTokenType : TokenBase
         {
             _occurencesList.Add(new IsTokenOccurence(typeof(TTokenType)));
             return this;
@@ -198,9 +200,38 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// </summary>
         /// <typeparam name="TTokenType">The type</typeparam>
         /// <returns>An expression not containing the specified token type</returns>
-        public IMiddleStatementExpression ContainsNo<TTokenType>() where TTokenType : TokenBase
+        public IMiddleStatementExpression ContainsNo<TTokenType>()
+            where TTokenType : TokenBase
         {
             _expressionOccurencesList.Add(new ContainsNoTokenOccurence(typeof(TTokenType)));
+            return this;
+        }        
+        
+        /// <summary>
+        /// Verify that the previous token is followed by one of either token types
+        /// </summary>
+        /// <typeparam name="TTokenTypeOne">The first type</typeparam>
+        /// <typeparam name="TTokenTypeTwo">The second type</typeparam>
+        /// <returns>An expression followed by either specified token</returns>
+        public IMiddleStatementExpression FollowedByEither<TTokenTypeOne, TTokenTypeTwo>()
+            where TTokenTypeOne : TokenBase
+            where TTokenTypeTwo : TokenBase
+        {
+            _occurencesList.Add(new EitherTokenOccurence(typeof(TTokenTypeOne), typeof(TTokenTypeTwo)));
+            return this;
+        }
+
+        /// <summary>
+        /// Verify that the statement contains either token
+        /// </summary>
+        /// <typeparam name="TTokenTypeOne">The first type</typeparam>
+        /// <typeparam name="TTokenTypeTwo">The second type</typeparam>
+        /// <returns>An expression containing either token type</returns>
+        public IMiddleStatementExpression ContainsEither<TTokenTypeOne, TTokenTypeTwo>()
+            where TTokenTypeOne : TokenBase
+            where TTokenTypeTwo : TokenBase
+        {
+            _occurencesList.Add(new ContainsEitherTokenOccurence(typeof(TTokenTypeOne), typeof(TTokenTypeTwo)));
             return this;
         }
     }

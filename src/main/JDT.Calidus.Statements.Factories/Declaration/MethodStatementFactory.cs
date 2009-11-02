@@ -25,6 +25,7 @@ using JDT.Calidus.Statements.Factories.Fluent;
 using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Common.Brackets;
+using JDT.Calidus.Tokens.Types;
 
 namespace JDT.Calidus.Statements.Factories.Declaration
 {
@@ -49,7 +50,7 @@ namespace JDT.Calidus.Statements.Factories.Declaration
             {
                 StatementExpression expression = new StatementExpression();
                 expression
-                    .Contains<IdentifierToken>()
+                    .ContainsEither<IdentifierToken, ValueTypeToken>()
                     .FollowedBy<IdentifierToken>()
                     .FollowedBy<OpenRoundBracketToken>();
 
