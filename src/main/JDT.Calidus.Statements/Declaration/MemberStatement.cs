@@ -65,12 +65,7 @@ namespace JDT.Calidus.Statements.Declaration
         {
             get
             {
-                for (int i = Tokens.Count() - 1; i >= 0; i--)
-                {
-                    if (Tokens.ElementAt(i) is StaticToken)
-                        return (StaticToken)Tokens.ElementAt(i);
-                }
-                return null;
+                return FindFirstOccurenceOf<StaticToken>();
             }
         }
     }
