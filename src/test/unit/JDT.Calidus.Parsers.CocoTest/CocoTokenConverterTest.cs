@@ -125,9 +125,9 @@ namespace JDT.Calidus.Parsers.CocoTest
         }
 
         [Test]
-        public void IntConstShouldReturnValueTypeToken()
+        public void IntConstShouldReturnIntToken()
         {
-            Assert.IsInstanceOf(typeof(ValueTypeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._int)));
+            Assert.IsInstanceOf(typeof(IntToken), CocoTokenConverter.Convert(GetCocoToken(Parser._int)));
         }
 
         [Test]

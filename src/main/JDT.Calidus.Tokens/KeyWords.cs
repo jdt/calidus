@@ -99,6 +99,10 @@ namespace JDT.Calidus.Tokens
         /// The void keyword
         /// </summary>
         public static String VOID = "void";
+        /// <summary>
+        /// The int keyword
+        /// </summary>
+        public static String INT = "int";
 
         /// <summary>
         /// The this keyword

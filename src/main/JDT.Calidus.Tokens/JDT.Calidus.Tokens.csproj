@@ -95,6 +95,7 @@
     <Compile Include="Statement\ElseToken.cs" />
     <Compile Include="Statement\IfToken.cs" />
     <Compile Include="Types\ClassToken.cs" />
+    <Compile Include="Types\IntToken.cs" />
     <Compile Include="Types\ObjectToken.cs" />
     <Compile Include="Types\VoidToken.cs" />
     <Compile Include="Types\EventToken.cs" />
