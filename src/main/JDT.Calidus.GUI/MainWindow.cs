@@ -35,8 +35,8 @@ namespace JDT.Calidus.GUI
     /// </summary>
     public partial class MainWindow : Form, IMainView
     {
-        private static String WINDOW_TITLE = "Calidus GUI Runner - {0}";
-        private static String HAS_CHANGES = "*";
+        private static String _windowTitle = "Calidus GUI Runner - {0}";
+        private static String _hasChanges = "*";
 
         private String _projectName;
 
@@ -119,16 +119,16 @@ namespace JDT.Calidus.GUI
         /// <summary>
         /// Marks changes to the project
         /// </summary>
-        /// <param name="_hasChanges">True if changed, otherwise false</param>
+        /// <param name="hasChanges">True if changed, otherwise false</param>
         public void ProjectHasChanges(bool hasChanges)
         {
             String name = "";
             if (hasChanges)
-                name = String.Format(_projectName + "{0}", HAS_CHANGES);
+                name = String.Format(_projectName + "{0}", _hasChanges);
             else
                 name = String.Format(_projectName + "{0}", String.Empty);
 
-            Text = String.Format(WINDOW_TITLE, name);
+            Text = String.Format(_windowTitle, name);
         }
 
         /// <summary>
