@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.UI.Events;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
 using JDT.Calidus.UI.Views;
@@ -27,24 +29,65 @@ using Rhino.Mocks;
 
 namespace JDT.Calidus.UITest.Controllers
 {
+    public class TreeViewImp : IRuleTreeView
+    {
+        private IList<IRule> _expected;
+
+        public TreeViewImp(IList<IRule> expected)
+        {
+            _expected = expected;
+
+            BeforeRuleSelectionChanged += new EventHandler<RuleChangeCancelEventArgs>(TreeViewImp_BeforeRuleSelectionChanged);
+            RuleSelectionChanged += new EventHandler<RuleEventArgs>(TreeViewImp_RuleSelectionChanged);
+        }
+
+        private void TreeViewImp_BeforeRuleSelectionChanged(object sender, RuleChangeCancelEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void TreeViewImp_RuleSelectionChanged(object sender, RuleEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisplayRules(IEnumerable<IRule> rules)
+        {
+            CollectionAssert.AreEquivalent(_expected, rules);
+        }
+
+        public event EventHandler<RuleEventArgs> RuleSelectionChanged;
+        public event EventHandler<RuleChangeCancelEventArgs> BeforeRuleSelectionChanged;
+    }
+
     [TestFixture]
     public class RuleTreeControllerTest
     {
         [Test]
-        public void RuleTreeControllerShouldDisplayRulesFromRuleProvider()
+        public void RuleTreeControllerShouldDisplayRulesAlphabeticallyFromRuleProvider()
         {
             MockRepository mocker = new MockRepository();
 
-            IRule rule = mocker.DynamicMock<IRule>();
-            IRuleTreeView view = mocker.DynamicMock<IRuleTreeView>();
-            ICalidusRuleProvider ruleProvider = mocker.DynamicMock<ICalidusRuleProvider>();
+            IRule ruleAlpha = mocker.DynamicMock<IRule>();
+            IRule ruleBravo = mocker.DynamicMock<IRule>();
 
             IList<IRule> rules = new List<IRule>();
-            rules.Add(rule);
+            rules.Add(ruleBravo);
+            rules.Add(ruleAlpha);
 
-            Expect.Call(() => view.DisplayRules(rules)).Repeat.Once();
+            IList<IRule> rulesSorted = new List<IRule>();
+            rulesSorted.Add(rules[1]);
+            rulesSorted.Add(rules[0]);
+
+            TreeViewImp view = new TreeViewImp(rulesSorted);
+            ICalidusRuleProvider ruleProvider = mocker.DynamicMock<ICalidusRuleProvider>();
+
+            Expect.Call(ruleAlpha.Category).Return("Alpha").Repeat.Any();
+            Expect.Call(ruleBravo.Category).Return("Bravo").Repeat.Any();
+
             Expect.Call(ruleProvider.GetRules()).Return(rules).Repeat.Once();
-
+            Expect.Call(() => view.DisplayRules(rulesSorted)).Repeat.Once();
+            
             mocker.ReplayAll();
 
             RuleTreeController controller = new RuleTreeController(view, ruleProvider);
