@@ -36,7 +36,7 @@ namespace JDT.Calidus.GUI.Views
     /// </summary>
     public partial class ViolationListView : UserControl, IViolationListView
     {
-        private static String IGNORE_FILE = "Ignore {1} in {0}";
+        private static String _ignoreFile = "Ignore {1} in {0}";
 
         private IDictionary<ListViewItem, RuleViolation> _violationMap;
 
@@ -123,7 +123,7 @@ namespace JDT.Calidus.GUI.Views
                 {
                     ListViewItem selectedItem = lvViolations.SelectedItems[0];
                     Object[] data = { Path.GetFileName(_violationMap[selectedItem].File), "all violations"};
-                    ignoreFileToolStripMenuItem.Text = String.Format(IGNORE_FILE, data);
+                    ignoreFileToolStripMenuItem.Text = String.Format(_ignoreFile, data);
                     contextMenuStrip.Show(lvViolations, e.X, e.Y);
                 }
             }

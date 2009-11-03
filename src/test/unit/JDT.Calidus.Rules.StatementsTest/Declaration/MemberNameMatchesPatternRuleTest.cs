@@ -20,8 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Rules.Statements.Declaration;
+using JDT.Calidus.Statements.Declaration;
 using JDT.Calidus.Tests;
+using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Modifiers;
 using NUnit.Framework;
 
 namespace JDT.Calidus.Rules.StatementsTest.Declaration
@@ -38,22 +42,42 @@ namespace JDT.Calidus.Rules.StatementsTest.Declaration
         [Test]
         public void RuleShouldValidateStatements()
         {
-            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex(""));
+            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex(""), false);
             Assert.IsTrue(rule.Validates(StatementCreator.CreateMemberStatement("member")));
         }
 
         [Test]
         public void RuleShouldReturnValidForStatementsThatMatchThePattern()
         {
-            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex("^_[a-z]+"));
+            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex("^_[a-z]+"), false);
             Assert.IsTrue(rule.IsValidFor(StatementCreator.CreateMemberStatement("_aTest")));
         }
 
         [Test]
         public void RuleShouldReturnInvalidForStatementsThatDoNotMatchThePattern()
         {
-            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex("^_[a-z]+"));
+            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex("^_[a-z]+"), false);
             Assert.IsFalse(rule.IsValidFor(StatementCreator.CreateMemberStatement("ATest")));
+        }
+
+        [Test]
+        public void RuleShouldReturnValidForStatementsThatDoNotMatchThePatternButArePublicStatic()
+        {
+            MemberNameMatchesPatternRule rule = new MemberNameMatchesPatternRule(new Regex("^_[a-z]+"), true);
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<StaticToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            MemberStatement member = new MemberStatement(input);
+
+            Assert.IsTrue(rule.IsValidFor(member));
         }
     }
 }

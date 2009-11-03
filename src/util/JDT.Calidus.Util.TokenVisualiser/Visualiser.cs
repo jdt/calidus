@@ -37,8 +37,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
 {
     public partial class Visualiser : Form
     {
-        private static String GENERIC_TOKEN_COUNT = "Generic tokens: {0}";
-        private static String GENERIC_STATEMENT_COUNT = "Generic statements: {0}";
+        private static String _genericTokenCount = "Generic tokens: {0}";
+        private static String _genericStatementCount = "Generic statements: {0}";
 
         private IList<VisualiserToken> _currentTokens;
         private IList<VisualiserStatement> _currentStatements;
@@ -183,8 +183,8 @@ namespace JDT.Calidus.Util.TokenVisualiser
             lstLineList.DataSource = _currentLines;
             lstLineList.Enabled = true;
 
-            lblGenericToken.Text = String.Format(GENERIC_TOKEN_COUNT, genericToken);
-            lblGenericStatement.Text = String.Format(GENERIC_STATEMENT_COUNT, genericStatement);
+            lblGenericToken.Text = String.Format(_genericTokenCount, genericToken);
+            lblGenericStatement.Text = String.Format(_genericStatementCount, genericStatement);
 
             tabDisplay.SelectedIndex = 0;
             DisplayCurrentToken();

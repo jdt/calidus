@@ -57,5 +57,73 @@ namespace JDT.Calidus.StatementsTest.Declaration
             MemberStatement statement = new MemberStatement(input);
             Assert.AreEqual(expected, statement.MemberNameToken);
         }
+
+        [Test]
+        public void StaticTokenPropertyShouldReturnNullIfNoStaticToken()
+        {
+            TokenBase expected = TokenCreator.Create<IdentifierToken>("memberName");
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(expected);
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            MemberStatement statement = new MemberStatement(input);
+            Assert.IsNull(statement.StaticToken);
+        }
+
+        [Test]
+        public void StaticTokenPropertyShouldReturnStaticToken()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PrivateModifierToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+
+            TokenBase expected = TokenCreator.Create<StaticToken>();
+
+            input.Add(expected);
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("test"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            MemberStatement statement = new MemberStatement(input);
+            Assert.AreEqual(expected, statement.StaticToken);
+        }
+
+        [Test]
+        public void AccessModifierTokenPropertyShouldReturnNullIfNoAccessModifier()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("memberName"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            MemberStatement statement = new MemberStatement(input);
+            Assert.IsNull(statement.AccessModifierToken);
+        }
+
+        [Test]
+        public void AccessModifierTokenPropertyShouldReturnAccessModifier()
+        {
+            TokenBase expected = TokenCreator.Create<PrivateModifierToken>();
+
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(expected);
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("String"));
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("test"));
+            input.Add(TokenCreator.Create<SemiColonToken>());
+
+            MemberStatement statement = new MemberStatement(input);
+            Assert.AreEqual(expected, statement.AccessModifierToken);
+        }
     }
 }

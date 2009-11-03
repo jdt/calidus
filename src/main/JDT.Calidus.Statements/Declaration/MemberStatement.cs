@@ -23,6 +23,7 @@ using JDT.Calidus.Common;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Modifiers;
 
 namespace JDT.Calidus.Statements.Declaration
 {
@@ -54,6 +55,22 @@ namespace JDT.Calidus.Statements.Declaration
                 }
 
                 throw new CalidusException("Could not find a valid member name token");
+            }
+        }
+
+        /// <summary>
+        /// Gets the token that defines the member as static or null if none found
+        /// </summary>
+        public StaticToken StaticToken
+        {
+            get
+            {
+                for (int i = Tokens.Count() - 1; i >= 0; i--)
+                {
+                    if (Tokens.ElementAt(i) is StaticToken)
+                        return (StaticToken)Tokens.ElementAt(i);
+                }
+                return null;
             }
         }
     }

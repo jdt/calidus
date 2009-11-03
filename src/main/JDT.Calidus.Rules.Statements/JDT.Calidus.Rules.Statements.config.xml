@@ -6,6 +6,7 @@
     </description>
     <params>
       <param name="pattern" type="String">_[a-z0-9]</param>
+      <param name="ignorePublicStatic" type="Boolean">true</param>
     </params>
   </rule>
 </rules>

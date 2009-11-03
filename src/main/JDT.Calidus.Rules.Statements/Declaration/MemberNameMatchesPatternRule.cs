@@ -24,6 +24,7 @@ using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Statements.Declaration;
+using JDT.Calidus.Tokens.Modifiers;
 
 namespace JDT.Calidus.Rules.Statements.Declaration
 {
@@ -35,13 +36,15 @@ namespace JDT.Calidus.Rules.Statements.Declaration
         : StatementRuleBase
     {
         private Regex _expression;
+        private bool _ignorePublicStatic;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         /// <param name="pattern">The pattern to match with</param>
-        public MemberNameMatchesPatternRule(String pattern)
-            : this(new Regex(pattern))
+        /// <param name="ignorePublicStatic">Ignore public static members</param>
+        public MemberNameMatchesPatternRule(String pattern, bool ignorePublicStatic)
+            : this(new Regex(pattern), ignorePublicStatic)
         {
         }
 
@@ -49,10 +52,12 @@ namespace JDT.Calidus.Rules.Statements.Declaration
         /// Creates a new instance of this class
         /// </summary>
         /// <param name="expression">The expression to match with</param>
-        public MemberNameMatchesPatternRule(Regex expression)
+        /// <param name="ignorePublicStatic">Ignore public static members</param>
+        public MemberNameMatchesPatternRule(Regex expression, bool ignorePublicStatic)
             : base(RuleCategories.Naming)
         {
             _expression = expression;
+            _ignorePublicStatic = ignorePublicStatic;
         }
 
         /// <summary>
@@ -73,7 +78,9 @@ namespace JDT.Calidus.Rules.Statements.Declaration
         public override bool IsValidFor(StatementBase statement)
         {
             MemberStatement memberStatement = (MemberStatement) statement;
-            return _expression.IsMatch(memberStatement.MemberNameToken.Content);
+            bool matchesExpression = _expression.IsMatch(memberStatement.MemberNameToken.Content);
+            //either true or must be public static to be true
+            return matchesExpression || (memberStatement.AccessModifierToken is PublicModifierToken && memberStatement.StaticToken != null);
         }
     }
 }

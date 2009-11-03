@@ -35,7 +35,7 @@ namespace JDT.Calidus.Common.Rules
     /// </summary>
     public class RuleFactory<TRuleType> where TRuleType : IRule
     {
-        private static String exMsg = "Found rule {0}, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found";
+        private static String _exMsg = "Found rule {0}, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found";
 
         private Assembly _toParse;
 
@@ -94,11 +94,11 @@ namespace JDT.Calidus.Common.Rules
                     catch(Exception ex)
                     {
                         if (ruleInstance == null)
-                            throw new CalidusException(String.Format(exMsg, aType.Name), ex);    
+                            throw new CalidusException(String.Format(_exMsg, aType.Name), ex);    
                     }
 
                     if (ruleInstance == null)
-                        throw new CalidusException(String.Format(exMsg, aType.Name));
+                        throw new CalidusException(String.Format(_exMsg, aType.Name));
 
                     result.Add(ruleInstance);
                 }
@@ -134,11 +134,11 @@ namespace JDT.Calidus.Common.Rules
                     catch(Exception ex)
                     {
                         if (ruleInstance == null)
-                            throw new CalidusException(String.Format(exMsg, aType.Name), ex);    
+                            throw new CalidusException(String.Format(_exMsg, aType.Name), ex);    
                     }
 
                     if (ruleInstance == null)
-                        throw new CalidusException(String.Format(exMsg, aType.Name));
+                        throw new CalidusException(String.Format(_exMsg, aType.Name));
 
                     result.Add(ruleInstance);
                 }
@@ -177,11 +177,11 @@ namespace JDT.Calidus.Common.Rules
                     catch (Exception ex)
                     {
                         if (ruleInstance == null)
-                            throw new CalidusException(String.Format(exMsg, aType.Name), ex);
+                            throw new CalidusException(String.Format(_exMsg, aType.Name), ex);
                     }
 
                     if (ruleInstance == null)
-                        throw new CalidusException(String.Format(exMsg, aType.Name));
+                        throw new CalidusException(String.Format(_exMsg, aType.Name));
 
                     result.Add(ruleInstance);
                 }

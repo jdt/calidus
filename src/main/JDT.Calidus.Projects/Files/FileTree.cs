@@ -30,7 +30,7 @@ namespace JDT.Calidus.Projects.Files
     /// </summary>
     public class FileTree
     {
-        private static readonly String SEPARATOR = Path.DirectorySeparatorChar.ToString();
+        private static readonly String _separator = Path.DirectorySeparatorChar.ToString();
 
         private IList<String> _files;
         private IFileValidator _validator;
@@ -85,7 +85,7 @@ namespace JDT.Calidus.Projects.Files
             get
             {
                 if (_files.Count() == 0)
-                    return new FileTreeItem(null, SEPARATOR);
+                    return new FileTreeItem(null, _separator);
 
                 String root = Path.GetDirectoryName(_files.ElementAt(0));
                 foreach(String aFile in _files)
@@ -106,11 +106,11 @@ namespace JDT.Calidus.Projects.Files
 
                 //return at least separator
                 if (root.Length == 0)
-                    return new FileTreeItem(null, SEPARATOR);
+                    return new FileTreeItem(null, _separator);
                 else
                 {
-                    if (root.EndsWith(SEPARATOR) == false)
-                        root = root + SEPARATOR;
+                    if (root.EndsWith(_separator) == false)
+                        root = root + _separator;
                     return new FileTreeItem(null, root);
                 }
             }
