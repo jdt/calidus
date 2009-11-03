@@ -121,24 +121,23 @@
     <value>17, 17</value>
   </metadata>
   <data name="rtSource.Text" xml:space="preserve">
-    <value>namespace JDT.Calidus.Statements.Factories.Declaration
-{
-    public class MethodStatementFactory : FluentStatementFactory&lt;MethodStatement&gt;
-    {
-         protected override IStatementExpression Expression
-        {
-            get 
-            {
-                StatementExpression expression = new StatementExpression();
-                expression
-                    .Contains&lt;IdentifierToken&gt;()
-                    .FollowedBy&lt;IdentifierToken&gt;()
-                    .FollowedBy&lt;OpenRoundBracketToken&gt;();
+    <value>using System;
+using System.Collections;
 
-                return expression;
-            }
-        }
-    }
+class MyClass
+{
+ private string []data = new string[5];
+ public String this [int index]
+ {
+  get
+  {
+   return data[index];
+  }
+  set
+  {
+   data[index] = value;
+  }
+ }
 }</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

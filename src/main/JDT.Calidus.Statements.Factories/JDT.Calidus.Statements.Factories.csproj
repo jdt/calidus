@@ -52,6 +52,7 @@
     <Compile Include="Common\OpenBlockStatementFactory.cs" />
     <Compile Include="Declaration\AttributeStatementFactory.cs" />
     <Compile Include="Declaration\ClassStatementFactory.cs" />
+    <Compile Include="Declaration\IndexerStatementFactory.cs" />
     <Compile Include="Declaration\MethodStatementFactory.cs" />
     <Compile Include="Declaration\StructStatementFactory.cs" />
     <Compile Include="Declaration\InterfaceStatementFactory.cs" />
