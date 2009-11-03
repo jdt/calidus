@@ -43,7 +43,8 @@ namespace JDT.Calidus.UI.Controllers
             _view = view;
             _ruleProvider = ruleProvider;
 
-            _view.DisplayRules(_ruleProvider.GetRules());
+            IEnumerable<IRule> rules = _ruleProvider.GetRules();
+            _view.DisplayRules(rules.OrderBy(p => p.Category));
         }
     }
 }
