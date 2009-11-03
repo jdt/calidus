@@ -21,6 +21,10 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Tests;
+using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tokens.Modifiers;
+using JDT.Calidus.Tokens.Types;
 using NUnit.Framework;
 
 namespace JDT.Calidus.CommonTest.Statements
@@ -31,11 +35,27 @@ namespace JDT.Calidus.CommonTest.Statements
             : base(new List<TokenBase>())
         {
         }
+
+        public StatementBaseImpl(IList<TokenBase> tokens)
+            : base(tokens)
+        {
+        }
+
+        public TokenBase OccurenceOf<TTokenType>() where TTokenType : TokenBase
+        {
+            return FindFirstOccurenceOf<TTokenType>();
+        }
     }
 
     [TestFixture]
-    public class StatementBaseTest
+    public class StatementBaseTest : CalidusTestBase
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
+
         [Test]
         public void StatementBaseInheritorsShouldBeEqualWhenNotAddingAdditionalProperties()
         {
@@ -43,6 +63,50 @@ namespace JDT.Calidus.CommonTest.Statements
             StatementBaseImpl bravo = new StatementBaseImpl();
 
             Assert.AreEqual(alpha, bravo);
+        }
+
+        [Test]
+        public void StatementBaseFindFirstOccurenceOfShouldReturnFirstOccurenceOfTokenType()
+        {            
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            TokenBase expected = TokenCreator.Create<ClassToken>();
+            input.Add(expected);
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+
+            StatementBaseImpl imp = new StatementBaseImpl(input);
+            Assert.AreEqual(expected, imp.OccurenceOf<ClassToken>());
+        }
+
+        [Test]
+        public void StatementBaseFindFirstOccurenceOfShouldReturnNullIfNoOccurenceFound()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<ClassToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+
+            StatementBaseImpl imp = new StatementBaseImpl(input);
+            Assert.IsNull(imp.OccurenceOf<TabToken>());
+        }
+
+        [Test]
+        public void StatementBaseFindFirstOccurenceOfShouldWorkForSuperClasses()
+        {
+            IList<TokenBase> input = new List<TokenBase>();
+            input.Add(TokenCreator.Create<PublicModifierToken>());
+            TokenBase expected = TokenCreator.Create<SpaceToken>();
+            input.Add(expected);
+            input.Add(TokenCreator.Create<ClassToken>());
+            input.Add(TokenCreator.Create<SpaceToken>());
+            input.Add(TokenCreator.Create<IdentifierToken>("Test"));
+
+            StatementBaseImpl imp = new StatementBaseImpl(input);
+            Assert.AreEqual(expected, imp.OccurenceOf<WhiteSpaceToken>());
         }
     }
 }

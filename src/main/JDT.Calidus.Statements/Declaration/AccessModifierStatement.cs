@@ -47,13 +47,7 @@ namespace JDT.Calidus.Statements.Declaration
         {
             get
             {
-                for(int i = 0; i < Tokens.Count(); i++)
-                {
-                    if(Tokens.ElementAt(i) is AccessModifierToken)
-                        return (AccessModifierToken)Tokens.ElementAt(i);
-                }
-
-                return null;
+                return FindFirstOccurenceOf<AccessModifierToken>();
             }
         }
     }

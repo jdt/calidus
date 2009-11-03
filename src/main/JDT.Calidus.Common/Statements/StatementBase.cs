@@ -60,6 +60,21 @@ namespace JDT.Calidus.Common.Statements
             }
         }
 
+        /// <summary>
+        /// Finds the first occurence of the specified token type or null if not found
+        /// </summary>
+        /// <typeparam name="TTokenType">The type to look for</typeparam>
+        /// <returns>The token of type or null if not found</returns>
+        protected TTokenType FindFirstOccurenceOf<TTokenType>() where TTokenType : TokenBase
+        {
+            foreach(TokenBase aToken in Tokens)
+            {
+                if (typeof(TTokenType).IsAssignableFrom(aToken.GetType()))
+                    return (TTokenType)aToken;
+            }
+            return null;
+        }
+
         // override object.Equals
         public override bool Equals(object obj)
         {
