@@ -75,6 +75,7 @@ namespace JDT.Calidus.GUI.Views
         /// <param name="ruleConfig">The rule configuration to display</param>
         public void DisplayRuleConfiguration(IRuleConfiguration ruleConfig)
         {
+            parameterLayoutPanel.Controls.Clear();
             mainContainer.Panel2.Enabled = true;
 
             //create parameter controls
