@@ -39,7 +39,8 @@ namespace JDT.Calidus.GUI.Views
     {
         private IRuleTreeView _ruleTreeView;
 
-        private IDictionary<IRuleConfigurationParameter, EditParameterControl> _currentRuleParameterControl;
+        private IDictionary<String, EditParameterControl> _currentRuleParameterControl;
+        private IDictionary<String, IRuleConfigurationParameter> _currentParameters;
 
         /// <summary>
         /// Creates a new instance of this class
@@ -51,7 +52,8 @@ namespace JDT.Calidus.GUI.Views
             Load += new EventHandler(RuleConfigurationView_Load);
 
             _ruleTreeView = ruleTreeView;
-            _currentRuleParameterControl = new Dictionary<IRuleConfigurationParameter, EditParameterControl>();
+            _currentRuleParameterControl = new Dictionary<String, EditParameterControl>();
+            _currentParameters = new Dictionary<String, IRuleConfigurationParameter>();
         }
 
         private void RuleConfigurationView_Load(object sender, EventArgs e)
@@ -88,13 +90,15 @@ namespace JDT.Calidus.GUI.Views
 
             //create parameter controls
             _currentRuleParameterControl.Clear();
+            _currentParameters.Clear();
             foreach (IRuleConfigurationParameter aParameter in ruleConfig.Parameters)
             {
                 EditParameterControl paramControl = GetControlFor(aParameter);
                 paramControl.SetValue(aParameter.Value);
                 paramControl.ValueChanged += new EventHandler(paramControl_ValueChanged);
 
-                _currentRuleParameterControl.Add(aParameter, paramControl);
+                _currentRuleParameterControl.Add(aParameter.Name, paramControl);
+                _currentParameters.Add(aParameter.Name, aParameter);
             }
 
             txtDescription.Text = ruleConfig.Description;
@@ -120,7 +124,7 @@ namespace JDT.Calidus.GUI.Views
         public void DisplayRuleConfigurationParameter(IRuleConfigurationParameter parameter)
         {
             parameterLayoutPanel.Controls.Clear();
-            parameterLayoutPanel.Controls.Add(_currentRuleParameterControl[parameter]);
+            parameterLayoutPanel.Controls.Add(_currentRuleParameterControl[parameter.Name]);
         }
 
         /// <summary>
@@ -195,9 +199,9 @@ namespace JDT.Calidus.GUI.Views
             {
                 String desc = txtDescription.Text;
                 IDictionary<IRuleConfigurationParameter, Object> valueMap = new Dictionary<IRuleConfigurationParameter, Object>();
-                foreach (IRuleConfigurationParameter aParam in _currentRuleParameterControl.Keys)
+                foreach (String aParameterName in _currentRuleParameterControl.Keys)
                 {
-                    valueMap.Add(aParam, _currentRuleParameterControl[aParam].GetValue());
+                    valueMap.Add(_currentParameters[aParameterName], _currentRuleParameterControl[aParameterName].GetValue());
                 }
 
                 RuleConfigurationChangeCommandEventArgs args = new RuleConfigurationChangeCommandEventArgs(desc, valueMap);
