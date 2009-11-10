@@ -38,14 +38,26 @@ namespace JDT.Calidus.Common.Rules
         private static String _exMsg = "Found rule {0}, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found";
 
         private Assembly _toParse;
+        private IRuleConfigurationFactory _factory;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="toParse">The assembly to parse for rules</param>
         public RuleFactory(Assembly toParse)
+            : this(toParse, null)
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="toParse">The assembly to parse for rules</param>
+        /// <param name="factory">The factory to use for rule configurations</param>
+        public RuleFactory(Assembly toParse, IRuleConfigurationFactory factory)
         {
             _toParse = toParse;
+            _factory = factory;
         }
 
         /// <summary>
@@ -54,6 +66,9 @@ namespace JDT.Calidus.Common.Rules
         /// <returns></returns>
         public IRuleConfigurationFactory GetConfigurationFactory()
         {
+            if (_factory != null)
+                return _factory;
+
             foreach (Type aType in _toParse.GetTypes())
             {
                 //make sure to ignore the interface itself
@@ -97,7 +112,7 @@ namespace JDT.Calidus.Common.Rules
 
                             //get default config
                             IRuleConfiguration defaultConfig = fct.Get(aType);
-                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.GetType().Equals(aType));
+                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
 
                             IRuleConfiguration config = defaultConfig;
                             if (overrideConfig != null)

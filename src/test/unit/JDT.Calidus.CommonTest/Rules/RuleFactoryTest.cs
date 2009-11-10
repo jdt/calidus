@@ -22,7 +22,9 @@ using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Rules
 {
@@ -40,6 +42,26 @@ namespace JDT.Calidus.CommonTest.Rules
                                                 },
                                             "Found rule UnCreatableRule, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found"
                                             );
+        }
+
+        [Test]
+        public void FactoryShouldUseArgumentArrayFromOverriddenRulesIfAvailable()
+        {
+            MockRepository mocker = new MockRepository();
+
+            IRuleConfiguration unCreateableRule = mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationFactory ruleConfigurationFactory = mocker.DynamicMock<IRuleConfigurationFactory>();
+            IList<IRuleConfiguration> overrides = new[] {unCreateableRule};
+          
+            Expect.Call(unCreateableRule.Rule).Return(typeof(UnCreatableRule)).Repeat.Once();
+            Expect.Call(unCreateableRule.ArgumentArray).Return(new[] {"test"}).Repeat.Once();
+
+            mocker.ReplayAll();
+            
+            RuleFactory<IRule> factory = new RuleFactory<IRule>(GetType().Assembly, ruleConfigurationFactory);
+            factory.GetStatementRules(overrides);
+
+            mocker.VerifyAll();
         }
     }
 }
