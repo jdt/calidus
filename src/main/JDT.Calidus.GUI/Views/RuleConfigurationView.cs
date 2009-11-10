@@ -48,8 +48,16 @@ namespace JDT.Calidus.GUI.Views
         {
             InitializeComponent();
 
+            Load += new EventHandler(RuleConfigurationView_Load);
+
             _ruleTreeView = ruleTreeView;
             _currentRuleParameterControl = new Dictionary<IRuleConfigurationParameter, EditParameterControl>();
+        }
+
+        private void RuleConfigurationView_Load(object sender, EventArgs e)
+        {
+            //need to wire this in the load to prevent null-issues
+            ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
         }
 
         /// <summary>
@@ -155,6 +163,16 @@ namespace JDT.Calidus.GUI.Views
                 Save(this, e);
         }
 
+        /// <summary>
+        /// Notifies that the view is closing
+        /// </summary>
+        public event EventHandler<RuleChangeCancelEventArgs> Closing;
+        private void OnClosing(RuleChangeCancelEventArgs e)
+        {
+            if (Closing != null)
+                Closing(this, e);
+        }
+
         #region Events
 
             private void paramControl_ValueChanged(object sender, EventArgs e)
@@ -184,6 +202,13 @@ namespace JDT.Calidus.GUI.Views
 
                 RuleConfigurationChangeCommandEventArgs args = new RuleConfigurationChangeCommandEventArgs(desc, valueMap);
                 OnSave(args);
+            }
+
+            private void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
+            {
+                RuleChangeCancelEventArgs args = new RuleChangeCancelEventArgs();
+                OnClosing(args);
+                e.Cancel = args.Cancel;
             }
 
         #endregion
