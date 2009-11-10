@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Configuration;
 using NUnit.Framework;
 
 namespace JDT.Calidus.CommonTest.Rules
@@ -35,7 +36,7 @@ namespace JDT.Calidus.CommonTest.Rules
 
             Assert.Throws<CalidusException>(delegate
                                                 {
-                                                    factory.GetStatementRules();
+                                                    factory.GetStatementRules(new List<IRuleConfiguration>());
                                                 },
                                             "Found rule UnCreatableRule, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found"
                                             );

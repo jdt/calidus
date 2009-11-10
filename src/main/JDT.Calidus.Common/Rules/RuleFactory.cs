@@ -70,8 +70,9 @@ namespace JDT.Calidus.Common.Rules
         /// <summary>
         /// Gets the list of statement rules
         /// </summary>
+        /// <param name="overrides">A list of rule configurations that override default configurations</param>
         /// <returns>The statement rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules()
+        public IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides)
         {
             List<StatementRuleBase> result = new List<StatementRuleBase>();
 
@@ -85,11 +86,23 @@ namespace JDT.Calidus.Common.Rules
                     try
                     {
                         //not in default, try for a no-args constructor
-                        if (aType.GetConstructor(new Type[] {}) != null)
-                            ruleInstance = (StatementRuleBase) Activator.CreateInstance(aType);
-                            //try the factory
+                        if (aType.GetConstructor(new Type[] { }) != null)
+                        {
+                            ruleInstance = (StatementRuleBase)Activator.CreateInstance(aType);
+                        }
+                        //try the factory
                         else
-                            ruleInstance = (StatementRuleBase)Activator.CreateInstance(aType, GetConfigurationFactory().Get(aType).ArgumentArray);
+                        {
+                            //get default config
+                            IRuleConfiguration defaultConfig = GetConfigurationFactory().Get(aType);
+                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.GetType().Equals(aType));
+
+                            IRuleConfiguration config = defaultConfig;
+                            if (overrideConfig != null)
+                                config = overrideConfig;
+
+                            ruleInstance = (StatementRuleBase) Activator.CreateInstance(aType, config.ArgumentArray);
+                        }
                     }
                     catch(Exception ex)
                     {

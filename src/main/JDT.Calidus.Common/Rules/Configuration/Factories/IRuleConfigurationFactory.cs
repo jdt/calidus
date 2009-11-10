@@ -33,10 +33,5 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
         /// <param name="type">The type</param>
         /// <returns>The configuration</returns>
         IRuleConfiguration Get(Type type);
-        /// <summary>
-        /// Adds or updates a configuration in the factory
-        /// </summary>
-        /// <param name="ruleConfig">The configuration</param>
-        void Set(IRuleConfiguration ruleConfig);
     }
 }

@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Commands;
 using JDT.Calidus.UI.Events;
+using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
 using JDT.Calidus.Common.Rules;
 
@@ -35,15 +35,19 @@ namespace JDT.Calidus.UI.Controllers
     {
         private IRuleConfigurationView _view;
         private ICalidusRuleProvider _provider;
+        private ICalidusProjectModel _project;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="provider">The rule provider to use</param>
-        public RuleConfigurationController(IRuleConfigurationView view, ICalidusRuleProvider provider)
+        /// <param name="project">The project</param>
+        public RuleConfigurationController(IRuleConfigurationView view, ICalidusRuleProvider provider, ICalidusProjectModel project)
         {
             HasChanges = false;
+
+            _project = project;
 
             _provider = provider;
 
@@ -52,9 +56,10 @@ namespace JDT.Calidus.UI.Controllers
             _view.RuleTreeView.RuleSelectionChanged += new EventHandler<RuleEventArgs>(RuleTreeView_RuleSelectionChanged);
             _view.SelectedRuleParameterChanged += new EventHandler<RuleConfigurationParameterEventArgs>(_view_SelectedRuleParameterChanged);
             _view.RuleParameterSettingsChanged += new EventHandler<EventArgs>(_view_RuleParameterSettingsChanged);
-            _view.Save += new EventHandler<RuleConfigurationChangeCommandEventArgs>(_view_Save);  
+            _view.Save += new EventHandler<RuleConfigurationChangeCommandEventArgs>(_view_Save);
 
-            _view.DisplayRules(_provider.GetRules());
+            IEnumerable<IRule> rules = _provider.GetRules(_project.GetProjectRuleConfigurations());
+            _view.DisplayRules(rules);
         }
 
         /// <summary>
@@ -107,8 +112,7 @@ namespace JDT.Calidus.UI.Controllers
             CurrentConfiguration.Description = e.Description;
             foreach(IRuleConfigurationParameter aParam in CurrentConfiguration.Parameters)
                 aParam.Value = e.ValueMap[aParam];
-
-            _provider.GetConfigurationFactoryFor(CurrentConfiguration.Rule).Set(CurrentConfiguration);
+            _project.SetProjectRuleConfigurationTo(CurrentConfiguration);
             HasChanges = false;
         }
     }

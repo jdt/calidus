@@ -40,7 +40,7 @@ namespace JDT.Calidus.GUI
                 MainController c = new MainController(mainView, project, win.IsNewProject, projectManager, runner, violationList);
 
                 ViolationListController violationListController = new ViolationListController(mainView.ViolationListView, project, violationList);
-                CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(mainView.CheckableRuleTreeView, new CalidusRuleProvider());
+                CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(mainView.CheckableRuleTreeView, new CalidusRuleProvider(), project);
                 FileTreeController fileListController = new FileTreeController(mainView.FileListView, project);
                 SourceLocationController sourceLocationController = new SourceLocationController(mainView.SourceLocationView, project);
                 RuleRunnerController ruleRunnerController = new RuleRunnerController(mainView.RuleRunnerView, runner, project);

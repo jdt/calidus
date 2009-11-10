@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using JDT.Calidus.Common.Rules.Blocks;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
@@ -32,23 +33,27 @@ namespace JDT.Calidus.Common.Rules
         /// <summary>
         /// Gets a list of all block rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        IEnumerable<BlockRuleBase> GetBlockRules();
+        IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides);
         /// <summary>
         /// Gets a list of all line rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        IEnumerable<LineRuleBase> GetLineRules();
+        IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides);
         /// <summary>
         /// Gets a  list of all statement rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        IEnumerable<StatementRuleBase> GetStatementRules();
+        IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides);
         /// <summary>
         /// Gets a list of all the rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        IEnumerable<IRule> GetRules();
+        IEnumerable<IRule> GetRules(IEnumerable<IRuleConfiguration> overrides);
         /// <summary>
         /// Gets the configuration factory for the specified rule
         /// </summary>

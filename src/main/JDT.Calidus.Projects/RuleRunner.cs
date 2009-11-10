@@ -77,7 +77,7 @@ namespace JDT.Calidus.Projects
 
                 IList<RuleViolation> currentFileViolations = new List<RuleViolation>();
 
-                foreach (StatementRuleBase aStatementRule in ruleProvider.GetStatementRules())
+                foreach (StatementRuleBase aStatementRule in ruleProvider.GetStatementRules(project.GetProjectRuleConfigurations()))
                 {
                     foreach (StatementBase aStatement in parsedStatements)
                     {
@@ -89,7 +89,7 @@ namespace JDT.Calidus.Projects
                     }
                 }
 
-                foreach (BlockRuleBase aBlockRule in ruleProvider.GetBlockRules())
+                foreach (BlockRuleBase aBlockRule in ruleProvider.GetBlockRules(project.GetProjectRuleConfigurations()))
                 {
                     foreach (BlockBase aBlock in parsedBlocks)
                     {
@@ -101,7 +101,7 @@ namespace JDT.Calidus.Projects
                     }
                 }
 
-                foreach (LineRuleBase aLineRule in ruleProvider.GetLineRules())
+                foreach (LineRuleBase aLineRule in ruleProvider.GetLineRules(project.GetProjectRuleConfigurations()))
                 {
                     foreach (LineBase aLine in parsedLines)
                     {

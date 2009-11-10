@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using JDT.Calidus.Common.Rules.Configuration;
 
 namespace JDT.Calidus.Common.Projects
 {
@@ -60,5 +61,15 @@ namespace JDT.Calidus.Common.Projects
         /// </summary>
         /// <param name="file">The file to ignore</param>
         void IgnoredFile(String file);
+        /// <summary>
+        /// Gets the list of rule configurations that were changed from the defaults 
+        /// </summary>
+        /// <returns>The list of configurations</returns>
+        IEnumerable<IRuleConfiguration> GetProjectRuleConfigurations();
+        /// <summary>
+        /// Sets a rule configuration
+        /// </summary>
+        /// <param name="config">The configuration to set</param>
+        void SetProjectRuleConfigurationTo(IRuleConfiguration config);
     }
 }

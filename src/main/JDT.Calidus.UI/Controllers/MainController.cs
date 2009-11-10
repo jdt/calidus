@@ -129,7 +129,7 @@ namespace JDT.Calidus.UI.Controllers
 
         private void _view_RuleConfiguration(object sender, EventArgs e)
         {
-            _view.ShowRuleConfiguration();
+            _view.ShowRuleConfiguration(_project);
         }
 
         private void _view_ProjectConfiguration(object sender, EventArgs e)

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Statements;
 
@@ -32,8 +33,9 @@ namespace JDT.Calidus.Common.Statements
         /// <summary>
         /// Gets the list of statement rules
         /// </summary>
+        /// <param name="overrides">A list of rule configurations that override default settings</param>
         /// <returns>The rules</returns>
-        IEnumerable<StatementRuleBase> GetStatementRules();
+        IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides);
         /// <summary>
         /// Gets the configuration factory that provides configuration information for the statement rules in this factory
         /// </summary>

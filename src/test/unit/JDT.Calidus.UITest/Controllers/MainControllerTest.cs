@@ -186,12 +186,12 @@ namespace JDT.Calidus.UITest.Controllers
         public void MainControllerShouldCallViewShowRuleConfigurationOnRuleConfiguration()
         {
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
-            Expect.Call(() => _view.ShowRuleConfiguration()).Repeat.Once();
+            Expect.Call(() => _view.ShowRuleConfiguration(_projectModel)).Repeat.Once();
 
             _mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
-            _view.ShowRuleConfiguration();
+            _view.ShowRuleConfiguration(_projectModel);
 
             _mocker.VerifyAll();
         }

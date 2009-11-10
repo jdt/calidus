@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.UI.Events;
 
 namespace JDT.Calidus.UI.Model
@@ -140,6 +141,24 @@ namespace JDT.Calidus.UI.Model
             {
                 _project.IgnoredFile(file);
                 OnChanged();
+            }
+
+            /// <summary>
+            /// Gets the list of rule configurations that were changed from the defaults 
+            /// </summary>
+            /// <returns>The list of configurations</returns>
+            public IEnumerable<IRuleConfiguration> GetProjectRuleConfigurations()
+            {
+                return _project.GetProjectRuleConfigurations();
+            }
+
+            /// <summary>
+            /// Sets a rule configuration
+            /// </summary>
+            /// <param name="config">The configuration to set</param>
+            public void SetProjectRuleConfigurationTo(IRuleConfiguration config)
+            {
+                _project.SetProjectRuleConfigurationTo(config);
             }
 
         #endregion
