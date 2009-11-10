@@ -93,8 +93,10 @@ namespace JDT.Calidus.Common.Rules
                         //try the factory
                         else
                         {
+                            IRuleConfigurationFactory fct = GetConfigurationFactory();
+
                             //get default config
-                            IRuleConfiguration defaultConfig = GetConfigurationFactory().Get(aType);
+                            IRuleConfiguration defaultConfig = fct.Get(aType);
                             IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.GetType().Equals(aType));
 
                             IRuleConfiguration config = defaultConfig;

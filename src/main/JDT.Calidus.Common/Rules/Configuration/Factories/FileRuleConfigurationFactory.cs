@@ -33,7 +33,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
     {
         private XDocument _doc;
 
-        private IDictionary<Type, IRuleConfiguration> _configList;
+        private IDictionary<String, IRuleConfiguration> _configList;
 
         /// <summary>
         /// Gets the configuration for the specified rule type
@@ -45,7 +45,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
             if (_doc == null)
                 LoadDocumentContent();
 
-            return _configList.Values.FirstOrDefault(p => p.Rule.Equals(type));
+            return _configList[type.FullName];
         }
         
         /// <summary>
@@ -57,7 +57,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
             if (_doc == null)
                 LoadDocumentContent();
 
-            _configList[ruleConfig.Rule.GetType()] = ruleConfig;
+            _configList[ruleConfig.Rule.FullName] = ruleConfig;
             WriteDocumentContent();
         }
 
@@ -79,7 +79,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
             {
                 XmlReader reader = GetReader();
 
-                _configList = new Dictionary<Type, IRuleConfiguration>();
+                _configList = new Dictionary<String, IRuleConfiguration>();
                 _doc = XDocument.Load(reader);
                 //parse all rule declarations
                 var result = from e in _doc.Root.Elements("rule")
@@ -103,7 +103,7 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
 
                 foreach (DefaultRuleConfiguration w in result)
                 {
-                    _configList.Add(w.Rule.GetType(), w);
+                    _configList.Add(w.Rule.FullName, w);
                 }
             }
 

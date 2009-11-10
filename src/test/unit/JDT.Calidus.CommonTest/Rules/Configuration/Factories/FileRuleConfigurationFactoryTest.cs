@@ -102,7 +102,6 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             CollectionAssert.AreEquivalent(paramList, actual.Parameters);
         }
 
-
         [Test]
         public void BooleanTypeParameterShouldParseAsBoolean()
         {
@@ -261,6 +260,45 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             String actual = actualReader.ReadToEnd();
 
             Assert.AreEqual(bldr.ToString(), actual);
+        }
+
+        [Test]
+        public void ParsingStreamWithRegistrationShouldSupportMultipleRules()
+        {
+            StringBuilder bldr = new StringBuilder();
+            bldr.Append(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
+            bldr.Append("<rules>");
+            bldr.Append(@"<rule type=""JDT.Calidus.CommonTest.Rules.UnCreatableRule, JDT.Calidus.CommonTest"">");
+            bldr.Append("<description>");
+            bldr.Append("Description text");
+            bldr.Append("</description>");
+            bldr.Append("<params>");
+            bldr.Append(@"<param name=""param1"" type=""String"">");
+            bldr.Append("theValue1");
+            bldr.Append(@"</param>");
+            bldr.Append(@"<param name=""param2"" type=""String"">");
+            bldr.Append("theValue2");
+            bldr.Append(@"</param>");
+            bldr.Append("</params>");
+            bldr.Append("</rule>");
+            bldr.Append(@"<rule type=""JDT.Calidus.CommonTest.CreatableRule, JDT.Calidus.CommonTest"">");
+            bldr.Append("<description>");
+            bldr.Append("Description text");
+            bldr.Append("</description>");
+            bldr.Append("<params>");
+            bldr.Append("</params>");
+            bldr.Append("</rule>");
+            bldr.Append("</rules>");
+
+            Stream stream = new MemoryStream(Encoding.Default.GetBytes(bldr.ToString()));
+            XmlReader reader = new XmlTextReader(stream);
+
+            FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
+            IRuleConfiguration one = builder.Get(typeof(UnCreatableRule));
+            IRuleConfiguration two = builder.Get(typeof(CreatableRule));
+
+            Assert.IsNotNull(one);
+            Assert.IsNotNull(two);
         }
     }
 }

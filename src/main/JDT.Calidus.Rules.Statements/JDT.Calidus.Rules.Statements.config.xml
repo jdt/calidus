@@ -9,4 +9,11 @@
       <param name="ignorePublicStatic" type="Boolean">true</param>
     </params>
   </rule>
+  <rule type="JDT.Calidus.Rules.Statements.Declaration.ExplicitAccessModifierDeclaredRule, JDT.Calidus.Rules.Statements">
+    <description>
+      This rule validates that all elements that can have access modifiers declared have explicit access modifiers declared
+    </description>
+    <params>
+    </params>
+  </rule>
 </rules>
