@@ -170,6 +170,7 @@
             // 
             this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDescription.Enabled = false;
             this.txtDescription.Location = new System.Drawing.Point(3, 29);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
