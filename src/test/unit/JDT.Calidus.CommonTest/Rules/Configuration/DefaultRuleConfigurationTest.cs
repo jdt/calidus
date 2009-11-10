@@ -53,7 +53,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration
         [Test]
         public void MatchesShouldReturnFalseForNoneMatchingConstructorParameters()
         {
-            Assert.IsFalse(_config.Matches(typeof(CreatableRule).GetConstructors().ElementAt(0)));
+            Assert.IsFalse(_config.Matches(typeof(CreateableRule).GetConstructors().ElementAt(0)));
         }
 
         [Test]

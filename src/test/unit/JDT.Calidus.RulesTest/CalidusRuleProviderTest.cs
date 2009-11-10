@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Providers;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Rules;
 using NUnit.Framework;
@@ -49,11 +50,9 @@ namespace JDT.Calidus.RulesTest
             mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
-            //provider.GetRules();
+            provider.GetRules(new List<IRuleConfiguration>());
 
             mocker.VerifyAll();
-
-            Assert.Fail("Change for rule changes");
         }
     }
 }

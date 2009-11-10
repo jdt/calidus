@@ -25,9 +25,9 @@ using JDT.Calidus.Common.Statements;
 
 namespace JDT.Calidus.CommonTest
 {
-    public class CreatableRule : StatementRuleBase
+    public class CreateableRule : StatementRuleBase
     {
-        public CreatableRule(): base("test") { }
+        public CreateableRule() : base("test") { }
 
         public override bool Validates(StatementBase statement)
         {

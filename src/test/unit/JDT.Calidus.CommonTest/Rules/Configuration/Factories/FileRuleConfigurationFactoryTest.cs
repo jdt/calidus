@@ -281,7 +281,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
             bldr.Append(@"</param>");
             bldr.Append("</params>");
             bldr.Append("</rule>");
-            bldr.Append(@"<rule type=""JDT.Calidus.CommonTest.CreatableRule, JDT.Calidus.CommonTest"">");
+            bldr.Append(@"<rule type=""JDT.Calidus.CommonTest.CreateableRule, JDT.Calidus.CommonTest"">");
             bldr.Append("<description>");
             bldr.Append("Description text");
             bldr.Append("</description>");
@@ -295,7 +295,7 @@ namespace JDT.Calidus.CommonTest.Rules.Configuration.Factories
 
             FileRuleConfigurationFactory builder = new FileRuleConfigurationFactoryImpl(reader, GetEmptyWriter());
             IRuleConfiguration one = builder.Get(typeof(UnCreatableRule));
-            IRuleConfiguration two = builder.Get(typeof(CreatableRule));
+            IRuleConfiguration two = builder.Get(typeof(CreateableRule));
 
             Assert.IsNotNull(one);
             Assert.IsNotNull(two);
