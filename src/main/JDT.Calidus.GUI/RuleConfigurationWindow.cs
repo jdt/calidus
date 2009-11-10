@@ -41,7 +41,6 @@ namespace JDT.Calidus.GUI
         public RuleConfigurationWindow(ICalidusProjectModel project)
         {
             InitializeComponent();
-
             _provider = new CalidusRuleProvider();
 
             RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider, project);

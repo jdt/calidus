@@ -211,5 +211,23 @@ namespace JDT.Calidus.UITest.Controllers
 
             _mocker.VerifyAll();
         }
+
+        [Test]
+        public void RuleConfigurationControllerShouldConfirmChangeOnViewClose()
+        {
+            RuleChangeCancelEventArgs cancelArgs = new RuleChangeCancelEventArgs();
+
+            Expect.Call(_view.ConfirmRuleSelectionChanged()).Return(false);
+
+            _mocker.ReplayAll();
+
+            RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _project);
+            //set changes
+            _view.Raise(x => x.RuleParameterSettingsChanged += null, this, EventArgs.Empty);
+            _view.Raise(x => x.Closing += null, this, cancelArgs);
+            
+            Assert.IsTrue(cancelArgs.Cancel);
+            _mocker.VerifyAll();
+        }
     }
 }

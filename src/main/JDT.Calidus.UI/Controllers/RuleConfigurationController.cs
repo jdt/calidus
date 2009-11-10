@@ -57,6 +57,7 @@ namespace JDT.Calidus.UI.Controllers
             _view.SelectedRuleParameterChanged += new EventHandler<RuleConfigurationParameterEventArgs>(_view_SelectedRuleParameterChanged);
             _view.RuleParameterSettingsChanged += new EventHandler<EventArgs>(_view_RuleParameterSettingsChanged);
             _view.Save += new EventHandler<RuleConfigurationChangeCommandEventArgs>(_view_Save);
+            _view.Closing += new EventHandler<RuleChangeCancelEventArgs>(_view_Closing);
 
             IEnumerable<IRule> rules = _provider.GetRules(_project.GetProjectRuleConfigurations());
             _view.DisplayRules(rules);
@@ -105,6 +106,14 @@ namespace JDT.Calidus.UI.Controllers
             }
 
             HasChanges = false;
+        }
+
+        private void _view_Closing(object sender, RuleChangeCancelEventArgs e)
+        {
+            if (!HasChanges || _view.ConfirmRuleSelectionChanged())
+                e.Cancel = false;
+            else
+                e.Cancel = true;
         }
 
         private void _view_Save(object sender, RuleConfigurationChangeCommandEventArgs e)

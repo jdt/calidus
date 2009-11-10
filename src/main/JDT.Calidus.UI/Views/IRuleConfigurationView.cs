@@ -71,5 +71,9 @@ namespace JDT.Calidus.UI.Views
         /// Notifies that a save was called
         /// </summary>
         event EventHandler<RuleConfigurationChangeCommandEventArgs> Save;
+        /// <summary>
+        /// Notifies that the view is closing
+        /// </summary>
+        event EventHandler<RuleChangeCancelEventArgs> Closing;
     }
 }
