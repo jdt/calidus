@@ -64,7 +64,8 @@ namespace JDT.Calidus.UI.Views
         /// <summary>
         /// Displays the rule configuration
         /// </summary>
-        void ShowRuleConfiguration();
+        /// <param name="model">The model to display for</param>
+        void ShowRuleConfiguration(ICalidusProjectModel model);
         /// <summary>
         /// Sets the current rpoject
         /// </summary>

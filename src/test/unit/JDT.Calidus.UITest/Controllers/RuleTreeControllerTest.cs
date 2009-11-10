@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Tokens;
 using JDT.Calidus.UI.Events;
 using NUnit.Framework;
@@ -81,16 +83,18 @@ namespace JDT.Calidus.UITest.Controllers
 
             TreeViewImp view = new TreeViewImp(rulesSorted);
             ICalidusRuleProvider ruleProvider = mocker.DynamicMock<ICalidusRuleProvider>();
+            ICalidusProject project = mocker.DynamicMock<ICalidusProject>();
 
             Expect.Call(ruleAlpha.Category).Return("Alpha").Repeat.Any();
             Expect.Call(ruleBravo.Category).Return("Bravo").Repeat.Any();
 
-            Expect.Call(ruleProvider.GetRules()).Return(rules).Repeat.Once();
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(new List<IRuleConfiguration>()).Repeat.Once();
+            Expect.Call(ruleProvider.GetRules(new List<IRuleConfiguration>())).Return(rules).Repeat.Once();
             Expect.Call(() => view.DisplayRules(rulesSorted)).Repeat.Once();
             
             mocker.ReplayAll();
 
-            RuleTreeController controller = new RuleTreeController(view, ruleProvider);
+            RuleTreeController controller = new RuleTreeController(view, ruleProvider, project);
 
             mocker.VerifyAll();
         }

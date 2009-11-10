@@ -176,9 +176,10 @@ namespace JDT.Calidus.GUI
         /// <summary>
         /// Displays the rule configuration
         /// </summary>
-        public void ShowRuleConfiguration()
+        /// <param name="model">The model to display for</param>
+        public void ShowRuleConfiguration(ICalidusProjectModel model)
         {
-            RuleConfigurationWindow win = new RuleConfigurationWindow();
+            RuleConfigurationWindow win = new RuleConfigurationWindow(model);
             win.ShowDialog(this);
         }
 

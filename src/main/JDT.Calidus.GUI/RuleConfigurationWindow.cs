@@ -25,6 +25,7 @@ using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Controllers;
+using JDT.Calidus.UI.Model;
 
 namespace JDT.Calidus.GUI
 {
@@ -35,10 +36,15 @@ namespace JDT.Calidus.GUI
         public RuleConfigurationWindow()
         {
             InitializeComponent();
+        }
+
+        public RuleConfigurationWindow(ICalidusProjectModel project)
+        {
+            InitializeComponent();
 
             _provider = new CalidusRuleProvider();
 
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider);
+            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider, project);
         }
     }
 }

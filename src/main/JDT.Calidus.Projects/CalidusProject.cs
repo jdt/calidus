@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Projects.Providers;
 
 namespace JDT.Calidus.Projects
@@ -34,6 +35,8 @@ namespace JDT.Calidus.Projects
         private IList<String> _ignoredFiles;
 
         private String _file;
+
+        private IList<IRuleConfiguration> _ruleConfigurations;
 
         /// <summary>
         /// Creates a new instance of this class
@@ -51,6 +54,7 @@ namespace JDT.Calidus.Projects
             IgnoreProgramFiles = true;
 
             _ignoredFiles = new List<String>();
+            _ruleConfigurations = new List<IRuleConfiguration>();
         }
 
         /// <summary>
@@ -160,6 +164,28 @@ namespace JDT.Calidus.Projects
         public IList<String> IgnoredFileList
         {
             get { return _ignoredFiles; }
+        }
+
+        /// <summary>
+        /// Gets the list of rule configurations that were changed from the defaults 
+        /// </summary>
+        /// <returns>The list of configurations</returns>
+        public IEnumerable<IRuleConfiguration> GetProjectRuleConfigurations()
+        {
+            return _ruleConfigurations;
+        }
+
+        /// <summary>
+        /// Sets a rule configuration
+        /// </summary>
+        /// <param name="config">The configuration to set</param>
+        public void SetProjectRuleConfigurationTo(IRuleConfiguration config)
+        {
+            IRuleConfiguration exisitingConfig = _ruleConfigurations.FirstOrDefault<IRuleConfiguration>(p => p.Rule.GetType().Equals(config.Rule.GetType()));
+            if (exisitingConfig != null)
+                _ruleConfigurations.Remove(exisitingConfig);
+
+            _ruleConfigurations.Add(config);
         }
     }
 }

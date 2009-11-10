@@ -49,9 +49,11 @@ namespace JDT.Calidus.RulesTest
             mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
-            provider.GetRules();
+            //provider.GetRules();
 
             mocker.VerifyAll();
+
+            Assert.Fail("Change for rule changes");
         }
     }
 }

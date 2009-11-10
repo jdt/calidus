@@ -25,6 +25,7 @@ using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
@@ -71,18 +72,19 @@ namespace JDT.Calidus.Rules
         /// <summary>
         /// Gets a list of all the rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        public IEnumerable<IRule> GetRules()
+        public IEnumerable<IRule> GetRules(IEnumerable<IRuleConfiguration> overrides)
         {
             IList<IRule> rules = new List<IRule>();
 
-            foreach (StatementRuleBase aRule in GetStatementRules())
+            foreach (StatementRuleBase aRule in GetStatementRules(overrides))
                 rules.Add(aRule);
 
-            foreach (BlockRuleBase aRule in GetBlockRules())
+            foreach (BlockRuleBase aRule in GetBlockRules(overrides))
                 rules.Add(aRule);
 
-            foreach (LineRuleBase aRule in GetLineRules())
+            foreach (LineRuleBase aRule in GetLineRules(overrides))
                 rules.Add(aRule);
 
             return rules;
@@ -91,8 +93,9 @@ namespace JDT.Calidus.Rules
         /// <summary>
         /// Gets a  list of all statement rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules()
+        public IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides)
         {
             if (_statementRules == null)
             {
@@ -101,7 +104,7 @@ namespace JDT.Calidus.Rules
                 foreach (IStatementRuleFactory aFactory in _statementRuleProvider.GetStatementRuleFactories())
                 {
                     IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules())
+                    foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules(overrides))
                     {
                         _statementRules.Add(aStatementRule, configFactory);
                     }
@@ -114,8 +117,9 @@ namespace JDT.Calidus.Rules
         /// <summary>
         /// Gets a list of all block rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules()
+        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
         {
             if (_blockRules == null)
             {
@@ -137,8 +141,9 @@ namespace JDT.Calidus.Rules
         /// <summary>
         /// Gets a list of all line rules
         /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules()
+        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
         {
             if (_lineRules == null)
             {
