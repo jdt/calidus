@@ -69,7 +69,7 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(view.RuleTreeView).Return(ruleTreeView).Repeat.Any();
             Expect.Call(_project.GetProjectRuleConfigurations()).Return(projectRuleList).Repeat.Once();
-            Expect.Call(provider.GetRules(projectRuleList)).IgnoreArguments().Return(ruleList).Repeat.Once();
+            Expect.Call(provider.GetRules(_project)).IgnoreArguments().Return(ruleList).Repeat.Once();
             Expect.Call(() => view.DisplayRules(ruleList)).Repeat.Once();
             
             mocker.ReplayAll();
@@ -165,7 +165,7 @@ namespace JDT.Calidus.UITest.Controllers
             IRule rule = _mocker.DynamicMock<IRule>();
             IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
 
-            Expect.Call(_provider.GetConfigurationFor(rule, new List<IRuleConfiguration>())).IgnoreArguments().Return(ruleConfig).Repeat.Once();
+            Expect.Call(_provider.GetConfigurationFor(rule, _project)).IgnoreArguments().Return(ruleConfig).Repeat.Once();
             Expect.Call(() => _view.DisplayRuleConfiguration(ruleConfig)).Repeat.Once();
 
             _mocker.ReplayAll();
@@ -195,7 +195,7 @@ namespace JDT.Calidus.UITest.Controllers
             IRule rule = _mocker.DynamicMock<IRule>();
             IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
 
-            Expect.Call(_provider.GetConfigurationFor(rule, new List<IRuleConfiguration>())).IgnoreArguments().Return(ruleConfig).Repeat.Once();
+            Expect.Call(_provider.GetConfigurationFor(rule, _project)).IgnoreArguments().Return(ruleConfig).Repeat.Once();
             Expect.Call(ruleConfig.Parameters).Return(new List<IRuleConfigurationParameter>()).Repeat.Once();
             Expect.Call(() => _project.SetProjectRuleConfigurationTo(ruleConfig)).Repeat.Once();
 

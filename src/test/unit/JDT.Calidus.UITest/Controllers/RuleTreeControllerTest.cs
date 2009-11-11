@@ -88,8 +88,7 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(ruleAlpha.Category).Return("Alpha").Repeat.Any();
             Expect.Call(ruleBravo.Category).Return("Bravo").Repeat.Any();
 
-            Expect.Call(project.GetProjectRuleConfigurations()).Return(new List<IRuleConfiguration>()).Repeat.Once();
-            Expect.Call(ruleProvider.GetRules(new List<IRuleConfiguration>())).Return(rules).Repeat.Once();
+            Expect.Call(ruleProvider.GetRules(project)).Return(rules).Repeat.Once();
             Expect.Call(() => view.DisplayRules(rulesSorted)).Repeat.Once();
             
             mocker.ReplayAll();

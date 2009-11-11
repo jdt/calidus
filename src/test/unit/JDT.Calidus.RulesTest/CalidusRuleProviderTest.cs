@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Lines;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
@@ -59,20 +60,20 @@ namespace JDT.Calidus.RulesTest
         public void GetRulesShouldCallStatementAndBlockRuleFactoryProvider()
         {
             MockRepository mocker = new MockRepository();
+            
             IStatementRuleFactoryProvider ruleFactoryProvider = mocker.StrictMock<IStatementRuleFactoryProvider>();
-            Expect.Call(ruleFactoryProvider.GetStatementRuleFactories()).Return(new List<IStatementRuleFactory>()).Repeat.Once();
-
             IBlockRuleFactoryProvider blockRuleFactoryProvider = mocker.StrictMock<IBlockRuleFactoryProvider>();
-            Expect.Call(blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new List<IBlockRuleFactory>()).Repeat.Once();
-
             ILineRuleFactoryProvider lineRuleFactoryProvider = mocker.StrictMock<ILineRuleFactoryProvider>();
+            ICalidusProject project = mocker.DynamicMock<ICalidusProject>();
+
+            Expect.Call(ruleFactoryProvider.GetStatementRuleFactories()).Return(new List<IStatementRuleFactory>()).Repeat.Once();
+            Expect.Call(blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new List<IBlockRuleFactory>()).Repeat.Once();
             Expect.Call(lineRuleFactoryProvider.GetLineRuleFactories()).Return(new List<ILineRuleFactory>()).Repeat.Once();
-
-
+            
             mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
-            provider.GetRules(new List<IRuleConfiguration>());
+            provider.GetRules(project);
 
             mocker.VerifyAll();
         }
@@ -82,12 +83,14 @@ namespace JDT.Calidus.RulesTest
         {
             IRule rule = _mocker.DynamicMock<IRule>();
             IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(new[] {config}).Repeat.Once();
             Expect.Call(config.Rule).Return(rule.GetType()).Repeat.Once();
 
             _mocker.ReplayAll();
 
-            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new[] {config}));
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, project));
 
             _mocker.VerifyAll();
         }
@@ -99,15 +102,17 @@ namespace JDT.Calidus.RulesTest
             IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
             IStatementRuleFactory ruleFactory = _mocker.DynamicMock<IStatementRuleFactory>();
             IRuleConfigurationFactory ruleConfigFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(new List<IRuleConfiguration>()).Repeat.Once();
             Expect.Call(_ruleFactoryProvider.GetStatementRuleFactories()).Return(new[] { ruleFactory }).Repeat.Once();
             Expect.Call(ruleFactory.GetConfigurationFactory()).Return(ruleConfigFactory).Repeat.Once();
-            Expect.Call(ruleFactory.GetStatementRules(new List<IRuleConfiguration>())).Return(new[] {rule});
+            Expect.Call(ruleFactory.GetStatementRules(project)).Return(new[] {rule});
             Expect.Call(ruleConfigFactory.Get(rule.GetType())).Return(config).Repeat.Once();
 
             _mocker.ReplayAll();
 
-            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new List<IRuleConfiguration>()));
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, project));
 
             _mocker.VerifyAll();
         }
@@ -119,15 +124,17 @@ namespace JDT.Calidus.RulesTest
             IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
             IBlockRuleFactory ruleFactory = _mocker.DynamicMock<IBlockRuleFactory>();
             IRuleConfigurationFactory ruleConfigFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(new List<IRuleConfiguration>()).Repeat.Once();
             Expect.Call(_blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new[] { ruleFactory }).Repeat.Once();
             Expect.Call(ruleFactory.GetConfigurationFactory()).Return(ruleConfigFactory).Repeat.Once();
-            Expect.Call(ruleFactory.GetBlockRules(new List<IRuleConfiguration>())).Return(new[] { rule });
+            Expect.Call(ruleFactory.GetBlockRules(project)).Return(new[] { rule });
             Expect.Call(ruleConfigFactory.Get(rule.GetType())).Return(config).Repeat.Once();
 
             _mocker.ReplayAll();
 
-            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new List<IRuleConfiguration>()));
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, project));
 
             _mocker.VerifyAll();
         }
@@ -139,15 +146,17 @@ namespace JDT.Calidus.RulesTest
             IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
             ILineRuleFactory ruleFactory = _mocker.DynamicMock<ILineRuleFactory>();
             IRuleConfigurationFactory ruleConfigFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(new List<IRuleConfiguration>()).Repeat.Once();
             Expect.Call(_lineRuleFactoryProvider.GetLineRuleFactories()).Return(new[] { ruleFactory }).Repeat.Once();
             Expect.Call(ruleFactory.GetConfigurationFactory()).Return(ruleConfigFactory).Repeat.Once();
-            Expect.Call(ruleFactory.GetLineRules(new List<IRuleConfiguration>())).Return(new[] { rule });
+            Expect.Call(ruleFactory.GetLineRules(project)).Return(new[] { rule });
             Expect.Call(ruleConfigFactory.Get(rule.GetType())).Return(config).Repeat.Once();
 
             _mocker.ReplayAll();
 
-            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new List<IRuleConfiguration>()));
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, project));
 
             _mocker.VerifyAll();
         }

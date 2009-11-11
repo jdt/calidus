@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Lines;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
@@ -43,13 +44,13 @@ namespace JDT.Calidus.Rules.Lines
         }
 
         /// <summary>
-        /// Gets the list of line rules
+        /// Gets the list of line rules in the specified project
         /// </summary>
-        /// <param name="overrides">The overrides to use</param>
+        /// <param name="project">The project to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project)
         {
-            return _factory.GetLineRules(overrides);
+            return _factory.GetLineRules(project);
         }
 
         /// <summary>

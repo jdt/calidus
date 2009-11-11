@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration;
@@ -44,13 +45,13 @@ namespace JDT.Calidus.Rules.Blocks
         }
 
         /// <summary>
-        /// Gets the list of block rules
+        /// Gets the list of block rules in the specified project
         /// </summary>
-        /// <param name="overrides">The configuration overrides to use</param>
+        /// <param name="project">The project to get the rules in</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project)
         {
-            return _factory.GetBlockRules(overrides);
+            return _factory.GetBlockRules(project);
         }
 
         /// <summary>

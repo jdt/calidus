@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Lines;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
@@ -70,69 +71,69 @@ namespace JDT.Calidus.Rules
         }
 
         /// <summary>
-        /// Gets a list of all the rules
+        /// Gets a list of all the rules with settings for the specified project
         /// </summary>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <param name="project">The project to get the rules for</param>
         /// <returns>The rules</returns>
-        public IEnumerable<IRule> GetRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<IRule> GetRules(ICalidusProject project)
         {
             IList<IRule> rules = new List<IRule>();
 
-            foreach (StatementRuleBase aRule in GetStatementRules(overrides))
+            foreach (StatementRuleBase aRule in GetStatementRules(project))
                 rules.Add(aRule);
 
-            foreach (BlockRuleBase aRule in GetBlockRules(overrides))
+            foreach (BlockRuleBase aRule in GetBlockRules(project))
                 rules.Add(aRule);
 
-            foreach (LineRuleBase aRule in GetLineRules(overrides))
+            foreach (LineRuleBase aRule in GetLineRules(project))
                 rules.Add(aRule);
 
             return rules;
         }
 
         /// <summary>
-        /// Gets a  list of all statement rules
+        /// Gets a  list of all statement rules with settings for the specified project
         /// </summary>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <param name="project">The project to get the rules for</param>
         /// <returns>The rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project)
         {
-            LoadStatementRules(overrides);
+            LoadStatementRules(project);
             return _statementRules.Keys.ToList();
         }
 
         /// <summary>
-        /// Gets a list of all block rules
+        /// Gets a list of all block rules with settings for the specified project
         /// </summary>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <param name="project">The project to get the rules for</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project)
         {
-            LoadBlockRules(overrides);
+            LoadBlockRules(project);
             return _blockRules.Keys.ToList();
         }
 
         /// <summary>
-        /// Gets a list of all line rules
+        /// Gets a list of all line rules with settings for the specified project
         /// </summary>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <param name="project">The project to get the rules for</param>
         /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project)
         {
-            LoadLineRules(overrides);
+            LoadLineRules(project);
             return _lineRules.Keys.ToList();
         }
 
         /// <summary>
-        /// Gets the configuration information for the specified rule with the specified override
+        /// Gets the configuration information for the specified rule for the specified project
         /// </summary>
         /// <param name="rule">The rule</param>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <param name="project">The project to get the rules for</param>
         /// <returns>The configuration</returns>
-        public IRuleConfiguration GetConfigurationFor(IRule rule, IEnumerable<IRuleConfiguration> overrides)
+        public IRuleConfiguration GetConfigurationFor(IRule rule, ICalidusProject project)
         {
             //check overrides first
-            IRuleConfiguration config = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.Equals(rule.GetType()));
+            IRuleConfiguration config = project.GetProjectRuleConfigurations().FirstOrDefault<IRuleConfiguration>(p => p.Rule.Equals(rule.GetType()));
             if (config != null)
                 return config;
 
@@ -140,7 +141,7 @@ namespace JDT.Calidus.Rules
 
             if (ruleType.IsSubclassOf(typeof(StatementRuleBase)))
             {
-                LoadStatementRules(overrides);
+                LoadStatementRules(project);
                 foreach (StatementRuleBase aRule in _statementRules.Keys)
                 {
                     if (aRule.GetType().Equals(ruleType))
@@ -150,7 +151,7 @@ namespace JDT.Calidus.Rules
 
             if (ruleType.IsSubclassOf(typeof(BlockRuleBase)))
             {
-                LoadBlockRules(overrides);
+                LoadBlockRules(project);
                 foreach (BlockRuleBase aRule in _blockRules.Keys)
                 {
                     if (aRule.GetType().Equals(ruleType))
@@ -160,7 +161,7 @@ namespace JDT.Calidus.Rules
 
             if (ruleType.IsSubclassOf(typeof(LineRuleBase)))
             {
-                LoadLineRules(overrides);
+                LoadLineRules(project);
                 foreach (LineRuleBase aRule in _lineRules.Keys)
                 {
                     if (aRule.GetType().Equals(ruleType))
@@ -171,7 +172,7 @@ namespace JDT.Calidus.Rules
             throw new CalidusException("Cannot find an appropriate IRuleConfigurationFactory for the supplied rule type " + ruleType.FullName);
         }
 
-        private void LoadStatementRules(IEnumerable<IRuleConfiguration> overrides)
+        private void LoadStatementRules(ICalidusProject project)
         {
             if (_statementRules == null)
             {
@@ -180,7 +181,7 @@ namespace JDT.Calidus.Rules
                 foreach (IStatementRuleFactory aFactory in _statementRuleProvider.GetStatementRuleFactories())
                 {
                     IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules(overrides))
+                    foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules(project))
                     {
                         _statementRules.Add(aStatementRule, configFactory);
                     }
@@ -188,7 +189,7 @@ namespace JDT.Calidus.Rules
             }
         }
 
-        private void LoadBlockRules(IEnumerable<IRuleConfiguration> overrides)
+        private void LoadBlockRules(ICalidusProject project)
         {
             if (_blockRules == null)
             {
@@ -197,7 +198,7 @@ namespace JDT.Calidus.Rules
                 foreach (IBlockRuleFactory aFactory in _blockRuleProvider.GetBlockRuleFactories())
                 {
                     IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules(overrides))
+                    foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules(project))
                     {
                         _blockRules.Add(aBlockRule, configFactory);
                     }
@@ -205,7 +206,7 @@ namespace JDT.Calidus.Rules
             }
         }
 
-        private void LoadLineRules(IEnumerable<IRuleConfiguration> overrides)
+        private void LoadLineRules(ICalidusProject project)
         {
             if (_lineRules == null)
             {
@@ -214,7 +215,7 @@ namespace JDT.Calidus.Rules
                 foreach (ILineRuleFactory aFactory in _lineRuleProvider.GetLineRuleFactories())
                 {
                     IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (LineRuleBase aLineRule in aFactory.GetLineRules(overrides))
+                    foreach (LineRuleBase aLineRule in aFactory.GetLineRules(project))
                     {
                         _lineRules.Add(aLineRule, configFactory);
                     }
