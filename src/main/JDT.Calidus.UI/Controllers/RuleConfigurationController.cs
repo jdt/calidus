@@ -95,7 +95,7 @@ namespace JDT.Calidus.UI.Controllers
         {
             if (e.SelectedRule != null)
             {
-                IRuleConfiguration config = _provider.GetConfigurationFactoryFor(e.SelectedRule.GetType()).Get(e.SelectedRule.GetType());
+                IRuleConfiguration config = _provider.GetConfigurationFor(e.SelectedRule,_project.GetProjectRuleConfigurations());
                 _view.DisplayRuleConfiguration(config);
                 CurrentConfiguration = config;
             }

@@ -97,6 +97,82 @@ namespace JDT.Calidus.Rules
         /// <returns>The rules</returns>
         public IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides)
         {
+            LoadStatementRules(overrides);
+            return _statementRules.Keys.ToList();
+        }
+
+        /// <summary>
+        /// Gets a list of all block rules
+        /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <returns>The rules</returns>
+        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
+        {
+            LoadBlockRules(overrides);
+            return _blockRules.Keys.ToList();
+        }
+
+        /// <summary>
+        /// Gets a list of all line rules
+        /// </summary>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <returns>The rules</returns>
+        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
+        {
+            LoadLineRules(overrides);
+            return _lineRules.Keys.ToList();
+        }
+
+        /// <summary>
+        /// Gets the configuration information for the specified rule with the specified override
+        /// </summary>
+        /// <param name="rule">The rule</param>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
+        /// <returns>The configuration</returns>
+        public IRuleConfiguration GetConfigurationFor(IRule rule, IEnumerable<IRuleConfiguration> overrides)
+        {
+            //check overrides first
+            IRuleConfiguration config = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.Equals(rule.GetType()));
+            if (config != null)
+                return config;
+
+            Type ruleType = rule.GetType();
+
+            if (ruleType.IsSubclassOf(typeof(StatementRuleBase)))
+            {
+                LoadStatementRules(overrides);
+                foreach (StatementRuleBase aRule in _statementRules.Keys)
+                {
+                    if (aRule.GetType().Equals(ruleType))
+                        return _statementRules[aRule].Get(ruleType);
+                }
+            }
+
+            if (ruleType.IsSubclassOf(typeof(BlockRuleBase)))
+            {
+                LoadBlockRules(overrides);
+                foreach (BlockRuleBase aRule in _blockRules.Keys)
+                {
+                    if (aRule.GetType().Equals(ruleType))
+                        return _blockRules[aRule].Get(ruleType);
+                }
+            }
+
+            if (ruleType.IsSubclassOf(typeof(LineRuleBase)))
+            {
+                LoadLineRules(overrides);
+                foreach (LineRuleBase aRule in _lineRules.Keys)
+                {
+                    if (aRule.GetType().Equals(ruleType))
+                        return _lineRules[aRule].Get(ruleType);
+                }
+            }
+
+            throw new CalidusException("Cannot find an appropriate IRuleConfigurationFactory for the supplied rule type " + ruleType.FullName);
+        }
+
+        private void LoadStatementRules(IEnumerable<IRuleConfiguration> overrides)
+        {
             if (_statementRules == null)
             {
                 _statementRules = new Dictionary<StatementRuleBase, IRuleConfigurationFactory>();
@@ -110,16 +186,9 @@ namespace JDT.Calidus.Rules
                     }
                 }
             }
-
-            return _statementRules.Keys.ToList();
         }
 
-        /// <summary>
-        /// Gets a list of all block rules
-        /// </summary>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
-        /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
+        private void LoadBlockRules(IEnumerable<IRuleConfiguration> overrides)
         {
             if (_blockRules == null)
             {
@@ -128,22 +197,15 @@ namespace JDT.Calidus.Rules
                 foreach (IBlockRuleFactory aFactory in _blockRuleProvider.GetBlockRuleFactories())
                 {
                     IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules())
+                    foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules(overrides))
                     {
                         _blockRules.Add(aBlockRule, configFactory);
                     }
                 }
             }
-
-            return _blockRules.Keys.ToList();
         }
 
-        /// <summary>
-        /// Gets a list of all line rules
-        /// </summary>
-        /// <param name="overrides">The list of rule configurations that override default configurations</param>
-        /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
+        private void LoadLineRules(IEnumerable<IRuleConfiguration> overrides)
         {
             if (_lineRules == null)
             {
@@ -152,42 +214,12 @@ namespace JDT.Calidus.Rules
                 foreach (ILineRuleFactory aFactory in _lineRuleProvider.GetLineRuleFactories())
                 {
                     IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (LineRuleBase aLineRule in aFactory.GetLineRules())
+                    foreach (LineRuleBase aLineRule in aFactory.GetLineRules(overrides))
                     {
                         _lineRules.Add(aLineRule, configFactory);
                     }
                 }
             }
-
-            return _lineRules.Keys.ToList();
-        }
-
-        /// <summary>
-        /// Gets the configuration factory for the specified rule
-        /// </summary>
-        /// <param name="type">The rule</param>
-        /// <returns>The configuration</returns>
-        public IRuleConfigurationFactory GetConfigurationFactoryFor(Type type)
-        {
-            foreach(StatementRuleBase aRule in _statementRules.Keys)
-            {
-                if (aRule.GetType().Equals(type))
-                    return _statementRules[aRule];
-            }
-
-            foreach (BlockRuleBase aRule in _blockRules.Keys)
-            {
-                if (aRule.GetType().Equals(type))
-                    return _blockRules[aRule];
-            }
-
-            foreach(LineRuleBase aRule in _lineRules.Keys)
-            {
-                if (aRule.GetType().Equals(type))
-                    return _lineRules[aRule];
-            }
-
-            throw new CalidusException("Cannot find an appropriate IRuleConfigurationFactory for the supplied rule type");
         }
     }
 }

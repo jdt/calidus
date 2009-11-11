@@ -23,6 +23,7 @@ using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 
 namespace JDT.Calidus.Rules.Blocks
@@ -45,10 +46,11 @@ namespace JDT.Calidus.Rules.Blocks
         /// <summary>
         /// Gets the list of block rules
         /// </summary>
+        /// <param name="overrides">The configuration overrides to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules()
+        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
         {
-            return _factory.GetBlockRules();
+            return _factory.GetBlockRules(overrides);
         }
 
         /// <summary>

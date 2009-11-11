@@ -26,6 +26,7 @@ using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
+using JDT.Calidus.Common.Util;
 
 namespace JDT.Calidus.Common.Rules
 {
@@ -37,8 +38,9 @@ namespace JDT.Calidus.Common.Rules
     {
         private static String _exMsg = "Found rule {0}, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found";
 
-        private Assembly _toParse;
+        private IEnumerable<Type> _parsed;
         private IRuleConfigurationFactory _factory;
+        private IInstanceCreator _instanceCreator;
 
         /// <summary>
         /// Create a new instance of this class
@@ -55,10 +57,22 @@ namespace JDT.Calidus.Common.Rules
         /// <param name="toParse">The assembly to parse for rules</param>
         /// <param name="factory">The factory to use for rule configurations</param>
         public RuleFactory(Assembly toParse, IRuleConfigurationFactory factory)
+            : this(toParse.GetTypes(), ObjectFactory.Get<IInstanceCreator>(), factory)
         {
-            _toParse = toParse;
-            _factory = factory;
         }
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="parsedTypes">The parsed types</param>
+        /// <param name="instanceCreator">The instance creator to use</param>
+        /// <param name="factory">The factory to use for rule configurations</param>
+        public RuleFactory(IEnumerable<Type> parsedTypes, IInstanceCreator instanceCreator, IRuleConfigurationFactory factory)
+        {
+            _parsed = parsedTypes;
+            _factory = factory;
+            _instanceCreator = instanceCreator;
+        } 
 
         /// <summary>
         /// Gets the configuration factory that provides configuration information
@@ -69,12 +83,12 @@ namespace JDT.Calidus.Common.Rules
             if (_factory != null)
                 return _factory;
 
-            foreach (Type aType in _toParse.GetTypes())
+            foreach (Type aType in _parsed)
             {
                 //make sure to ignore the interface itself
                 if (typeof(IRuleConfigurationFactory).IsAssignableFrom(aType))
                 {
-                    IRuleConfigurationFactory ruleInstance = (IRuleConfigurationFactory)Activator.CreateInstance(aType);
+                    IRuleConfigurationFactory ruleInstance = _instanceCreator.CreateInstanceOf<IRuleConfigurationFactory>(aType);
                     return ruleInstance;
                 }
             }
@@ -91,7 +105,7 @@ namespace JDT.Calidus.Common.Rules
         {
             List<StatementRuleBase> result = new List<StatementRuleBase>();
 
-            foreach (Type aType in _toParse.GetTypes())
+            foreach (Type aType in _parsed)
             {
                 StatementRuleBase ruleInstance = null;
 
@@ -103,7 +117,7 @@ namespace JDT.Calidus.Common.Rules
                         //not in default, try for a no-args constructor
                         if (aType.GetConstructor(new Type[] { }) != null)
                         {
-                            ruleInstance = (StatementRuleBase)Activator.CreateInstance(aType);
+                            ruleInstance = _instanceCreator.CreateInstanceOf<StatementRuleBase>(aType);
                         }
                         //try the factory
                         else
@@ -118,7 +132,7 @@ namespace JDT.Calidus.Common.Rules
                             if (overrideConfig != null)
                                 config = overrideConfig;
 
-                            ruleInstance = (StatementRuleBase) Activator.CreateInstance(aType, config.ArgumentArray);
+                            ruleInstance = _instanceCreator.CreateInstanceOf<StatementRuleBase>(aType, config.ArgumentArray);
                         }
                     }
                     catch(Exception ex)
@@ -140,12 +154,13 @@ namespace JDT.Calidus.Common.Rules
         /// <summary>
         /// Gets the list of rules
         /// </summary>
+        /// <param name="overrides">The overrides to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules()
+        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
         {
             List<BlockRuleBase> result = new List<BlockRuleBase>();
 
-            foreach (Type aType in _toParse.GetTypes())
+            foreach (Type aType in _parsed)
             {
                 BlockRuleBase ruleInstance = null;
 
@@ -156,10 +171,24 @@ namespace JDT.Calidus.Common.Rules
                     {
                         //not in default, try for a no-args constructor
                         if (aType.GetConstructor(new Type[] { }) != null)
-                            ruleInstance = (BlockRuleBase)Activator.CreateInstance(aType);
+                        {
+                            ruleInstance = _instanceCreator.CreateInstanceOf<BlockRuleBase>(aType);
+                        }
                         //try the factory
                         else
-                            ruleInstance = (BlockRuleBase)Activator.CreateInstance(aType, GetConfigurationFactory().Get(aType).ArgumentArray);
+                        {
+                            IRuleConfigurationFactory fct = GetConfigurationFactory();
+
+                            //get default config
+                            IRuleConfiguration defaultConfig = fct.Get(aType);
+                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
+
+                            IRuleConfiguration config = defaultConfig;
+                            if (overrideConfig != null)
+                                config = overrideConfig;
+
+                            ruleInstance = _instanceCreator.CreateInstanceOf<BlockRuleBase>(aType, config.ArgumentArray);
+                        }
                     }
                     catch(Exception ex)
                     {
@@ -180,12 +209,13 @@ namespace JDT.Calidus.Common.Rules
         /// <summary>
         /// Gets the list of line rules
         /// </summary>
+        /// <param name="overrides">The overrides to use</param>
         /// <returns>The list of line rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules()
+        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
         {
             List<LineRuleBase> result = new List<LineRuleBase>();
 
-            foreach (Type aType in _toParse.GetTypes())
+            foreach (Type aType in _parsed)
             {
                 LineRuleBase ruleInstance = null;
 
@@ -196,12 +226,22 @@ namespace JDT.Calidus.Common.Rules
                     {
                         //not in default, try for a no-args constructor
                         if (aType.GetConstructor(new Type[] { }) != null)
-                            ruleInstance = (LineRuleBase)Activator.CreateInstance(aType);
-                        //try the factory
+                        {
+                            ruleInstance = _instanceCreator.CreateInstanceOf<LineRuleBase>(aType);
+                        }
                         else
                         {
-                            IRuleConfiguration config = GetConfigurationFactory().Get(aType);
-                            ruleInstance = (LineRuleBase) Activator.CreateInstance(aType, config.ArgumentArray);
+                            IRuleConfigurationFactory fct = GetConfigurationFactory();
+
+                            //get default config
+                            IRuleConfiguration defaultConfig = fct.Get(aType);
+                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
+
+                            IRuleConfiguration config = defaultConfig;
+                            if (overrideConfig != null)
+                                config = overrideConfig;
+
+                            ruleInstance = _instanceCreator.CreateInstanceOf<LineRuleBase>(aType, config.ArgumentArray);
                         }
                     }
                     catch (Exception ex)

@@ -19,27 +19,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 
-namespace JDT.Calidus.Common.Blocks
+namespace JDT.Calidus.Common.Util
 {
     /// <summary>
-    /// This interface is implemented by block rule factories
+    /// This interface is implemented by classes that create instances
     /// </summary>
-    public interface IBlockRuleFactory
+    public interface IInstanceCreator
     {
         /// <summary>
-        /// Gets the list of block rules
+        /// Creates a new instance of the specified type
         /// </summary>
-        /// <param name="overrides">The overrides to use</param>
-        /// <returns>The rules</returns>
-        IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides);
+        /// <typeparam name="TInstanceType">The type to return as</typeparam>
+        /// <param name="aType">The type to create an instance of</param>
+        /// <returns>An instance of the specified type</returns>
+        TInstanceType CreateInstanceOf<TInstanceType>(Type aType);
         /// <summary>
-        /// Gets the configuration factory that provides configuration information for the block rules in this factory
+        /// Creates a new instance of the specified type
         /// </summary>
-        /// <returns></returns>
-        IRuleConfigurationFactory GetConfigurationFactory();
+        /// <typeparam name="TInstanceType">The type to return as</typeparam>
+        /// <param name="aType">The type to create an instance of</param>
+        /// <param name="args">The argument list</param>
+        /// <returns>An instance of the specified type</returns>
+        TInstanceType CreateInstanceOf<TInstanceType>(Type aType, object[] args);
     }
 }
