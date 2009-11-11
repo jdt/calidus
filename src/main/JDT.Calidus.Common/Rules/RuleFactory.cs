@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
@@ -77,7 +78,7 @@ namespace JDT.Calidus.Common.Rules
         /// <summary>
         /// Gets the configuration factory that provides configuration information
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The configuration factory</returns>
         public IRuleConfigurationFactory GetConfigurationFactory()
         {
             if (_factory != null)
@@ -97,11 +98,11 @@ namespace JDT.Calidus.Common.Rules
         }
 
         /// <summary>
-        /// Gets the list of statement rules
+        /// Gets the list of statement rules for the project
         /// </summary>
-        /// <param name="overrides">A list of rule configurations that override default configurations</param>
+        /// <param name="project">The project to get rules for</param>
         /// <returns>The statement rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project)
         {
             List<StatementRuleBase> result = new List<StatementRuleBase>();
 
@@ -126,7 +127,7 @@ namespace JDT.Calidus.Common.Rules
 
                             //get default config
                             IRuleConfiguration defaultConfig = fct.Get(aType);
-                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
+                            IRuleConfiguration overrideConfig = project.GetProjectRuleConfigurations().FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
 
                             IRuleConfiguration config = defaultConfig;
                             if (overrideConfig != null)
@@ -152,11 +153,11 @@ namespace JDT.Calidus.Common.Rules
         }
 
         /// <summary>
-        /// Gets the list of rules
+        /// Gets the list of block rules for the project
         /// </summary>
-        /// <param name="overrides">The overrides to use</param>
+        /// <param name="project">The project to get rules for</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project)
         {
             List<BlockRuleBase> result = new List<BlockRuleBase>();
 
@@ -181,7 +182,7 @@ namespace JDT.Calidus.Common.Rules
 
                             //get default config
                             IRuleConfiguration defaultConfig = fct.Get(aType);
-                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
+                            IRuleConfiguration overrideConfig = project.GetProjectRuleConfigurations().FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
 
                             IRuleConfiguration config = defaultConfig;
                             if (overrideConfig != null)
@@ -207,11 +208,11 @@ namespace JDT.Calidus.Common.Rules
         }
 
         /// <summary>
-        /// Gets the list of line rules
+        /// Gets the list of line rules for the project
         /// </summary>
-        /// <param name="overrides">The overrides to use</param>
+        /// <param name="project">The project to get rules for</param>
         /// <returns>The list of line rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project)
         {
             List<LineRuleBase> result = new List<LineRuleBase>();
 
@@ -235,7 +236,7 @@ namespace JDT.Calidus.Common.Rules
 
                             //get default config
                             IRuleConfiguration defaultConfig = fct.Get(aType);
-                            IRuleConfiguration overrideConfig = overrides.FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
+                            IRuleConfiguration overrideConfig = project.GetProjectRuleConfigurations().FirstOrDefault<IRuleConfiguration>(p => p.Rule.FullName.Equals(aType.FullName));
 
                             IRuleConfiguration config = defaultConfig;
                             if (overrideConfig != null)

@@ -59,7 +59,7 @@ namespace JDT.Calidus.UI.Controllers
             _view.Save += new EventHandler<RuleConfigurationChangeCommandEventArgs>(_view_Save);
             _view.Closing += new EventHandler<RuleChangeCancelEventArgs>(_view_Closing);
 
-            IEnumerable<IRule> rules = _provider.GetRules(_project.GetProjectRuleConfigurations());
+            IEnumerable<IRule> rules = _provider.GetRules(_project);
             _view.DisplayRules(rules);
         }
 
@@ -95,7 +95,7 @@ namespace JDT.Calidus.UI.Controllers
         {
             if (e.SelectedRule != null)
             {
-                IRuleConfiguration config = _provider.GetConfigurationFor(e.SelectedRule,_project.GetProjectRuleConfigurations());
+                IRuleConfiguration config = _provider.GetConfigurationFor(e.SelectedRule,_project);
                 _view.DisplayRuleConfiguration(config);
                 CurrentConfiguration = config;
             }

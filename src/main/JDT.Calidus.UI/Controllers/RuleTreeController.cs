@@ -47,7 +47,7 @@ namespace JDT.Calidus.UI.Controllers
             _ruleProvider = ruleProvider;
             _project = project;
 
-            IEnumerable<IRule> rules = _ruleProvider.GetRules(_project.GetProjectRuleConfigurations());
+            IEnumerable<IRule> rules = _ruleProvider.GetRules(_project);
             _view.DisplayRules(rules.OrderBy(p => p.Category));
         }
     }

@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
@@ -44,13 +45,13 @@ namespace JDT.Calidus.Rules.Statements
         }
 
         /// <summary>
-        /// Gets the list of statement rules
+        /// Gets the list of statement rules in the specified project
         /// </summary>
-        /// <param name="overrides">A list of rule configurations that override default settings</param>
+        /// <param name="project">The project the rules are in</param>
         /// <returns>The rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules(IEnumerable<IRuleConfiguration> overrides)
+        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project)
         {
-            return _factory.GetStatementRules(overrides);
+            return _factory.GetStatementRules(project);
         }
 
         /// <summary>

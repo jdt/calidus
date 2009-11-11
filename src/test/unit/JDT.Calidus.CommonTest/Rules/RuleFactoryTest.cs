@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration;
@@ -35,14 +36,25 @@ namespace JDT.Calidus.CommonTest.Rules
     [TestFixture]
     public class RuleFactoryTest
     {
+        private MockRepository _mocker;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _mocker = new MockRepository();
+        }
+
         [Test]
         public void FactoryShouldThrowExceptionForUnCreateableRules()
         {
             RuleFactory<IRule> factory = new RuleFactory<IRule>(GetType().Assembly.GetTypes(), null, null);
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
+
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(new List<IRuleConfiguration>()).Repeat.Once();
 
             Assert.Throws<CalidusException>(delegate
                                                 {
-                                                    factory.GetStatementRules(new List<IRuleConfiguration>());
+                                                    factory.GetStatementRules(project);
                                                 },
                                             "Found rule UnCreatableRule, but an instance could not be created because the rule configuration does not match the constructor and no default no-args constructor was found"
                                             );
@@ -51,73 +63,73 @@ namespace JDT.Calidus.CommonTest.Rules
         [Test]
         public void FactoryShouldUseArgumentArrayFromOverriddenRulesIfAvailableForStatement()
         {
-            MockRepository mocker = new MockRepository();
-
-            StatementRuleBase rule = mocker.DynamicMock<StatementRuleBase>("test");
-            IRuleConfiguration ruleConfig = mocker.DynamicMock<IRuleConfiguration>();
-            IRuleConfigurationFactory ruleConfigurationFactory = mocker.DynamicMock<IRuleConfigurationFactory>();
-            IInstanceCreator instanceCreator = mocker.DynamicMock<IInstanceCreator>();
+            StatementRuleBase rule = _mocker.DynamicMock<StatementRuleBase>("test");
+            IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationFactory ruleConfigurationFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            IInstanceCreator instanceCreator = _mocker.DynamicMock<IInstanceCreator>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
             IList<IRuleConfiguration> overrides = new[] { ruleConfig };
-
+            
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(overrides).Repeat.Once();
             Expect.Call(ruleConfig.Rule).Return(rule.GetType()).Repeat.Once();
             Expect.Call(ruleConfig.ArgumentArray).Return(new[] { "test" }).Repeat.Once();
             Expect.Call(instanceCreator.CreateInstanceOf<StatementRuleBase>(rule.GetType(), null)).IgnoreArguments().Return(rule).Repeat.Once();
 
-            mocker.ReplayAll();
+            _mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(new[] { rule.GetType() }, instanceCreator, ruleConfigurationFactory);
-            factory.GetStatementRules(overrides);
+            factory.GetStatementRules(project);
 
-            mocker.VerifyAll();
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void FactoryShouldUseArgumentArrayFromOverriddenRulesIfAvailableForBlock()
         {
-            MockRepository mocker = new MockRepository();
-
-            BlockRuleBase rule = mocker.DynamicMock<BlockRuleBase>("test");
-            IRuleConfiguration ruleConfig = mocker.DynamicMock<IRuleConfiguration>();
-            IRuleConfigurationFactory ruleConfigurationFactory = mocker.DynamicMock<IRuleConfigurationFactory>();
-            IInstanceCreator instanceCreator = mocker.DynamicMock<IInstanceCreator>();
+            BlockRuleBase rule = _mocker.DynamicMock<BlockRuleBase>("test");
+            IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationFactory ruleConfigurationFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            IInstanceCreator instanceCreator = _mocker.DynamicMock<IInstanceCreator>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
             IList<IRuleConfiguration> overrides = new[] { ruleConfig };
 
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(overrides).Repeat.Once();
             Expect.Call(ruleConfig.Rule).Return(rule.GetType()).Repeat.Once();
             Expect.Call(ruleConfig.ArgumentArray).Return(new[] { "test" }).Repeat.Once();
             Expect.Call(instanceCreator.CreateInstanceOf<BlockRuleBase>(rule.GetType(), null)).IgnoreArguments().Return(rule).Repeat.Once();
 
-            mocker.ReplayAll();
+            _mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(new[] { rule.GetType() }, instanceCreator, ruleConfigurationFactory);
-            factory.GetBlockRules(overrides);
+            factory.GetBlockRules(project);
 
-            mocker.VerifyAll();
+            _mocker.VerifyAll();
         }
 
         [Test]
         public void FactoryShouldUseArgumentArrayFromOverriddenRulesIfAvailableForLine()
         {
-            MockRepository mocker = new MockRepository();
-
-            LineRuleBase rule = mocker.DynamicMock<LineRuleBase>("test");
-            IRuleConfiguration ruleConfig = mocker.DynamicMock<IRuleConfiguration>();
-            IRuleConfigurationFactory ruleConfigurationFactory = mocker.DynamicMock<IRuleConfigurationFactory>();
-            IInstanceCreator instanceCreator = mocker.DynamicMock<IInstanceCreator>();
+            LineRuleBase rule = _mocker.DynamicMock<LineRuleBase>("test");
+            IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationFactory ruleConfigurationFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            IInstanceCreator instanceCreator = _mocker.DynamicMock<IInstanceCreator>();
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
 
             IList<IRuleConfiguration> overrides = new[] { ruleConfig };
 
+            Expect.Call(project.GetProjectRuleConfigurations()).Return(overrides).Repeat.Once();
             Expect.Call(ruleConfig.Rule).Return(rule.GetType()).Repeat.Once();
             Expect.Call(ruleConfig.ArgumentArray).Return(new[] { "test" }).Repeat.Once();
             Expect.Call(instanceCreator.CreateInstanceOf<LineRuleBase>(rule.GetType(), null)).IgnoreArguments().Return(rule).Repeat.Once();
 
-            mocker.ReplayAll();
+            _mocker.ReplayAll();
 
             RuleFactory<IRule> factory = new RuleFactory<IRule>(new[] { rule.GetType() }, instanceCreator, ruleConfigurationFactory);
-            factory.GetLineRules(overrides);
+            factory.GetLineRules(project);
 
-            mocker.VerifyAll();
+            _mocker.VerifyAll();
         }
     }
 }

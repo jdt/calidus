@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
@@ -31,11 +32,11 @@ namespace JDT.Calidus.Common.Blocks
     public interface IBlockRuleFactory
     {
         /// <summary>
-        /// Gets the list of block rules
+        /// Gets the list of block rules in the specified project
         /// </summary>
-        /// <param name="overrides">The overrides to use</param>
+        /// <param name="project">The project to get the rules in</param>
         /// <returns>The rules</returns>
-        IEnumerable<BlockRuleBase> GetBlockRules(IEnumerable<IRuleConfiguration> overrides);
+        IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project);
         /// <summary>
         /// Gets the configuration factory that provides configuration information for the block rules in this factory
         /// </summary>
