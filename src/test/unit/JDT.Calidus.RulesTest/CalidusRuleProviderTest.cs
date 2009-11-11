@@ -22,7 +22,12 @@ using System.Text;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Providers;
+using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Blocks;
 using JDT.Calidus.Common.Rules.Configuration;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules.Lines;
+using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Rules;
 using NUnit.Framework;
@@ -33,6 +38,23 @@ namespace JDT.Calidus.RulesTest
     [TestFixture]
     public class CalidusRuleProviderTest
     {
+        private MockRepository _mocker;
+        private IStatementRuleFactoryProvider _ruleFactoryProvider;
+        private IBlockRuleFactoryProvider _blockRuleFactoryProvider;
+        private ILineRuleFactoryProvider _lineRuleFactoryProvider;
+        private CalidusRuleProvider _provider;
+            
+        [SetUp]
+        public void SetUp()
+        {
+            _mocker = new MockRepository();
+
+            _ruleFactoryProvider = _mocker.StrictMock<IStatementRuleFactoryProvider>();
+            _blockRuleFactoryProvider = _mocker.StrictMock<IBlockRuleFactoryProvider>();
+            _lineRuleFactoryProvider = _mocker.StrictMock<ILineRuleFactoryProvider>();
+            _provider = new CalidusRuleProvider(_ruleFactoryProvider, _blockRuleFactoryProvider, _lineRuleFactoryProvider);
+        }
+
         [Test]
         public void GetRulesShouldCallStatementAndBlockRuleFactoryProvider()
         {
@@ -53,6 +75,81 @@ namespace JDT.Calidus.RulesTest
             provider.GetRules(new List<IRuleConfiguration>());
 
             mocker.VerifyAll();
+        }
+
+        [Test]
+        public void GetConfigurationForShouldReturnConfigurationFromOverrideIfExists()
+        {
+            IRule rule = _mocker.DynamicMock<IRule>();
+            IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
+
+            Expect.Call(config.Rule).Return(rule.GetType()).Repeat.Once();
+
+            _mocker.ReplayAll();
+
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new[] {config}));
+
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void GetConfigurationForShouldCheckStatementRuleConfigurationFactoryIfRuleIsStatementRule()
+        {
+            StatementRuleBase rule = _mocker.DynamicMock<StatementRuleBase>("test");
+            IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
+            IStatementRuleFactory ruleFactory = _mocker.DynamicMock<IStatementRuleFactory>();
+            IRuleConfigurationFactory ruleConfigFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+
+            Expect.Call(_ruleFactoryProvider.GetStatementRuleFactories()).Return(new[] { ruleFactory }).Repeat.Once();
+            Expect.Call(ruleFactory.GetConfigurationFactory()).Return(ruleConfigFactory).Repeat.Once();
+            Expect.Call(ruleFactory.GetStatementRules(new List<IRuleConfiguration>())).Return(new[] {rule});
+            Expect.Call(ruleConfigFactory.Get(rule.GetType())).Return(config).Repeat.Once();
+
+            _mocker.ReplayAll();
+
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new List<IRuleConfiguration>()));
+
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void GetConfigurationForShouldCheckBlockRuleConfigurationFactoryIfRuleIsBlockRule()
+        {
+            BlockRuleBase rule = _mocker.DynamicMock<BlockRuleBase>("test");
+            IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
+            IBlockRuleFactory ruleFactory = _mocker.DynamicMock<IBlockRuleFactory>();
+            IRuleConfigurationFactory ruleConfigFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+
+            Expect.Call(_blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new[] { ruleFactory }).Repeat.Once();
+            Expect.Call(ruleFactory.GetConfigurationFactory()).Return(ruleConfigFactory).Repeat.Once();
+            Expect.Call(ruleFactory.GetBlockRules(new List<IRuleConfiguration>())).Return(new[] { rule });
+            Expect.Call(ruleConfigFactory.Get(rule.GetType())).Return(config).Repeat.Once();
+
+            _mocker.ReplayAll();
+
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new List<IRuleConfiguration>()));
+
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void GetConfigurationForShouldCheckLineRuleConfigurationFactoryIfRuleIsLineRule()
+        {
+            LineRuleBase rule = _mocker.DynamicMock<LineRuleBase>("test");
+            IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
+            ILineRuleFactory ruleFactory = _mocker.DynamicMock<ILineRuleFactory>();
+            IRuleConfigurationFactory ruleConfigFactory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+
+            Expect.Call(_lineRuleFactoryProvider.GetLineRuleFactories()).Return(new[] { ruleFactory }).Repeat.Once();
+            Expect.Call(ruleFactory.GetConfigurationFactory()).Return(ruleConfigFactory).Repeat.Once();
+            Expect.Call(ruleFactory.GetLineRules(new List<IRuleConfiguration>())).Return(new[] { rule });
+            Expect.Call(ruleConfigFactory.Get(rule.GetType())).Return(config).Repeat.Once();
+
+            _mocker.ReplayAll();
+
+            Assert.AreEqual(config, _provider.GetConfigurationFor(rule, new List<IRuleConfiguration>()));
+
+            _mocker.VerifyAll();
         }
     }
 }

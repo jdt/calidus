@@ -55,10 +55,11 @@ namespace JDT.Calidus.Common.Rules
         /// <returns>The rules</returns>
         IEnumerable<IRule> GetRules(IEnumerable<IRuleConfiguration> overrides);
         /// <summary>
-        /// Gets the configuration factory for the specified rule
+        /// Gets the configuration information for the specified rule with the specified override
         /// </summary>
-        /// <param name="type">The rule</param>
+        /// <param name="rule">The rule</param>
+        /// <param name="overrides">The list of rule configurations that override default configurations</param>
         /// <returns>The configuration</returns>
-        IRuleConfigurationFactory GetConfigurationFactoryFor(Type type);
+        IRuleConfiguration GetConfigurationFor(IRule rule, IEnumerable<IRuleConfiguration> overrides);
     }
 }

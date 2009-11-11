@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 
@@ -44,10 +45,11 @@ namespace JDT.Calidus.Rules.Lines
         /// <summary>
         /// Gets the list of line rules
         /// </summary>
+        /// <param name="overrides">The overrides to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules()
+        public IEnumerable<LineRuleBase> GetLineRules(IEnumerable<IRuleConfiguration> overrides)
         {
-            return _factory.GetLineRules();
+            return _factory.GetLineRules(overrides);
         }
 
         /// <summary>

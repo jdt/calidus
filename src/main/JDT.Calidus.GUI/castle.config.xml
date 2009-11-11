@@ -16,5 +16,7 @@
     <component id="ILineRuleFactoryProvider" type="JDT.Calidus.Providers.LineRuleFactoryProviders.AssemblyBasedLineRuleFactoryProvider, JDT.Calidus.Providers" />
     
     <component id="IStatementContextManager" type="JDT.Calidus.Parsers.Statements.StatementContextManager, JDT.Calidus.Parsers" />
+
+    <component id="IInstanceCreator" type="JDT.Calidus.Common.Util.ActivatorBasedInstanceCreator, JDT.Calidus.Common" />
   </components>
 </castle>
