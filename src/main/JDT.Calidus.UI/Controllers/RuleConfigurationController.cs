@@ -22,7 +22,6 @@ using System.Text;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.UI.Commands;
 using JDT.Calidus.UI.Events;
-using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
 using JDT.Calidus.Common.Rules;
 
@@ -35,19 +34,19 @@ namespace JDT.Calidus.UI.Controllers
     {
         private IRuleConfigurationView _view;
         private ICalidusRuleProvider _provider;
-        private ICalidusProjectModel _project;
+        private ICalidusRuleConfigurationFactory _configFactory;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="provider">The rule provider to use</param>
-        /// <param name="project">The project</param>
-        public RuleConfigurationController(IRuleConfigurationView view, ICalidusRuleProvider provider, ICalidusProjectModel project)
+        /// <param name="configFactory">The configuration factory to use</param>
+        public RuleConfigurationController(IRuleConfigurationView view, ICalidusRuleProvider provider, ICalidusRuleConfigurationFactory configFactory)
         {
             HasChanges = false;
 
-            _project = project;
+            _configFactory = configFactory;
 
             _provider = provider;
 
@@ -59,7 +58,7 @@ namespace JDT.Calidus.UI.Controllers
             _view.Save += new EventHandler<RuleConfigurationChangeCommandEventArgs>(_view_Save);
             _view.Closing += new EventHandler<RuleChangeCancelEventArgs>(_view_Closing);
 
-            IEnumerable<IRule> rules = _provider.GetRules(_project);
+            IEnumerable<IRule> rules = _provider.GetRules(_configFactory);
             _view.DisplayRules(rules);
         }
 
@@ -95,7 +94,7 @@ namespace JDT.Calidus.UI.Controllers
         {
             if (e.SelectedRule != null)
             {
-                IRuleConfiguration config = _provider.GetConfigurationFor(e.SelectedRule,_project);
+                IRuleConfiguration config = _configFactory.GetRuleConfigurationFor(e.SelectedRule.GetType());
                 _view.DisplayRuleConfiguration(config);
                 CurrentConfiguration = config;
             }
@@ -118,10 +117,20 @@ namespace JDT.Calidus.UI.Controllers
 
         private void _view_Save(object sender, RuleConfigurationChangeCommandEventArgs e)
         {
-            CurrentConfiguration.Description = e.Description;
-            foreach(IRuleConfigurationParameter aParam in CurrentConfiguration.Parameters)
-                aParam.Value = e.ValueMap[aParam];
-            _project.SetProjectRuleConfigurationTo(CurrentConfiguration);
+            IList<IRuleConfigurationParameter> parameters = new List<IRuleConfigurationParameter>();
+            foreach (KeyValuePair<IRuleConfigurationParameter, Object> aConfig in e.ValueMap)
+            {
+                //TODO: fix this code to a constructor-based setting
+                DefaultRuleConfigurationParameter overrideParameter = new DefaultRuleConfigurationParameter();
+                overrideParameter.Name = aConfig.Key.Name;
+                overrideParameter.ParameterType = aConfig.Key.ParameterType;
+                overrideParameter.Value = aConfig.Value;
+
+                parameters.Add(overrideParameter);
+            }
+            
+            IRuleConfigurationOverride overrideConfig = new DefaultRuleConfigurationOverride(CurrentConfiguration.Rule, parameters);
+            _configFactory.SetRuleConfiguration(overrideConfig);
             HasChanges = false;
         }
     }

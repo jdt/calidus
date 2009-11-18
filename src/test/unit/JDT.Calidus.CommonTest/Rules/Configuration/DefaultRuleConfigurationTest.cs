@@ -19,8 +19,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common;
 using JDT.Calidus.Common.Rules.Configuration;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Rules.Configuration
 {

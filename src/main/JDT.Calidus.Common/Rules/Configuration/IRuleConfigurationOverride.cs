@@ -19,27 +19,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Rules.Configuration;
 
-namespace JDT.Calidus.UI.Commands
+namespace JDT.Calidus.Common.Rules.Configuration
 {
     /// <summary>
-    /// This class represents a command event for rule configuration changes
+    /// This interface is implemented by overrides of rule configurations
     /// </summary>
-    public class RuleConfigurationChangeCommandEventArgs : EventArgs
+    public interface IRuleConfigurationOverride
     {
         /// <summary>
-        /// Creates a new instance of this class
+        /// Gets the list of parameters
         /// </summary>
-        /// <param name="valueMap">The value map</param>
-        public RuleConfigurationChangeCommandEventArgs(IDictionary<IRuleConfigurationParameter, Object> valueMap)
-        {
-            ValueMap = valueMap;
-        }
-
+        IEnumerable<IRuleConfigurationParameter> Parameters { get; }
         /// <summary>
-        /// Get the configuration parameter object value map
+        /// Gets the rule type
         /// </summary>
-        public IDictionary<IRuleConfigurationParameter, Object> ValueMap { get; private set; }
+        Type Rule { get; }
     }
 }

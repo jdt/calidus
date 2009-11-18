@@ -20,26 +20,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules.Configuration;
+using NUnit.Framework;
+using Rhino.Mocks;
 
-namespace JDT.Calidus.UI.Commands
+namespace JDT.Calidus.CommonTest.Rules.Configuration
 {
-    /// <summary>
-    /// This class represents a command event for rule configuration changes
-    /// </summary>
-    public class RuleConfigurationChangeCommandEventArgs : EventArgs
+    [TestFixture]
+    public class DefaultRuleConfigurationOverrideTest
     {
-        /// <summary>
-        /// Creates a new instance of this class
-        /// </summary>
-        /// <param name="valueMap">The value map</param>
-        public RuleConfigurationChangeCommandEventArgs(IDictionary<IRuleConfigurationParameter, Object> valueMap)
+        private MockRepository _mocker;
+
+        [SetUp]
+        public void SetUp()
         {
-            ValueMap = valueMap;
+            _mocker = new MockRepository();
         }
 
-        /// <summary>
-        /// Get the configuration parameter object value map
-        /// </summary>
-        public IDictionary<IRuleConfigurationParameter, Object> ValueMap { get; private set; }
+        [Test]
+        public void DefaultRuleConfigurationOverridesShouldBeEqual()
+        {
+            IRuleConfigurationParameter parameter = _mocker.DynamicMock<IRuleConfigurationParameter>();
+            IList<IRuleConfigurationParameter> parameters = new[]{parameter};
+
+            DefaultRuleConfigurationOverride alpha = new DefaultRuleConfigurationOverride(typeof(String), parameters);
+            DefaultRuleConfigurationOverride beta = new DefaultRuleConfigurationOverride(typeof(String), parameters);
+
+            Assert.AreEqual(alpha, beta);
+        }
     }
 }

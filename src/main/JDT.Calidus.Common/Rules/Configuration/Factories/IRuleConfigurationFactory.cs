@@ -33,5 +33,11 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
         /// <param name="type">The type</param>
         /// <returns>The configuration</returns>
         IRuleConfiguration Get(Type type);
+        /// <summary>
+        /// Gets if the configuration for the specified type is contained in this configuration factory
+        /// </summary>
+        /// <param name="type">The type to check for</param>
+        /// <returns>True if can be retrieved, otherwise false</returns>
+        bool Has(Type type);
     }
 }

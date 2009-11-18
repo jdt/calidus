@@ -19,27 +19,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using JDT.Calidus.Common.Rules.Configuration;
 
-namespace JDT.Calidus.UI.Commands
+namespace JDT.Calidus.Projects.SectionManagers
 {
     /// <summary>
-    /// This class represents a command event for rule configuration changes
+    /// This interface is implemented by rules section managers
     /// </summary>
-    public class RuleConfigurationChangeCommandEventArgs : EventArgs
+    public interface IRulesSectionManager
     {
         /// <summary>
-        /// Creates a new instance of this class
+        /// Writes the specified set of overrides to the specified xml document
         /// </summary>
-        /// <param name="valueMap">The value map</param>
-        public RuleConfigurationChangeCommandEventArgs(IDictionary<IRuleConfigurationParameter, Object> valueMap)
-        {
-            ValueMap = valueMap;
-        }
-
+        /// <param name="overrides">The overrides</param>
+        /// <param name="parent">The parent element</param>
+        void WriteTo(IEnumerable<IRuleConfigurationOverride> overrides, XElement parent);
         /// <summary>
-        /// Get the configuration parameter object value map
+        /// Reads the rule configuration overrides from the specified document
         /// </summary>
-        public IDictionary<IRuleConfigurationParameter, Object> ValueMap { get; private set; }
+        /// <param name="doc">The document to read from</param>
+        /// <returns>The overrides</returns>
+        IEnumerable<IRuleConfigurationOverride> ReadFrom(XDocument doc);
     }
 }

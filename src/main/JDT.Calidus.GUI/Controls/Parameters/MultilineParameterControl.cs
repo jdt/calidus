@@ -40,7 +40,7 @@ namespace JDT.Calidus.GUI.Controls.Parameters
 
         public override Object GetValue()
         {
-            return txtValue.Text;
+            return txtValue.Text.Replace("\r\n", "\n");
         }
 
         public void txtValue_TextChanged(object sender, EventArgs e)

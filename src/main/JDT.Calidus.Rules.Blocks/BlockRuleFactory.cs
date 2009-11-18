@@ -19,13 +19,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 
 namespace JDT.Calidus.Rules.Blocks
 {
@@ -34,33 +31,24 @@ namespace JDT.Calidus.Rules.Blocks
     /// </summary>
     public class BlockRuleFactory : IBlockRuleFactory
     {
-        private RuleFactory<BlockRuleBase> _factory;
+        private RuleFactory _factory;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         public BlockRuleFactory()
         {
-            _factory = new RuleFactory<BlockRuleBase>(GetType().Assembly);
+            _factory = new RuleFactory(GetType().Assembly);
         }
 
         /// <summary>
         /// Gets the list of block rules in the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules in</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project)
+        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusRuleConfigurationFactory configFactory)
         {
-            return _factory.GetBlockRules(project);
-        }
-
-        /// <summary>
-        /// Gets the configuration factory that provides configuration information for the statement rules in this factory
-        /// </summary>
-        /// <returns></returns>
-        public IRuleConfigurationFactory GetConfigurationFactory()
-        {
-            return _factory.GetConfigurationFactory();
+            return _factory.GetBlockRules(configFactory);
         }
     }
 }

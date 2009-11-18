@@ -36,9 +36,9 @@ namespace JDT.Calidus.UI.Controllers
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="ruleProvider">The rule provider to use</param>
-        /// <param name="project">The project</param>
-        public CheckableRuleTreeController(ICheckableRuleTreeView view, ICalidusRuleProvider ruleProvider, ICalidusProject project)
-            : base(view, ruleProvider, project)
+        /// <param name="configFactory">The configuration factory to use</param>
+        public CheckableRuleTreeController(ICheckableRuleTreeView view, ICalidusRuleProvider ruleProvider, ICalidusRuleConfigurationFactory configFactory)
+            : base(view, ruleProvider, configFactory)
         {
         }
     }
