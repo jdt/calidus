@@ -83,17 +83,17 @@ namespace JDT.Calidus.UITest.Controllers
 
             TreeViewImp view = new TreeViewImp(rulesSorted);
             ICalidusRuleProvider ruleProvider = mocker.DynamicMock<ICalidusRuleProvider>();
-            ICalidusProject project = mocker.DynamicMock<ICalidusProject>();
+            ICalidusRuleConfigurationFactory configFactory = mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(ruleAlpha.Category).Return("Alpha").Repeat.Any();
             Expect.Call(ruleBravo.Category).Return("Bravo").Repeat.Any();
 
-            Expect.Call(ruleProvider.GetRules(project)).Return(rules).Repeat.Once();
+            Expect.Call(ruleProvider.GetRules(configFactory)).Return(rules).Repeat.Once();
             Expect.Call(() => view.DisplayRules(rulesSorted)).Repeat.Once();
             
             mocker.ReplayAll();
 
-            RuleTreeController controller = new RuleTreeController(view, ruleProvider, project);
+            RuleTreeController controller = new RuleTreeController(view, ruleProvider, configFactory);
 
             mocker.VerifyAll();
         }

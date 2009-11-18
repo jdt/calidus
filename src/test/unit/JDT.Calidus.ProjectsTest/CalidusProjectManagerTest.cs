@@ -23,7 +23,10 @@ using System.Text;
 using System.Xml;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Projects;
+using JDT.Calidus.Projects.SectionManagers;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -33,18 +36,23 @@ namespace JDT.Calidus.ProjectsTest
     public class CalidusProjectManagerTest
     {
         private CalidusProjectManager _manager;
+        private IRulesSectionManager _rulesSectionManager;
+
+        private MockRepository _mocker;
 
         [SetUp]
         public void SetUp()
         {
-            _manager = new CalidusProjectManager();
+            _mocker = new MockRepository();
+            _rulesSectionManager = _mocker.DynamicMock<IRulesSectionManager>();
+            
+            _manager = new CalidusProjectManager(_rulesSectionManager);
         }
 
         [Test]
         public void WriteShouldOnlyAllowWritersWritingUTF8()
         {
-            MockRepository mocker = new MockRepository();
-            ICalidusProject project = mocker.StrictMock<ICalidusProject>();
+            ICalidusProject project = _mocker.StrictMock<ICalidusProject>();
 
             Stream destination = new MemoryStream();
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -77,6 +85,8 @@ namespace JDT.Calidus.ProjectsTest
         [Test]
         public void WriteToShouldWriteXmlToDestination()
         {
+            IRule rule = _mocker.StrictMock<IRule>();
+
             StringBuilder bldr = new StringBuilder();
             bldr.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
             bldr.Append(@"<calidusproject>");
@@ -95,14 +105,15 @@ namespace JDT.Calidus.ProjectsTest
             fileList.Add(@"main\file1.cs");
             fileList.Add(@"test\testfile.cs");
 
-            MockRepository mocker = new MockRepository();
-            ICalidusProject project = mocker.StrictMock<ICalidusProject>();
+            ICalidusProject project = _mocker.StrictMock<ICalidusProject>();
             Expect.Call(project.IgnoreAssemblyFiles).Return(true).Repeat.Once();
             Expect.Call(project.IgnoreDesignerFiles).Return(false).Repeat.Once();
             Expect.Call(project.IgnoreProgramFiles).Return(true).Repeat.Once();
             Expect.Call(project.IgnoredFiles).Return(fileList).Repeat.Once();
 
-            mocker.ReplayAll();
+            Expect.Call(project.GetProjectRuleConfigurationOverrides()).Return(new IRuleConfigurationOverride[] {}).Repeat.Once();
+            
+            _mocker.ReplayAll();
 
             Stream destination = new MemoryStream();
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -116,7 +127,7 @@ namespace JDT.Calidus.ProjectsTest
 
             Assert.AreEqual(bldr.ToString(), reader.ReadToEnd());
 
-            mocker.VerifyAll();
+            _mocker.VerifyAll();
         }
 
         [Test]
@@ -139,15 +150,16 @@ namespace JDT.Calidus.ProjectsTest
             IList<String> fileList = new List<String>();
             fileList.Add(@"main\file1.cs");
             fileList.Add(@"test\testfile.cs");
-            
-            MockRepository mocker = new MockRepository();
-            ICalidusProject expected = mocker.StrictMock<ICalidusProject>();
+
+            ICalidusProject expected = _mocker.StrictMock<ICalidusProject>();
             Expect.Call(expected.IgnoreAssemblyFiles).Return(true).Repeat.Once();
             Expect.Call(expected.IgnoreDesignerFiles).Return(false).Repeat.Once();
             Expect.Call(expected.IgnoreProgramFiles).Return(true).Repeat.Once();
             Expect.Call(expected.IgnoredFiles).Return(fileList).Repeat.Once();
 
-            mocker.ReplayAll();
+            Expect.Call(_rulesSectionManager.ReadFrom(null)).IgnoreArguments().Return(new IRuleConfigurationOverride[]{}).Repeat.Once();
+
+            _mocker.ReplayAll();
 
             Stream source = new MemoryStream();
 
@@ -161,6 +173,27 @@ namespace JDT.Calidus.ProjectsTest
             Assert.AreEqual(expected.IgnoreDesignerFiles, actual.IgnoreDesignerFiles);
             Assert.AreEqual(expected.IgnoreProgramFiles, actual.IgnoreProgramFiles);
             CollectionAssert.AreEquivalent(expected.IgnoredFiles, actual.IgnoredFiles);
+
+            _mocker.VerifyAll();
+        }
+
+        [Test]
+        public void WriteShouldCallRulesSectionManagerToWriteRuleOverrides()
+        {
+            ICalidusProject project = _mocker.DynamicMock<ICalidusProject>();
+            IRuleConfigurationOverride config = _mocker.DynamicMock<IRuleConfigurationOverride>();
+
+            Expect.Call(project.IgnoredFiles).Return(new String[] {}).Repeat.Once();
+            Expect.Call(project.GetProjectRuleConfigurationOverrides()).Return(new[] { config }).Repeat.Once();
+            Expect.Call(() => _rulesSectionManager.WriteTo(new[] {config}, null)).IgnoreArguments().Repeat.Once();
+
+            _mocker.ReplayAll();
+
+            MemoryStream stream = new MemoryStream();
+            XmlWriter writer = XmlTextWriter.Create(stream);
+            _manager.WriteTo(project, writer);
+
+            _mocker.VerifyAll();
         }
     }
 }

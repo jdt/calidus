@@ -22,8 +22,6 @@ using System.Text;
 using JDT.Calidus.Common.Lines;
 using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 
 namespace JDT.Calidus.Rules.Lines
@@ -33,33 +31,24 @@ namespace JDT.Calidus.Rules.Lines
     /// </summary>
     public class LineRuleFactory : ILineRuleFactory
     {
-        private RuleFactory<LineRuleBase> _factory;
+        private RuleFactory _factory;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         public LineRuleFactory()
         {
-            _factory = new RuleFactory<LineRuleBase>(GetType().Assembly);
+            _factory = new RuleFactory(GetType().Assembly);
         }
 
         /// <summary>
         /// Gets the list of line rules in the specified project
         /// </summary>
-        /// <param name="project">The project to use</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project)
+        public IEnumerable<LineRuleBase> GetLineRules(ICalidusRuleConfigurationFactory configFactory)
         {
-            return _factory.GetLineRules(project);
-        }
-
-        /// <summary>
-        /// Gets the configuration factory that provides configuration information for the line rules in this factory
-        /// </summary>
-        /// <returns></returns>
-        public IRuleConfigurationFactory GetConfigurationFactory()
-        {
-            return _factory.GetConfigurationFactory();
+            return _factory.GetLineRules(configFactory);
         }
     }
 }

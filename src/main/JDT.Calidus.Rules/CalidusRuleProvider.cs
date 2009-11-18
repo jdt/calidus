@@ -22,12 +22,9 @@ using System.Text;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Blocks;
 using JDT.Calidus.Common.Lines;
-using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
@@ -43,15 +40,12 @@ namespace JDT.Calidus.Rules
         private IBlockRuleFactoryProvider _blockRuleProvider;
         private ILineRuleFactoryProvider _lineRuleProvider;
 
-        private IDictionary<StatementRuleBase, IRuleConfigurationFactory> _statementRules;
-        private IDictionary<BlockRuleBase, IRuleConfigurationFactory> _blockRules;
-        private IDictionary<LineRuleBase, IRuleConfigurationFactory> _lineRules;
-
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="statementRuleProvider">The statement rule provider to use</param>
         /// <param name="blockRuleProvider">The block rule provider to use</param>
+        /// <param name="lineRuleProvider">The line rule provider to use</param>
         public CalidusRuleProvider(IStatementRuleFactoryProvider statementRuleProvider, 
             IBlockRuleFactoryProvider blockRuleProvider,
             ILineRuleFactoryProvider lineRuleProvider
@@ -73,19 +67,19 @@ namespace JDT.Calidus.Rules
         /// <summary>
         /// Gets a list of all the rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<IRule> GetRules(ICalidusProject project)
+        public IEnumerable<IRule> GetRules(ICalidusRuleConfigurationFactory configFactory)
         {
             IList<IRule> rules = new List<IRule>();
 
-            foreach (StatementRuleBase aRule in GetStatementRules(project))
+            foreach (StatementRuleBase aRule in GetStatementRules(configFactory))
                 rules.Add(aRule);
 
-            foreach (BlockRuleBase aRule in GetBlockRules(project))
+            foreach (BlockRuleBase aRule in GetBlockRules(configFactory))
                 rules.Add(aRule);
 
-            foreach (LineRuleBase aRule in GetLineRules(project))
+            foreach (LineRuleBase aRule in GetLineRules(configFactory))
                 rules.Add(aRule);
 
             return rules;
@@ -94,133 +88,61 @@ namespace JDT.Calidus.Rules
         /// <summary>
         /// Gets a  list of all statement rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project)
+        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusRuleConfigurationFactory configFactory)
         {
-            LoadStatementRules(project);
-            return _statementRules.Keys.ToList();
+            IList<StatementRuleBase> statementRules = new List<StatementRuleBase>();
+
+            foreach (IStatementRuleFactory aFactory in _statementRuleProvider.GetStatementRuleFactories())
+            {
+                foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules(configFactory))
+                {
+                    statementRules.Add(aStatementRule);
+                }
+            }
+
+            return statementRules;
         }
 
         /// <summary>
         /// Gets a list of all block rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project)
+        public IEnumerable<BlockRuleBase> GetBlockRules(ICalidusRuleConfigurationFactory configFactory)
         {
-            LoadBlockRules(project);
-            return _blockRules.Keys.ToList();
+            List<BlockRuleBase> blockRules = new List<BlockRuleBase>();
+
+            foreach (IBlockRuleFactory aFactory in _blockRuleProvider.GetBlockRuleFactories())
+            {
+                foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules(configFactory))
+                {
+                    blockRules.Add(aBlockRule);
+                }
+            }
+
+            return blockRules;
         }
 
         /// <summary>
         /// Gets a list of all line rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project)
+        public IEnumerable<LineRuleBase> GetLineRules(ICalidusRuleConfigurationFactory configFactory)
         {
-            LoadLineRules(project);
-            return _lineRules.Keys.ToList();
-        }
+            List<LineRuleBase> lineRules = new List<LineRuleBase>();
 
-        /// <summary>
-        /// Gets the configuration information for the specified rule for the specified project
-        /// </summary>
-        /// <param name="rule">The rule</param>
-        /// <param name="project">The project to get the rules for</param>
-        /// <returns>The configuration</returns>
-        public IRuleConfiguration GetConfigurationFor(IRule rule, ICalidusProject project)
-        {
-            //check overrides first
-            IRuleConfiguration config = project.GetProjectRuleConfigurations().FirstOrDefault<IRuleConfiguration>(p => p.Rule.Equals(rule.GetType()));
-            if (config != null)
-                return config;
-
-            Type ruleType = rule.GetType();
-
-            if (ruleType.IsSubclassOf(typeof(StatementRuleBase)))
+            foreach (ILineRuleFactory aFactory in _lineRuleProvider.GetLineRuleFactories())
             {
-                LoadStatementRules(project);
-                foreach (StatementRuleBase aRule in _statementRules.Keys)
+                foreach (LineRuleBase aLineRule in aFactory.GetLineRules(configFactory))
                 {
-                    if (aRule.GetType().Equals(ruleType))
-                        return _statementRules[aRule].Get(ruleType);
+                    lineRules.Add(aLineRule);
                 }
             }
 
-            if (ruleType.IsSubclassOf(typeof(BlockRuleBase)))
-            {
-                LoadBlockRules(project);
-                foreach (BlockRuleBase aRule in _blockRules.Keys)
-                {
-                    if (aRule.GetType().Equals(ruleType))
-                        return _blockRules[aRule].Get(ruleType);
-                }
-            }
-
-            if (ruleType.IsSubclassOf(typeof(LineRuleBase)))
-            {
-                LoadLineRules(project);
-                foreach (LineRuleBase aRule in _lineRules.Keys)
-                {
-                    if (aRule.GetType().Equals(ruleType))
-                        return _lineRules[aRule].Get(ruleType);
-                }
-            }
-
-            throw new CalidusException("Cannot find an appropriate IRuleConfigurationFactory for the supplied rule type " + ruleType.FullName);
-        }
-
-        private void LoadStatementRules(ICalidusProject project)
-        {
-            if (_statementRules == null)
-            {
-                _statementRules = new Dictionary<StatementRuleBase, IRuleConfigurationFactory>();
-
-                foreach (IStatementRuleFactory aFactory in _statementRuleProvider.GetStatementRuleFactories())
-                {
-                    IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (StatementRuleBase aStatementRule in aFactory.GetStatementRules(project))
-                    {
-                        _statementRules.Add(aStatementRule, configFactory);
-                    }
-                }
-            }
-        }
-
-        private void LoadBlockRules(ICalidusProject project)
-        {
-            if (_blockRules == null)
-            {
-                _blockRules = new Dictionary<BlockRuleBase, IRuleConfigurationFactory>();
-
-                foreach (IBlockRuleFactory aFactory in _blockRuleProvider.GetBlockRuleFactories())
-                {
-                    IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (BlockRuleBase aBlockRule in aFactory.GetBlockRules(project))
-                    {
-                        _blockRules.Add(aBlockRule, configFactory);
-                    }
-                }
-            }
-        }
-
-        private void LoadLineRules(ICalidusProject project)
-        {
-            if (_lineRules == null)
-            {
-                _lineRules = new Dictionary<LineRuleBase, IRuleConfigurationFactory>();
-
-                foreach (ILineRuleFactory aFactory in _lineRuleProvider.GetLineRuleFactories())
-                {
-                    IRuleConfigurationFactory configFactory = aFactory.GetConfigurationFactory();
-                    foreach (LineRuleBase aLineRule in aFactory.GetLineRules(project))
-                    {
-                        _lineRules.Add(aLineRule, configFactory);
-                    }
-                }
-            }
+            return lineRules;
         }
     }
 }

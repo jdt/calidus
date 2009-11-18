@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 
 namespace JDT.Calidus.Common.Projects
@@ -65,11 +66,11 @@ namespace JDT.Calidus.Common.Projects
         /// Gets the list of rule configurations that were changed from the defaults 
         /// </summary>
         /// <returns>The list of configurations</returns>
-        IEnumerable<IRuleConfiguration> GetProjectRuleConfigurations();
+        IEnumerable<IRuleConfigurationOverride> GetProjectRuleConfigurationOverrides();
         /// <summary>
-        /// Sets a rule configuration
+        /// Sets a rule configuration override
         /// </summary>
-        /// <param name="config">The configuration to set</param>
-        void SetProjectRuleConfigurationTo(IRuleConfiguration config);
+        /// <param name="overrideConfig">The override config</param>
+        void SetProjectRuleConfigurationOverrideTo(IRuleConfigurationOverride overrideConfig);
     }
 }

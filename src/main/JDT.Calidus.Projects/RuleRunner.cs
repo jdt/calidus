@@ -46,8 +46,9 @@ namespace JDT.Calidus.Projects
         /// <summary>
         /// Starts the runner
         /// </summary>
+        /// <param name="configFactory">The configuration factory</param>
         /// <param name="project">The project to run against</param>
-        public void Run(ICalidusProject project)
+        public void Run(ICalidusRuleConfigurationFactory configFactory, ICalidusProject project)
         {
             //raise started
             if (Started != null)
@@ -77,7 +78,7 @@ namespace JDT.Calidus.Projects
 
                 IList<RuleViolation> currentFileViolations = new List<RuleViolation>();
 
-                foreach (StatementRuleBase aStatementRule in ruleProvider.GetStatementRules(project))
+                foreach (StatementRuleBase aStatementRule in ruleProvider.GetStatementRules(configFactory))
                 {
                     foreach (StatementBase aStatement in parsedStatements)
                     {
@@ -89,7 +90,7 @@ namespace JDT.Calidus.Projects
                     }
                 }
 
-                foreach (BlockRuleBase aBlockRule in ruleProvider.GetBlockRules(project))
+                foreach (BlockRuleBase aBlockRule in ruleProvider.GetBlockRules(configFactory))
                 {
                     foreach (BlockBase aBlock in parsedBlocks)
                     {
@@ -101,7 +102,7 @@ namespace JDT.Calidus.Projects
                     }
                 }
 
-                foreach (LineRuleBase aLineRule in ruleProvider.GetLineRules(project))
+                foreach (LineRuleBase aLineRule in ruleProvider.GetLineRules(configFactory))
                 {
                     foreach (LineBase aLine in parsedLines)
                     {

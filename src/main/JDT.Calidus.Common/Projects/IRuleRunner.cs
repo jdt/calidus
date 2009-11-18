@@ -17,6 +17,7 @@
 
 using System;
 using JDT.Calidus.Common.Projects.Events;
+using JDT.Calidus.Common.Rules;
 
 namespace JDT.Calidus.Common.Projects
 {
@@ -24,8 +25,13 @@ namespace JDT.Calidus.Common.Projects
     /// This interface is implemented by rule runners
     /// </summary>
     public interface IRuleRunner
-    {
-        void Run(ICalidusProject project);
+    {        
+        /// <summary>
+        /// Starts the runner
+        /// </summary>
+        /// <param name="configFactory">The configuration factory</param>
+        /// <param name="project">The project to run against</param>
+        void Run(ICalidusRuleConfigurationFactory configFactory, ICalidusProject project);
         /// <summary>
         /// This event is raised upon completion of the runner
         /// </summary>

@@ -43,18 +43,5 @@ namespace JDT.Calidus.Rules.Blocks
         {
             return XmlReader.Create(_file);
         }
-
-        /// <summary>
-        /// Gets a writer for an xml-based configuration file
-        /// </summary>
-        /// <returns>A writer</returns>
-        protected override XmlWriter GetWriter()
-        {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
-
-            return XmlWriter.Create(_file, settings);
-        }
     }
 }

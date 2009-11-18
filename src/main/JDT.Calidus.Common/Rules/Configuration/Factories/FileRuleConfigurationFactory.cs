@@ -46,26 +46,20 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                 LoadDocumentContent();
 
             return _configList[type.FullName];
-        }
+        }    
         
         /// <summary>
-        /// Adds or updates a configuration in the factory
+        /// Gets if the configuration for the specified type is contained in this configuration factory
         /// </summary>
-        /// <param name="ruleConfig">The configuration</param>
-        public void Set(IRuleConfiguration ruleConfig)
+        /// <param name="type">The type to check for</param>
+        /// <returns>True if can be retrieved, otherwise false</returns>
+        public bool Has(Type type)
         {
             if (_doc == null)
                 LoadDocumentContent();
 
-            _configList[ruleConfig.Rule.FullName] = ruleConfig;
-            WriteDocumentContent();
+            return _configList.ContainsKey(type.FullName);
         }
-
-        /// <summary>
-        /// Gets an Xml writer to use to write the configuration information to
-        /// </summary>
-        /// <returns>The writer</returns>
-        protected abstract XmlWriter GetWriter();
 
         /// <summary>
         /// Gets an Xml reader to use to read the configuration information from
@@ -105,45 +99,6 @@ namespace JDT.Calidus.Common.Rules.Configuration.Factories
                 {
                     _configList.Add(w.Rule.FullName, w);
                 }
-            }
-
-            private void WriteDocumentContent()
-            {
-                //clear all rules
-                //remember to use ToList, see http://msdn.microsoft.com/en-us/library/bb387088.aspx
-                foreach (XElement aRule in _doc.Root.Elements().ToList())
-                    aRule.Remove();
-
-                //and rewrite
-                foreach (IRuleConfiguration aConfiguration in _configList.Values)
-                {
-                    String fullAssembly = aConfiguration.Rule.Assembly.FullName;
-                    String assembly = fullAssembly.Substring(0, fullAssembly.IndexOf(" ") - 1);
-
-                    XElement ruleElement = new XElement("rule", new XAttribute("type", aConfiguration.Rule.FullName + ", " + assembly));
-                    XElement descriptionElement = new XElement("description", aConfiguration.Description);
-
-                    //write parameters
-                    XElement parametersElement = new XElement("params");
-                    foreach (IRuleConfigurationParameter param in aConfiguration.Parameters)
-                    {
-                        XElement paramElement = new XElement("param", param.Value);
-                        paramElement.Add(new XAttribute("name", param.Name));
-                        paramElement.Add(new XAttribute("type", param.ParameterType.ToString()));
-
-                        parametersElement.Add(paramElement);
-                    }
-
-                    ruleElement.Add(descriptionElement);
-                    ruleElement.Add(parametersElement);
-
-                    _doc.Root.Add(ruleElement);
-                }
-
-                XmlWriter writer = GetWriter();
-                _doc.Save(writer);
-                writer.Flush();
-                writer.Close();
             }
         
             private object GetValueAsType(ParameterType parameterType, String value)

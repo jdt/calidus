@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using JDT.Calidus.GUI.Controls;
+using JDT.Calidus.Projects;
 using JDT.Calidus.UI.Model;
 using JDT.Calidus.UI.Views;
 using JDT.Calidus.UI.Events;
@@ -179,7 +180,7 @@ namespace JDT.Calidus.GUI
         /// <param name="model">The model to display for</param>
         public void ShowRuleConfiguration(ICalidusProjectModel model)
         {
-            RuleConfigurationWindow win = new RuleConfigurationWindow(model);
+            RuleConfigurationWindow win = new RuleConfigurationWindow(model, new CalidusProjectManager());
             win.ShowDialog(this);
         }
 

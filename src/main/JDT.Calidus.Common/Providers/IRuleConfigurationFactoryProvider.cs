@@ -19,27 +19,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Rules.Configuration;
+using JDT.Calidus.Common.Rules.Configuration.Factories;
 
-namespace JDT.Calidus.UI.Commands
+namespace JDT.Calidus.Common.Providers
 {
     /// <summary>
-    /// This class represents a command event for rule configuration changes
+    /// This class is implemented by providers of rule configuration factories
     /// </summary>
-    public class RuleConfigurationChangeCommandEventArgs : EventArgs
+    public interface IRuleConfigurationFactoryProvider
     {
         /// <summary>
-        /// Creates a new instance of this class
+        /// Gets the rule configuration factory for the specified rule type
         /// </summary>
-        /// <param name="valueMap">The value map</param>
-        public RuleConfigurationChangeCommandEventArgs(IDictionary<IRuleConfigurationParameter, Object> valueMap)
-        {
-            ValueMap = valueMap;
-        }
-
-        /// <summary>
-        /// Get the configuration parameter object value map
-        /// </summary>
-        public IDictionary<IRuleConfigurationParameter, Object> ValueMap { get; private set; }
+        /// <param name="aType">The rule type</param>
+        /// <returns>The configuration factory if found or null if not found</returns>
+        IRuleConfigurationFactory GetRuleConfigurationFactoryFor(Type aType);
     }
 }

@@ -197,14 +197,13 @@ namespace JDT.Calidus.GUI.Views
 
             private void cmdSave_Click(object sender, EventArgs e)
             {
-                String desc = txtDescription.Text;
                 IDictionary<IRuleConfigurationParameter, Object> valueMap = new Dictionary<IRuleConfigurationParameter, Object>();
                 foreach (String aParameterName in _currentRuleParameterControl.Keys)
                 {
                     valueMap.Add(_currentParameters[aParameterName], _currentRuleParameterControl[aParameterName].GetValue());
                 }
 
-                RuleConfigurationChangeCommandEventArgs args = new RuleConfigurationChangeCommandEventArgs(desc, valueMap);
+                RuleConfigurationChangeCommandEventArgs args = new RuleConfigurationChangeCommandEventArgs(valueMap);
                 OnSave(args);
             }
 

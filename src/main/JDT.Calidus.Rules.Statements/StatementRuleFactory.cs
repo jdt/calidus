@@ -19,11 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common;
-using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Common.Statements;
 
@@ -34,33 +30,24 @@ namespace JDT.Calidus.Rules.Statements
     /// </summary>
     public class StatementRuleFactory : IStatementRuleFactory
     {
-        private RuleFactory<StatementRuleBase> _factory;
+        private RuleFactory _factory;
 
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
         public StatementRuleFactory()
         {
-            _factory = new RuleFactory<StatementRuleBase>(GetType().Assembly);
+            _factory = new RuleFactory(GetType().Assembly);
         }
 
         /// <summary>
         /// Gets the list of statement rules in the specified project
         /// </summary>
-        /// <param name="project">The project the rules are in</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project)
+        public IEnumerable<StatementRuleBase> GetStatementRules(ICalidusRuleConfigurationFactory configFactory)
         {
-            return _factory.GetStatementRules(project);
-        }
-
-        /// <summary>
-        /// Gets the configuration factory that provides configuration information for the statement rules in this factory
-        /// </summary>
-        /// <returns></returns>
-        public IRuleConfigurationFactory GetConfigurationFactory()
-        {
-            return _factory.GetConfigurationFactory();
+            return _factory.GetStatementRules(configFactory);
         }
     }
 }

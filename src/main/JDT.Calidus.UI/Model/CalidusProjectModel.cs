@@ -147,18 +147,18 @@ namespace JDT.Calidus.UI.Model
             /// Gets the list of rule configurations that were changed from the defaults 
             /// </summary>
             /// <returns>The list of configurations</returns>
-            public IEnumerable<IRuleConfiguration> GetProjectRuleConfigurations()
+            public IEnumerable<IRuleConfigurationOverride> GetProjectRuleConfigurationOverrides()
             {
-                return _project.GetProjectRuleConfigurations();
+                return _project.GetProjectRuleConfigurationOverrides();
             }
 
             /// <summary>
-            /// Sets a rule configuration
+            /// Sets a rule configuration override
             /// </summary>
-            /// <param name="config">The configuration to set</param>
-            public void SetProjectRuleConfigurationTo(IRuleConfiguration config)
+            /// <param name="overrideConfig">The override config</param>
+            public void SetProjectRuleConfigurationOverrideTo(IRuleConfigurationOverride overrideConfig)
             {
-                _project.SetProjectRuleConfigurationTo(config);
+                _project.SetProjectRuleConfigurationOverrideTo(overrideConfig);
             }
 
         #endregion

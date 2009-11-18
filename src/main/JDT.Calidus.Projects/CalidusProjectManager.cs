@@ -24,7 +24,9 @@ using System.Xml;
 using System.Xml.Linq;
 using JDT.Calidus.Common;
 using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Projects.Providers;
+using JDT.Calidus.Projects.SectionManagers;
 
 namespace JDT.Calidus.Projects
 {
@@ -33,6 +35,25 @@ namespace JDT.Calidus.Projects
     /// </summary>
     public class CalidusProjectManager : ICalidusProjectManager
     {
+        private IRulesSectionManager _rulesSectionManager;
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        public CalidusProjectManager()
+            : this(ObjectFactory.Get<IRulesSectionManager>())
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="rulesSectionManager">The rules section manager to use</param>
+        public CalidusProjectManager(IRulesSectionManager rulesSectionManager)
+        {
+            _rulesSectionManager = rulesSectionManager;
+        }
+
         /// <summary>
         /// Writes the calidus project to the specified xml writer
         /// </summary>
@@ -67,8 +88,9 @@ namespace JDT.Calidus.Projects
                 XElement file = new XElement("file", new XAttribute("path", aFile));
                 ignores.Add(file);
             }
-
             root.Add(ignores);
+
+            _rulesSectionManager.WriteTo(project.GetProjectRuleConfigurationOverrides(), root);
 
             //write document to file
             doc.Add(root);
@@ -103,6 +125,11 @@ namespace JDT.Calidus.Projects
             foreach(XElement ignoredFile in ignored.Elements())
             {
                 res.IgnoredFileList.Add(ignoredFile.Attribute("path").Value);
+            }
+
+            foreach(IRuleConfigurationOverride anOverride in _rulesSectionManager.ReadFrom(_doc))
+            {
+                res.SetProjectRuleConfigurationOverrideTo(anOverride);
             }
 
             reader.Close();

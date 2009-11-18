@@ -19,8 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Projects;
-using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Views;
 using JDT.Calidus.Common.Rules;
 
@@ -33,21 +31,21 @@ namespace JDT.Calidus.UI.Controllers
     {
         private IRuleTreeView _view;
         private ICalidusRuleProvider _ruleProvider;
-        private ICalidusProject _project;
+        private ICalidusRuleConfigurationFactory _configFactory;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
         /// <param name="view">The view to use</param>
         /// <param name="ruleProvider">The rule provider to use</param>
-        /// <param name="project">The project</param>
-        public RuleTreeController(IRuleTreeView view, ICalidusRuleProvider ruleProvider, ICalidusProject project)
+        /// <param name="configFactory">The configuration factory</param>
+        public RuleTreeController(IRuleTreeView view, ICalidusRuleProvider ruleProvider, ICalidusRuleConfigurationFactory configFactory)
         {
             _view = view;
             _ruleProvider = ruleProvider;
-            _project = project;
+            _configFactory = configFactory;
 
-            IEnumerable<IRule> rules = _ruleProvider.GetRules(_project);
+            IEnumerable<IRule> rules = _ruleProvider.GetRules(_configFactory);
             _view.DisplayRules(rules.OrderBy(p => p.Category));
         }
     }

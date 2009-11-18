@@ -50,6 +50,7 @@
     <Compile Include="LineFactoryProviders\AssemblyBasedLineFactoryProvider.cs" />
     <Compile Include="LineRuleFactoryProviders\AssemblyBasedStatementRuleFactoryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleConfigurationFactoryProviders\AssemblyBasedRuleConfigurationFactoryProvider.cs" />
     <Compile Include="StatementFactoryProviders\AssemblyBasedStatementFactoryProvider.cs" />
     <Compile Include="StatementFactoryProviders\DefaultStatementFactoryProvider.cs" />
     <Compile Include="StatementRuleFactoryProviders\AssemblyBasedStatementRuleFactoryProvider.cs" />

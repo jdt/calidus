@@ -23,6 +23,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Rules;
 using JDT.Calidus.UI.Controllers;
 using JDT.Calidus.UI.Model;
@@ -31,19 +33,21 @@ namespace JDT.Calidus.GUI
 {
     public partial class RuleConfigurationWindow : Form
     {
-        private CalidusRuleProvider _provider;
+        private ICalidusRuleProvider _provider;
+        private ICalidusRuleConfigurationFactory _configurationFactory;
 
         public RuleConfigurationWindow()
         {
             InitializeComponent();
         }
 
-        public RuleConfigurationWindow(ICalidusProjectModel project)
+        public RuleConfigurationWindow(ICalidusProjectModel project, ICalidusProjectManager manager)
         {
             InitializeComponent();
             _provider = new CalidusRuleProvider();
+            _configurationFactory = new CalidusRuleConfigurationFactory(project, manager);
 
-            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider, project);
+            RuleConfigurationController controller = new RuleConfigurationController(ruleConfigurationView, _provider, _configurationFactory);
         }
     }
 }

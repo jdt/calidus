@@ -19,9 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Projects;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Statements;
 
 namespace JDT.Calidus.Common.Statements
@@ -34,13 +32,8 @@ namespace JDT.Calidus.Common.Statements
         /// <summary>
         /// Gets the list of statement rules in the specified project
         /// </summary>
-        /// <param name="project">The project the rules are in</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project);
-        /// <summary>
-        /// Gets the configuration factory that provides configuration information for the statement rules in this factory
-        /// </summary>
-        /// <returns></returns>
-        IRuleConfigurationFactory GetConfigurationFactory();
+        IEnumerable<StatementRuleBase> GetStatementRules(ICalidusRuleConfigurationFactory configFactory);
     }
 }

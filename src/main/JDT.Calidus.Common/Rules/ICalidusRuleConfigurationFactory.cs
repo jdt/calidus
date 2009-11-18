@@ -21,25 +21,23 @@ using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules.Configuration;
 
-namespace JDT.Calidus.UI.Commands
+namespace JDT.Calidus.Common.Rules
 {
     /// <summary>
-    /// This class represents a command event for rule configuration changes
+    /// This interface is implemented by Calidus rule configuration factories
     /// </summary>
-    public class RuleConfigurationChangeCommandEventArgs : EventArgs
+    public interface ICalidusRuleConfigurationFactory
     {
         /// <summary>
-        /// Creates a new instance of this class
+        /// Gets the configuration for the specified rule type
         /// </summary>
-        /// <param name="valueMap">The value map</param>
-        public RuleConfigurationChangeCommandEventArgs(IDictionary<IRuleConfigurationParameter, Object> valueMap)
-        {
-            ValueMap = valueMap;
-        }
-
+        /// <param name="aType">The rule type</param>
+        /// <returns>The rule configuration</returns>
+        IRuleConfiguration GetRuleConfigurationFor(Type aType);
         /// <summary>
-        /// Get the configuration parameter object value map
+        /// Sets the configuration override
         /// </summary>
-        public IDictionary<IRuleConfigurationParameter, Object> ValueMap { get; private set; }
+        /// <param name="overrideConfig">The configuration to set</param>
+        void SetRuleConfiguration(IRuleConfigurationOverride overrideConfig);
     }
 }

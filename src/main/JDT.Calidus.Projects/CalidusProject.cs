@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Projects;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Projects.Providers;
 
@@ -36,7 +37,7 @@ namespace JDT.Calidus.Projects
 
         private String _file;
 
-        private IList<IRuleConfiguration> _ruleConfigurations;
+        private IList<IRuleConfigurationOverride> _ruleConfigurations;
 
         /// <summary>
         /// Creates a new instance of this class
@@ -54,7 +55,7 @@ namespace JDT.Calidus.Projects
             IgnoreProgramFiles = true;
 
             _ignoredFiles = new List<String>();
-            _ruleConfigurations = new List<IRuleConfiguration>();
+            _ruleConfigurations = new List<IRuleConfigurationOverride>();
         }
 
         /// <summary>
@@ -65,8 +66,7 @@ namespace JDT.Calidus.Projects
             : this(projectFile, new FolderBasedSourceFileProvider(Path.GetDirectoryName(projectFile)))
         {
         }
-
-
+        
         /// <summary>
         /// Get the project file
         /// </summary>
@@ -170,22 +170,22 @@ namespace JDT.Calidus.Projects
         /// Gets the list of rule configurations that were changed from the defaults 
         /// </summary>
         /// <returns>The list of configurations</returns>
-        public IEnumerable<IRuleConfiguration> GetProjectRuleConfigurations()
+        public IEnumerable<IRuleConfigurationOverride> GetProjectRuleConfigurationOverrides()
         {
             return _ruleConfigurations;
         }
 
         /// <summary>
-        /// Sets a rule configuration
+        /// Sets a rule configuration override
         /// </summary>
-        /// <param name="config">The configuration to set</param>
-        public void SetProjectRuleConfigurationTo(IRuleConfiguration config)
+        /// <param name="overrideConfig">The override config</param>
+        public void SetProjectRuleConfigurationOverrideTo(IRuleConfigurationOverride overrideConfig)
         {
-            IRuleConfiguration exisitingConfig = _ruleConfigurations.FirstOrDefault<IRuleConfiguration>(p => p.Rule.GetType().Equals(config.Rule.GetType()));
+            IRuleConfigurationOverride exisitingConfig = _ruleConfigurations.FirstOrDefault<IRuleConfigurationOverride>(p => p.Rule.AssemblyQualifiedName.Equals(overrideConfig.Rule.AssemblyQualifiedName));
             if (exisitingConfig != null)
                 _ruleConfigurations.Remove(exisitingConfig);
 
-            _ruleConfigurations.Add(config);
+            _ruleConfigurations.Add(overrideConfig);
         }
     }
 }

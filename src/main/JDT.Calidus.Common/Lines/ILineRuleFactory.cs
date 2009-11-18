@@ -19,9 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Projects;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
+using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Lines;
 
 namespace JDT.Calidus.Common.Lines
@@ -34,13 +32,8 @@ namespace JDT.Calidus.Common.Lines
         /// <summary>
         /// Gets the list of line rules in the specified project
         /// </summary>
-        /// <param name="project">The project to use</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project);
-        /// <summary>
-        /// Gets the configuration factory that provides configuration information for the line rules in this factory
-        /// </summary>
-        /// <returns></returns>
-        IRuleConfigurationFactory GetConfigurationFactory();
+        IEnumerable<LineRuleBase> GetLineRules(ICalidusRuleConfigurationFactory configFactory);
     }
 }

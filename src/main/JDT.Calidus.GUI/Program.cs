@@ -30,6 +30,8 @@ namespace JDT.Calidus.GUI
                 //build main objects
                 CalidusProjectManager projectManager = new CalidusProjectManager();
                 CalidusProjectModel project = new CalidusProjectModel(projectManager.ReadFrom(win.SelectedProjectFile));
+                CalidusRuleConfigurationFactory configFactory = new CalidusRuleConfigurationFactory(project, projectManager);
+                
                 RuleRunner runner = new RuleRunner();
                 RuleViolationList violationList = new RuleViolationList();
                 
@@ -40,10 +42,10 @@ namespace JDT.Calidus.GUI
                 MainController c = new MainController(mainView, project, win.IsNewProject, projectManager, runner, violationList);
 
                 ViolationListController violationListController = new ViolationListController(mainView.ViolationListView, project, violationList);
-                CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(mainView.CheckableRuleTreeView, new CalidusRuleProvider(), project);
+                CheckableRuleTreeController checkableRuleListController = new CheckableRuleTreeController(mainView.CheckableRuleTreeView, new CalidusRuleProvider(), configFactory);
                 FileTreeController fileListController = new FileTreeController(mainView.FileListView, project);
                 SourceLocationController sourceLocationController = new SourceLocationController(mainView.SourceLocationView, project);
-                RuleRunnerController ruleRunnerController = new RuleRunnerController(mainView.RuleRunnerView, runner, project);
+                RuleRunnerController ruleRunnerController = new RuleRunnerController(mainView.RuleRunnerView, runner, project, configFactory);
                 StatusController statusController = new StatusController(mainView.StatusView, violationList);
 
                 //run application

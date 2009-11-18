@@ -19,8 +19,6 @@ using System;
 using System.Collections.Generic;
 using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Common.Rules.Lines;
 using JDT.Calidus.Common.Rules.Statements;
 
@@ -34,33 +32,26 @@ namespace JDT.Calidus.Common.Rules
         /// <summary>
         /// Gets a list of all block rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        IEnumerable<BlockRuleBase> GetBlockRules(ICalidusProject project);
-        /// <summary>
-        /// Gets a list of all line rules with settings for the specified project
-        /// </summary>
-        /// <param name="project">The project to get the rules for</param>
-        /// <returns>The rules</returns>
-        IEnumerable<LineRuleBase> GetLineRules(ICalidusProject project);
+        IEnumerable<BlockRuleBase> GetBlockRules(ICalidusRuleConfigurationFactory configFactory);
         /// <summary>
         /// Gets a  list of all statement rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        IEnumerable<StatementRuleBase> GetStatementRules(ICalidusProject project);
+        IEnumerable<StatementRuleBase> GetStatementRules(ICalidusRuleConfigurationFactory configFactory);
+        /// <summary>
+        /// Gets a list of all line rules with settings for the specified project
+        /// </summary>
+        /// <param name="configFactory">The configuration factory to use</param>
+        /// <returns>The rules</returns>
+        IEnumerable<LineRuleBase> GetLineRules(ICalidusRuleConfigurationFactory configFactory);
         /// <summary>
         /// Gets a list of all the rules with settings for the specified project
         /// </summary>
-        /// <param name="project">The project to get the rules for</param>
+        /// <param name="configFactory">The configuration factory to use</param>
         /// <returns>The rules</returns>
-        IEnumerable<IRule> GetRules(ICalidusProject project);
-        /// <summary>
-        /// Gets the configuration information for the specified rule for the specified project
-        /// </summary>
-        /// <param name="rule">The rule</param>
-        /// <param name="project">The project to get the rules for</param>
-        /// <returns>The configuration</returns>
-        IRuleConfiguration GetConfigurationFor(IRule rule, ICalidusProject project);
+        IEnumerable<IRule> GetRules(ICalidusRuleConfigurationFactory configFactory);
     }
 }

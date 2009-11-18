@@ -58,6 +58,8 @@
     <Compile Include="Providers\FolderBasedSourceFileProvider.cs" />
     <Compile Include="Providers\ISourceFileProvider.cs" />
     <Compile Include="RuleRunner.cs" />
+    <Compile Include="SectionManagers\IRulesSectionManager.cs" />
+    <Compile Include="SectionManagers\RulesSectionManager.cs" />
     <Compile Include="Util\IDEFileOpener.cs" />
   </ItemGroup>
   <ItemGroup>

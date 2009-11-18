@@ -18,5 +18,9 @@
     <component id="IStatementContextManager" type="JDT.Calidus.Parsers.Statements.StatementContextManager, JDT.Calidus.Parsers" />
 
     <component id="IInstanceCreator" type="JDT.Calidus.Common.Util.ActivatorBasedInstanceCreator, JDT.Calidus.Common" />
+
+    <component id="IRuleConfigurationFactoryProvider" type="JDT.Calidus.Providers.RuleConfigurationFactoryProviders.AssemblyBasedRuleConfigurationFactoryProvider, JDT.Calidus.Providers" />
+
+    <component id="IRulesSectionManager" type="JDT.Calidus.Projects.SectionManagers.RulesSectionManager, JDT.Calidus.Projects" />
   </components>
 </castle>
