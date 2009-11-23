@@ -32,9 +32,9 @@ namespace JDT.Calidus.Statements.Factories.Common
     /// </summary>
     public class OpenBlockStatementFactory : FluentStatementFactory<OpenBlockStatement>
     {
-        protected override OpenBlockStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override OpenBlockStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new OpenBlockStatement(input);
+            return new OpenBlockStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

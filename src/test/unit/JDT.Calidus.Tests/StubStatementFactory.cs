@@ -28,7 +28,7 @@ namespace JDT.Calidus.Tests
     {
         public StatementBase Create(IEnumerable<TokenBase> tokenList, IStatementContext context)
         {
-            return new GenericStatement(tokenList);
+            return new GenericStatement(tokenList, context);
         }
 
         public bool CanCreateStatementFrom(IEnumerable<TokenBase> tokenList, IStatementContext context)

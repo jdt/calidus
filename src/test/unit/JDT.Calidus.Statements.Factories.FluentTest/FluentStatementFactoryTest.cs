@@ -38,7 +38,7 @@ namespace JDT.Calidus.Statements.Factories.FluentTest
             ExpressionResult = expressionResult;
         }
 
-        protected override StubStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override StubStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
             throw new NotImplementedException();
         }

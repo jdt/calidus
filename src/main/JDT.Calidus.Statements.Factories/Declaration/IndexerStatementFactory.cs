@@ -35,9 +35,9 @@ namespace JDT.Calidus.Statements.Factories.Declaration
     /// </summary>
     public class IndexerStatementFactory : FluentStatementFactory<IndexerStatement>
     {
-        protected override IndexerStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override IndexerStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new IndexerStatement(input);
+            return new IndexerStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Common.Tokens;
 
 namespace JDT.Calidus.Statements.Declaration
@@ -32,8 +33,9 @@ namespace JDT.Calidus.Statements.Declaration
         /// Create a new instance of this class
         /// </summary>
         /// <param name="tokens">The list of tokens in the statement</param>
-        public IndexerStatement(IEnumerable<TokenBase> tokens)
-            : base(tokens)
+        /// <param name="context">The statement context</param>
+        public IndexerStatement(IEnumerable<TokenBase> tokens, IStatementContext context)
+            : base(tokens, context)
         {
         }
     }

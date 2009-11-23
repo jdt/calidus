@@ -32,9 +32,9 @@ namespace JDT.Calidus.Statements.Factories.Common
     /// </summary>
     public class AssignmentStatementFactory : FluentStatementFactory<AssignmentStatement>
     {
-        protected override AssignmentStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override AssignmentStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new AssignmentStatement(input);
+            return new AssignmentStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

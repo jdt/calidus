@@ -33,8 +33,9 @@ namespace JDT.Calidus.Statements.PreProcessor
         /// Create a new instance of this class
         /// </summary>
         /// <param name="tokens">The list of tokens in the statement</param>
-        public RegionEndStatement(IEnumerable<TokenBase> tokens)
-            : base(tokens)
+        /// <param name="context">The context</param>
+        public RegionEndStatement(IEnumerable<TokenBase> tokens, IStatementContext context)
+            : base(tokens, context)
         {
         }
     }

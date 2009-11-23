@@ -33,9 +33,9 @@ namespace JDT.Calidus.Statements.Factories.Declaration
     /// </summary>
     public class ClassStatementFactory : FluentStatementFactory<ClassStatement>
     {
-        protected override ClassStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override ClassStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new ClassStatement(input);
+            return new ClassStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

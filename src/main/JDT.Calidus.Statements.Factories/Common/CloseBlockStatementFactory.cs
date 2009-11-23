@@ -32,9 +32,9 @@ namespace JDT.Calidus.Statements.Factories.Common
     /// </summary>
     public class CloseBlockStatementFactory : FluentStatementFactory<CloseBlockStatement>
     {
-        protected override CloseBlockStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override CloseBlockStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new CloseBlockStatement(input);
+            return new CloseBlockStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)
