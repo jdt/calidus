@@ -20,26 +20,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Rules.Configuration;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Rules.Configuration
 {
     [TestFixture]
-    public class DefaultRuleConfigurationOverrideTest
+    public class DefaultRuleConfigurationOverrideTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
         }
 
         [Test]
         public void DefaultRuleConfigurationOverridesShouldBeEqual()
         {
-            IRuleConfigurationParameter parameter = _mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationParameter parameter = Mocker.DynamicMock<IRuleConfigurationParameter>();
             IList<IRuleConfigurationParameter> parameters = new[]{parameter};
 
             DefaultRuleConfigurationOverride alpha = new DefaultRuleConfigurationOverride(typeof(String), parameters);

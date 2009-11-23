@@ -33,6 +33,12 @@ namespace JDT.Calidus.ParsersTest.Lines
     [TestFixture]
     public class CalidusLineParserTest : CalidusTestBase
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
+
         [Test]
         public void ParseTokensOnDifferentLinesShouldParseAsDifferentLines()
         {
@@ -44,8 +50,7 @@ namespace JDT.Calidus.ParsersTest.Lines
             IList<TokenBase> secondLine = new List<TokenBase>();
             secondLine.Add(TokenCreator.Create<IdentifierToken>("test2"));
 
-            MockRepository mocker = new MockRepository();
-            ILineFactory factory = mocker.StrictMock<ILineFactory>();
+            ILineFactory factory = Mocker.StrictMock<ILineFactory>();
             Expect.Call(factory.Create(firstLine)).Return(new Line(firstLine)).Repeat.Once();
             Expect.Call(factory.Create(secondLine)).Return(new Line(secondLine)).Repeat.Once();
 
@@ -60,12 +65,12 @@ namespace JDT.Calidus.ParsersTest.Lines
             toParse.Add(firstLine[0]);
             toParse.Add(secondLine[0]);
 
-            factory.Replay();
+            Mocker.ReplayAll();
 
             IEnumerable<LineBase> actual = parser.Parse(toParse);
             CollectionAssert.AreEquivalent(expected, actual);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

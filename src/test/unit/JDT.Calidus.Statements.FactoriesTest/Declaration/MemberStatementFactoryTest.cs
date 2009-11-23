@@ -37,7 +37,6 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
     {
         private MemberStatementFactory _factory;
         private IStatementContext _context;
-        private MockRepository _mocker;
 
         [SetUp]
         public override void SetUp()
@@ -45,8 +44,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             base.SetUp();
 
             _factory = new MemberStatementFactory();
-            _mocker = new MockRepository();
-            _context = _mocker.DynamicMock<IStatementContext>();
+            _context = Mocker.DynamicMock<IStatementContext>();
         }
 
         [Test]
@@ -62,9 +60,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -79,9 +77,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -98,9 +96,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -114,9 +112,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -132,9 +130,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -152,9 +150,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -171,9 +169,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -188,9 +186,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -206,9 +204,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("t"));
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsFalse(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

@@ -25,26 +25,25 @@ using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Statements;
 using JDT.Calidus.Projects;
 using JDT.Calidus.Projects.Providers;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace JDT.Calidus.ProjectsTest
 {
     [TestFixture]
-    public class CalidusProjectTest
+    public class CalidusProjectTest : CalidusTestBase
     {
         private ISourceFileProvider _provider;
         private CalidusProject _project;
         private IList<String> _files;
         
-        private MockRepository _mocker;
-        
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _provider = _mocker.DynamicMock<ISourceFileProvider>();
+            _provider = Mocker.DynamicMock<ISourceFileProvider>();
 
             _files = new List<String>();
             _files.Add(@"C:\src\main\Alpha.cs");
@@ -61,11 +60,11 @@ namespace JDT.Calidus.ProjectsTest
 
             Expect.Call(_provider.GetFiles()).Return(_files).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.IgnoreAssemblyFiles = true;
             CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\main\AssemblyInfo.cs");
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -75,12 +74,12 @@ namespace JDT.Calidus.ProjectsTest
 
             Expect.Call(_provider.GetFiles()).Return(_files).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.IgnoreDesignerFiles = true;
             CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\test\Test.Designer.cs");
             
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -90,12 +89,12 @@ namespace JDT.Calidus.ProjectsTest
 
             Expect.Call(_provider.GetFiles()).Return(_files).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.IgnoreProgramFiles = true;
             CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\main\Program.cs");
             
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -105,12 +104,12 @@ namespace JDT.Calidus.ProjectsTest
 
             Expect.Call(_provider.GetFiles()).Return(_files).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.IgnoredFileList.Add(@"\src\main\Bravo.cs");
             CollectionAssert.Contains(_project.GetAllSourceFiles(), @"C:\src\main\Bravo.cs");
             
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -120,12 +119,12 @@ namespace JDT.Calidus.ProjectsTest
 
             Expect.Call(_provider.GetFiles()).Return(_files).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.IgnoredFileList.Add(@"\src\main\Bravo.cs");
             CollectionAssert.DoesNotContain(_project.GetSourceFilesToValidate(), @"C:\src\main\Bravo.cs");
             
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -133,12 +132,12 @@ namespace JDT.Calidus.ProjectsTest
         {
             _project = new CalidusProject(@"C:\src\test.project", _provider);
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.IgnoredFile(@"\src\main\Bravo.cs");
             CollectionAssert.Contains(_project.IgnoredFileList, @"\main\Bravo.cs");
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -146,16 +145,16 @@ namespace JDT.Calidus.ProjectsTest
         {
             _project = new CalidusProject(@"C:\src\test.project", _provider);
             //need to make sure to have different rule types
-            StatementRuleBase ruleOne = _mocker.DynamicMock<StatementRuleBase>("test");
-            BlockRuleBase ruleTwo = _mocker.DynamicMock<BlockRuleBase>("test");
+            StatementRuleBase ruleOne = Mocker.DynamicMock<StatementRuleBase>("test");
+            BlockRuleBase ruleTwo = Mocker.DynamicMock<BlockRuleBase>("test");
 
-            IRuleConfigurationOverride one = _mocker.DynamicMock<IRuleConfigurationOverride>();
-            IRuleConfigurationOverride two = _mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRuleConfigurationOverride one = Mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRuleConfigurationOverride two = Mocker.DynamicMock<IRuleConfigurationOverride>();
 
             Expect.Call(one.Rule).Return(ruleOne.GetType()).Repeat.Once();
             Expect.Call(two.Rule).Return(ruleTwo.GetType()).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             Assert.AreEqual(0, _project.GetProjectRuleConfigurationOverrides().Count());
             _project.SetProjectRuleConfigurationOverrideTo(one);
@@ -163,7 +162,7 @@ namespace JDT.Calidus.ProjectsTest
             _project.SetProjectRuleConfigurationOverrideTo(two);
             Assert.AreEqual(2, _project.GetProjectRuleConfigurationOverrides().Count());
             
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -171,19 +170,19 @@ namespace JDT.Calidus.ProjectsTest
         {
             _project = new CalidusProject(@"C:\src\test.project", _provider);
 
-            IRule rule = _mocker.DynamicMock<IRule>();
-            IRuleConfigurationOverride one = _mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRule rule = Mocker.DynamicMock<IRule>();
+            IRuleConfigurationOverride one = Mocker.DynamicMock<IRuleConfigurationOverride>();
 
             Expect.Call(one.Rule).Return(rule.GetType()).Repeat.Twice();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _project.SetProjectRuleConfigurationOverrideTo(one);
             Assert.AreEqual(1, _project.GetProjectRuleConfigurationOverrides().Count());
             _project.SetProjectRuleConfigurationOverrideTo(one);
             Assert.AreEqual(1, _project.GetProjectRuleConfigurationOverrides().Count());
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

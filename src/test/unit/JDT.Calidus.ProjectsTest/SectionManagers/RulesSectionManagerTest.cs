@@ -25,29 +25,29 @@ using System.Xml.Linq;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Projects.SectionManagers;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace JDT.Calidus.ProjectsTest.SectionManagers
 {
     [TestFixture]
-    public class RulesSectionManagerTest
+    public class RulesSectionManagerTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         private RulesSectionManager _sectionManager;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
+
             _sectionManager = new RulesSectionManager();
         }
 
         [Test]
         public void RulesSectionManagerShouldWriteRulesSectionFromOverrideList()
         {
-            IRule rule = _mocker.DynamicMock<IRule>();
+            IRule rule = Mocker.DynamicMock<IRule>();
 
             String paramOneName = "paramOne";
             String paramTwoName = "paramTwo";
@@ -64,9 +64,9 @@ namespace JDT.Calidus.ProjectsTest.SectionManagers
             bldr.Append(@"</rules>");
             bldr.Append(@"</root>");
 
-            IRuleConfigurationOverride overrideConfig = _mocker.DynamicMock<IRuleConfigurationOverride>();
-            IRuleConfigurationParameter overrideParamOne = _mocker.DynamicMock<IRuleConfigurationParameter>();
-            IRuleConfigurationParameter overrideParamTwo = _mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationOverride overrideConfig = Mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRuleConfigurationParameter overrideParamOne = Mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationParameter overrideParamTwo = Mocker.DynamicMock<IRuleConfigurationParameter>();
 
             IList<IRuleConfigurationOverride> overrides = new List<IRuleConfigurationOverride>();
             overrides.Add(overrideConfig);
@@ -80,14 +80,14 @@ namespace JDT.Calidus.ProjectsTest.SectionManagers
             Expect.Call(overrideParamTwo.Value).Return(paramTwoValue).Repeat.Once();
             Expect.Call(overrideParamTwo.ParameterType).Return(ParameterType.String).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             XElement parent = new XElement(XName.Get("root"));
             _sectionManager.WriteTo(overrides, parent);
 
             Assert.AreEqual(bldr.ToString(), parent.ToString(SaveOptions.DisableFormatting));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]

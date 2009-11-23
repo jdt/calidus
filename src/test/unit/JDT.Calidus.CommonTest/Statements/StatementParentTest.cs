@@ -38,8 +38,6 @@ namespace JDT.Calidus.CommonTest.Statements
         [Test]
         public void StatementParentsShouldBeEqual()
         {
-            MockRepository mocker = new MockRepository();
-
             StatementBase alphaStatement = StatementCreator.CreateMemberStatement("test");
             StatementBase alphaDelimiter = StatementCreator.CreateOpenBlockStatement();
             TokenCreator.Reset();

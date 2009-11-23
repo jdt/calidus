@@ -38,15 +38,14 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
     {
         private IndexerStatementFactory _factory;
         private IStatementContext _context;
-        private MockRepository _mocker;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
+
             _factory = new IndexerStatementFactory();
-            _mocker = new MockRepository();
-            _context = _mocker.DynamicMock<IStatementContext>();
+            _context = Mocker.DynamicMock<IStatementContext>();
         }
 
         [Test]
@@ -66,9 +65,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("index"));
             input.Add(TokenCreator.Create<CloseSquareBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

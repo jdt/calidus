@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 using JDT.Calidus.UI.Controllers;
@@ -28,24 +29,28 @@ using JDT.Calidus.UI.Model;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class SourceLocationControllerTest
+    public class SourceLocationControllerTest : CalidusTestBase
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
+
         [Test]
         public void SourceLocationControllerShouldDisplayProjectFileLocation()
         {
-            MockRepository mocker = new MockRepository();
-
-            ISourceLocationView view = mocker.DynamicMock<ISourceLocationView>();
-            ICalidusProjectModel model = mocker.DynamicMock<ICalidusProjectModel>();
+            ISourceLocationView view = Mocker.DynamicMock<ISourceLocationView>();
+            ICalidusProjectModel model = Mocker.DynamicMock<ICalidusProjectModel>();
 
             Expect.Call(model.GetProjectFile()).Return("test.calidus").Repeat.Once();
             Expect.Call(() => view.DisplayProjectFileLocation("test.calidus")).Repeat.Once();
 
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             SourceLocationController controller = new SourceLocationController(view, model);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

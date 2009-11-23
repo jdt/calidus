@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common.Tokens;
-using JDT.Calidus.Tokens.Common;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.Parsers.Tokens;
 using Rhino.Mocks;
@@ -54,72 +54,71 @@ namespace JDT.Calidus.ParsersTest.Tokens
     }
 
     [TestFixture]
-    public class CalidusTokenParserTest
+    public class CalidusTokenParserTest : CalidusTestBase
     {
         private OtherParsersImpl _otherImpl;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
+
             _otherImpl = new OtherParsersImpl();
         }
 
         [Test]
         public void ParserShouldCheckWhiteSpaceBeforeCommentsBeforeGenerics()
         {
-            MockRepository mocker = new MockRepository();
-            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
+            ITokenParser parserImp = Mocker.StrictMock<ITokenParser>();
 
-            using (mocker.Ordered())
+            using (Mocker.Ordered())
             {
                 Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
                 Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
                 Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
             }
 
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusTokenParser parser = new CalidusTokenParser(parserImp, _otherImpl, _otherImpl);
             parser.Parse("");
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void ParserShouldUseWhiteSpaceParserWhenPluggedParserDoesNotSupportWhiteSpace()
         {
-            MockRepository mocker = new MockRepository();
-            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
+            ITokenParser parserImp = Mocker.StrictMock<ITokenParser>();
 
             Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
             Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(false).Repeat.Once();
             Expect.Call(parserImp.SupportsGenericsParsing).Return(true).Repeat.Once();
             
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusTokenParser parser = new CalidusTokenParser(parserImp, _otherImpl, _otherImpl);
             parser.Parse("");
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
             Assert.IsTrue(_otherImpl.WhiteSpaceWasCalled);
         }
 
         [Test]
         public void ParserShouldUseGenericsParserWhenPluggedParserDoesNotSupportGenerics()
         {
-            MockRepository mocker = new MockRepository();
-            ITokenParser parserImp = mocker.StrictMock<ITokenParser>();
+            ITokenParser parserImp = Mocker.StrictMock<ITokenParser>();
 
             Expect.Call(parserImp.Parse("")).Return(new List<TokenBase>()).Repeat.Once();
             Expect.Call(parserImp.SupportsWhiteSpaceParsing).Return(true).Repeat.Once();
             Expect.Call(parserImp.SupportsGenericsParsing).Return(false).Repeat.Once();
             
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusTokenParser parser = new CalidusTokenParser(parserImp, _otherImpl, _otherImpl);
             parser.Parse("");
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
             Assert.IsTrue(_otherImpl.GenericsWasCalled);
         }
     }
