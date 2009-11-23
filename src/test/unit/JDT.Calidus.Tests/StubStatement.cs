@@ -29,7 +29,7 @@ namespace JDT.Calidus.Tests
     public class StubStatement : StatementBase
     {
         public StubStatement()
-            : base(new List<TokenBase>())
+            : base(new List<TokenBase>(), null)
         {
         }
     }

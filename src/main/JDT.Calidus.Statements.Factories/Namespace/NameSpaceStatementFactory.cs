@@ -33,9 +33,9 @@ namespace JDT.Calidus.Statements.Factories.Namespace
     /// </summary>
     public class NameSpaceStatementFactory : FluentStatementFactory<NameSpaceStatement>
     {
-        protected override NameSpaceStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override NameSpaceStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new NameSpaceStatement(input);
+            return new NameSpaceStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

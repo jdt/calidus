@@ -36,15 +36,21 @@ namespace JDT.Calidus.Common.Statements
         /// Create a new instance of this class
         /// </summary>
         /// <param name="tokens">The list of tokens in the statement</param>
-        protected StatementBase(IEnumerable<TokenBase> tokens)
+        /// <param name="context">The context the statement is in</param>
+        protected StatementBase(IEnumerable<TokenBase> tokens, IStatementContext context)
         {
             Tokens = tokens;
+            Context = context;
         }
 
         /// <summary>
         /// Get the tokens contained in the statement
         /// </summary>
         public IEnumerable<TokenBase> Tokens { get; private set; }
+        /// <summary>
+        /// Get the statement context
+        /// </summary>
+        public IStatementContext Context { get; private set; }
 
         /// <summary>
         /// Gets the source code in the statement
@@ -92,6 +98,7 @@ namespace JDT.Calidus.Common.Statements
 
             StatementBase theStatement = (StatementBase)obj;
             if (theStatement.Tokens.SequenceEqual(Tokens) == false) return false;
+            if (theStatement.Context.Equals(Context) == false) return false;
             return true;
         }
 
@@ -100,6 +107,7 @@ namespace JDT.Calidus.Common.Statements
         {
             int hash = 33;
             hash ^= Tokens.GetHashCode();
+            hash ^= Context.GetHashCode();
             return hash;
         }
     }

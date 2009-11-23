@@ -87,7 +87,7 @@ namespace JDT.Calidus.Rules.StatementsTest.Declaration
             input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
-            Assert.IsFalse(_rule.IsValidFor(new ClassStatement(input)));
+            Assert.IsFalse(_rule.IsValidFor(new ClassStatement(input, null)));
         }
     }
 }

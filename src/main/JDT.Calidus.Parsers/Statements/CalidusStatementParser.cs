@@ -100,7 +100,7 @@ namespace JDT.Calidus.Parsers.Statements
                     //check: if the current statements were not successfully parsed
                     //the list is not cleared, add as a generic statement
                     if(!wasStatement)
-                        createdStatements.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
+                        createdStatements.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens), context));
 
                     currentStatementTokens.Clear();
                     //notify context manager
@@ -116,7 +116,7 @@ namespace JDT.Calidus.Parsers.Statements
             //the list is not cleared, add as a generic statement
             if (currentStatementTokens.Count != 0)
             {
-                res.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens)));
+                res.Add(new GenericStatement(new List<TokenBase>(currentStatementTokens), _contextManager.GetContext(currentStatementTokens)));
                 currentStatementTokens.Clear();
             }
 

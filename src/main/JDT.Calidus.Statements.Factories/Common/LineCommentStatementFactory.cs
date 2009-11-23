@@ -32,9 +32,9 @@ namespace JDT.Calidus.Statements.Factories.Common
     /// </summary>
     public class LineCommentStatementFactory : FluentStatementFactory<LineCommentStatement>
     {
-        protected override LineCommentStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override LineCommentStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new LineCommentStatement(input);
+            return new LineCommentStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

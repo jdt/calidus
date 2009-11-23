@@ -41,7 +41,7 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         public StatementBase Create(IEnumerable<TokenBase> input, IStatementContext context)
         {
             if (CanCreateStatementFrom(input, context))
-                return BuildStatement(input);
+                return BuildStatement(input, context);
             else
                 throw new CalidusException("The factory cannot parse the token list into a statement");
         }
@@ -61,8 +61,9 @@ namespace JDT.Calidus.Statements.Factories.Fluent
         /// Builds the appropriate statement for the token list
         /// </summary>
         /// <param name="input">The token list</param>
+        /// <param name="context">The statement context</param>
         /// <returns>The statement</returns>
-        protected abstract TStatementType BuildStatement(IEnumerable<TokenBase> input);
+        protected abstract TStatementType BuildStatement(IEnumerable<TokenBase> input, IStatementContext context);
         /// <summary>
         /// Checks if the statement context is valid for the expression
         /// </summary>

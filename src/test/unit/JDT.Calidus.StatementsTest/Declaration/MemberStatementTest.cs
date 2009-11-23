@@ -54,7 +54,7 @@ namespace JDT.Calidus.StatementsTest.Declaration
             input.Add(expected);
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            MemberStatement statement = new MemberStatement(input);
+            MemberStatement statement = new MemberStatement(input, null);
             Assert.AreEqual(expected, statement.MemberNameToken);
         }
 
@@ -71,7 +71,7 @@ namespace JDT.Calidus.StatementsTest.Declaration
             input.Add(expected);
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            MemberStatement statement = new MemberStatement(input);
+            MemberStatement statement = new MemberStatement(input, null);
             Assert.IsNull(statement.StaticToken);
         }
 
@@ -91,7 +91,7 @@ namespace JDT.Calidus.StatementsTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("test"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            MemberStatement statement = new MemberStatement(input);
+            MemberStatement statement = new MemberStatement(input, null);
             Assert.AreEqual(expected, statement.StaticToken);
         }
 
@@ -105,7 +105,7 @@ namespace JDT.Calidus.StatementsTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("memberName"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            MemberStatement statement = new MemberStatement(input);
+            MemberStatement statement = new MemberStatement(input, null);
             Assert.IsNull(statement.AccessModifierToken);
         }
 
@@ -122,7 +122,7 @@ namespace JDT.Calidus.StatementsTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("test"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            MemberStatement statement = new MemberStatement(input);
+            MemberStatement statement = new MemberStatement(input, null);
             Assert.AreEqual(expected, statement.AccessModifierToken);
         }
     }

@@ -32,9 +32,9 @@ namespace JDT.Calidus.Statements.Factories.PreProcessor
     /// </summary>
     public class RegionEndStatementFactory : FluentStatementFactory<RegionEndStatement>
     {
-        protected override RegionEndStatement BuildStatement(IEnumerable<TokenBase> input)
+        protected override RegionEndStatement BuildStatement(IEnumerable<TokenBase> input, IStatementContext context)
         {
-            return new RegionEndStatement(input);
+            return new RegionEndStatement(input, context);
         }
 
         protected override bool IsValidContext(IStatementContext context)

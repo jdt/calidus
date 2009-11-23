@@ -19,7 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Common.Statements;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.Tests
 {
@@ -31,12 +33,17 @@ namespace JDT.Calidus.Tests
     {
         private TokenCreator _tokenCreator;
         private StatementCreator _statementCreator;
+        private MockRepository _mocker;
 
         [SetUp]
         public virtual void SetUp()
         {
+            _mocker = new MockRepository();
+
+            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+
             _tokenCreator = new TokenCreator();
-            _statementCreator = new StatementCreator(_tokenCreator);
+            _statementCreator = new StatementCreator(_tokenCreator, context);
         }
 
         /// <summary>
@@ -58,6 +65,17 @@ namespace JDT.Calidus.Tests
             get
             {
                 return _statementCreator;
+            }
+        }
+
+        /// <summary>
+        /// Gets a mock repository
+        /// </summary>
+        public MockRepository Mocker
+        {
+            get
+            {
+                return _mocker;
             }
         }
     }

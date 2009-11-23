@@ -75,7 +75,7 @@ namespace JDT.Calidus.Rules.StatementsTest.Declaration
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            MemberStatement member = new MemberStatement(input);
+            MemberStatement member = new MemberStatement(input, null);
 
             Assert.IsTrue(rule.IsValidFor(member));
         }

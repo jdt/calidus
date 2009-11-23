@@ -58,12 +58,13 @@ namespace JDT.Calidus.ParsersTest.Statements
 
             MockRepository mocker = new MockRepository();
             IStatementFactory factory = mocker.StrictMock<IStatementFactory>();
+            IStatementContext context = mocker.StrictMock<IStatementContext>();
             IStatementContextManager contextManager = mocker.StrictMock<IStatementContextManager>();
 
-            Expect.Call(factory.CanCreateStatementFrom(new List<TokenBase>(), null)).IgnoreArguments().Return(true).Repeat.Once();
-            Expect.Call(factory.Create(input, null)).Return(new GenericStatement(input)).Repeat.Once();
-            Expect.Call(() => contextManager.Encountered(new[] { new GenericStatement(input) }, input.Count, input)).Repeat.Once();
-            Expect.Call(contextManager.GetContext(input)).Return(null).Repeat.Once();
+            Expect.Call(factory.CanCreateStatementFrom(new List<TokenBase>(), context)).IgnoreArguments().Return(true).Repeat.Once();
+            Expect.Call(factory.Create(input, context)).Return(new GenericStatement(input, context)).Repeat.Once();
+            Expect.Call(() => contextManager.Encountered(new[] { new GenericStatement(input, context) }, input.Count, input)).Repeat.Once();
+            Expect.Call(contextManager.GetContext(input)).Return(context).Repeat.Once();
 
             input.Add(TokenCreator.Create<SemiColonToken>());
 

@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Tests;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Statements
 {
@@ -37,6 +38,8 @@ namespace JDT.Calidus.CommonTest.Statements
         [Test]
         public void StatementParentsShouldBeEqual()
         {
+            MockRepository mocker = new MockRepository();
+
             StatementBase alphaStatement = StatementCreator.CreateMemberStatement("test");
             StatementBase alphaDelimiter = StatementCreator.CreateOpenBlockStatement();
             TokenCreator.Reset();

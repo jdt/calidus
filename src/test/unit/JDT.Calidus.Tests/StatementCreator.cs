@@ -41,15 +41,21 @@ namespace JDT.Calidus.Tests
         /// Create a new instance of this object
         /// </summary>
         /// <param name="tokenCreator">The token creator to use</param>
-        public StatementCreator(TokenCreator tokenCreator)
+        /// <param name="context">The statement context to pass</param>
+        public StatementCreator(TokenCreator tokenCreator, IStatementContext context)
         {
             TokenCreator = tokenCreator;
+            Context = context;
         }
 
         /// <summary>
         /// Get the token creator
         /// </summary>
         public TokenCreator TokenCreator { get; private set; }
+        /// <summary>
+        /// Get or Set the statement context that will be passed to statements
+        /// </summary>
+        public IStatementContext Context { get; private set; }
 
         /// <summary>
         /// Create a member statement with the supplied identifier
@@ -66,7 +72,7 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<IdentifierToken>(identifier));
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            return new MemberStatement(input);
+            return new MemberStatement(input, Context);
         }
 
         /// <summary>
@@ -78,28 +84,28 @@ namespace JDT.Calidus.Tests
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<LineCommentToken>(commentText));
-            return new LineCommentStatement(input);
+            return new LineCommentStatement(input, Context);
         }
 
         public StatementBase CreateRegionStartStatement(String content)
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<RegionStartToken>(content));
-            return new RegionStartStatement(input);
+            return new RegionStartStatement(input, Context);
         }
 
         public StatementBase CreateRegionEndStatement(String content)
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<RegionEndToken>(content));
-            return new RegionEndStatement(input);
+            return new RegionEndStatement(input, Context);
         }
 
         public OpenBlockStatement CreateOpenBlockStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<OpenCurlyBracketToken>());
-            return new OpenBlockStatement(input);
+            return new OpenBlockStatement(input, Context);
         }
 
         public ClassStatement CreateClassStatement()
@@ -110,14 +116,14 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<ClassToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
-            return new ClassStatement(input);
+            return new ClassStatement(input, Context);
         }
 
         public CloseBlockStatement CreateCloseBlockStatement()
         {
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<CloseCurlyBracketToken>());
-            return new CloseBlockStatement(input);
+            return new CloseBlockStatement(input, Context);
         }
 
         public MethodStatement CreateMethodStatement()
@@ -130,7 +136,7 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<IdentifierToken>("MyMethod"));
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
-            return new MethodStatement(input);
+            return new MethodStatement(input, Context);
         }
 
         public StructStatement CreateStructStatement()
@@ -141,7 +147,7 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<StructToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
-            return new StructStatement(input);
+            return new StructStatement(input, Context);
         }
 
         public InterfaceStatement CreateInterfaceStatement()
@@ -152,7 +158,7 @@ namespace JDT.Calidus.Tests
             input.Add(TokenCreator.Create<InterfaceToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
-            return new InterfaceStatement(input);
+            return new InterfaceStatement(input, Context);
         }
     }
 }

@@ -26,18 +26,19 @@ using JDT.Calidus.Tokens.Common;
 using JDT.Calidus.Tokens.Modifiers;
 using JDT.Calidus.Tokens.Types;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Statements
 {
     public class StatementBaseImpl : StatementBase
     {
-        public StatementBaseImpl()
-            : base(new List<TokenBase>())
+        public StatementBaseImpl(IStatementContext context)
+            : base(new List<TokenBase>(), context)
         {
         }
 
-        public StatementBaseImpl(IList<TokenBase> tokens)
-            : base(tokens)
+        public StatementBaseImpl(IList<TokenBase> tokens, IStatementContext context)
+            : base(tokens, null)
         {
         }
 
@@ -50,24 +51,32 @@ namespace JDT.Calidus.CommonTest.Statements
     [TestFixture]
     public class StatementBaseTest : CalidusTestBase
     {
+        private MockRepository _mocker;
+
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
+
+            _mocker = new MockRepository();
         }
 
         [Test]
         public void StatementBaseInheritorsShouldBeEqualWhenNotAddingAdditionalProperties()
         {
-            StatementBaseImpl alpha = new StatementBaseImpl();
-            StatementBaseImpl bravo = new StatementBaseImpl();
+            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+
+            StatementBaseImpl alpha = new StatementBaseImpl(context);
+            StatementBaseImpl bravo = new StatementBaseImpl(context);
 
             Assert.AreEqual(alpha, bravo);
         }
 
         [Test]
         public void StatementBaseFindFirstOccurenceOfShouldReturnFirstOccurenceOfTokenType()
-        {            
+        {
+            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PublicModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -76,13 +85,15 @@ namespace JDT.Calidus.CommonTest.Statements
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
-            StatementBaseImpl imp = new StatementBaseImpl(input);
+            StatementBaseImpl imp = new StatementBaseImpl(input, context);
             Assert.AreEqual(expected, imp.OccurenceOf<ClassToken>());
         }
 
         [Test]
         public void StatementBaseFindFirstOccurenceOfShouldReturnNullIfNoOccurenceFound()
         {
+            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PublicModifierToken>());
             input.Add(TokenCreator.Create<SpaceToken>());
@@ -90,13 +101,15 @@ namespace JDT.Calidus.CommonTest.Statements
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
-            StatementBaseImpl imp = new StatementBaseImpl(input);
+            StatementBaseImpl imp = new StatementBaseImpl(input, context);
             Assert.IsNull(imp.OccurenceOf<TabToken>());
         }
 
         [Test]
         public void StatementBaseFindFirstOccurenceOfShouldWorkForSuperClasses()
         {
+            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PublicModifierToken>());
             TokenBase expected = TokenCreator.Create<SpaceToken>();
@@ -105,7 +118,7 @@ namespace JDT.Calidus.CommonTest.Statements
             input.Add(TokenCreator.Create<SpaceToken>());
             input.Add(TokenCreator.Create<IdentifierToken>("Test"));
 
-            StatementBaseImpl imp = new StatementBaseImpl(input);
+            StatementBaseImpl imp = new StatementBaseImpl(input, context);
             Assert.AreEqual(expected, imp.OccurenceOf<WhiteSpaceToken>());
         }
     }
