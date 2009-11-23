@@ -26,36 +26,35 @@ using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.Rules;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace JDT.Calidus.RulesTest
 {
     [TestFixture]
-    public class CalidusRuleConfigurationFactoryTest
+    public class CalidusRuleConfigurationFactoryTest : CalidusTestBase
     {
         private CalidusRuleConfigurationFactory _configFactory;
         private ICalidusProject _project;
         private ICalidusProjectManager _manager;
         private IRuleConfigurationFactoryProvider _provider;
 
-        private MockRepository _mocker;
-
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _project = _mocker.DynamicMock<ICalidusProject>();
-            _manager = _mocker.DynamicMock<ICalidusProjectManager>();
-            _provider = _mocker.DynamicMock<IRuleConfigurationFactoryProvider>();
+            _project = Mocker.DynamicMock<ICalidusProject>();
+            _manager = Mocker.DynamicMock<ICalidusProjectManager>();
+            _provider = Mocker.DynamicMock<IRuleConfigurationFactoryProvider>();
             _configFactory = new CalidusRuleConfigurationFactory(_project, _manager, _provider);
         }
 
         [Test]
         public void ConfigurationFactoryShouldThrowExceptionForRuleWithoutDefaultConfiguration()
         {
-            IRule rule = _mocker.DynamicMock<IRule>();
+            IRule rule = Mocker.DynamicMock<IRule>();
 
             Assert.Throws<CalidusException>(() =>
                                                 {
@@ -68,19 +67,19 @@ namespace JDT.Calidus.RulesTest
         [Test]
         public void ConfigurationFactoryShouldReturnConfigurationFromConfigurationFactoryProvider()
         {
-            IRule rule = _mocker.DynamicMock<IRule>();
-            IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
-            IRuleConfigurationFactory factory = _mocker.DynamicMock<IRuleConfigurationFactory>();
+            IRule rule = Mocker.DynamicMock<IRule>();
+            IRuleConfiguration config = Mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationFactory factory = Mocker.DynamicMock<IRuleConfigurationFactory>();
 
             Expect.Call(_provider.GetRuleConfigurationFactoryFor(rule.GetType())).Return(factory).Repeat.Once();
             Expect.Call(factory.Get(rule.GetType())).Return(config).Repeat.Once();
             Expect.Call(_project.GetProjectRuleConfigurationOverrides()).Return(new IRuleConfigurationOverride[] {}).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             Assert.AreEqual(config, _configFactory.GetRuleConfigurationFor(rule.GetType()));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -91,13 +90,13 @@ namespace JDT.Calidus.RulesTest
             ParameterType type = ParameterType.MultilineString;
             String value = "parameterValue";
 
-            IRule rule = _mocker.DynamicMock<IRule>();
-            IRuleConfiguration config = _mocker.DynamicMock<IRuleConfiguration>();
-            IRuleConfigurationFactory factory = _mocker.DynamicMock<IRuleConfigurationFactory>();
-            IRuleConfigurationOverride ruleOverride = _mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRule rule = Mocker.DynamicMock<IRule>();
+            IRuleConfiguration config = Mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationFactory factory = Mocker.DynamicMock<IRuleConfigurationFactory>();
+            IRuleConfigurationOverride ruleOverride = Mocker.DynamicMock<IRuleConfigurationOverride>();
 
-            IRuleConfigurationParameter defaultParameter = _mocker.DynamicMock<IRuleConfigurationParameter>();
-            IRuleConfigurationParameter ruleOverrideParameter = _mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationParameter defaultParameter = Mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationParameter ruleOverrideParameter = Mocker.DynamicMock<IRuleConfigurationParameter>();
 
             IList<IRuleConfigurationOverride> overrides = new[] { ruleOverride };
             IList<IRuleConfigurationParameter> parameters = new[] { ruleOverrideParameter };
@@ -117,29 +116,29 @@ namespace JDT.Calidus.RulesTest
             Expect.Call(ruleOverrideParameter.Name).Return(name).Repeat.Once();
             Expect.Call(ruleOverrideParameter.Value).Return(value).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             IRuleConfiguration actual = _configFactory.GetRuleConfigurationFor(rule.GetType());
             Assert.AreEqual(name, actual.Parameters[0].Name);
             Assert.AreEqual(type, actual.Parameters[0].ParameterType);
             Assert.AreEqual(value, actual.Parameters[0].Value);
             
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
             
         }
 
         [Test]
         public void ConfigurationFactoryShouldSetOverrideToProject()
         {
-            IRuleConfigurationOverride overrideConfig = _mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRuleConfigurationOverride overrideConfig = Mocker.DynamicMock<IRuleConfigurationOverride>();
             Expect.Call(() => _project.SetProjectRuleConfigurationOverrideTo(overrideConfig)).Repeat.Once();
             Expect.Call(() => _manager.Write(_project)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _configFactory.SetRuleConfiguration(overrideConfig);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

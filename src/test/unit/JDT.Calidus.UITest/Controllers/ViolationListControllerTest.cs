@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 using JDT.Calidus.UI.Controllers;
@@ -32,23 +33,21 @@ using JDT.Calidus.UI.Commands;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class ViolationListControllerTest
+    public class ViolationListControllerTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         private ViolationListController _controller;
         private IViolationListView _view;
         private ICalidusProjectModel _projectModel;
         private IRuleViolationList _violationList;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _view = _mocker.DynamicMock<IViolationListView>();
-            _projectModel = _mocker.DynamicMock<ICalidusProjectModel>();
-            _violationList = _mocker.DynamicMock<IRuleViolationList>();
+            _view = Mocker.DynamicMock<IViolationListView>();
+            _projectModel = Mocker.DynamicMock<ICalidusProjectModel>();
+            _violationList = Mocker.DynamicMock<IRuleViolationList>();
         }
 
         [Test]
@@ -58,12 +57,12 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(() => _view.AddViolation(violation)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new ViolationListController(_view, _projectModel, _violationList);
             _violationList.Raise(x => x.ViolationAdded += null, this, new RuleViolationEventArgs(violation));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -73,12 +72,12 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(() => _view.RemoveViolation(violation)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new ViolationListController(_view, _projectModel, _violationList);
             _violationList.Raise(x => x.ViolationRemoved += null, this, new RuleViolationEventArgs(violation));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
 
@@ -89,12 +88,12 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(() => _projectModel.IgnoredFile("file.cs")).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new ViolationListController(_view, _projectModel, _violationList);
             _view.Raise(x => x.IgnoreViolation += null, this, new RuleViolationIgnoreCommandEventArgs(violation, RuleViolationIgnoreType.File));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

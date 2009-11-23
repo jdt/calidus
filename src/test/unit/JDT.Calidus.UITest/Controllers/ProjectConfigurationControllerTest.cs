@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
 using Rhino.Mocks;
@@ -29,19 +30,18 @@ using JDT.Calidus.UI.Events;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class ProjectConfigurationControllerTest
+    public class ProjectConfigurationControllerTest : CalidusTestBase
     {
-        private MockRepository _mocker;
         private IProjectConfigurationView _view;
         private ICalidusProjectModel _model;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _view = _mocker.DynamicMock<IProjectConfigurationView>();
-            _model = _mocker.DynamicMock<ICalidusProjectModel>();
+            _view = Mocker.DynamicMock<IProjectConfigurationView>();
+            _model = Mocker.DynamicMock<ICalidusProjectModel>();
 
             Expect.Call(_model.IgnoreAssemblyFiles).Return(true).Repeat.Once();
             Expect.Call(_model.IgnoreDesignerFiles).Return(true).Repeat.Once();
@@ -55,24 +55,11 @@ namespace JDT.Calidus.UITest.Controllers
         [Test]
         public void ProjectConfigurationControllerShouldSetViewIgnore()
         {
-            MockRepository mocker = new MockRepository();
+            Mocker.ReplayAll();
 
-            IProjectConfigurationView view = mocker.DynamicMock<IProjectConfigurationView>();
-            ICalidusProjectModel model = mocker.DynamicMock<ICalidusProjectModel>();
+            ProjectConfigurationController controller = new ProjectConfigurationController(_view, _model);
 
-            Expect.Call(model.IgnoreAssemblyFiles).Return(true).Repeat.Once();
-            Expect.Call(model.IgnoreDesignerFiles).Return(true).Repeat.Once();
-            Expect.Call(model.IgnoreProgramFiles).Return(true).Repeat.Once();
-
-            Expect.Call(view.IgnoreAssemblyFiles = true).Repeat.Once();
-            Expect.Call(view.IgnoreDesignerFiles = true).Repeat.Once();
-            Expect.Call(view.IgnoreProgramFiles = true).Repeat.Once();
-
-            mocker.ReplayAll();
-
-            ProjectConfigurationController controller = new ProjectConfigurationController(view, model);
-
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -81,12 +68,12 @@ namespace JDT.Calidus.UITest.Controllers
             bool value = true;
             Expect.Call(_model.IgnoreProgramFiles = value).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             ProjectConfigurationController controller = new ProjectConfigurationController(_view, _model);
             _view.Raise(x => x.IgnoreProgramFilesChanged += null, this, new CheckedEventArgs(value));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -95,12 +82,12 @@ namespace JDT.Calidus.UITest.Controllers
             bool value = true;
             Expect.Call(_model.IgnoreDesignerFiles = value).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             ProjectConfigurationController controller = new ProjectConfigurationController(_view, _model);
             _view.Raise(x => x.IgnoreDesignerFilesChanged += null, this, new CheckedEventArgs(value));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -109,12 +96,12 @@ namespace JDT.Calidus.UITest.Controllers
             bool value = true;
             Expect.Call(_model.IgnoreAssemblyFiles = value).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             ProjectConfigurationController controller = new ProjectConfigurationController(_view, _model);
             _view.Raise(x => x.IgnoreAssemblyFilesChanged += null, this, new CheckedEventArgs(value));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

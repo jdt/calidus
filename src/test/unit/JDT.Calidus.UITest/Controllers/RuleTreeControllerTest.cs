@@ -19,9 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.Common.Projects;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Tests;
 using JDT.Calidus.UI.Events;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
@@ -63,15 +61,19 @@ namespace JDT.Calidus.UITest.Controllers
     }
 
     [TestFixture]
-    public class RuleTreeControllerTest
+    public class RuleTreeControllerTest : CalidusTestBase
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
+
         [Test]
         public void RuleTreeControllerShouldDisplayRulesAlphabeticallyFromRuleProvider()
         {
-            MockRepository mocker = new MockRepository();
-
-            IRule ruleAlpha = mocker.DynamicMock<IRule>();
-            IRule ruleBravo = mocker.DynamicMock<IRule>();
+            IRule ruleAlpha = Mocker.DynamicMock<IRule>();
+            IRule ruleBravo = Mocker.DynamicMock<IRule>();
 
             IList<IRule> rules = new List<IRule>();
             rules.Add(ruleBravo);
@@ -82,20 +84,20 @@ namespace JDT.Calidus.UITest.Controllers
             rulesSorted.Add(rules[0]);
 
             TreeViewImp view = new TreeViewImp(rulesSorted);
-            ICalidusRuleProvider ruleProvider = mocker.DynamicMock<ICalidusRuleProvider>();
-            ICalidusRuleConfigurationFactory configFactory = mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            ICalidusRuleProvider ruleProvider = Mocker.DynamicMock<ICalidusRuleProvider>();
+            ICalidusRuleConfigurationFactory configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(ruleAlpha.Category).Return("Alpha").Repeat.Any();
             Expect.Call(ruleBravo.Category).Return("Bravo").Repeat.Any();
 
             Expect.Call(ruleProvider.GetRules(configFactory)).Return(rules).Repeat.Once();
             Expect.Call(() => view.DisplayRules(rulesSorted)).Repeat.Once();
-            
-            mocker.ReplayAll();
+
+            Mocker.ReplayAll();
 
             RuleTreeController controller = new RuleTreeController(view, ruleProvider, configFactory);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

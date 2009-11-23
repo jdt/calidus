@@ -51,20 +51,16 @@ namespace JDT.Calidus.CommonTest.Statements
     [TestFixture]
     public class StatementBaseTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-
-            _mocker = new MockRepository();
         }
 
         [Test]
         public void StatementBaseInheritorsShouldBeEqualWhenNotAddingAdditionalProperties()
         {
-            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+            IStatementContext context = Mocker.DynamicMock<IStatementContext>();
 
             StatementBaseImpl alpha = new StatementBaseImpl(context);
             StatementBaseImpl bravo = new StatementBaseImpl(context);
@@ -75,7 +71,7 @@ namespace JDT.Calidus.CommonTest.Statements
         [Test]
         public void StatementBaseFindFirstOccurenceOfShouldReturnFirstOccurenceOfTokenType()
         {
-            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+            IStatementContext context = Mocker.DynamicMock<IStatementContext>();
 
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PublicModifierToken>());
@@ -92,7 +88,7 @@ namespace JDT.Calidus.CommonTest.Statements
         [Test]
         public void StatementBaseFindFirstOccurenceOfShouldReturnNullIfNoOccurenceFound()
         {
-            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+            IStatementContext context = Mocker.DynamicMock<IStatementContext>();
 
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PublicModifierToken>());
@@ -108,7 +104,7 @@ namespace JDT.Calidus.CommonTest.Statements
         [Test]
         public void StatementBaseFindFirstOccurenceOfShouldWorkForSuperClasses()
         {
-            IStatementContext context = _mocker.DynamicMock<IStatementContext>();
+            IStatementContext context = Mocker.DynamicMock<IStatementContext>();
 
             IList<TokenBase> input = new List<TokenBase>();
             input.Add(TokenCreator.Create<PublicModifierToken>());

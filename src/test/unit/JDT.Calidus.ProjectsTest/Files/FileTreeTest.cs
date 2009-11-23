@@ -28,13 +28,15 @@ using Rhino.Mocks;
 namespace JDT.Calidus.ProjectsTest.Files
 {
     [TestFixture]
-    public class FileTreeTest
+    public class FileTreeTest : CalidusTestBase
     {
         private FileTree _fileTree;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
+            base.SetUp();
+
             _fileTree = new FileTree(new StubFileValidator());
         }
 
@@ -46,17 +48,16 @@ namespace JDT.Calidus.ProjectsTest.Files
             files.Add("two.cs");
             files.Add("three.cs");
 
-            MockRepository mocker = new MockRepository();
-            IFileValidator validator = mocker.StrictMock<IFileValidator>();
+            IFileValidator validator = Mocker.StrictMock<IFileValidator>();
             foreach(String aFile in files)
                 Expect.Call(validator.IsValidFile(aFile)).Return(true).Repeat.Once();
             
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             FileTree fileTree = new FileTree(validator);
             fileTree.Add(files);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]

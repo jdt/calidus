@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
 using Rhino.Mocks;
@@ -28,8 +29,14 @@ using JDT.Calidus.UI.Model;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class FileTreeControllerTest
+    public class FileTreeControllerTest : CalidusTestBase
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
+
         [Test]
         public void FileTreeControllerShouldCallViewDisplaySourceFiles()
         {
@@ -37,19 +44,17 @@ namespace JDT.Calidus.UITest.Controllers
             files.Add(@"C:\one.cs");
             files.Add(@"C:\two.cs");
 
-            MockRepository mocker = new MockRepository();
-
-            IFileTreeView view = mocker.DynamicMock<IFileTreeView>();
-            ICalidusProjectModel model = mocker.DynamicMock<ICalidusProjectModel>();
+            IFileTreeView view = Mocker.DynamicMock<IFileTreeView>();
+            ICalidusProjectModel model = Mocker.DynamicMock<ICalidusProjectModel>();
 
             Expect.Call(model.GetAllSourceFiles()).Return(files).Repeat.Once();
             Expect.Call(() => view.DisplaySourceFiles(files)).Repeat.Once();
 
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             FileTreeController controller = new FileTreeController(view, model);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

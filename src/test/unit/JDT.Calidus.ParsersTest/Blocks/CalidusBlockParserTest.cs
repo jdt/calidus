@@ -32,24 +32,29 @@ namespace JDT.Calidus.ParsersTest.Blocks
     [TestFixture]
     public class CalidusBlockParserTest : CalidusTestBase
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
+        
         [Test]
         public void ParserShouldCallSBlockFactoryWhenParsingStatements()
         {
             IList<StatementBase> input = new List<StatementBase>();
             input.Add(StatementCreator.CreateMemberStatement("_someString"));
 
-            MockRepository mocker = new MockRepository();
-            IBlockFactory factory = mocker.StrictMock<IBlockFactory>();
+            IBlockFactory factory = Mocker.StrictMock<IBlockFactory>();
             Expect.Call(factory.Create(input)).Return(new [] { new BlockBaseImpl(input) }).Repeat.Once();
 
             StubBlockFactoryProvider provider = new StubBlockFactoryProvider(factory);
 
             CalidusBlockParser parser = new CalidusBlockParser(provider);
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             parser.Parse(input);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 

@@ -36,7 +36,6 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
     public class MethodStatementFactoryTest : CalidusTestBase
     {
         private IStatementContext _context;
-        private MockRepository _mocker;
         private MethodStatementFactory _factory;
 
         [SetUp]
@@ -44,8 +43,7 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
         {
             base.SetUp();
 
-            _mocker = new MockRepository();
-            _context = _mocker.DynamicMock<IStatementContext>();
+            _context = Mocker.DynamicMock<IStatementContext>();
             _factory = new MethodStatementFactory();
         }
 
@@ -63,9 +61,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -84,9 +82,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -106,9 +104,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
             input.Add(TokenCreator.Create<SemiColonToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
         
         [Test]
@@ -127,9 +125,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -146,9 +144,9 @@ namespace JDT.Calidus.Statements.FactoriesTest.Declaration
             input.Add(TokenCreator.Create<OpenRoundBracketToken>());
             input.Add(TokenCreator.Create<CloseRoundBracketToken>());
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
             Assert.IsTrue(_factory.CanCreateStatementFrom(input, _context));
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

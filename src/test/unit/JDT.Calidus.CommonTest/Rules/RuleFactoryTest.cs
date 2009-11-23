@@ -20,35 +20,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JDT.Calidus.Common;
-using JDT.Calidus.Common.Projects;
 using JDT.Calidus.Common.Rules;
-using JDT.Calidus.Common.Rules.Blocks;
-using JDT.Calidus.Common.Rules.Configuration;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
-using JDT.Calidus.Common.Rules.Lines;
-using JDT.Calidus.Common.Rules.Statements;
-using JDT.Calidus.Common.Util;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace JDT.Calidus.CommonTest.Rules
 {
     [TestFixture]
-    public class RuleFactoryTest
+    public class RuleFactoryTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
         }
 
         [Test]
         public void FactoryShouldThrowExceptionForUnCreateableRules()
         {
             RuleFactory factory = new RuleFactory(GetType().Assembly.GetTypes(), null, null);
-            ICalidusRuleConfigurationFactory configFactory = _mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            ICalidusRuleConfigurationFactory configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Assert.Throws<CalidusException>(delegate
                                                 {

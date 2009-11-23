@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JDT.Calidus.UI.Model;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
 using Rhino.Mocks;
@@ -27,30 +27,27 @@ using JDT.Calidus.Common.Rules;
 using JDT.Calidus.UI.Views;
 using JDT.Calidus.Common.Rules.Configuration;
 using JDT.Calidus.UI.Events;
-using JDT.Calidus.Common.Rules.Configuration.Factories;
 using JDT.Calidus.UI.Commands;
 
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class RuleConfigurationControllerTest
+    public class RuleConfigurationControllerTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         private IRuleTreeView _ruleTreeView;
         private IRuleConfigurationView _view;
         private ICalidusRuleProvider _provider;
         private ICalidusRuleConfigurationFactory _configFactory;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _ruleTreeView = _mocker.DynamicMock<IRuleTreeView>();
-            _view = _mocker.DynamicMock<IRuleConfigurationView>();
-            _provider = _mocker.DynamicMock<ICalidusRuleProvider>();
-            _configFactory = _mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            _ruleTreeView = Mocker.DynamicMock<IRuleTreeView>();
+            _view = Mocker.DynamicMock<IRuleConfigurationView>();
+            _provider = Mocker.DynamicMock<ICalidusRuleProvider>();
+            _configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(_view.RuleTreeView).Return(_ruleTreeView).Repeat.Any();
         }
@@ -58,53 +55,51 @@ namespace JDT.Calidus.UITest.Controllers
         [Test]
         public void RuleConfigurationControllerShouldDisplayRules()
         {
-            MockRepository mocker = new MockRepository();
-
             IList<IRule> ruleList = new List<IRule>();
 
-            IRuleTreeView ruleTreeView = mocker.DynamicMock<IRuleTreeView>();
-            IRuleConfigurationView view = mocker.DynamicMock<IRuleConfigurationView>();
-            ICalidusRuleProvider provider = mocker.DynamicMock<ICalidusRuleProvider>();
+            IRuleTreeView ruleTreeView = Mocker.DynamicMock<IRuleTreeView>();
+            IRuleConfigurationView view = Mocker.DynamicMock<IRuleConfigurationView>();
+            ICalidusRuleProvider provider = Mocker.DynamicMock<ICalidusRuleProvider>();
 
             Expect.Call(view.RuleTreeView).Return(ruleTreeView).Repeat.Any();
             Expect.Call(provider.GetRules(_configFactory)).IgnoreArguments().Return(ruleList).Repeat.Once();
             Expect.Call(() => view.DisplayRules(ruleList)).Repeat.Once();
 
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(view, provider, _configFactory);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void RuleConfigurationControllerShouldDisplayRuleConfigurationParameterOnSelectedRuleParameterChanged()
         {
-            IRuleConfigurationParameter config = _mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationParameter config = Mocker.DynamicMock<IRuleConfigurationParameter>();
 
             Expect.Call(() => _view.DisplayRuleConfigurationParameter(config)).Repeat.Once();
             
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             _view.Raise(x => x.SelectedRuleParameterChanged += null, this, new RuleConfigurationParameterEventArgs(config));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void RuleConfigurationControllerShouldNotDisplayRuleConfigurationParameterOnSelectedRuleParameterChangedIfParameterIsNull()
         {
-            IRuleConfigurationParameter config = _mocker.DynamicMock<IRuleConfigurationParameter>();
+            IRuleConfigurationParameter config = Mocker.DynamicMock<IRuleConfigurationParameter>();
 
             Expect.Call(() => _view.DisplayRuleConfigurationParameter(config)).Repeat.Never();
             
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             _view.Raise(x => x.SelectedRuleParameterChanged += null, this, new RuleConfigurationParameterEventArgs(null));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -112,13 +107,13 @@ namespace JDT.Calidus.UITest.Controllers
         {
             RuleChangeCancelEventArgs cancelArgs = new RuleChangeCancelEventArgs();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             _view.RuleTreeView.Raise(x => x.BeforeRuleSelectionChanged += null, this, cancelArgs);
 
             Assert.IsFalse(cancelArgs.Cancel);
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -128,7 +123,7 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(_view.ConfirmRuleSelectionChanged()).Return(true);
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             //set changes
@@ -136,7 +131,7 @@ namespace JDT.Calidus.UITest.Controllers
             _view.RuleTreeView.Raise(x => x.BeforeRuleSelectionChanged += null, this, cancelArgs);
 
             Assert.IsFalse(cancelArgs.Cancel);
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -146,7 +141,7 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(_view.ConfirmRuleSelectionChanged()).Return(false);
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             //set changes
@@ -154,24 +149,24 @@ namespace JDT.Calidus.UITest.Controllers
             _view.RuleTreeView.Raise(x => x.BeforeRuleSelectionChanged += null, this, cancelArgs);
 
             Assert.IsTrue(cancelArgs.Cancel);
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void RuleConfigurationControllerShouldGetAndDisplayRuleConfigurationOnRuleSelectionChanged()
         {
-            IRule rule = _mocker.DynamicMock<IRule>();
-            IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
+            IRule rule = Mocker.DynamicMock<IRule>();
+            IRuleConfiguration ruleConfig = Mocker.DynamicMock<IRuleConfiguration>();
 
             Expect.Call(_configFactory.GetRuleConfigurationFor(rule.GetType())).Return(ruleConfig).Repeat.Once();
             Expect.Call(() => _view.DisplayRuleConfiguration(ruleConfig)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             _view.RuleTreeView.Raise(x => x.RuleSelectionChanged += null, this, new RuleEventArgs(rule));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -179,31 +174,31 @@ namespace JDT.Calidus.UITest.Controllers
         {
             Expect.Call(() => _view.ClearRuleConfiguration()).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             _view.RuleTreeView.Raise(x => x.RuleSelectionChanged += null, this, new RuleEventArgs(null));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void RuleConfigurationControllerShouldSetConfigurationForCurrentRuleToRuleConfigurationFactory()
         {
-            IRule rule = _mocker.DynamicMock<IRule>();
-            IRuleConfiguration ruleConfig = _mocker.DynamicMock<IRuleConfiguration>();
-            IRuleConfigurationOverride overrideConfig = _mocker.DynamicMock<IRuleConfigurationOverride>();
+            IRule rule = Mocker.DynamicMock<IRule>();
+            IRuleConfiguration ruleConfig = Mocker.DynamicMock<IRuleConfiguration>();
+            IRuleConfigurationOverride overrideConfig = Mocker.DynamicMock<IRuleConfigurationOverride>();
 
             Expect.Call(_configFactory.GetRuleConfigurationFor(rule.GetType())).Return(ruleConfig).Repeat.Once();
             Expect.Call(() => _configFactory.SetRuleConfiguration(overrideConfig)).IgnoreArguments().Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             _view.RuleTreeView.Raise(x => x.RuleSelectionChanged += null, this, new RuleEventArgs(rule));
             _view.Raise(x => x.Save += null, this, new RuleConfigurationChangeCommandEventArgs(new Dictionary<IRuleConfigurationParameter, object>()));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -213,7 +208,7 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(_view.ConfirmRuleSelectionChanged()).Return(false);
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleConfigurationController controller = new RuleConfigurationController(_view, _provider, _configFactory);
             //set changes
@@ -221,7 +216,7 @@ namespace JDT.Calidus.UITest.Controllers
             _view.Raise(x => x.Closing += null, this, cancelArgs);
             
             Assert.IsTrue(cancelArgs.Cancel);
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

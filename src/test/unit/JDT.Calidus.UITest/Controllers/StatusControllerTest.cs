@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
 using Rhino.Mocks;
@@ -29,35 +30,33 @@ using JDT.Calidus.UI.Events;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class StatusControllerTest
+    public class StatusControllerTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         private IStatusView _view;
         private IRuleViolationList _list;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _view = _mocker.DynamicMock<IStatusView>();
-            _list = _mocker.DynamicMock<IRuleViolationList>();
+            _view = Mocker.DynamicMock<IStatusView>();
+            _list = Mocker.DynamicMock<IRuleViolationList>();
         }
 
         [Test]
         public void StatusControllerShouldDisplayViolationListViolationCount()
         {
-            IStatusView view = _mocker.DynamicMock<IStatusView>();
-            IRuleViolationList list = _mocker.DynamicMock<IRuleViolationList>();
+            IStatusView view = Mocker.DynamicMock<IStatusView>();
+            IRuleViolationList list = Mocker.DynamicMock<IRuleViolationList>();
 
-            Expect.Call(list.Count).Return(0).Repeat.Once(); 
+            Expect.Call(list.Count).Return(0).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             StatusController controller = new StatusController(view, list);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -68,12 +67,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(() => _view.DisplayViolationCount(0)).Repeat.Once();
             Expect.Call(() => _view.DisplayViolationCount(1)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             StatusController controller = new StatusController(_view, _list);
             _list.Raise(x => x.ViolationAdded += null, this, new RuleViolationEventArgs(null));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -84,12 +83,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(() => _view.DisplayViolationCount(4)).Repeat.Once();
             Expect.Call(() => _view.DisplayViolationCount(3)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             StatusController controller = new StatusController(_view, _list);
             _list.Raise(x => x.ViolationRemoved += null, this, new RuleViolationEventArgs(null));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

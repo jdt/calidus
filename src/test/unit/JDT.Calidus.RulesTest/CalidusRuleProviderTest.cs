@@ -25,111 +25,103 @@ using JDT.Calidus.Common.Providers;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Statements;
 using JDT.Calidus.Rules;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace JDT.Calidus.RulesTest
 {
     [TestFixture]
-    public class CalidusRuleProviderTest
+    public class CalidusRuleProviderTest : CalidusTestBase
     {
-        private MockRepository _mocker;
         private IStatementRuleFactoryProvider _ruleFactoryProvider;
         private IBlockRuleFactoryProvider _blockRuleFactoryProvider;
         private ILineRuleFactoryProvider _lineRuleFactoryProvider;
         private CalidusRuleProvider _provider;
             
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _ruleFactoryProvider = _mocker.StrictMock<IStatementRuleFactoryProvider>();
-            _blockRuleFactoryProvider = _mocker.StrictMock<IBlockRuleFactoryProvider>();
-            _lineRuleFactoryProvider = _mocker.StrictMock<ILineRuleFactoryProvider>();
+            _ruleFactoryProvider = Mocker.StrictMock<IStatementRuleFactoryProvider>();
+            _blockRuleFactoryProvider = Mocker.StrictMock<IBlockRuleFactoryProvider>();
+            _lineRuleFactoryProvider = Mocker.StrictMock<ILineRuleFactoryProvider>();
             _provider = new CalidusRuleProvider(_ruleFactoryProvider, _blockRuleFactoryProvider, _lineRuleFactoryProvider);
         }
 
         [Test]
         public void GetRulesShouldCallStatementBlockAndLineRuleFactoryProvider()
         {
-            MockRepository mocker = new MockRepository();
-            
-            IStatementRuleFactoryProvider ruleFactoryProvider = mocker.StrictMock<IStatementRuleFactoryProvider>();
-            IBlockRuleFactoryProvider blockRuleFactoryProvider = mocker.StrictMock<IBlockRuleFactoryProvider>();
-            ILineRuleFactoryProvider lineRuleFactoryProvider = mocker.StrictMock<ILineRuleFactoryProvider>();
-            ICalidusRuleConfigurationFactory configFactory = mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            IStatementRuleFactoryProvider ruleFactoryProvider = Mocker.StrictMock<IStatementRuleFactoryProvider>();
+            IBlockRuleFactoryProvider blockRuleFactoryProvider = Mocker.StrictMock<IBlockRuleFactoryProvider>();
+            ILineRuleFactoryProvider lineRuleFactoryProvider = Mocker.StrictMock<ILineRuleFactoryProvider>();
+            ICalidusRuleConfigurationFactory configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(ruleFactoryProvider.GetStatementRuleFactories()).Return(new List<IStatementRuleFactory>()).Repeat.Once();
             Expect.Call(blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new List<IBlockRuleFactory>()).Repeat.Once();
             Expect.Call(lineRuleFactoryProvider.GetLineRuleFactories()).Return(new List<ILineRuleFactory>()).Repeat.Once();
             
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
             provider.GetRules(configFactory);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void GetStatementRulesShouldCallStatementRuleFactoryProvider()
         {
-            MockRepository mocker = new MockRepository();
-
-            IStatementRuleFactoryProvider ruleFactoryProvider = mocker.StrictMock<IStatementRuleFactoryProvider>();
-            IBlockRuleFactoryProvider blockRuleFactoryProvider = mocker.StrictMock<IBlockRuleFactoryProvider>();
-            ILineRuleFactoryProvider lineRuleFactoryProvider = mocker.StrictMock<ILineRuleFactoryProvider>();
-            ICalidusRuleConfigurationFactory configFactory = mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            IStatementRuleFactoryProvider ruleFactoryProvider = Mocker.StrictMock<IStatementRuleFactoryProvider>();
+            IBlockRuleFactoryProvider blockRuleFactoryProvider = Mocker.StrictMock<IBlockRuleFactoryProvider>();
+            ILineRuleFactoryProvider lineRuleFactoryProvider = Mocker.StrictMock<ILineRuleFactoryProvider>();
+            ICalidusRuleConfigurationFactory configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(ruleFactoryProvider.GetStatementRuleFactories()).Return(new List<IStatementRuleFactory>()).Repeat.Once();
             
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
             provider.GetStatementRules(configFactory);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void GetBlockRulesShouldCallBlockRuleFactoryProvider()
         {
-            MockRepository mocker = new MockRepository();
-
-            IStatementRuleFactoryProvider ruleFactoryProvider = mocker.StrictMock<IStatementRuleFactoryProvider>();
-            IBlockRuleFactoryProvider blockRuleFactoryProvider = mocker.StrictMock<IBlockRuleFactoryProvider>();
-            ILineRuleFactoryProvider lineRuleFactoryProvider = mocker.StrictMock<ILineRuleFactoryProvider>();
-            ICalidusRuleConfigurationFactory configFactory = mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            IStatementRuleFactoryProvider ruleFactoryProvider = Mocker.StrictMock<IStatementRuleFactoryProvider>();
+            IBlockRuleFactoryProvider blockRuleFactoryProvider = Mocker.StrictMock<IBlockRuleFactoryProvider>();
+            ILineRuleFactoryProvider lineRuleFactoryProvider = Mocker.StrictMock<ILineRuleFactoryProvider>();
+            ICalidusRuleConfigurationFactory configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(blockRuleFactoryProvider.GetBlockRuleFactories()).Return(new List<IBlockRuleFactory>()).Repeat.Once();
             
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
             provider.GetBlockRules(configFactory);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void GetLineRulesShouldCallLineRuleFactoryProvider()
         {
-            MockRepository mocker = new MockRepository();
-
-            IStatementRuleFactoryProvider ruleFactoryProvider = mocker.StrictMock<IStatementRuleFactoryProvider>();
-            IBlockRuleFactoryProvider blockRuleFactoryProvider = mocker.StrictMock<IBlockRuleFactoryProvider>();
-            ILineRuleFactoryProvider lineRuleFactoryProvider = mocker.StrictMock<ILineRuleFactoryProvider>();
-            ICalidusRuleConfigurationFactory configFactory = mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            IStatementRuleFactoryProvider ruleFactoryProvider = Mocker.StrictMock<IStatementRuleFactoryProvider>();
+            IBlockRuleFactoryProvider blockRuleFactoryProvider = Mocker.StrictMock<IBlockRuleFactoryProvider>();
+            ILineRuleFactoryProvider lineRuleFactoryProvider = Mocker.StrictMock<ILineRuleFactoryProvider>();
+            ICalidusRuleConfigurationFactory configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
 
             Expect.Call(lineRuleFactoryProvider.GetLineRuleFactories()).Return(new List<ILineRuleFactory>()).Repeat.Once();
 
-            mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             CalidusRuleProvider provider = new CalidusRuleProvider(ruleFactoryProvider, blockRuleFactoryProvider, lineRuleFactoryProvider);
             provider.GetLineRules(configFactory);
 
-            mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

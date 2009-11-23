@@ -22,6 +22,7 @@ using System.Text;
 using JDT.Calidus.Common.Projects.Events;
 using JDT.Calidus.Common.Rules;
 using JDT.Calidus.Common.Tokens;
+using JDT.Calidus.Tests;
 using JDT.Calidus.UI.Events;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
@@ -33,10 +34,9 @@ using JDT.Calidus.Common.Projects;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class MainControllerTest
+    public class MainControllerTest : CalidusTestBase
     {
         private MainController _controller;
-        private MockRepository _mocker;
 
         private IMainView _view;
         private ICalidusProjectModel _projectModel;
@@ -45,36 +45,36 @@ namespace JDT.Calidus.UITest.Controllers
         private IRuleViolationList _violationList;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _view = _mocker.DynamicMock<IMainView>();
+            _view = Mocker.DynamicMock<IMainView>();
 
-            _projectModel = _mocker.DynamicMultiMock<ICalidusProjectModel>();
+            _projectModel = Mocker.DynamicMultiMock<ICalidusProjectModel>();
 
-            _projectManager = _mocker.DynamicMultiMock<ICalidusProjectManager>();
-            _ruleRunner = _mocker.DynamicMock<IRuleRunner>();
-            _violationList = _mocker.DynamicMultiMock<IRuleViolationList>();
+            _projectManager = Mocker.DynamicMultiMock<ICalidusProjectManager>();
+            _ruleRunner = Mocker.DynamicMock<IRuleRunner>();
+            _violationList = Mocker.DynamicMultiMock<IRuleViolationList>();
         }
 
         [Test]
         public void MainControllerShouldSetViewSelectedProjectToProjectFileName()
         {
-            IMainView view = _mocker.DynamicMock<IMainView>();
-            ICalidusProjectModel projectModel = _mocker.DynamicMultiMock<ICalidusProjectModel>(typeof(ICalidusProject));
-            ICalidusProjectManager projectManager = _mocker.DynamicMock<ICalidusProjectManager>();
-            IRuleRunner ruleRunner = _mocker.DynamicMock<IRuleRunner>();
-            IRuleViolationList violationList = _mocker.DynamicMock<IRuleViolationList>();
+            IMainView view = Mocker.DynamicMock<IMainView>();
+            ICalidusProjectModel projectModel = Mocker.DynamicMultiMock<ICalidusProjectModel>(typeof(ICalidusProject));
+            ICalidusProjectManager projectManager = Mocker.DynamicMock<ICalidusProjectManager>();
+            IRuleRunner ruleRunner = Mocker.DynamicMock<IRuleRunner>();
+            IRuleViolationList violationList = Mocker.DynamicMock<IRuleViolationList>();
 
             //Expect.Call(view.SelectedProject = @"c:\test.calidus").Repeat.Once();
             Expect.Call(projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             MainController controller = new MainController(view, projectModel, false, projectManager, ruleRunner, violationList);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -83,12 +83,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(_view.ConfirmSaveChanges()).Return(Confirm.Cancel);
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.Raise(x => x.Open += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -97,30 +97,30 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(_view.OpenProjectFile()).Return(new FileBrowseResult(true, "")).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.Raise(x => x.Open += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void MainControllerShouldCallSetProjectOnProjectModelOnViewOpen()
         {
-            ICalidusProject theProject = _mocker.DynamicMock<ICalidusProject>();
+            ICalidusProject theProject = Mocker.DynamicMock<ICalidusProject>();
 
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(delegate { _projectModel.SetProject(theProject); }).Repeat.Once();
             Expect.Call(_view.OpenProjectFile()).Return(new FileBrowseResult(true, @"c:\test.calidus")).Repeat.Once();
             Expect.Call(_projectManager.ReadFrom("test")).IgnoreArguments().Return(theProject).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.Raise(x => x.Open += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -129,29 +129,29 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(_view.SelectedProject = @"c:\test.calidus").Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _projectModel.SetProject(null);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
         public void MainControllerShouldSetViewProjectHasChangesToFalseOnViewOpen()
         {
-            ICalidusProject theProject = _mocker.DynamicMock<ICalidusProject>();
+            ICalidusProject theProject = Mocker.DynamicMock<ICalidusProject>();
 
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(_view.OpenProjectFile()).Return(new FileBrowseResult(true, @"c:\test.calidus")).Repeat.Once();
             Expect.Call(delegate { _view.ProjectHasChanges(false); }).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.Raise(x => x.Open += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -160,12 +160,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(delegate { _view.ProjectHasChanges(false); }).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.Raise(x => x.Save += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -174,12 +174,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(_view.ConfirmSaveChanges()).Return(Confirm.Cancel).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.Raise(x => x.Quit += null, this, new QuitEventArgs());
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -188,12 +188,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(() => _view.ShowRuleConfiguration(_projectModel)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.ShowRuleConfiguration(_projectModel);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -202,12 +202,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(() => _view.ShowProjectConfiguration(_projectModel)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _view.ShowProjectConfiguration(_projectModel);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -216,12 +216,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(() => _view.BeginWait()).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _ruleRunner.Raise(x => x.Started += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -230,12 +230,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(() => _violationList.Clear()).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _ruleRunner.Raise(x => x.Started += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -244,12 +244,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(() => _view.EndWait()).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _ruleRunner.Raise(x => x.Completed += null, this, new RuleRunnerEventArgs(new List<RuleViolation>()));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -266,7 +266,7 @@ namespace JDT.Calidus.UITest.Controllers
 
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, actual);
             _ruleRunner.Raise(x => x.Completed += null, this, new RuleRunnerEventArgs(vList));
@@ -280,12 +280,12 @@ namespace JDT.Calidus.UITest.Controllers
             Expect.Call(_projectModel.GetProjectFile()).Return(@"c:\test.calidus").Repeat.Times(1);
             Expect.Call(() => _view.ProjectHasChanges(true)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             _controller = new MainController(_view, _projectModel, true, _projectManager, _ruleRunner, _violationList);
             _projectModel.Raise(x => x.Changed += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }

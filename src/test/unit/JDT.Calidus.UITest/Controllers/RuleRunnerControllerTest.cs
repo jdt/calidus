@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JDT.Calidus.Tests;
 using NUnit.Framework;
 using JDT.Calidus.UI.Controllers;
 using Rhino.Mocks;
@@ -31,24 +32,22 @@ using JDT.Calidus.Common.Rules;
 namespace JDT.Calidus.UITest.Controllers
 {
     [TestFixture]
-    public class RuleRunnerControllerTest
+    public class RuleRunnerControllerTest : CalidusTestBase
     {
-        private MockRepository _mocker;
-
         private IRuleRunnerView _view;
         private IRuleRunner _runner;
         private ICalidusProjectModel _projectModel;
         private ICalidusRuleConfigurationFactory _configFactory;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            _mocker = new MockRepository();
+            base.SetUp();
 
-            _view = _mocker.DynamicMock<IRuleRunnerView>();
-            _runner = _mocker.DynamicMock<IRuleRunner>();
-            _projectModel = _mocker.DynamicMock<ICalidusProjectModel>();
-            _configFactory = _mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
+            _view = Mocker.DynamicMock<IRuleRunnerView>();
+            _runner = Mocker.DynamicMock<IRuleRunner>();
+            _projectModel = Mocker.DynamicMock<ICalidusProjectModel>();
+            _configFactory = Mocker.DynamicMock<ICalidusRuleConfigurationFactory>();
         }
 
         [Test]
@@ -56,12 +55,12 @@ namespace JDT.Calidus.UITest.Controllers
         {
             Expect.Call(() => _view.DisplayProgressPercentage(25)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleRunnerController controller = new RuleRunnerController(_view, _runner, _projectModel, _configFactory);
             _runner.Raise(x => x.FileCompleted += null, this, new FileCompletedEventArgs(String.Empty, 1, 4, new List<RuleViolation>()));
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
 
         [Test]
@@ -69,12 +68,12 @@ namespace JDT.Calidus.UITest.Controllers
         {
             Expect.Call(() => _runner.Run(_configFactory, _projectModel)).Repeat.Once();
 
-            _mocker.ReplayAll();
+            Mocker.ReplayAll();
 
             RuleRunnerController controller = new RuleRunnerController(_view, _runner, _projectModel, _configFactory);
             _view.Raise(x => x.RuleRunnerStart += null, this, EventArgs.Empty);
 
-            _mocker.VerifyAll();
+            Mocker.VerifyAll();
         }
     }
 }
