@@ -54,7 +54,6 @@ namespace JDT.Calidus.Parsers.Coco
             _simpleTokenTypeMap.Add(Parser._char, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._decimal, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._double, typeof(ValueTypeToken));
-            _simpleTokenTypeMap.Add(Parser._enum, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._float, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._long, typeof(ValueTypeToken));
             _simpleTokenTypeMap.Add(Parser._sbyte, typeof(ValueTypeToken));
@@ -107,6 +106,9 @@ namespace JDT.Calidus.Parsers.Coco
             _contentTokenTypeMap.Add(Parser._eq, typeof(EqualityToken));
             _contentTokenTypeMap.Add(Parser._else, typeof(ElseToken));
             _contentTokenTypeMap.Add(Parser._int, typeof(IntToken));
+            _contentTokenTypeMap.Add(Parser._tilde, typeof (TildeToken));
+            _contentTokenTypeMap.Add(Parser._delegate, typeof(DelegateToken));
+            _contentTokenTypeMap.Add(Parser._enum, typeof(EnumToken));
         }
 
         /// <summary>

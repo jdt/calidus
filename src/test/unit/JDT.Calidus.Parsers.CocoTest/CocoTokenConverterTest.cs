@@ -405,5 +405,23 @@ namespace JDT.Calidus.Parsers.CocoTest
         {
             Assert.IsInstanceOf(typeof(ElseToken), CocoTokenConverter.Convert(GetCocoToken(Parser._else)));
         }
+
+        [Test]
+        public void TildeConstShouldReturnTildeToken()
+        {
+            Assert.IsInstanceOf(typeof(TildeToken), CocoTokenConverter.Convert(GetCocoToken(Parser._tilde)));
+        }
+
+        [Test]
+        public void DelegateConstShouldReturnDelegateToken()
+        {
+            Assert.IsInstanceOf(typeof(DelegateToken), CocoTokenConverter.Convert(GetCocoToken(Parser._delegate)));
+        }
+
+        [Test]
+        public void EnumConstShouldReturnEnumToken()
+        {
+            Assert.IsInstanceOf(typeof(EnumToken), CocoTokenConverter.Convert(GetCocoToken(Parser._enum)));
+        }
     }
 }

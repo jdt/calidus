@@ -82,6 +82,10 @@ namespace JDT.Calidus.Tokens
         /// The return keyword
         /// </summary>
         public static String RETURN = "return";
+        /// <summary>
+        /// The delegate keyword
+        /// </summary>
+        public static String DELEGATE = "delegate";
         
         /// <summary>
         /// The class keyword
@@ -103,6 +107,10 @@ namespace JDT.Calidus.Tokens
         /// The int keyword
         /// </summary>
         public static String INT = "int";
+        /// <summary>
+        /// The enum token
+        /// </summary>
+        public static String ENUM = "enum";
 
         /// <summary>
         /// The this keyword
